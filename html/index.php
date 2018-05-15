@@ -8,8 +8,5 @@
 </head>
 <body>
     hello world
-
-    <a href="/gitpull.php">gipull</a>
-
 </body>
 </html>
