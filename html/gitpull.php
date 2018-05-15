@@ -1,16 +1,5 @@
 
-<?php
 
-if (isset($_GET["gitbranch"])) {
-    $output = array();
-    exec("cd /srv/www/projetA2F/ && git pull origin " . $_GET["gitbranch"], $output);
-    foreach($output as $line) {
-        echo $line . PHP_EOL;
-    }
-    exit();
-}
-
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -21,9 +10,24 @@ if (isset($_GET["gitbranch"])) {
     <title>Git pull</title>
 </head>
 <body>
+
+<?php
+if (isset($_GET["gitbranch"])) {
+    $output = array();
+    exec("cd /srv/www/projetA2F/ && git pull origin " . $_GET["gitbranch"], $output);
+    foreach($output as $line) {
+        echo $line . "<br>";
+    }
+    exit();
+} else {
+?>
     <form action="/gitpull.php" method="get">
         <input name="gitbranch" type="text" value="" placeholder="branch">
         <input type="submit" value="Pull">
     </form>
+
+<?php 
+}
+?>
 </body>
 </html>
