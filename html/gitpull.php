@@ -7,6 +7,7 @@ if (isset($_GET["gitbranch"])) {
     foreach($output as $line) {
         echo $line . PHP_EOL;
     }
+    exit();
 }
 
 ?>
