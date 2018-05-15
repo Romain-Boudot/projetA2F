@@ -14,7 +14,7 @@ ini_set('display_errors', 1);
 
 if (isset($_GET["gitbranch"])) {
     $output = array();
-    exec("cd /srv/www/projetA2F/ && git pull origin " . $_GET["gitbranch"], $output);
+    exec("ls -l /srv/www/projetA2F/", $output);
     foreach($output as $line) {
         echo $line . "<br>";
     }
