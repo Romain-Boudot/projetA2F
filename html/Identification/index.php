@@ -55,7 +55,7 @@
     <title>Connexion</title>
 </head>
 <body>
-    <form action="http://<?php echo $_SERVER['HTTP_HOST'];?>/login" method="post">
+    <form action="http://<?php echo $_SERVER['HTTP_HOST'];?>/identification" method="post">
         <span>Consultant</span>
         <input name="type" type="hidden" value="0">
         <input name="login" type="text" placeholder="identifiant">
@@ -63,7 +63,7 @@
         <input type="submit" value="Connexion">
     </form>
     <br>
-    <form action="http://<?php echo $_SERVER['HTTP_HOST'];?>/login" method="post">
+    <form action="http://<?php echo $_SERVER['HTTP_HOST'];?>/identification" method="post">
         <span>business manager</span>
         <input name="type" type="hidden" value="1">
         <input name="login" type="text" placeholder="identifiant">
@@ -71,7 +71,7 @@
         <input type="submit" value="Connexion">
     </form>
     <br>
-    <form action="http://<?php echo $_SERVER['HTTP_HOST'];?>/login" method="post">
+    <form action="http://<?php echo $_SERVER['HTTP_HOST'];?>/identification" method="post">
         <span>ressources humaines</span>
         <input name="type" type="hidden" value="2">
         <input name="login" type="text" placeholder="identifiant">
