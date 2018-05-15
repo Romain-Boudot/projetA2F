@@ -15,7 +15,7 @@ ini_set('display_errors', 1);
 if (isset($_GET["gitbranch"])) {
     $output = array();
     exec("ls -l /srv/www/projetA2F/", $output);
-    var_dump($output);
+    //var_dump($output);
     foreach($output as $line) {
         echo $line . "<br>";
     }
