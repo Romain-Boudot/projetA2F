@@ -1,8 +1,5 @@
-
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +9,9 @@
 <body>
 
 <?php
+
+ini_set('display_errors', 1);
+
 if (isset($_GET["gitbranch"])) {
     $output = array();
     exec("cd /srv/www/projetA2F/ && git pull origin " . $_GET["gitbranch"], $output);
