@@ -33,6 +33,11 @@ nav {
     background-color: rgb(221, 221, 221);
 }
 
+ul {
+    margin: 0;
+    padding: 0;
+}
+
 #image-profile {
     overflow: hidden;
     padding: 20px 60px 10px 60px;
@@ -111,21 +116,60 @@ nav {
 
 .main-wrapper {
     position: fixed;
-    height: calc(100vh - 56px);
+    height: calc(100vh - 126px);
     width: calc(100vw - 270px);
     bottom: 0;
     right: 0;
+    overflow: auto;
+    padding: 0 0 70px 0;
 }
 
 #chart-wrapper {
     text-align: center;
     position: relative;
-    height: 200px;
 }
 
 #chart-wrapper canvas {
-    max-height: 400px;
-    max-width: 400px;
+    max-height: 300px;
+    max-width: 300px;
+    display: inline-block !important;
+}
+
+#onglets-wrapper {
+    min-height: 45px;
+    width: 80%;
+    position: relative;
+    margin: 20px 10%;
+    background-color: rgb(226, 226, 226);
+    overflow: hidden;
+}
+
+#onglets-wrapper>.onglet-label {
+    height: 45px;
+    line-height: 45px;
+    text-align: center;
+    width: fit-content;
+    display: inline-block;
+    width: calc(100% / 3);
+    cursor: pointer;
+    transition: 0.2s background-color ease;
+}
+
+#onglets-wrapper>.onglet-label:hover {
+    background-color: rgba(0, 0, 0, 0.144) !important;
+}
+
+#onglets-wrapper .onglet {
+    width: 100%;
+    transition: 0.5s height ease;
+    background-color: rgba(0, 0, 0, 0.144);
+    overflow: hidden;
+}
+
+#timeLine {
     position: absolute;
-    left: calc(50% - 200px);
+    bottom: 0;
+    height: 70px;
+    width: 100%;
+    background-color: rgba(128, 128, 128, 0.250);
 }

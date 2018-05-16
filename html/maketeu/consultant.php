@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="main.css">
     <script src="/cdn/Chart.bundle.min.js"></script>
+    <script src="/cdn/Chart.js"></script>
+    <script src="/cdn/Dropdown.js"></script>
     <title>Profile Consultant</title>
 </head>
 <body>
@@ -24,6 +26,7 @@
         <div id="image-profile">
             <img src="/images/unknown.png" alt="profile image">
         </div>
+        <div class="profile-info bold">PÔLE DATABASE</div>
         <div class="hr"></div>
         <div class="profile-info" data-info="prenom">Romain</div>
         <div class="profile-info" data-info="nom">Boudot</div>
@@ -33,53 +36,95 @@
     </nav>
 
     <div class="main-wrapper">
-        <div id="chart-wrapper">
-            <canvas id="chart-test" class="chartjs" width="400" height="400"></canvas>
+        <div id="onglets-wrapper">
+            <div id="ongletInt" class="onglet-label">Interventions</div><div id="ongletQual" class="onglet-label">Qualifications</div><div id="ongletComp" class="onglet-label">Compétences</div>
+            <div id="ongletIntContent" class="onglet">
+                <ul>
+                    <li>coucou</li>
+                    <li>test</li>
+                    <li>another coucou</li>
+                </ul>
+            </div>
+            <div id="ongletQualContent" class="onglet">
+                <ul>
+                    <li>DES QUALIFICATION DE QUALITEY</li>
+                    <li>en elevage de bovin</li>
+                    <li>peche a la ligne</li>
+                    <li>chasse a l'autruche</li>
+                </ul>
+            </div>
+            <div id="ongletCompContent" class="onglet">
+                <ul>
+                    <li>comp 1</li>
+                    <li>comp 2</li>
+                    <li>comp 3</li>
+                </ul>
+            </div>
+
             <script>
-                new Chart(document.getElementById("chart-test"),{
-                    "type":"radar",
-                    "data":{
-                        "labels": ["coucou","prout","jesaispas"],
-                        "datasets":[
-                            {
-                                "data": [1,2,3],
-                                "tension": 0,
-                                "backgroundColor": "rgba(255, 99, 132, 0.2)",
-                                "borderColor": "rgb(255, 99, 132)",
-                                "pointBackgroundColor": "rgb(255, 99, 132)",
-                                "pointBorderColor": "#fff",
-                                "pointHoverBackgroundColor": "#fff",
-                                "pointHoverBorderColor": "rgb(255, 99, 132)"
-                            }
-                        ]
-                    },
-                    "options":{
-                        "scale": {
-                            "ticks": {
-                                "max": 3,
-                                "min": 0,
-                                "stepSize": 1
-                            }
-                        },
-                        "legend":{
-                            "display": false
-                        },
-                        "layout":{
-                            "padding": {
-                                "top": 20,
-                                "left": 20,
-                                "right": 20,
-                                "bottom": 20
-                            }
-                        },
-                        "elements":{
-                            "line":{
-                                "borderWidth":3
-                            }
-                        }
-                    }
+                
+                var ongletInt = new Dropdown(
+                    document.getElementById("ongletInt"),
+                    document.getElementById("ongletIntContent"),
+                    false
+                );
+
+                var ongletQual = new Dropdown(
+                    document.getElementById("ongletQual"),
+                    document.getElementById("ongletQualContent"),
+                    false
+                );
+
+                var ongletComp = new Dropdown(
+                    document.getElementById("ongletComp"),
+                    document.getElementById("ongletCompContent"),
+                    false
+                );
+
+                ongletInt.trigger.addEventListener("click", function() {
+                    ongletInt.switch_status();
                 });
+
+                ongletQual.trigger.addEventListener("click", function() {
+                    ongletQual.switch_status();
+                });
+
+                ongletComp.trigger.addEventListener("click", function() {
+                    ongletComp.switch_status();
+                });
+
+                ongletInt.toHideElem = [ongletQual, ongletComp];
+                ongletQual.toHideElem = [ongletInt, ongletComp];
+                ongletComp.toHideElem = [ongletInt, ongletQual];
+
             </script>
+
+        </div>
+        <div id="chart-wrapper">
+            <canvas id="chart-p1" class="chartjs" width="200" height="200"></canvas>
+            <script>
+                var co1 = new chartOption();
+                co1.chart.data.datasets[0].data = [3,2,3]
+                co1.chart.data.labels = ["bonjour","hola","hello"]
+                new Chart(document.getElementById("chart-p1"), co1.option);
+            </script>
+            <canvas id="chart-p2" class="chartjs" width="200" height="200"></canvas>
+            <script>
+                var co2 = new chartOption();
+                co2.chart.data.datasets[0].data = [1,2,1]
+                co2.chart.data.labels = ["bonjour","hola","hello"]
+                new Chart(document.getElementById("chart-p2"), co2.option);
+            </script>
+            <canvas id="chart-p3" class="chartjs" width="200" height="200"></canvas>
+            <script>
+                var co3 = new chartOption();
+                co3.chart.data.datasets[0].data = [3,2,1]
+                co3.chart.data.labels = ["bonjour","hola","hello"]
+                new Chart(document.getElementById("chart-p3"), co3.option);
+            </script>
+        </div>
+        <div id="timeLine">
+
         </div>
     </div>
 
