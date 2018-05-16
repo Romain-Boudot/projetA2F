@@ -39,10 +39,10 @@
                 new Chart(document.getElementById("chart-test"),{
                     "type":"radar",
                     "data":{
-                        "labels": ["Eating","Drinking","Sleeping","Designing","Coding","Cycling","Running"],
+                        "labels": ["coucou","prout","jesaispas"],
                         "datasets":[
                             {
-                                "data": [0,1,1,3,2,2,1],
+                                "data": [1,2,3],
                                 "tension": 0,
                                 "backgroundColor": "rgba(255, 99, 132, 0.2)",
                                 "borderColor": "rgb(255, 99, 132)",
