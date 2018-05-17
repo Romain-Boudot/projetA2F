@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="main.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="/cdn/Chart.bundle.min.js"></script>
     <script src="/cdn/Chart.js"></script>
     <script src="/cdn/Dropdown.js"></script>
@@ -42,13 +43,27 @@
                 <div id="ongletInt" class="onglet-label">Interventions</div><div id="ongletQual" class="onglet-label">Qualifications</div><div id="ongletComp" class="onglet-label">Compétences</div>
                 <div id="ongletIntContent" class="onglet">
                     <div class="intervention">
-                        <div class="infos"><span>17 mai 2018</span><span>A2F advisor</span></div>
+                        <div class="infos">Date</div>
+                        <div class="infos">Client</div>
+                        <div class="details textCenter">
+                            Détails
+                            <div style="float: right;margin-right: 20px">
+                                <i class="material-icons clickable">add</i>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="intervention">
+                        <div class="infos">17 mai 2018</div>
+                        <div class="infos">A2F advisor</div>
                         <div class="details">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit.
                         </div>
                     </div>
+                    <hr>
                     <div class="intervention">
-                        <div class="infos"><span>17 mai 2018</span><span>A2F advisor</span></div>
+                        <div class="infos">17 mai 2018</div>
+                        <div class="infos">A2F advisor</div>
                         <div class="details">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit.
                         </div>
@@ -56,92 +71,335 @@
                 </div>
                 <div id="ongletQualContent" class="onglet">
                     <ul>
-                        <li>DES QUALIFICATION DE QUALITEY</li>
-                        <li>en elevage de bovin</li>
-                        <li>peche a la ligne</li>
-                        <li>chasse a l'autruche</li>
+                        <li><span>DES QUALIFICATION DE QUALITEY</span><span>15 mai 2018</span></li>
+                        <li><span>chasse a l'autruche</span><span>11 juin 2013</span></li>
+                        <li><span>peche a la ligne</span><span>28 février 2001</span></li>
+                        <li><span>en elevage de bovin</span><span>18 septembre 1952</span></li>
                     </ul>
                 </div>
                 <div id="ongletCompContent" class="onglet">
                     <ul>
-                        <li>comp 1</li>
-                        <li>comp 2</li>
-                        <li>comp 3</li>
-                        <li>comp 4</li>
-                        <li>comp 1</li>
-                        <li>comp 2</li>
-                        <li>comp 3</li>
-                        <li>comp 4</li>
-                        <li>comp 1</li>
-                        <li>comp 2</li>
-                        <li>comp 3</li>
-                        <li>comp 4</li>
-                        <li>comp 1</li>
-                        <li>comp 2</li>
-                        <li>comp 3</li>
-                        <li>comp 4</li>
-                        <li>comp 1</li>
-                        <li>comp 2</li>
-                        <li>comp 3</li>
-                        <li>comp 4</li>
-                        <li>comp 1</li>
-                        <li>comp 2</li>
-                        <li>comp 3</li>
-                        <li>comp 4</li>
-                        <li>comp 1</li>
-                        <li>comp 2</li>
-                        <li>comp 3</li>
-                        <li>comp 4</li>
-                        <li>comp 1</li>
-                        <li>comp 2</li>
-                        <li>comp 3</li>
-                        <li>comp 4</li>
-                        <li>comp 1</li>
-                        <li>comp 2</li>
-                        <li>comp 3</li>
-                        <li>comp 4</li>
-                        <li>comp 1</li>
-                        <li>comp 2</li>
-                        <li>comp 3</li>
-                        <li>comp 4</li>
-                        <li>comp 1</li>
-                        <li>comp 2</li>
-                        <li>comp 3</li>
-                        <li>comp 4</li>
+                        <?php
+
+                            $comp = array(
+                                "Pole indus" => array(
+                                    "Compétence 1" => array(
+                                        "Sous Comp 1" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        ),
+                                        "Sous Comp 2" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        ),
+                                        "Sous Comp 3" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        ),
+                                        "Sous Comp 4" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        )
+                                    ),
+                                    "Compétence 2" => array(
+                                        "Sous Comp 1" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 1" => 0
+                                        ),
+                                        "Sous Comp 2" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        ),
+                                        "Sous Comp 3" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        ),
+                                        "Sous Comp 4" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        )
+                                    ),
+                                    "Compétence 3" => array(
+                                        "Sous Comp 1" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        ),
+                                        "Sous Comp 2" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        ),
+                                        "Sous Comp 3" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        ),
+                                        "Sous Comp 4" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        )
+                                    )
+                                ),
+                                "Pole Si" => array(
+                                    "Compétence 1" => array(
+                                        "Sous Comp 1" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        ),
+                                        "Sous Comp 2" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        ),
+                                        "Sous Comp 3" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        ),
+                                        "Sous Comp 4" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        )
+                                    ),
+                                    "Compétence 2" => array(
+                                        "Sous Comp 1" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 1" => 0
+                                        ),
+                                        "Sous Comp 2" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        ),
+                                        "Sous Comp 3" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        ),
+                                        "Sous Comp 4" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        )
+                                    ),
+                                    "Compétence 3" => array(
+                                        "Sous Comp 1" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        ),
+                                        "Sous Comp 2" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        ),
+                                        "Sous Comp 3" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        ),
+                                        "Sous Comp 4" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        )
+                                    )
+                                ),
+                                "Pole Database" => array(
+                                    "Compétence 1" => array(
+                                        "Sous Comp 1" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        ),
+                                        "Sous Comp 2" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        ),
+                                        "Sous Comp 3" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        ),
+                                        "Sous Comp 4" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        )
+                                    ),
+                                    "Compétence 2" => array(
+                                        "Sous Comp 1" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 1" => 0
+                                        ),
+                                        "Sous Comp 2" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        ),
+                                        "Sous Comp 3" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        ),
+                                        "Sous Comp 4" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        )
+                                    ),
+                                    "Compétence 3" => array(
+                                        "Sous Comp 1" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        ),
+                                        "Sous Comp 2" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        ),
+                                        "Sous Comp 3" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        ),
+                                        "Sous Comp 4" => array(
+                                            "Sous sous Comp 1" => 0,
+                                            "Sous sous Comp 2" => 0,
+                                            "Sous sous Comp 3" => 0,
+                                            "Sous sous Comp 4" => 0,
+                                            "Sous sous Comp 5" => 0
+                                        )
+                                    )
+                                )
+                            );
+                            
+                            $cptTrigger = 0;
+                            $script = "";
+
+                            function tab($name, $tab) {
+                                echo "<ul>";
+                                foreach ($tab as $name => $value) {
+                                    echo "<li><span>" . $name . "</span>";
+                                    if (is_array($value)) {
+                                        tab($name, $value);
+                                    } else {
+                                        echo " - <span>" . $value . "</span>";
+                                    }
+                                    echo "</li>";
+                                }
+                                echo "</ul>";
+                            };
+
+                            foreach ($comp as $name => $value) {
+                                echo "<li><span>" . $name;
+                                if (is_array($value)) {
+                                    echo "</span>";
+                                    tab($name, $value);
+                                } else {
+                                    echo " - " . $value . "</span>";
+                                }
+                                echo "</li>";
+                            }
+
+                        ?>
                     </ul>
                 </div>
 
                 <script>
-                    
-                    var ongletInt = new Dropdown(
-                        document.getElementById("ongletInt"),
-                        document.getElementById("ongletIntContent"),
-                        false
-                    );
+                    var ongletInt = new Dropdown("ongletInt", "ongletIntContent", false);
+                    var ongletQual = new Dropdown("ongletQual", "ongletQualContent", false);
+                    var ongletComp = new Dropdown("ongletComp", "ongletCompContent", false);
 
-                    var ongletQual = new Dropdown(
-                        document.getElementById("ongletQual"),
-                        document.getElementById("ongletQualContent"),
-                        false
-                    );
-
-                    var ongletComp = new Dropdown(
-                        document.getElementById("ongletComp"),
-                        document.getElementById("ongletCompContent"),
-                        false
-                    );
-
-                    ongletInt.trigger.addEventListener("click", function() {
-                        ongletInt.switch_status();
-                    });
-
-                    ongletQual.trigger.addEventListener("click", function() {
-                        ongletQual.switch_status();
-                    });
-
-                    ongletComp.trigger.addEventListener("click", function() {
-                        ongletComp.switch_status();
-                    });
+                    ongletInt.trigger.addEventListener("click", function() { ongletInt.switch_status(); });
+                    ongletQual.trigger.addEventListener("click", function() { ongletQual.switch_status(); });
+                    ongletComp.trigger.addEventListener("click", function() { ongletComp.switch_status(); });
 
                     ongletInt.toHideElem = [ongletQual, ongletComp];
                     ongletQual.toHideElem = [ongletInt, ongletComp];

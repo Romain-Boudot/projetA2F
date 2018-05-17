@@ -4,8 +4,8 @@ class Dropdown {
     // status = false -> hide
 
     constructor(trigger, target, status) {
-        this.trigger = trigger;
-        this.target = target;
+        this.trigger = document.getElementById(trigger);
+        this.target = document.getElementById(target);
         this.status = status;
         this.toHide = [];
 

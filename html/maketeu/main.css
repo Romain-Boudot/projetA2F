@@ -38,6 +38,11 @@ ul {
     padding: 0;
 }
 
+ul>li {
+    list-style: none;
+    margin: 3px 0;
+}
+
 #image-profile {
     overflow: hidden;
     padding: 20px 60px 10px 60px;
@@ -250,19 +255,74 @@ ul {
 
 #ongletIntContent .intervention {
     display: grid;
-    grid-template-columns: 25% 75%;
+    grid-template-columns: 15% 15% 70%;
     grid-template-rows: auto;
-    margin-bottom: 10px;
+    margin: 10px 0;
 }
 
-#ongletIntContent .intervention .infos {
+#ongletIntContent .intervention .infos:nth-child(1) {
     grid-column: 1 / 2;
     grid-row: 1 / 2;
     padding: 10px;
+    text-align: center;
 }
 
-#ongletIntContent .intervention .details {
+#ongletIntContent .intervention .infos:nth-child(2) {
     grid-column: 2 / 3;
     grid-row: 1 / 2;
     padding: 10px;
+    text-align: center;
+}
+
+#ongletIntContent .intervention .details {
+    grid-column: 3 / 4;
+    grid-row: 1 / 2;
+    padding: 10px;
+}
+
+.textCenter {
+    text-align: center;
+}
+
+hr {
+    margin: 0;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+#ongletQualContent ul>li {
+    width: calc(100% - 20px);
+    height: 20px;
+    margin: 3px 10px;
+}
+
+#ongletQualContent ul>li>span:nth-child(1){
+    float: left;
+}
+
+#ongletQualContent ul>li>span:nth-child(2) {
+    float: right;
+}
+
+#ongletCompContent ul {
+    background-color: rgba(0, 0, 0, 0.144);
+    margin: 0;
+    padding: 0 0 0 20px;
+    height: 100%;
+    width: 100%;
+}
+
+#ongletCompContent>ul {
+    padding: 0;
+    background-color: unset;
+}
+
+#ongletCompContent li {
+    margin: 0;
+}
+
+#ongletCompContent li>span:hover {
+    background-color: rgba(0, 0, 0, 0.144);
 }
