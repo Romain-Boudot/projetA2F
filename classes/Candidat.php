@@ -195,28 +195,5 @@ class Candidat {
         return $this->linkedin;
     }
 
-    public function set_nom($nom){
-        $this->nom = $nom;
-    }
-
-    public function set_prenom($prenom){
-        $this->prenom = $prenom;
-    }
-
-
-    public function set_email($email){
-        $this->email = $email;
-    }
-
-
-    public function set_telephone($telephone){
-        $this->telephone = $telephone;
-    }
-
-
-    public function set_linkedin($linkedin){
-        $this->linkedin = $linkedin;
-    }
-
 
 }
