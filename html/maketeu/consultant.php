@@ -360,63 +360,96 @@
                                 )
                             );
 
-                            function tab($name, $tab) {
+                            $cpt = 0;
 
-                                echo PHP_EOL . "<ul class=\"CompRaiseUp\" id=\"compUl" . $cptTrigger . "\">";
-                                
-                                $script = $script . "var onglet" . $cptTrigger . " = new Dropdown(\"compTrigger" . ($cptTrigger - 1) . "\", \"compUl" . $cptTrigger . "\", false, \".CompRaiseUp\");";
-                                $script = $script . "onglet" . $cptTrigger . ".trigger.addEventListener(\"click\", function() { onglet" . $cptTrigger . ".switch_status(); });";
-                                $cptTrigger += 1;
+                            function tab($name, $tab, $cpt) {
+
+                                $html = array();
+                                $script = array();
+
+                                $html[] = "<span id=\"compTrigger" . $cpt . "\">" . $name . "</span>";
+                                $html[] = "<ul class=\"CompRaiseUp\" id=\"compTarget" . $cpt . "\">";
+
+                                $script[] = "var onglet" . $cpt . " = new Dropdown(\"compTrigger" . $cpt . "\", \"compTarget" . $cpt . "\", false, onglet" . ($cpt > 0 ? ($cpt - 1) : "Comp") . ");";
+                                $script[] = "onglet" . $cpt . ".trigger.addEventListener(\"click\", function() { onglet" . $cpt . ".switch_status(); });";
+
+                                $cpt += 1;
                                 
                                 foreach ($tab as $name => $value) {
 
-                                    echo PHP_EOL . "<li>";
+                                    $html[] = "<li>";
 
                                     if (is_array($value)) {
-
-                                        echo "<span id=\"compTrigger" . $cptTrigger . "\">" . $name . "</span>";
-                                        $cptTrigger++;
-                                        tab($name, $value, $cptTrigger, $script);
+                                        
+                                        $returned = tab($name, $value, $cpt);
+                                        $cpt = $returned["cpt"];
+                                        foreach ($returned["html"] as $line) {
+                                            $html[] = $line;
+                                        }
+                                        foreach ($returned["script"] as $line) {
+                                            $script[] = $line;
+                                        }
 
                                     } else {
 
-                                        echo "<span>" . $name . " - " . $value . "</span>";
+                                        $html[] = "<span>" . $name . " - " . $value . "</span>";
 
                                     }
 
-                                    echo "</li>";
+                                    $html[] = "</li>";
                                 }
 
-                                echo "</ul>";
+                                $html[] = "</ul>";
+
+                                return array(
+                                    "cpt" => $cpt,
+                                    "html" => $html,
+                                    "script" => $script
+                                );
 
                             };
 
+                            $html = array();
+                            $script = array();
+                            
                             foreach ($comp as $name => $value) {
 
-                                echo "<li>";
+                                $html[] = "<li>";
 
-                                    if (is_array($value)) {
-
-                                        echo "<span id=\"compTrigger" . $cptTrigger . "\">" . $name . "</span>";
-                                        $cptTrigger += 1;
-                                        tab($name, $value, $cptTrigger, $script);
-
-                                    } else {
-
-                                        echo "<span>" . $name . " - " . $value . "</span>";
-
+                                if (is_array($value)) {
+                                    
+                                    $returned = tab($name, $value, $cpt);
+                                    //var_dump($returned);
+                                    $cpt = $returned["cpt"];
+                                    foreach ($returned["html"] as $line) {
+                                        $html[] = $line;
                                     }
-                                echo "</li>" . PHP_EOL;
+                                    foreach ($returned["script"] as $line) {
+                                        $script[] = $line;
+                                    }
+
+                                } else {
+
+                                    $html[] = "<span>" . $name . " - " . $value . "</span>";
+
+                                }
+
+                                $html[] = "</li>";
+
                             }
 
-                            var_dump($script);
-                            var_dump($cptTrigger);
+                            foreach ($html as $line) {
+                                echo $line . PHP_EOL;
+                            }
 
                         ?>
                     </ul>
                 </div>
 
                 <script>
+
+                    var DropdownList = {};
+
                     var ongletInt = new Dropdown("ongletInt", "ongletIntContent", false);
                     var ongletQual = new Dropdown("ongletQual", "ongletQualContent", false);
                     var ongletComp = new Dropdown("ongletComp", "ongletCompContent", false);
@@ -430,7 +463,9 @@
                     ongletComp.toHideElem = [ongletInt, ongletQual];
 
                     <?php
-                        echo $script;
+                        foreach ($script as $line) {
+                            echo $line . PHP_EOL;
+                        }
                     ?>
 
                 </script>

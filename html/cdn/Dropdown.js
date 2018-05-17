@@ -3,18 +3,13 @@ class Dropdown {
     // status = true -> show
     // status = false -> hide
 
-    constructor(trigger, target, status, toHide = [], HideToHide = "") {
+    constructor(trigger, target, status, parent = null, toHide = []) {
 
         this.trigger = document.getElementById(trigger);
         this.target = document.getElementById(target);
         this.status = status;
         this.toHide = toHide;
-        
-        if (HideToHide != "") {
-            this.HideToHide = document.querySelectorAll(HideToHide);
-        } else {
-            this.HideToHide = [];
-        }
+        this.parent = parent;
 
         if (this.status == true) {
             this.show();
@@ -50,7 +45,7 @@ class Dropdown {
     }
 
     hideDiv() {
-        this.target.style.height = "0px";
+        this.target.style.maxHeight = "0px";
     }
 
     hideColor() {
@@ -62,37 +57,59 @@ class Dropdown {
         this.trigger.style.backgroundColor = "unset";
         this.target.style.color = "rgba(0, 0, 0, 0)";
         setTimeout(() => {
-            this.target.style.height = "0px";
+            this.target.style.maxHeight = "0px";
+            if (this.parent != null) this.parent.update();
         }, 200);
-        this.HideToHide.forEach(elem => {
-            elem.hide();
-        });
+    }
+
+    update() {
+        console.log(document.getElementById('ongletCompContent').scrollHeight)
+        if (this.status == true) {
+            this.target.style.maxHeight = this.target.scrollHeight + "px";
+        }
+        if (this.parent != null) this.parent.update();
     }
 
     show() {
+
         this.status = true;
         this.trigger.style.backgroundColor = "rgba(0, 0, 0, 0.144)";
         let check = false;
         let timeout = 0;
         this.toHide.forEach(elem => {
+
             if (elem.statusVal) check++;
+
         });
+
         if (check > 0) {
+
             this.toHide.forEach(elem => {
+
                 elem.hideText();
                 elem.hideColor();
                 elem.statusVal = false;
+
             });
+
             timeout = 200;
         }
+
         setTimeout(() => {
-            this.target.style.height = this.target.scrollHeight + "px";
+
+            this.target.style.maxHeight = this.target.scrollHeight + "px";
             this.toHide.forEach(elem => {
+
                 elem.hideDiv();
+
             });
+            if (this.parent != null) this.parent.update();
             setTimeout(() => {
+
                 this.target.style.color = "inherit";
+
             }, 300);
+
         }, timeout);
 
     }

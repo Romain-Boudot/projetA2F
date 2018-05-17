@@ -165,7 +165,7 @@ ul>li {
 
 #onglets-wrapper .onglet {
     width: 100%;
-    transition: 0.3s height ease, 0.2s color ease;
+    transition: 0.3s max-height ease, 0.2s color ease;
     background-color: rgba(0, 0, 0, 0.144);
     overflow: hidden;
 }
@@ -232,7 +232,6 @@ ul>li {
     content: " ";
     position: absolute;
     top: 100%;
-    /* At the bottom of the tooltip */
     left: 50%;
     margin-left: -5px;
     border-width: 5px;
@@ -312,11 +311,15 @@ hr {
     padding: 0 0 0 20px;
     height: 100%;
     width: 100%;
+    transition: 0.3s height ease, 0.2s color ease;
+    cursor: pointer;
+    overflow: hidden;
 }
 
 #ongletCompContent>ul {
     padding: 0;
     background-color: unset;
+    overflow: visible;
 }
 
 #ongletCompContent li {
