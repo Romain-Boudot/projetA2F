@@ -48,7 +48,7 @@ class Candidat {
         $pdo = Database::connect();
 
         $delete_candidate = $pdo->prepare("DELETE FROM candidats WHERE id_candidat = :id");
-        $delete_candidate->bindParam('id', this->$id);
+        $delete_candidate->bindParam('id', $this->id);
         $delete_candidate->execute();
 
         $pdo = null:
@@ -61,42 +61,44 @@ class Candidat {
         if (isset($infos[':nom'])) {
             if (!$first) {
                 $statement .= ",";
-                $first = false;
             }
             $statement .= " nom = :nom";
+
+            $first = false;
         }
 
         if (isset($infos[':prenom'])) {
             if (!$first) {
                 $statement .= ",";
-                $first = false;
             }
             $statement .= " prenom = :prenom";
+            $first = false;
         }
 
         if (isset($infos[':telephone'])) {
             if (!$first) {
                 $statement .= ",";
-                $first = false;
             }
             $statement .= " telephone = :telephone";
+            $first = false;
         }
 
         if (isset($infos[':email'])) {
             if (!$first) {
                 $statement .= ",";
-                $first = false;
             }
             $statement .= " email = :email";
+            $first = false;
         }
         if (isset($infos[':linkedin'])) {
             if (!$first) {
                 $statement .= ",";
-                $first = false;
             }
             $statement .= " linkedin = :linkedin";
+            $first = false;
+
         }
-        $statement .= " WHERE id_candidat = ".this->$id;
+        $statement .= " WHERE id_candidat = ".$this->id;
         $edit_candidate = $pdo->prepare($statement);
         $edit_candidate->execute($infos);		
 
