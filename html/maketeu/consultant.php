@@ -359,34 +359,58 @@
                                     )
                                 )
                             );
-                            
-                            $cptTrigger = 0;
-                            $script = "";
 
                             function tab($name, $tab) {
-                                echo "<ul>";
+
+                                echo PHP_EOL . "<ul class=\"CompRaiseUp\" id=\"compUl" . $cptTrigger . "\">";
+                                
+                                $script = $script . "var onglet" . $cptTrigger . " = new Dropdown(\"compTrigger" . ($cptTrigger - 1) . "\", \"compUl" . $cptTrigger . "\", false, \".CompRaiseUp\");";
+                                $script = $script . "onglet" . $cptTrigger . ".trigger.addEventListener(\"click\", function() { onglet" . $cptTrigger . ".switch_status(); });";
+                                $cptTrigger += 1;
+                                
                                 foreach ($tab as $name => $value) {
-                                    echo "<li><span>" . $name . "</span>";
+
+                                    echo PHP_EOL . "<li>";
+
                                     if (is_array($value)) {
-                                        tab($name, $value);
+
+                                        echo "<span id=\"compTrigger" . $cptTrigger . "\">" . $name . "</span>";
+                                        $cptTrigger++;
+                                        tab($name, $value, $cptTrigger, $script);
+
                                     } else {
-                                        echo " - <span>" . $value . "</span>";
+
+                                        echo "<span>" . $name . " - " . $value . "</span>";
+
                                     }
+
                                     echo "</li>";
                                 }
+
                                 echo "</ul>";
+
                             };
 
                             foreach ($comp as $name => $value) {
-                                echo "<li><span>" . $name;
-                                if (is_array($value)) {
-                                    echo "</span>";
-                                    tab($name, $value);
-                                } else {
-                                    echo " - " . $value . "</span>";
-                                }
-                                echo "</li>";
+
+                                echo "<li>";
+
+                                    if (is_array($value)) {
+
+                                        echo "<span id=\"compTrigger" . $cptTrigger . "\">" . $name . "</span>";
+                                        $cptTrigger += 1;
+                                        tab($name, $value, $cptTrigger, $script);
+
+                                    } else {
+
+                                        echo "<span>" . $name . " - " . $value . "</span>";
+
+                                    }
+                                echo "</li>" . PHP_EOL;
                             }
+
+                            var_dump($script);
+                            var_dump($cptTrigger);
 
                         ?>
                     </ul>
@@ -404,6 +428,10 @@
                     ongletInt.toHideElem = [ongletQual, ongletComp];
                     ongletQual.toHideElem = [ongletInt, ongletComp];
                     ongletComp.toHideElem = [ongletInt, ongletQual];
+
+                    <?php
+                        echo $script;
+                    ?>
 
                 </script>
 

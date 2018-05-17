@@ -3,11 +3,18 @@ class Dropdown {
     // status = true -> show
     // status = false -> hide
 
-    constructor(trigger, target, status) {
+    constructor(trigger, target, status, toHide = [], HideToHide = "") {
+
         this.trigger = document.getElementById(trigger);
         this.target = document.getElementById(target);
         this.status = status;
-        this.toHide = [];
+        this.toHide = toHide;
+        
+        if (HideToHide != "") {
+            this.HideToHide = document.querySelectorAll(HideToHide);
+        } else {
+            this.HideToHide = [];
+        }
 
         if (this.status == true) {
             this.show();
@@ -57,6 +64,9 @@ class Dropdown {
         setTimeout(() => {
             this.target.style.height = "0px";
         }, 200);
+        this.HideToHide.forEach(elem => {
+            elem.hide();
+        });
     }
 
     show() {
