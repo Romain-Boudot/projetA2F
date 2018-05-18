@@ -165,7 +165,7 @@ ul>li {
 
 #onglets-wrapper .onglet {
     width: 100%;
-    transition: 0.3s max-height ease, 0.2s color ease;
+    transition: 0.3s max-height ease, 0.2s color ease, 0.3s height ease;
     background-color: rgba(0, 0, 0, 0.144);
     overflow: hidden;
 }
@@ -311,7 +311,7 @@ hr {
     padding: 0 0 0 20px;
     height: 100%;
     width: 100%;
-    transition: 0.3s height ease, 0.2s color ease;
+    transition: 0.3s height ease, 0.2s color ease, 0.3s max-height ease;
     cursor: pointer;
     overflow: hidden;
 }
