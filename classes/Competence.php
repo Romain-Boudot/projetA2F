@@ -14,7 +14,7 @@ function tab_search($id, $tab) {
                 "id_competence" => $c["id_competence"],
                 "id_competence_mere" => $c["id_competence_mere"],
                 "enfant" => tab_search($c["id_competence"], $tab)
-            )
+            );
 
         }
 
