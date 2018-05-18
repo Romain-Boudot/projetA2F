@@ -45,7 +45,7 @@ class Dropdown {
     }
 
     hideDiv() {
-        this.target.style.maxHeight = "0px";
+        this.target.style.height = "0px";
     }
 
     hideColor() {
@@ -57,17 +57,16 @@ class Dropdown {
         this.trigger.style.backgroundColor = "unset";
         this.target.style.color = "rgba(0, 0, 0, 0)";
         setTimeout(() => {
-            this.target.style.maxHeight = "0px";
+            this.target.style.height = "0px";
             if (this.parent != null) this.parent.update();
         }, 200);
     }
 
     update() {
-        console.log(document.getElementById('ongletCompContent').scrollHeight)
         if (this.status == true) {
-            this.target.style.maxHeight = this.target.scrollHeight + "px";
+            this.target.style.height = this.target.scrollHeight + "px";
+            if (this.parent != null) this.parent.update();
         }
-        if (this.parent != null) this.parent.update();
     }
 
     show() {
@@ -97,7 +96,7 @@ class Dropdown {
 
         setTimeout(() => {
 
-            this.target.style.maxHeight = this.target.scrollHeight + "px";
+            this.target.style.height = this.target.scrollHeight + "px";
             this.toHide.forEach(elem => {
 
                 elem.hideDiv();
