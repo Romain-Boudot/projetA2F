@@ -18,10 +18,12 @@ class Competence {
             
             foreach($answer as $c) {
                 if ($c["id_competence_mere"] == null) {
-                    $comp[] = $c["nom"] => array(
+
+                    $comp[$c["nom"]] = array(
                         "id_competence" => $c["id_competence"],
                         "id_competence_mere" => $c["id_competence_mere"]
                     )
+
                 }
             }
 
