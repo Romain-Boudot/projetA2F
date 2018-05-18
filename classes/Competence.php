@@ -11,11 +11,9 @@ function tab_search($id, $tab) {
         if ($c["id_competence_mere"] == $id) {
 
             $comp[$c["nom"]] = array(
-                
                 "id_competence" => $c["id_competence"],
                 "id_competence_mere" => $c["id_competence_mere"],
-                "enfant" => tab_search($c["id_competence"], $tab);
-
+                "enfant" => tab_search($c["id_competence"], $tab)
             )
 
         }
