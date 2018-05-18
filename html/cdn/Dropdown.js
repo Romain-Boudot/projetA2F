@@ -9,7 +9,7 @@ class Dropdown {
         this.target = document.getElementById(target);
         this.status = status;
         this.toHide = toHide;
-        this.parent = parent;
+
         if (this.status == true) {
     
             this.show();
@@ -85,23 +85,6 @@ class Dropdown {
             if (this.parent != null) this.parent.update();
     
         }, 200);
-    
-    }
-
-    update() {
-    
-        
-        setTimeout(() => {
-            
-            if (this.status == true) {
-                console.log(this.target.style.height + "px", this.target.scrollHeight, this.target.clientHeight, this.target.offsetHeight);
-                
-                this.target.style.maxHeight = this.target.scrollHeight + "px";
-                if (this.parent != null) this.parent.update();
-                
-            }
-            
-        }, 300);
     
     }
 

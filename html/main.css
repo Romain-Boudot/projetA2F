@@ -1,0 +1,21 @@
+.mainContainer {
+    width: 300px;
+    border: 1px solid black;
+}
+
+.dropdownBack {
+    width: 100%;
+    overflow: hidden;
+    transition: 0.3s height ease;
+}
+
+.dropdownTrigger {
+    width: 100%;
+    background-color: rgba(255, 0, 0, 0.308);
+    cursor: pointer;
+}
+
+.dropdownContainer{
+    width: calc(100% - 10px);
+    padding-left: 10px;
+}
