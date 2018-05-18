@@ -10,7 +10,13 @@ function tab_search($id, $tab) {
 
         if ($c["id_competence_mere"] == $id) {
 
-            $comp[$c["nom"]] = tab_search($c["id"], $tab);
+            $comp[$c["nom"]] = array(
+                
+                "id_competence" => $c["id_competence"],
+                "id_competence_mere" => $c["id_competence_mere"],
+                "enfant" => tab_search($c["id_competence"], $tab);
+
+            )
 
         }
 
@@ -38,13 +44,11 @@ class Competence {
 
                 if ($c["id_competence_mere"] == null) {
 
-                    $comp[$c["nom"]] = tab_search($c["id"], $tab);
+                    $comp[$c["nom"]] = tab_search($c["id_competence"], $tab);
 
                 }
 
             }
-
-            foreach($comp)
 
             return $comp;
         
