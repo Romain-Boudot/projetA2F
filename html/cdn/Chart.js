@@ -4,10 +4,10 @@ class chartOption {
         this.chart = {
             "type":"radar",
             "data": {
-                "labels": ["coucou","prout","jesaispas"],
+                "labels": [],
                 "datasets":[
                     {
-                        "data": [1,2,3],
+                        "data": [],
                         "tension": 0,
                         "backgroundColor": "#4582cf88",
                         "borderColor": "#2f336f",
