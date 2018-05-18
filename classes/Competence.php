@@ -22,7 +22,7 @@ class Competence {
                     $comp[$c["nom"]] = array(
                         "id_competence" => $c["id_competence"],
                         "id_competence_mere" => $c["id_competence_mere"]
-                    )
+                    );
 
                 }
             }
