@@ -1,5 +1,7 @@
 <?php
 
+include_once "Database.php";
+
 class Competence {
 
     public function get_array($id = null) {
