@@ -225,6 +225,7 @@ ul>li {
     color: white;
     border-radius: 5px;
     padding: 5px 10px;
+    visibility: hidden;
     opacity: 0;
 }
 
@@ -240,6 +241,7 @@ ul>li {
 }
 
 #timeLine .line .point:hover .tooltip {
+    visibility: visible;
     opacity: 1;
     transition: 0.4s opacity ease;
 }
@@ -252,28 +254,28 @@ ul>li {
     left: 0;
 }
 
-#ongletIntContent .intervention {
+#oc1 .intervention {
     display: grid;
     grid-template-columns: 15% 15% 70%;
     grid-template-rows: auto;
     margin: 10px 0;
 }
 
-#ongletIntContent .intervention .infos:nth-child(1) {
+#oc1 .intervention .infos:nth-child(1) {
     grid-column: 1 / 2;
     grid-row: 1 / 2;
     padding: 10px;
     text-align: center;
 }
 
-#ongletIntContent .intervention .infos:nth-child(2) {
+#oc1 .intervention .infos:nth-child(2) {
     grid-column: 2 / 3;
     grid-row: 1 / 2;
     padding: 10px;
     text-align: center;
 }
 
-#ongletIntContent .intervention .details {
+#oc1 .intervention .details {
     grid-column: 3 / 4;
     grid-row: 1 / 2;
     padding: 10px;
@@ -291,41 +293,73 @@ hr {
     cursor: pointer;
 }
 
-#ongletQualContent ul>li {
-    width: calc(100% - 20px);
-    height: 20px;
-    margin: 3px 10px;
+#oc2 .qualification {
+    display: grid;
+    grid-template-columns: 15% 15% 70%;
+    grid-template-rows: auto;
+    margin: 10px 0;
 }
 
-#ongletQualContent ul>li>span:nth-child(1){
-    float: left;
+#oc2 .qualification .infos:nth-child(1) {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    padding: 10px;
+    text-align: center;
 }
 
-#ongletQualContent ul>li>span:nth-child(2) {
-    float: right;
+#oc2 .qualification .infos:nth-child(2) {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    padding: 10px;
+    text-align: center;
 }
 
-#ongletCompContent ul {
-    background-color: rgba(0, 0, 0, 0.144);
-    margin: 0;
-    padding: 0 0 0 20px;
-    height: 100%;
-    width: 100%;
-    transition: 0.3s height ease, 0.2s color ease, 0.3s max-height ease;
+#oc2 .qualification .details {
+    grid-column: 3 / 4;
+    grid-row: 1 / 2;
+    padding: 10px;
+}
+
+.mainContainer {
+    width: 300px;
+    border: 1px solid black;
+}
+
+.dropdownTrigger,
+.ongletTrigger {
     cursor: pointer;
+}
+
+.dropdownContainer,
+.ongletContainer {
+    width: 100%;
+    transition: 0.3s height ease, 0.2s color ease;
     overflow: hidden;
 }
 
-#ongletCompContent>ul {
-    padding: 0;
-    background-color: unset;
-    overflow: visible;
+.ongletContainer>.dropdownTrigger,
+.ongletContainer>.comp {
+    width: calc(100% - 10px);
+    padding: 5px 0 5px 10px;
 }
 
-#ongletCompContent li {
-    margin: 0;
+.ongletContainer>.dropdownContainer>.dropdownTrigger,
+.ongletContainer>.dropdownContainer>.comp {
+    width: calc(100% - 20px);
+    padding: 3px 0 3px 20px;
 }
 
-#ongletCompContent li>span:hover {
-    background-color: rgba(0, 0, 0, 0.144);
+.ongletContainer>.dropdownContainer>.dropdownContainer>.dropdownTrigger,
+.ongletContainer>.dropdownContainer>.dropdownContainer>.comp {
+    width: calc(100% - 30px);
+    padding: 3px 0 3px 30px;
+}
+
+.ongletContainer>.dropdownContainer>.dropdownContainer>.dropdownContainer>.comp {
+    width: calc(100% - 40px);
+    padding: 3px 0 3px 40px;
+}
+
+.dropdownContainer {
+    box-shadow: inset 0px 1px 0px 0px rgba(128, 128, 128, 0.445), inset 0px -1px 0px 0px rgba(128, 128, 128, 0.445);
 }
