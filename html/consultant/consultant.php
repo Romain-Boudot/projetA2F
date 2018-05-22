@@ -1,3 +1,8 @@
+<?php
+
+    
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -517,8 +522,8 @@
                 <canvas id="chart-p1" class="chartjs" width="200" height="200"></canvas>
                 <script>
                     var co1 = new chartOption();
-                    co1.chart.data.datasets[0].data = [3,2,3,2,1,3,1,2,3,2]
-                    co1.chart.data.labels = ["bonjour","hola","hello","test","test","test","test","test","test","test"]
+                    co1.chart.data.datasets[0].data = [3,2,3,2,1,3,1,2,3,2,2,3,2,1,3,1,2,3,2,2,3,2,1,3,1,2,3,2]
+                    co1.chart.data.labels = ["bonjour","hola","hello","test","test","test","test","test","test","test","hola","hello","test","test","test","test","test","test","test","hola","hello","test","test","test","test","test","test","test"]
                     new Chart(document.getElementById("chart-p1"), co1.option);
                 </script>
                 <canvas id="chart-p2" class="chartjs" width="200" height="200"></canvas>

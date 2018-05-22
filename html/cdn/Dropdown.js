@@ -21,14 +21,14 @@ class Dropdown {
 
                 if (c.style.height == "0px") {
 
-                    c.style.height = document.getElementById('ddc' + id).scrollHeight + "px";
+                    c.style.height = c.scrollHeight + "px";
                     setTimeout(() => {
                         c.style.height = "auto";
                     }, 300);
 
                 } else {
 
-                    c.style.height = document.getElementById('ddc' + id).scrollHeight + "px";
+                    c.style.height = c.scrollHeight + "px";
                     setTimeout(() => {
                         c.style.height = "0px";
                     }, 50);
