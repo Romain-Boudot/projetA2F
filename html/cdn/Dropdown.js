@@ -1,115 +1,129 @@
 class Dropdown {
 
-    // status = true -> show
-    // status = false -> hide
+    static load() {
 
-    constructor(trigger, target, status, parent = null, toHide = []) {
+        // --------- dropdown -----------
 
-        this.trigger = document.getElementById(trigger);
-        this.target = document.getElementById(target);
-        this.status = status;
-        this.toHide = toHide;
-        this.parent = parent;
+        var triggers = document.querySelectorAll(".dropdownTrigger")
 
-        if (this.status == true) {
-            this.show();
-        } else {
-            this.hideText();
-            this.hideDiv();
-        }
+        triggers.forEach(trigger => {
 
-    }
+            // close div.dropdownBack
+            document.getElementById("ddc" + trigger.id.slice(3)).style.height = "0px";
 
-    set toHideElem(toHide) {
-        this.toHide = toHide;
-    }
 
-    set statusVal(status) {
-        this.status = status;
-    }
+            trigger.addEventListener("click", (e) => {
 
-    get statusVal() {
-        return this.status;
-    }
+                // current id of the foreach 
+                let id = e.target.trigger.id.slice(3);
 
-    switch_status() {
-        if (this.status == true) {
-            this.hide();
-        } else if (this.status == false) {
-            this.show();
-        }
-    }
+                let c = document.getElementById("ddc" + id);
 
-    hideText() {
-        this.target.style.color = "rgba(0, 0, 0, 0)";
-    }
+                if (c.style.height == "0px") {
 
-    hideDiv() {
-        this.target.style.height = "0px";
-    }
+                    c.style.height = c.scrollHeight + "px";
+                    setTimeout(() => {
+                        c.style.height = "auto";
+                    }, 300);
 
-    hideColor() {
-        this.trigger.style.backgroundColor = "unset";
-    }
+                } else {
 
-    hide() {
-        this.status = false;
-        this.trigger.style.backgroundColor = "unset";
-        this.target.style.color = "rgba(0, 0, 0, 0)";
-        setTimeout(() => {
-            this.target.style.height = "0px";
-            if (this.parent != null) this.parent.update();
-        }, 200);
-    }
+                    c.style.height = c.scrollHeight + "px";
+                    setTimeout(() => {
+                        c.style.height = "0px";
+                    }, 50);
 
-    update() {
-        if (this.status == true) {
-            this.target.style.height = this.target.scrollHeight + "px";
-            if (this.parent != null) this.parent.update();
-        }
-    }
+                }
 
-    show() {
+            });
 
-        this.status = true;
-        this.trigger.style.backgroundColor = "rgba(0, 0, 0, 0.144)";
-        let check = false;
-        let timeout = 0;
-        this.toHide.forEach(elem => {
-
-            if (elem.statusVal) check++;
+            trigger.trigger = trigger;
 
         });
 
-        if (check > 0) {
+        // --------- onglet -----------        
 
-            this.toHide.forEach(elem => {
+        var triggers = document.querySelectorAll(".ongletTrigger")
 
-                elem.hideText();
-                elem.hideColor();
-                elem.statusVal = false;
+        triggers.forEach(trigger => {
+
+            // close div.ongletBack
+            console.log(trigger)
+            document.getElementById("oc" + trigger.id.slice(2)).style.height = "0px";
+            document.getElementById("oc" + trigger.id.slice(2)).style.color = "rgba(0, 0, 0, 0)";
+
+            trigger.addEventListener("click", (e) => {
+
+                // current id of the foreach 
+                let id = e.target.trigger.id.slice(2);
+
+                let c = document.getElementById("oc" + id);
+
+                if (c.style.height == "0px") {
+
+                    document.querySelectorAll(".ongletTrigger").forEach(trig => {
+
+                        if (trig != trigger) {
+                            trig.style.backgroundColor = "unset";
+                            document.getElementById("oc" + trig.id.slice(2)).style.color = "rgba(0, 0, 0, 0)";
+                        } else {
+                            trig.style.backgroundColor = "rgba(0, 0, 0, 0.144)";
+                        }
+
+                        setTimeout(() => {
+
+
+                            if (trig != trigger && document.getElementById("oc" + trig.id.slice(2)).style.height != "0px") {
+
+                                document.getElementById("oc" + trig.id.slice(2)).style.height = document.getElementById('oc' + trig.id.slice(2)).scrollHeight + "px";
+                                setTimeout(() => {
+                                    document.getElementById("oc" + trig.id.slice(2)).style.height = "0px";
+                                }, 50);
+
+                            } else {
+
+                                setTimeout(() => {
+
+                                    c.style.height = document.getElementById('oc' + id).scrollHeight + "px";
+
+                                    setTimeout(() => {
+
+                                        c.style.height = "auto";
+                                        c.style.color = "inherit";
+
+                                    }, 300);
+
+                                }, 50);
+
+                            }
+
+                        }, 150);
+
+                    })
+
+                } else {
+
+                    e.target.trigger.style.backgroundColor = "unset";
+                    c.style.color = "rgba(0, 0, 0, 0)";
+                    c.style.height = document.getElementById('oc' + id).scrollHeight + "px";
+
+                    setTimeout(() => {
+
+                        c.style.height = "0px";
+
+                    }, 150);
+
+                }
 
             });
 
-            timeout = 200;
-        }
+            trigger.trigger = trigger;
 
-        setTimeout(() => {
+        });
 
-            this.target.style.height = this.target.scrollHeight + "px";
-            this.toHide.forEach(elem => {
+    }
 
-                elem.hideDiv();
-
-            });
-            if (this.parent != null) this.parent.update();
-            setTimeout(() => {
-
-                this.target.style.color = "inherit";
-
-            }, 300);
-
-        }, timeout);
+    constructor() {
 
     }
 

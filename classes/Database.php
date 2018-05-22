@@ -34,7 +34,7 @@ class Database {
 
         }
 
-        $db = Database::connect()
+        $db = Database::connect();
 
         if ($db == false) return false;
 
