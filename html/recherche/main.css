@@ -1,0 +1,28 @@
+.main-wrapper {
+    position: relative;
+    top: 56px;
+    left: 0;
+    width: 100vw;
+    height: calc(100vh - 56px);
+}
+
+.search {
+    position: relative;
+    top: 15%;
+    left: 15%;
+    max-width: calc(70% - 60px);
+    max-height: calc(70% - 60px);
+    background-color: rgba(0, 0, 0, 0.144);
+    padding: 30px;
+    text-align: center;
+}
+
+.searchBar {
+    width: 70%;
+}
+
+input[type=text] {
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.144);
+    background-color: unset;
+}
