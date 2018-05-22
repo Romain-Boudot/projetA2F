@@ -5,6 +5,12 @@
     
     session_start();
 
+    $_SESSION["user"] = array(
+        'id' => 1,
+        'login' => 'elyo',
+        'type' => 2
+    );
+
     $id = $_SESSION['user']['id'];
 
     if (isset($_GET['id'])) {
@@ -12,6 +18,7 @@
     }
 
     $consultant = new Consultant($id);
+    
 
 ?>
 <!DOCTYPE html>
@@ -25,7 +32,7 @@
     <script src="/cdn/Chart.bundle.min.js"></script>
     <script src="/cdn/Chart.js"></script>
     <script src="/cdn/Dropdown.js"></script>
-    <title>Profile Consultant</title>
+    <title>A2F Advisor</title>
 </head>
 <body>
     <header>
@@ -36,23 +43,26 @@
             <div class="btn bold">Déconnexion</div>
         </div>
         <div class="header-right">
-            <div>Bienvenue, <span>romain.boudot</span></div>
+            <div>Bienvenue, <span><?php echo $_SESSION['user']['login']; ?></span></div>
         </div>
     </header>
     <nav>
         <div id="image-profile">
             <img src="/images/unknown.png" alt="profile image">
         </div>
-        <div class="profile-info bold">PÔLE DATABASE</div>
+        <div class="profile-info bold" style="text-transform: uppercase;">pôle <?php echo $consultant->get_nom_pole(); ?></div>
         <div class="hr"></div>
-        <div class="profile-info" data-info="prenom">Romain</div>
-        <div class="profile-info" data-info="nom">Boudot</div>
-        <div class="profile-info" data-info="email">romain.boudot@epsi.fr</div>
-        <div class="profile-info" data-info="telephone">06 01 02 01 03</div>
-        <div class="profile-info" data-info="linkedin">monlienverslinkedin</div>
-        <div class="hr"></div>
-        <div class="profile-info salaire"> salaire : 2.000€</div>
-
+        <div class="profile-info" data-info="prenom"><?php echo $consultant->get_prenom(); ?></div>
+        <div class="profile-info" data-info="nom"><?php echo $consultant->get_nom(); ?></div>
+        <div class="profile-info" data-info="email"><?php echo $consultant->get_email(); ?></div></div>
+        <div class="profile-info" data-info="telephone"><?php echo $consultant->get_telephone(); ?></div></div>
+        <div class="profile-info" data-info="linkedin"><?php echo $consultant->get_linkedin(); ?></div></div>
+        
+        <?php if ($type >= 1 || $_SESSION['user']['login'] == $consultant->get_login()) {?>
+            <div class="hr"></div>
+            <div class="profile-info salaire"> salaire : <?php echo $consultant->get_salaire(); ?>€</div></div>
+        <?php } ?>
+        
         <div class="bottom btn h-56 modif-profile bold">Modifier mon profil</div>
     </nav>
 

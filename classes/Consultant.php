@@ -16,9 +16,9 @@ Class Consultant {
     private $honoraires;
 
     public function __construct($id){
-        $pdo = Databtase::connect();
+        $pdo = Database::connect();
 
-        $statement = pdo->prepare("SELECT *,( SELECT nom_pole FROM poles WHERE id_pole = c.pole) AS nom_pole FROM consultants c WHERE c.id_consultant = :id");
+        $statement = $pdo->prepare("SELECT *,( SELECT nom_pole FROM poles WHERE id_pole = c.pole) AS nom_pole FROM consultants c WHERE c.id_consultant = :id");
         $statement->bindParam('id', $id);
         $statement->execute();
 
@@ -34,6 +34,8 @@ Class Consultant {
             $this->nom_pole = $infos['nom_pole'];
             $this->pole = $infos['pole'];
             $this->honoraires = $infos['honoraires'];
+            $this->login = $infos['login'];
+            $this->salaire = $infos['salaire'];
         } elseif(!$statement){
     
             //            header('location: ../search/');
@@ -48,7 +50,7 @@ Class Consultant {
         $pdo = Database::connect();
         
         $statement = $pdo->prepare("INSERT INTO consultants (nom, prenom, telephone, email, linkedin, pole, honoraires) VALUES (:nom, :prenom, :email, :linkedin, :pole, :honoraires)");
-        $statement->execute(array(':nom' => $infos['nom'], ':prenom' => $infos['prenom'], ':email' => $infos['email'], ':linkedin' => $infos['linkedin'], ':pole' => $infos['pole'], ':honoraires' => $infos['honoraires']);
+        $statement->execute(array(':nom' => $infos['nom'], ':prenom' => $infos['prenom'], ':email' => $infos['email'], ':linkedin' => $infos['linkedin'], ':pole' => $infos['pole'], ':honoraires' => $infos['honoraires']));
 
         $pdo = null;
     }
@@ -67,7 +69,7 @@ Class Consultant {
         $pdo = Database::connect();
 
         $statement = $pdo->prepare("DELETE FROM consultants WHERE id_consultant = :id");
-        $statement->bindParam('id', this->$id);
+        $statement->bindParam('id', $this->id);
         $statement->execute();
 
         $pdo = null;
@@ -143,7 +145,7 @@ Class Consultant {
         $pdo = Database::connect();
 
         $statement = $pdo->prepare("INSERT INTO interventions (id_consultant, id_client, date, details) VALUES (:id_consultant, :id_client, :date, :details)");
-        $statement->execute(array(':id_consultant' => $this->id, ':id_client' => $infos['id_client'], ':date' => $infos['date'], ':details' => $infos['details']);
+        $statement->execute(array(':id_consultant' => $this->id, ':id_client' => $infos['id_client'], ':date' => $infos['date'], ':details' => $infos['details']));
 
         $pdo =null;
     }
@@ -153,7 +155,7 @@ Class Consultant {
 
         $statement = $pdo->prepare("DELETE FROM interventions WHERE id_interventions = :id_intervention");
         $statement->bindParam('id_intervention', $id);
-       $statement->execute() 
+        $statement->execute();
 
     }
     
@@ -266,11 +268,16 @@ $pdo = null;
     }
 
     public function get_honoraires(){
-        return $this->honoraires:
+        return $this->honoraires;
     }
 
+    public function get_login() {
+        return $this->login;
+    }
 
-
+    public function get_salaire() {
+        return $this->salaire;
+    }
 
 }
 
