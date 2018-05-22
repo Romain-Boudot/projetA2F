@@ -11,6 +11,7 @@ Class Consultant {
     private $email;
     private $telephone;
     private $linkedin;
+    private $nom_pole;
     private $pole;
     private $honoraires;
 
@@ -30,7 +31,8 @@ Class Consultant {
             $this->telephone = $infos['telephone'];
             $this->email = $infos['email'];
             $this->linkedin = $infos['linkedin'];
-            $this->pole = $infos['nom_pole'];
+            $this->nom_pole = $infos['nom_pole'];
+            $this->pole = $infos['pole'];
             $this->honoraires = $infos['honoraires'];
         } elseif(!$statement){
     
@@ -257,6 +259,10 @@ $pdo = null;
 
     public function get_pole(){
         return $this->pole;
+    }
+
+    public function get_nom_pole(){
+        return $this->nom_pole;
     }
 
     public function get_honoraires(){
