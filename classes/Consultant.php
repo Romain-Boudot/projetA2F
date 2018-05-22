@@ -217,13 +217,20 @@ $pdo = null;
     }
 
     public function delete_graphique($number){
+        $pdo = Database::connect();
 
+        $statement = $pdo->prepare("DELETE FROM graphiques WHERE id_graphique = :id_graphique AND id_consultant = :id_consultant");
+        $statement->execute(array(':id_graphique' => $number, ':id_consultant' => $this->id));
+
+        $pdo = null;
     }
 
     public function edit_graphique($number, $infos){
 
-    }
+        $this->delete_graphique($number);
+        $this->add_graphique($number, $infos);
 
+    }
 
     public function get_nom(){
         return $this->nom;

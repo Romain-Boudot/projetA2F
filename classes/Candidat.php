@@ -108,7 +108,7 @@ class Candidat {
 
     public function transfer(){
 
-        //Consultant::add();
+        Consultant::add();
         delete();
     }
 
