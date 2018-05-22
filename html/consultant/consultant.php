@@ -1,6 +1,17 @@
 <?php
 
+    include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Database.php";
+    include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Consultant.php";
     
+    session_start();
+
+    $id = $_SESSION['user']['id'];
+
+    if (isset($_GET['id'])) {
+        $id = $_GET['id'];
+    }
+
+    $consultant = new Consultant($id);
 
 ?>
 <!DOCTYPE html>
