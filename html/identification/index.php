@@ -1,10 +1,10 @@
 <?php
 
-    if (isset($_POST["login"]) && isset($_POST["password"]) && isset($_POST["type"])) {
+    if (isset($_POST["login"]) && isset($_POST["password"])) {
 
         // password check
 
-        if ($_POST['type'] == 0 && $_POST['login'] == "A2F") {
+        if ($_POST['login'] == "A2Fco") {
 
             session_start();
             $_SESSION['user']['type'] = 0;
@@ -13,7 +13,7 @@
 
         }
 
-        if ($_POST['type'] == 1 && $_POST['login'] == "A2F") {
+        if ($_POST['login'] == "A2Fbm") {
 
             session_start();
             $_SESSION['user']['type'] = 1;
@@ -22,7 +22,7 @@
 
         }
 
-        if ($_POST['type'] == 2 && $_POST['login'] == "A2F") {
+        if ($_POST['login'] == "A2Frh") {
 
             session_start();
             $_SESSION['user']['type'] = 2;
@@ -52,19 +52,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/cdn/main.css">
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="/identification/main.css">
     <title>Connexion</title>
 </head>
 <body>
     
     <div class="login-wrapper">
 
-        <form action="http://<?php //echo $_SERVER['HTTP_HOST'];?>/identification" method="post">
-            <span>Consultant</span>
-            <input name="type" type="hidden" value="0">
-            <input name="login" type="text" placeholder="identifiant">
-            <input name="password" type="password" placeholder="mot de passe">
-            <input type="submit" value="Connexion">
+        <img src="/images/logo-a2f-blanc-02.svg" alt="logo a2f" height="60">
+
+        <form action="http://<?php echo $_SERVER['HTTP_HOST'];?>/identification" method="post">
+            <h3>Connexion</h3><br>
+            <input name="login" type="text" placeholder="identifiant"><br>
+            <input name="password" type="password" placeholder="mot de passe"><br>
+            <input type="submit" value="Se connecter">
         </form>
 
     </div>

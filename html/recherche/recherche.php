@@ -26,11 +26,27 @@
     <div class="main-wrapper">
 
         <div class="search">
-            
             <input type="text" class="searchBar" placeholder="nom consultant">
-            
-            
+            <label for="archive">
+                <input type="checkbox" name="archive" value="archive" id="archive">
+                <div for="archive" class="checkbox">✔</div>
+                archive
+            </label>
 
+            <div class="filterContainer">
+
+                <div class="btn">Selection des competences</div>
+
+                <div class="comp">test - 2 <div class="closeBtn">&times;</div></div>
+
+            </div>
+
+            <div class="filterContainer">
+
+                
+
+            </div>
+            
         </div>
         
     </div>
