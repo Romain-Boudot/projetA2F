@@ -48,7 +48,7 @@ class Candidat {
         $pdo = Database::connect();
 
         $delete_candidate = $pdo->prepare("DELETE FROM candidats WHERE id_candidat = :id");
-        $delete_candidate->bindParam('id', this->$id);
+        $delete_candidate->bindParam('id', $this->id);
         $delete_candidate->execute();
 
         $pdo = null:
@@ -61,42 +61,44 @@ class Candidat {
         if (isset($infos[':nom'])) {
             if (!$first) {
                 $statement .= ",";
-                $first = false;
             }
             $statement .= " nom = :nom";
+
+            $first = false;
         }
 
         if (isset($infos[':prenom'])) {
             if (!$first) {
                 $statement .= ",";
-                $first = false;
             }
             $statement .= " prenom = :prenom";
+            $first = false;
         }
 
         if (isset($infos[':telephone'])) {
             if (!$first) {
                 $statement .= ",";
-                $first = false;
             }
             $statement .= " telephone = :telephone";
+            $first = false;
         }
 
         if (isset($infos[':email'])) {
             if (!$first) {
                 $statement .= ",";
-                $first = false;
             }
             $statement .= " email = :email";
+            $first = false;
         }
         if (isset($infos[':linkedin'])) {
             if (!$first) {
                 $statement .= ",";
-                $first = false;
             }
             $statement .= " linkedin = :linkedin";
+            $first = false;
+
         }
-        $statement .= " WHERE id_candidat = ".this->$id;
+        $statement .= " WHERE id_candidat = ".$this->id;
         $edit_candidate = $pdo->prepare($statement);
         $edit_candidate->execute($infos);		
 
@@ -106,7 +108,7 @@ class Candidat {
 
     public function transfer(){
 
-        //Consultant::add();
+        Consultant::add();
         delete();
     }
 
@@ -193,29 +195,6 @@ class Candidat {
 
     public function get_linkedin(){
         return $this->linkedin;
-    }
-
-    public function set_nom($nom){
-        $this->nom = $nom;
-    }
-
-    public function set_prenom($prenom){
-        $this->prenom = $prenom;
-    }
-
-
-    public function set_email($email){
-        $this->email = $email;
-    }
-
-
-    public function set_telephone($telephone){
-        $this->telephone = $telephone;
-    }
-
-
-    public function set_linkedin($linkedin){
-        $this->linkedin = $linkedin;
     }
 
 
