@@ -1,5 +1,4 @@
 <?php
-    var_dump($_POST);
 
     if (isset($_POST["login"]) && isset($_POST["password"]) && isset($_POST["type"])) {
 
@@ -52,31 +51,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/cdn/main.css">
+    <link rel="stylesheet" href="main.css">
     <title>Connexion</title>
 </head>
 <body>
-    <form action="http://<?php echo $_SERVER['HTTP_HOST'];?>/identification" method="post">
-        <span>Consultant</span>
-        <input name="type" type="hidden" value="0">
-        <input name="login" type="text" placeholder="identifiant">
-        <input name="password" type="password" placeholder="mot de passe">
-        <input type="submit" value="Connexion">
-    </form>
-    <br>
-    <form action="http://<?php echo $_SERVER['HTTP_HOST'];?>/identification" method="post">
-        <span>business manager</span>
-        <input name="type" type="hidden" value="1">
-        <input name="login" type="text" placeholder="identifiant">
-        <input name="password" type="password" placeholder="mot de passe">
-        <input type="submit" value="Connexion">
-    </form>
-    <br>
-    <form action="http://<?php echo $_SERVER['HTTP_HOST'];?>/identification" method="post">
-        <span>ressources humaines</span>
-        <input name="type" type="hidden" value="2">
-        <input name="login" type="text" placeholder="identifiant">
-        <input name="password" type="password" placeholder="mot de passe">
-        <input type="submit" value="Connexion">
-    </form>
+    
+    <div class="login-wrapper">
+
+        <form action="http://<?php //echo $_SERVER['HTTP_HOST'];?>/identification" method="post">
+            <span>Consultant</span>
+            <input name="type" type="hidden" value="0">
+            <input name="login" type="text" placeholder="identifiant">
+            <input name="password" type="password" placeholder="mot de passe">
+            <input type="submit" value="Connexion">
+        </form>
+
+    </div>
+
 </body>
 </html>
+<!--
+<form action="http://<?php //echo $_SERVER['HTTP_HOST'];?>/identification" method="post">
+    <span>Consultant</span>
+    <input name="type" type="hidden" value="0">
+    <input name="login" type="text" placeholder="identifiant">
+    <input name="password" type="password" placeholder="mot de passe">
+    <input type="submit" value="Connexion">
+</form>
+<br>
+<form action="http://<?php //echo $_SERVER['HTTP_HOST'];?>/identification" method="post">
+    <span>business manager</span>
+    <input name="type" type="hidden" value="1">
+    <input name="login" type="text" placeholder="identifiant">
+    <input name="password" type="password" placeholder="mot de passe">
+    <input type="submit" value="Connexion">
+</form>
+<br>
+<form action="http://<?php //echo $_SERVER['HTTP_HOST'];?>/identification" method="post">
+    <span>ressources humaines</span>
+    <input name="type" type="hidden" value="2">
+    <input name="login" type="text" placeholder="identifiant">
+    <input name="password" type="password" placeholder="mot de passe">
+    <input type="submit" value="Connexion">
+</form> -->
