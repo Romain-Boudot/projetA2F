@@ -11,13 +11,14 @@ Class Consultant {
     private $email;
     private $telephone;
     private $linkedin;
+    private $nom_pole;
     private $pole;
     private $honoraires;
 
     public function __construct($id){
         $pdo = Databtase::connect();
 
-        $statement = pdo->prepare("SELECT * FROM consultants WHERE id = :id");
+        $statement = pdo->prepare("SELECT *,( SELECT nom_pole FROM poles WHERE id_pole = c.pole) AS nom_pole FROM consultants c WHERE c.id_consultant = :id");
         $statement->bindParam('id', $id);
         $statement->execute();
 
@@ -30,6 +31,7 @@ Class Consultant {
             $this->telephone = $infos['telephone'];
             $this->email = $infos['email'];
             $this->linkedin = $infos['linkedin'];
+            $this->nom_pole = $infos['nom_pole'];
             $this->pole = $infos['pole'];
             $this->honoraires = $infos['honoraires'];
         } elseif(!$statement){
@@ -257,6 +259,10 @@ $pdo = null;
 
     public function get_pole(){
         return $this->pole;
+    }
+
+    public function get_nom_pole(){
+        return $this->nom_pole;
     }
 
     public function get_honoraires(){
