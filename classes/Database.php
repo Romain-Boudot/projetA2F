@@ -18,54 +18,62 @@ class Database {
     
     }
 
-    public function login($type, $login, $password) {
-
-        if ($type = 0) {
-
-            $table = "consultant";
-
-        } elseif ($type = 1) {
-
-            $table = "BM";
-
-        } elseif ($type = 2) {
-
-            $table = "RH";
-
-        }
+    public function login($login, $password) {
 
         $db = Database::connect();
 
         if ($db == false) return false;
 
-        $statement = $db->prepare("SELECT * FROM " . $table . "where login = :login");
+        $statement = $db->prepare("SELECT * FROM consultants where login = :login AND mot_de_passe = :password");
         $statement->execute(array(
-            ":login" => $login
+            ":login" => $login,
+            ":password" => $password
         ));
 
         $answer = $statement->fetch();
 
 
-        // verification du identifiant + mdp
-
-        if ($answer == false) {
+        if ($answer == true) {
     
-            return false;
+            return true;
     
         } else {
     
-            if ($answer['mot_de_passe'] == $password) {
-    
-                return true;
-    
-            } else {
-    
-                return false;
-    
-            }
-    
+            $statement = $db->prepare("SELECT * FROM BM WHERE login = :login AND mot_de_passe = :password");
+            $statement->execute(array(
+                ":login" => $login,
+                ":password" => $password
+            ));
+
+            $answer = $statement->fetch();
         }
     
+        if ($answer == true) {
+    
+            return true;
+    
+        } else {
+    
+            $statement = $db->prepare("SELECT * FROM RH WHERE login = :login AND mot_de_passe = :password");
+            $statement->execute(array(
+                ":login" => $login,
+                ":password" => $password
+            ));
+
+            $answer = $statement->fetch();
+        }
+    
+        if ($answer == true) {
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+
+
     }
 
 }
