@@ -278,7 +278,7 @@ $pdo = null;
     public function get_salaire() {
         return $this->salaire;
     }
-
+    
 }
 
 
