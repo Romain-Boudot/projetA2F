@@ -4,14 +4,15 @@ class Database {
 
     //connection a la BDD
 
-    public function connect() {
+    static public function connect() {
 
         try {
 
-            return new PDO('mysql:host=localhost;dbname=projetA2F', 'userA2F', 'A2FBDD@2018!');
+            return new PDO('mysql:host=romainbdt.fr;dbname=projetA2F', 'userA2F', 'A2FBDD@2018!');
 
         } catch (Exception $e) {
 
+            echo $e;
             return false;
 
         }
