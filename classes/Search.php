@@ -5,7 +5,7 @@ Class Search {
     public static function search(){
         $pdo = Database::connect();
         $where = false;
-        $and
+        $i = 0;
 
 
         $statement = "SELECT * from consultants c JOIN interventions i ON i.id_consultant = c.id_consultant JOIN client cl ON cl.id_client=i.id_client ";
@@ -25,7 +25,15 @@ Class Search {
         if(isset($_GET){
             $statement .= " WHERE ";
 
+            foreach($_GET as $name => $value){
+                
+                if ($i != 0){
+                    $statement .= " AND ";
+                } 
+               
+                $statement .= " :getname = :value "
 
+            }
 
             
 
