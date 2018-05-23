@@ -1,3 +1,17 @@
+<?php
+
+include_once $_SERVER['DOCUMENT_ROOT'] . "/../classes/Database.php";
+include_once $_SERVER['DOCUMENT_ROOT'] . "/../classes/Competence.php";
+
+session_start();
+
+$_SESSION["user"] = array(
+    "login" => "romain.boudot",
+    "type" => 2,
+    "id" => 1
+)
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +22,7 @@
     <link rel="stylesheet" href="/cdn/main.css">
     <link rel="stylesheet" href="main.css">
     <script src="/cdn/Popup.js"></script>
+    <script src="/cdn/Dropdown.js"></script>
     <title>Recherche</title>
 </head>
 <body>
@@ -27,12 +42,25 @@
     <div class="main-wrapper">
 
         <div class="search">
-            <input type="text" class="searchBar" placeholder="nom consultant">
+            <input type="text" class="searchBar" placeholder="Entrez un nom (optionnel)">
+
+            <?php
+
+                if ($_SESSION['user']['type'] == 2) {
+
+            ?>
+
             <label for="archive">
                 <input type="checkbox" name="archive" value="archive" id="archive">
                 <div for="archive" class="checkbox">✔</div>
                 archive
             </label>
+
+            <?php
+
+                }
+
+            ?>
 
             <div class="filterGrid">
     
@@ -117,16 +145,81 @@
 
         <div class="compSelect">
             
-
             <div class="filterGrid">
 
-                <div class="filterGridLeft">
+                <div class="filterGridLeft borderRight compContainer">
 
-                    some sheet
+                    <?php
+
+                        $comp = Competence::get_array();
+
+                        function tab($tab, $cpt) {
+
+                            $html = array();
+
+                            ?>
+                                <div id="ddc<?php echo $cpt?>" class="dropdownContainer" >
+                            <?php
+
+                            $cpt += 1;
+                            
+                            foreach ($tab as $name => $value) {
+                                
+                                if ($value["enfant"] != null) {
+                                    
+                                    ?>
+                                        <div id="ddt<?php echo $cpt?>" class="dropdownTrigger"><?php echo $name; ?></div>
+                                    <?php
+                                    
+                                    $returned = tab($value["enfant"], $cpt);
+    
+                                    $cpt = $returned["cpt"];
+    
+                                } else {
+    
+                                    ?>
+                                        <div class="comp"><?php echo $name; ?></div>
+                                    <?php
+    
+                                }
+                                
+                            }
+
+                            ?>
+                                </div>
+                            <?php
+
+                            return array(
+                                "cpt" => $cpt
+                            );
+                        
+                        };
+
+                        foreach ($comp as $name => $value) {
+                        
+                            if ($value["enfant"] != null) {
+
+                                ?>
+                                    <div id="ddt<?php echo $cpt?>" class="dropdownTrigger" ><?php echo $name; ?></div>
+                                <?php
+                                
+                                $returned = tab($value["enfant"], $cpt);
+
+                                $cpt = $returned["cpt"];
+
+                            }
+
+                        }
+
+                    ?>
 
                 </div>
 
-                <div class="filterGridLeft">
+                <script>
+                    Dropdown.load();
+                </script>
+
+                <div class="filterGridRight">
 
                     some sheet
 
@@ -144,7 +237,7 @@
 
         <div class="clientSelect">
             ceci est un test
-            <div class="btn close" onclick="Popup.close('popupClient')">close</div>
+            <div style="height: 50px" class="btn close" onclick="Popup.close('popupClient')">close</div>
         </div>
 
     </div>

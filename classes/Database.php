@@ -8,7 +8,7 @@ class Database {
 
         try {
 
-            return new PDO('mysql:host=romainbdt;dbname=projetA2F', 'userA2F', 'A2FBDD@2018!');
+            return new PDO('mysql:host=romainbdt.fr;dbname=projetA2F', 'userA2F', 'A2FBDD@2018!');
 
         } catch (Exception $e) {
 

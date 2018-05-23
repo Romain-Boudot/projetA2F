@@ -18,8 +18,8 @@
     position: relative;
     top: 15%;
     left: 15%;
-    max-width: calc(70% - 60px);
-    max-height: calc(70% - 60px);
+    max-width: calc(70% - 80px);
+    max-height: calc(70% - 80px);
     background-color: rgba(0, 0, 0, 0.144);
     text-align: center;
 }
@@ -99,9 +99,10 @@ input[type=checkbox]:checked + .checkbox {
 .filterGrid {
     margin: 10px;
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 50% 50%;
     justify-items: stretch;
     align-items: stretch;
+    max-height: calc(100% - 50px);
 }
 
 .filterGrid>div {
@@ -110,6 +111,7 @@ input[type=checkbox]:checked + .checkbox {
 
 .filterGridLeft {
     grid-column: 1/2;
+    text-align: left;
 }
 
 .filterGridRight {
@@ -181,4 +183,47 @@ input[type=checkbox]:checked + .checkbox {
     margin: 2px;
     background-color: rgba(0, 0, 0, 0.050);
     cursor: default;
+}
+
+.dropdownTrigger,
+.ongletTrigger {
+    cursor: pointer;
+}
+
+.dropdownContainer {
+    width: 100%;
+    transition: 0.3s height ease, 0.2s color ease;
+    overflow: hidden;
+}
+
+.compContainer {
+    max-height: calc(calc(0.7 * calc(100vh - 56px)) - 120px); /* ici sa pue faut changer pour le bouton */
+    overflow: auto;
+}
+
+.compContainer>.dropdownTrigger,
+.compContainer>.comp {
+    width: calc(100% - 10px);
+    padding: 5px 0 5px 10px;
+}
+
+.compContainer>.dropdownContainer>.dropdownTrigger,
+.compContainer>.dropdownContainer>.comp {
+    width: calc(100% - 20px);
+    padding: 3px 0 3px 20px;
+}
+
+.compContainer>.dropdownContainer>.dropdownContainer>.dropdownTrigger,
+.compContainer>.dropdownContainer>.dropdownContainer>.comp {
+    width: calc(100% - 30px);
+    padding: 3px 0 3px 30px;
+}
+
+.compContainer>.dropdownContainer>.dropdownContainer>.dropdownContainer>.comp {
+    width: calc(100% - 40px);
+    padding: 3px 0 3px 40px;
+}
+
+.dropdownContainer {
+    box-shadow: inset 0px 0.9px 0px 0px rgba(128, 128, 128, 0.445), inset 0px -0.9px 0px 0px rgba(128, 128, 128, 0.445);
 }
