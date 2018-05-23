@@ -25,7 +25,7 @@ Class Consultant {
         $infos = $statement->fetch();
 
         if($statement){
-            $this->id = $infos['id'];
+            $this->id = $infos['id_consultant'];
             $this->nom = $infos['nom'];
             $this->prenom = $infos['prenom'];
             $this->telephone = $infos['telephone'];
@@ -274,7 +274,7 @@ $pdo = null;
     public function get_interventions(){ 
         $pdo = Database::connect(); 
 
-        $statement = $pdo->prepare("SELECT i.id_intervention, i.date, i.details, c.entreprise FROM interventions i JOIN clients c ON c.id_client = i.id_client WHERE id = :id"); 
+        $statement = $pdo->prepare("SELECT i.id_intervention, i.date, i.details, c.entreprise FROM interventions i JOIN clients c ON c.id_client = i.id_client WHERE id_consultant = :id"); 
         $statement->execute(array(":id" => $this->id)); 
 
 
@@ -319,7 +319,11 @@ $pdo = null;
     public function get_salaire() {
         return $this->salaire;
     }
-    
+
+    public function get_id() {
+        return $this->id;
+    }
+
 }
 
 

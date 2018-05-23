@@ -19,7 +19,6 @@
 
     $consultant = new Consultant($id);
     
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,7 +57,7 @@
         <div class="profile-info" data-info="telephone"><?php echo $consultant->get_telephone(); ?></div></div>
         <div class="profile-info" data-info="linkedin"><?php echo $consultant->get_linkedin(); ?></div></div>
         
-        <?php if ($type >= 1 || $_SESSION['user']['login'] == $consultant->get_login()) {?>
+        <?php if ($_SESSION['user']['type'] >= 1 || $_SESSION['user']['login'] == $consultant->get_login()) {?>
             <div class="hr"></div>
             <div class="profile-info salaire"> salaire : <?php echo $consultant->get_salaire(); ?>€</div></div>
         <?php } ?>
@@ -85,16 +84,15 @@
 
                     <?php
 
-                        $tab = $consultant->get_intervention();
-
+                        $tab = $consultant->get_interventions();
                         foreach ($tab as $int) {
                             ?>
 
                     <div class="hr"></div>
                     <div class="intervention">
-                        <div class="infos"><?php $int['i.date']; ?></div>
-                        <div class="infos"><?php $int['c.entreprise']; ?></div>
-                        <div class="details"><?php $int['i.details']; ?></div>
+                        <div class="infos"><?php echo $int['date']; ?></div>
+                        <div class="infos"><?php echo $int['entreprise']; ?></div>
+                        <div class="details"><?php echo $int['details']; ?></div>
                     </div>
 
                             <?php
