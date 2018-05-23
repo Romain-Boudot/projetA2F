@@ -271,6 +271,47 @@ $pdo = null;
         return $this->honoraires;
     }
 
+    public function get_interventions(){ 
+        $pdo = Database::connect(); 
+
+        $statement = $pdo->prepare("SELECT i.id_intervention, i.date, i.details, c.entreprise FROM interventions i JOIN clients c ON c.id_client = i.id_client WHERE id = :id"); 
+        $statement->execute(array(":id" => $this->id)); 
+
+
+        $pdo = null; 
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);    
+
+    } 
+
+    public function get_qualifications(){ 
+
+        $pdo = Database::connect(); 
+
+        $statement = $pdo->prepare("SELECT * FROM diplomes_obtenus WHERE id = :id"); 
+        $statement->execute(array(":id" => $this->id)); 
+
+        $pdo = null; 
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);    
+
+
+    } 
+
+
+    public function get_graphiques(){ 
+
+        $pdo = Database::connect(); 
+
+        $statement = $pdo->prepare("SELECT g.id_graphique, cc.id_competence, c.nom, cc.niveau from graphiques g JOIN competences c ON c.id_competence = g.id_competence JOIN competences_consultants cc ON cc.id_consultant = g.id_consultant WHERE g.id_consultant = :id_consultant"); 
+        $statement->execute(array(":id" => $this->id)); 
+
+        $pdo = null; 
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC); 
+
+    } 
+
     public function get_login() {
         return $this->login;
     }
