@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="/cdn/main.css">
     <link rel="stylesheet" href="main.css">
+    <script src="/cdn/Popup.js"></script>
     <title>Recherche</title>
 </head>
 <body>
@@ -95,7 +96,7 @@
                 
                 <div class="filterGridLarge borderTop">
                     
-                    <div class="btn fakeComp">Selection des competences</div>
+                    <div class="btn fakeComp" onclick="Popup.open('popupComp')">Selection des competences</div>
                     
                     <div class="comp">test - 2 <div class="closeBtn">&times;</div></div>
                     <div class="comp">test - 1 <div class="closeBtn">&times;</div></div>
@@ -110,6 +111,15 @@
             
         </div>
         
+    </div>
+
+    <div class="popup" id="popupComp">
+
+        <div class="compSelect">
+            ceci est un test
+            <div class="btn close" onclick="Popup.close('popupComp')">close</div>
+        </div>
+
     </div>
 
 </body>
