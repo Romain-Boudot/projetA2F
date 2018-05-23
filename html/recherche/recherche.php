@@ -83,7 +83,7 @@
                 
                 <div class="filterGridLarge borderTop">
 
-                    <div class="btn fakeComp">Selection des clients</div>
+                    <div class="btn fakeComp" onclick="Popup.open('popupClient')">Selection des clients</div>
                     
                     <div class="comp">test<div class="closeBtn">&times;</div></div>
                     <div class="comp">test<div class="closeBtn">&times;</div></div>
@@ -116,8 +116,35 @@
     <div class="popup" id="popupComp">
 
         <div class="compSelect">
-            ceci est un test
+            
+
+            <div class="filterGrid">
+
+                <div class="filterGridLeft">
+
+                    some sheet
+
+                </div>
+
+                <div class="filterGridLeft">
+
+                    some sheet
+
+                </div>
+
+            </div>
+
+
             <div class="btn close" onclick="Popup.close('popupComp')">close</div>
+        </div>
+
+    </div>
+
+    <div class="popup" id="popupClient">
+
+        <div class="clientSelect">
+            ceci est un test
+            <div class="btn close" onclick="Popup.close('popupClient')">close</div>
         </div>
 
     </div>
