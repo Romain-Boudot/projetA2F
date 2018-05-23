@@ -162,8 +162,8 @@ Class Consultant {
     public function add_qualification($infos){
         $pdo = Database::connect();
 
-        $statement = $pdo->prepare("INSERT INTO diplomes_obtenus (id_diplome,id_consultant, date_obtention) VALUES (:id_diplome, :id_consultant, :date_obtention)");
-        $statement->execute(array(':id_diplome' => $infos['id_diplome'], ':id_consultant' => $this->id, ':date_obtention' => $infos['date_obtention']));
+        $statement = $pdo->prepare("INSERT INTO qualifications (id_qualification, nom_qualification, id_consultant, date_obtention, details) VALUES (:id_qualification, :nom_qualification, :id_consultant, :date_obtention, :details)");
+        $statement->execute(array(':id_qualification' => $infos['id_qualification'], ':nom_qualification' => $infos['nom_qualification'], ':id_consultant' => $this->id, ':date_obtention' => $infos['date_obtention'], ':details' => $infos['details']));
 
         $pdo =null;
 
@@ -173,7 +173,7 @@ Class Consultant {
     public function delete_qualification($id){
         $pdo = Database::connect();
 
-        $statement = $pdo->prepare("DELETE FROM diplomes_obtenus WHERE id_diplome = :id_diplome AND id_consultant = :id_consultant");
+        $statement = $pdo->prepare("DELETE FROM qualifications WHERE id_diplome = :id_diplome AND id_consultant = :id_consultant");
         $statement->execute(array(':id_diplome' => $id, ':id_consultant' => $this->id));
 
         $pdo = null;
@@ -288,7 +288,7 @@ $pdo = null;
 
         $pdo = Database::connect(); 
 
-        $statement = $pdo->prepare("SELECT * FROM diplomes_obtenus WHERE id = :id"); 
+        $statement = $pdo->prepare("SELECT * FROM qualifications WHERE id_consultant = :id"); 
         $statement->execute(array(":id" => $this->id)); 
 
         $pdo = null; 
