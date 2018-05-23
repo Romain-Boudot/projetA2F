@@ -33,18 +33,79 @@
                 archive
             </label>
 
-            <div class="filterContainer">
+            <div class="filterGrid">
+    
+                <div class="filterGridLeft borderRight">
 
-                <div class="btn">Selection des competences</div>
+                    Pôles : <br>
+                    <label for="poleIndus" class="pole">
+                        <input type="checkbox" name="poleIndus" id="poleIndus">
+                        <div class="checkbox">✔</div>
+                        Indus
+                    </label>
+                    <label for="poleDatabase" class="pole">
+                        <input type="checkbox" name="poleDatabase" id="poleDatabase">
+                        <div class="checkbox">✔</div>
+                        Database
+                    </label>
+                    <label for="poleSi" class="pole">
+                        <input type="checkbox" name="poleSi" id="poleSi">
+                        <div class="checkbox">✔</div>
+                        Si
+                    </label>
 
-                <div class="comp">test - 2 <div class="closeBtn">&times;</div></div>
-
-            </div>
-
-            <div class="filterContainer">
-
+                </div>
                 
+                <div class="filterGridRight">
+                    Disponibilités :
+                    <label for="dispMtn" class="disp">
+                        <input type="checkbox" name="dispMtn" id="dispMtn">
+                        <div class="checkbox">✔</div>
+                        Maintenant
+                    </label>
+                    <label for="disp1M" class="disp">
+                        <input type="checkbox" name="disp1M" id="disp1M">
+                        <div class="checkbox">✔</div>
+                        Dans 1 mois
+                    </label> <br>
+                    <label for="disp2M" class="disp">
+                        <input type="checkbox" name="disp2M" id="disp2M">
+                        <div class="checkbox">✔</div>
+                        Dans 2 mois
+                    </label>
+                    <label for="disp3M" class="disp">
+                        <input type="checkbox" name="disp3M" id="disp3M">
+                        <div class="checkbox">✔</div>
+                        Dans 3 mois et plus
+                    </label>
+                </div>
+                
+                <div class="filterGridLarge borderTop">
 
+                    <div class="btn fakeComp">Selection des clients</div>
+                    
+                    <div class="comp">test<div class="closeBtn">&times;</div></div>
+                    <div class="comp">test<div class="closeBtn">&times;</div></div>
+                    <div class="comp">test<div class="closeBtn">&times;</div></div>
+                    <div class="comp">test<div class="closeBtn">&times;</div></div>
+                    <div class="comp">test<div class="closeBtn">&times;</div></div>
+                    <div class="comp">test<div class="closeBtn">&times;</div></div>
+
+                </div>
+                
+                <div class="filterGridLarge borderTop">
+                    
+                    <div class="btn fakeComp">Selection des competences</div>
+                    
+                    <div class="comp">test - 2 <div class="closeBtn">&times;</div></div>
+                    <div class="comp">test - 1 <div class="closeBtn">&times;</div></div>
+                    <div class="comp">test - 0 <div class="closeBtn">&times;</div></div>
+                    <div class="comp">test - 3 <div class="closeBtn">&times;</div></div>
+                    <div class="comp">test - 1 <div class="closeBtn">&times;</div></div>
+                    <div class="comp">test - 2 <div class="closeBtn">&times;</div></div>
+                    
+                </div>
+                
             </div>
             
         </div>

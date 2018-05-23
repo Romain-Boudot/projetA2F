@@ -79,3 +79,90 @@ input[type=checkbox]:checked + .checkbox {
     margin: 0 5px;
     cursor: pointer;
 }
+
+.filterGrid {
+    margin: 10px;
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-items: stretch;
+    align-items: stretch;
+}
+
+.filterGrid>div {
+    margin: 10px 0;
+}
+
+.filterGridLeft {
+    grid-column: 1/2;
+}
+
+.filterGridRight {
+    grid-column: 2/3;
+}
+
+.filterGridLarge {
+    grid-column: 1/3;
+}
+
+.borderRight,
+.borderBottom,
+.borderLeft,
+.borderTop {
+    position: relative;
+}
+
+.borderRight::after,
+.borderLeft::after,
+.borderTop::after,
+.borderBottom::after {
+    content: "";
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.144);
+}
+
+.borderBottom::after {
+    bottom: -10px;
+    width: 100%;
+    left: 0%;
+    height: 0.9px;
+}
+
+.borderTop::after {
+    top: -10px;
+    left: 0%;
+    width: 100%;
+    height: 0.9px;
+}
+
+.borderRight::after {
+    top: 5%;
+    right: 0;
+    width: 0.9px;
+    height: 90%;
+}
+
+.borderLeft::after {
+    top: 5%;
+    left: 0;
+    width: 0.9px;
+    height: 90%;
+}
+
+.comp {
+    padding: 2px;
+    margin: 2px;
+    border: 0.9px solid rgba(0, 0, 0, 0.144);
+}
+
+.fakeComp {
+    padding: 2.9px;
+    margin: 2px;
+}
+
+.pole,
+.disp {
+    padding: 2.9px;
+    margin: 2px;
+    background-color: rgba(0, 0, 0, 0.050);
+    cursor: default;
+}
