@@ -267,30 +267,81 @@
                     Dropdown.load();
 
                 </script>
-
+            
             </div>
+
             <div id="chart-wrapper">
+
+                <?php
+                
+                    $graph = $consultant->get_graphiques();
+                    $graphG = array(
+                        1 => array(
+                            "label" => "",
+                            "data" => "",
+                            "length" => 0
+                        ),
+                        2 => array(
+                            "label" => "",
+                            "data" => "",
+                            "length" => 0
+                        ),
+                        3 => array(
+                            "label" => "",
+                            "data" => "",
+                            "length" => 0
+                        )
+                    );
+                    foreach ($graph as $values) {
+                        if ($graphG[$values['id_graphique']]['length'] > 0) {
+                            $graphG[$values['id_graphique']]['label'] .= ",";
+                            $graphG[$values['id_graphique']]['data'] .= ",";
+                        }
+                        $graphG[$values['id_graphique']]['label'] .= "\"" . $values['nom'] . "\"";
+                        $graphG[$values['id_graphique']]['data'] .= $values['niveau'];
+                        $graphG[$values['id_graphique']]['length'] += 1;
+                        
+
+                    }  
+                    //var_dump($graphG);
+
+                if ($graphG[1]["length"] > 2) { ?>
+
                 <canvas id="chart-p1" class="chartjs" width="200" height="200"></canvas>
-                <script>
+                
+                <script>  
                     var co1 = new chartOption();
-                    co1.chart.data.datasets[0].data = [3,2,3,2,1,3,1,2,3,2,2,3,2,1,3,1,2,3,2,2,3,2,1,3,1,2,3,2]
-                    co1.chart.data.labels = ["bonjour","hola","hello","test","test","test","test","test","test","test","hola","hello","test","test","test","test","test","test","test","hola","hello","test","test","test","test","test","test","test"]
+                    co1.chart.data.datasets[0].data = [<?php echo $graphG[1]["data"]; ?>]
+                    co1.chart.data.labels = [<?php echo $graphG[1]["label"]; ?>]
                     new Chart(document.getElementById("chart-p1"), co1.option);
                 </script>
-                <canvas id="chart-p2" class="chartjs" width="200" height="200"></canvas>
-                <script>
+
+                <?php }
+                
+                if ($graphG[2]["length"] > 2) { ?>
+                
+                    <canvas id="chart-p2" class="chartjs" width="200" height="200"></canvas>
+                    <script>
                     var co2 = new chartOption();
-                    co2.chart.data.datasets[0].data = [1,2,1]
-                    co2.chart.data.labels = ["bonjour","hola","hello"]
+                    co2.chart.data.datasets[0].data = [<?php echo $graphG[2]["data"]; ?>]
+                    co2.chart.data.labels = [<?php echo $graphG[2]["length"]; ?>]
                     new Chart(document.getElementById("chart-p2"), co2.option);
-                </script>
-                <canvas id="chart-p3" class="chartjs" width="200" height="200"></canvas>
-                <script>
+                    </script>
+                
+                <?php }
+                
+                if ($graphG[2]["length"] > 2) { ?>
+
+                    <canvas id="chart-p3" class="chartjs" width="200" height="200"></canvas>
+                    <script>
                     var co3 = new chartOption();
-                    co3.chart.data.datasets[0].data = [3,2,1]
-                    co3.chart.data.labels = ["bonjour","hola","hello"]
+                    co3.chart.data.datasets[0].data = [<?php echo $graphG[3]["data"]; ?>]
+                    co3.chart.data.labels = [<?php echo $graphG[3]["length"]; ?>]
                     new Chart(document.getElementById("chart-p3"), co3.option);
                 </script>
+
+                <?php } ?>
+
             </div>
             <div id="timeLine">
                 <div class="line">

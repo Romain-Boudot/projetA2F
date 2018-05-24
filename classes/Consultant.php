@@ -303,7 +303,7 @@ $pdo = null;
 
         $pdo = Database::connect(); 
 
-        $statement = $pdo->prepare("SELECT g.id_graphique, cc.id_competence, c.nom, cc.niveau from graphiques g JOIN competences c ON c.id_competence = g.id_competence JOIN competences_consultants cc ON cc.id_consultant = g.id_consultant WHERE g.id_consultant = :id_consultant"); 
+        $statement = $pdo->prepare("SELECT g.id_graphique, g.id_competence, c.nom, cc.niveau from graphiques g JOIN competences c ON c.id_competence = g.id_competence JOIN competences_consultants cc ON cc.id_competence = g.id_competence WHERE g.id_consultant = :id"); 
         $statement->execute(array(":id" => $this->id)); 
 
         $pdo = null; 
