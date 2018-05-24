@@ -13,7 +13,6 @@
 }
 
 .search,
-.compSelect,
 .clientSelect {
     position: relative;
     top: 15%;
@@ -22,13 +21,13 @@
     max-height: calc(70% - 80px);
     background-color: rgba(0, 0, 0, 0.144);
     text-align: center;
+    overflow: auto;
 }
 
 .search {
     padding: 40px 40px 30px 40px;
 }
 
-.compSelect,
 .clientSelect {
     padding: 40px;
 }
@@ -94,6 +93,7 @@ input[type=checkbox]:checked + .checkbox {
     transform: scale(1.5);
     margin: 0 5px;
     cursor: pointer;
+    float: right;
 }
 
 .filterGrid {
@@ -111,7 +111,6 @@ input[type=checkbox]:checked + .checkbox {
 
 .filterGridLeft {
     grid-column: 1/2;
-    text-align: left;
 }
 
 .filterGridRight {
@@ -196,34 +195,108 @@ input[type=checkbox]:checked + .checkbox {
     overflow: hidden;
 }
 
-.compContainer {
-    max-height: calc(calc(0.7 * calc(100vh - 56px)) - 120px); /* ici sa pue faut changer pour le bouton */
-    overflow: auto;
+.compList .dropdownTrigger,
+.compList .competence {
+    width: calc(100% - 5px);
+    padding: 5px 0 5px 5px;
 }
 
-.compContainer>.dropdownTrigger,
-.compContainer>.comp {
-    width: calc(100% - 10px);
-    padding: 5px 0 5px 10px;
-}
-
-.compContainer>.dropdownContainer>.dropdownTrigger,
-.compContainer>.dropdownContainer>.comp {
-    width: calc(100% - 20px);
-    padding: 3px 0 3px 20px;
-}
-
-.compContainer>.dropdownContainer>.dropdownContainer>.dropdownTrigger,
-.compContainer>.dropdownContainer>.dropdownContainer>.comp {
-    width: calc(100% - 30px);
-    padding: 3px 0 3px 30px;
-}
-
-.compContainer>.dropdownContainer>.dropdownContainer>.dropdownContainer>.comp {
+.compList .dropdownContainer>.dropdownTrigger,
+.compList .dropdownContainer>.competence {
     width: calc(100% - 40px);
     padding: 3px 0 3px 40px;
 }
 
+.compList .dropdownContainer>.dropdownContainer>.dropdownTrigger,
+.compList .dropdownContainer>.dropdownContainer>.competence {
+    width: calc(100% - 80px);
+    padding: 3px 0 3px 80px;
+}
+
+.compList .dropdownContainer>.dropdownContainer>.dropdownContainer>.competence {
+    width: calc(100% - 120px);
+    padding: 3px 0 3px 120px;
+}
+
 .dropdownContainer {
     box-shadow: inset 0px 0.9px 0px 0px rgba(128, 128, 128, 0.445), inset 0px -0.9px 0px 0px rgba(128, 128, 128, 0.445);
+}
+
+.compSelectContainer {
+    width: 100%;
+    max-height: calc(100% - 50px);
+}
+
+.compList,
+.compListSelected {
+    text-align: left;
+    position: relative;
+    width: 100%;
+}
+
+.compList,
+.compListSelected,
+.clientList,
+.clientListSelected {
+    position: absolute;
+    top: 15%;
+    height: calc(70% - 105px);
+    width: calc(35% - 5px);
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.144);
+}
+
+.compList,
+.clientList {
+    left: 15%;
+}
+
+.compListContainer,
+.clientListContainer {
+    margin: 20px;
+    overflow: auto;
+    height: calc(100% - 40px);
+    width: calc(100% - 40px);
+}
+
+.compListSelected,
+.clientListSelected {
+    right: 15%;
+}
+
+.compSelectClose,
+.clientSelectClose {
+    height: 50px;
+    line-height: 50px;
+    display: inline-block;
+    position: absolute;
+    width: 300px;
+    top: calc(70% + 50px);
+    left: calc(50% - 150px);
+    text-align: center;
+}
+
+.competence,
+.client {
+    position: relative;
+    cursor: pointer;
+}
+
+.client {
+    margin-bottom: 5px;
+}
+
+.competence::after,
+.client::after {
+    content: "+";
+    font-weight: bolder;
+    margin-left: 10px;
+}
+
+.compSelected,
+.clientSelected {
+    border: 1px solid rgba(0, 0, 0, 0.144);
+    position: relative;
+    padding: 2px 5px;
+    margin-bottom: 5px;
 }
