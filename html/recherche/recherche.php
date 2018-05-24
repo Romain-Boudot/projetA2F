@@ -25,6 +25,7 @@ $_SESSION["user"] = array(
         <link rel="stylesheet" href="main.css">
         <script src="/cdn/Popup.js"></script>
         <script src="/cdn/Dropdown.js"></script>
+        <script src="/cdn/Search.js"></script>
         <title>Recherche</title>
     </head>
 
@@ -116,53 +117,15 @@ $_SESSION["user"] = array(
                             </label>
                         </div>
 
-                        <div class="filterGridLarge borderTop">
+                        <div class="filterGridLarge borderTop divClientList">
 
                             <div class="btn fakeComp" onclick="Popup.open('popupClient')">Selection des clients</div>
 
-                            <div class="comp">test
-                                <div class="closeBtn">&times;</div>
-                            </div>
-                            <div class="comp">test
-                                <div class="closeBtn">&times;</div>
-                            </div>
-                            <div class="comp">test
-                                <div class="closeBtn">&times;</div>
-                            </div>
-                            <div class="comp">test
-                                <div class="closeBtn">&times;</div>
-                            </div>
-                            <div class="comp">test
-                                <div class="closeBtn">&times;</div>
-                            </div>
-                            <div class="comp">test
-                                <div class="closeBtn">&times;</div>
-                            </div>
-
                         </div>
 
-                        <div class="filterGridLarge borderTop">
+                        <div class="filterGridLarge borderTop divCompList">
 
                             <div class="btn fakeComp" onclick="Popup.open('popupComp')">Selection des competences</div>
-
-                            <div class="comp">test - 2
-                                <div class="closeBtn">&times;</div>
-                            </div>
-                            <div class="comp">test - 1
-                                <div class="closeBtn">&times;</div>
-                            </div>
-                            <div class="comp">test - 0
-                                <div class="closeBtn">&times;</div>
-                            </div>
-                            <div class="comp">test - 3
-                                <div class="closeBtn">&times;</div>
-                            </div>
-                            <div class="comp">test - 1
-                                <div class="closeBtn">&times;</div>
-                            </div>
-                            <div class="comp">test - 2
-                                <div class="closeBtn">&times;</div>
-                            </div>
 
                         </div>
 
@@ -213,7 +176,7 @@ $_SESSION["user"] = array(
 
                             ?>
 
-                                <div class="competence">
+                                <div data-name="<?php echo $name; ?>" data-id="<?php echo $value["id_competence"]; ?>" class="competence">
                                     <?php echo $name; ?>
                                 </div>
 
@@ -263,26 +226,7 @@ $_SESSION["user"] = array(
 
         <div class="compListSelected">
 
-            <div class="compListContainer">
-
-                <div class="compSelected">test
-                    <div class="closeBtn">&times;</div>
-                </div>
-                <div class="compSelected">test
-                    <div class="closeBtn">&times;</div>
-                </div>
-                <div class="compSelected">test
-                    <div class="closeBtn">&times;</div>
-                </div>
-                <div class="compSelected">test
-                    <div class="closeBtn">&times;</div>
-                </div>
-                <div class="compSelected">test
-                    <div class="closeBtn">&times;</div>
-                </div>
-                <div class="compSelected">test
-                    <div class="closeBtn">&times;</div>
-                </div>
+            <div class="compListContainer divCompListS">
 
             </div>
 
@@ -306,7 +250,7 @@ $_SESSION["user"] = array(
 
                         ?>
 
-                        <div data-id="<?php echo $client[" id_client "] ?>" class="client">
+                        <div data-name="<?php echo $client["entreprise"] ?>" data-id="<?php echo $client["id_client"]; ?>" class="client">
                             <?php echo $client["entreprise"] ?>
                         </div>
 
@@ -322,26 +266,7 @@ $_SESSION["user"] = array(
 
         <div class="clientListSelected">
 
-            <div class="clientListContainer">
-
-                <div class="clientSelected">test
-                    <div class="closeBtn">&times;</div>
-                </div>
-                <div class="clientSelected">test
-                    <div class="closeBtn">&times;</div>
-                </div>
-                <div class="clientSelected">test
-                    <div class="closeBtn">&times;</div>
-                </div>
-                <div class="clientSelected">test
-                    <div class="closeBtn">&times;</div>
-                </div>
-                <div class="clientSelected">test
-                    <div class="closeBtn">&times;</div>
-                </div>
-                <div class="clientSelected">test
-                    <div class="closeBtn">&times;</div>
-                </div>
+            <div class="clientListContainer divClientListS">
 
             </div>
 
@@ -350,6 +275,10 @@ $_SESSION["user"] = array(
         <div class="clientSelectClose btn close" onclick="Popup.close('popupClient')">Valider</div>
 
     </div>
+
+    <script>
+    var search = new Search();
+    </script>
 
 </body>
 
