@@ -140,6 +140,9 @@ Class Search {
         }
 
 
+                $bindparam[":bp" . $bindparamcpt] = $value;
+                $bindparam[":bp" . ($bindparamcpt + 1)] = $array["competences"]["niveau"][$key];
+                $bindparamcpt += 2;
 
         if(isset($array["consultant"])){
             if(sizeof($array["consultant"]) > 0){
@@ -169,6 +172,8 @@ Class Search {
                 }
             }
         }
+        var_dump($statement);
+ //       $query->fetchAll();
 
         $statement .= " GROUP BY c.id_consultant";
 
