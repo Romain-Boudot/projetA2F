@@ -39,7 +39,7 @@
             <img id="logo-a2f" src="/images/logo-a2f-blanc-02.svg" height="46">
         </div>
         <div class="header-right">
-            <div class="btn bold">Déconnexion</div>
+            <div class="btn bold" onclick="location.href='http://<?php echo $_SERVER['HTTP_HOST']; ?>'">Déconnexion</div>
         </div>
         <div class="header-right">
             <div>Bienvenue, <span><?php echo $_SESSION['user']['login']; ?></span></div>
@@ -119,62 +119,27 @@
                         </div>
                     </div>
 
+                    <?php           
+                    
+                    $tab = $consultant->get_qualifications();
+                    foreach ($tab as $int) {
+                    
+                        ?>
 
                     <div class="hr"></div>
                     <div class="qualification">
-                        <div class="infos">
-                            DES QUALIFICATION DE QUALITE
-                        </div>
-                        <div class="infos">
-                            15 mai 2018
-                        </div>
-                        <div class="details">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit.                                
-                        </div>
-                    </div>
+                        <div class="infos"><?php echo $int['nom_qualification']; ?></div>
+                        <div class="infos"><?php echo $int['date_obtention']; ?></div>
+                        <div class="details"><?php echo $int['details']; ?></div>
+                    </div>   
 
-
-                    <div class="hr"></div>
-                    <div class="qualification">
-                        <div class="infos">
-                            chasse a l'autruche
-                        </div>
-                        <div class="infos">
-                            11 juin 2013
-                        </div>
-                        <div class="details">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit.                                
-                        </div>
-                    </div>
-
-                    <div class="hr"></div>
-                    <div class="qualification">
-                        <div class="infos">
-                            peche a la ligne
-                        </div>
-                        <div class="infos">
-                            28 février 2001
-                        </div>
-                        <div class="details">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit.                                
-                        </div>
-                    </div>
-                    <div class="hr"></div>
-                    <div class="qualification">
-                        <div class="infos">
-                            elevage de bovin
-                        </div>
-                        <div class="infos">
-                            18 septembre 1952
-                        </div>
-                        <div class="details">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit.                                
-                        </div>
-                    </div>
+                            <?php
+                        }
+                    ?>           
+                    
                 </div>
                 <div id="oc3" class="onglet ongletContainer">
                     <?php
-
                         
 
                         $cpt = 0;
