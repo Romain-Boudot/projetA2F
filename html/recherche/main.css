@@ -165,7 +165,8 @@ input[type=checkbox]:checked + .checkbox {
     height: 90%;
 }
 
-.comp {
+.competenceS,
+.clientS {
     padding: 2px;
     margin: 2px;
     border: 0.9px solid rgba(0, 0, 0, 0.144);
@@ -299,4 +300,21 @@ input[type=checkbox]:checked + .checkbox {
     position: relative;
     padding: 2px 5px;
     margin-bottom: 5px;
+}
+
+select {
+    overflow: hidden;
+    padding: 0px 0 !important;
+    font-family: inherit;
+    height: 20px;
+    line-height: 20px;
+    /* width: 3.5em; */
+    border: none;
+    box-shadow: none;
+    background-image: none;
+    -webkit-appearance: none;
+}
+
+select:focus {
+    outline: none;
 }
