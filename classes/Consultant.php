@@ -16,16 +16,16 @@ Class Consultant {
     private $honoraires;
 
     public function __construct($id){
-        $pdo = Databtase::connect();
+        $pdo = Database::connect();
 
-        $statement = pdo->prepare("SELECT *,( SELECT nom_pole FROM poles WHERE id_pole = c.pole) AS nom_pole FROM consultants c WHERE c.id_consultant = :id");
+        $statement = $pdo->prepare("SELECT *,( SELECT nom_pole FROM poles WHERE id_pole = c.pole) AS nom_pole FROM consultants c WHERE c.id_consultant = :id");
         $statement->bindParam('id', $id);
         $statement->execute();
 
         $infos = $statement->fetch();
 
         if($statement){
-            $this->id = $infos['id'];
+            $this->id = $infos['id_consultant'];
             $this->nom = $infos['nom'];
             $this->prenom = $infos['prenom'];
             $this->telephone = $infos['telephone'];
@@ -34,6 +34,8 @@ Class Consultant {
             $this->nom_pole = $infos['nom_pole'];
             $this->pole = $infos['pole'];
             $this->honoraires = $infos['honoraires'];
+            $this->login = $infos['login'];
+            $this->salaire = $infos['salaire'];
         } elseif(!$statement){
     
             //            header('location: ../search/');
@@ -48,7 +50,7 @@ Class Consultant {
         $pdo = Database::connect();
         
         $statement = $pdo->prepare("INSERT INTO consultants (nom, prenom, telephone, email, linkedin, pole, honoraires) VALUES (:nom, :prenom, :email, :linkedin, :pole, :honoraires)");
-        $statement->execute(array(':nom' => $infos['nom'], ':prenom' => $infos['prenom'], ':email' => $infos['email'], ':linkedin' => $infos['linkedin'], ':pole' => $infos['pole'], ':honoraires' => $infos['honoraires']);
+        $statement->execute(array(':nom' => $infos['nom'], ':prenom' => $infos['prenom'], ':email' => $infos['email'], ':linkedin' => $infos['linkedin'], ':pole' => $infos['pole'], ':honoraires' => $infos['honoraires']));
 
         $pdo = null;
     }
@@ -67,7 +69,7 @@ Class Consultant {
         $pdo = Database::connect();
 
         $statement = $pdo->prepare("DELETE FROM consultants WHERE id_consultant = :id");
-        $statement->bindParam('id', this->$id);
+        $statement->bindParam('id', $this->id);
         $statement->execute();
 
         $pdo = null;
@@ -143,7 +145,7 @@ Class Consultant {
         $pdo = Database::connect();
 
         $statement = $pdo->prepare("INSERT INTO interventions (id_consultant, id_client, date, details) VALUES (:id_consultant, :id_client, :date, :details)");
-        $statement->execute(array(':id_consultant' => $this->id, ':id_client' => $infos['id_client'], ':date' => $infos['date'], ':details' => $infos['details']);
+        $statement->execute(array(':id_consultant' => $this->id, ':id_client' => $infos['id_client'], ':date' => $infos['date'], ':details' => $infos['details']));
 
         $pdo =null;
     }
@@ -153,15 +155,15 @@ Class Consultant {
 
         $statement = $pdo->prepare("DELETE FROM interventions WHERE id_interventions = :id_intervention");
         $statement->bindParam('id_intervention', $id);
-       $statement->execute() 
+        $statement->execute();
 
     }
     
     public function add_qualification($infos){
         $pdo = Database::connect();
 
-        $statement = $pdo->prepare("INSERT INTO diplomes_obtenus (id_diplome,id_consultant, date_obtention) VALUES (:id_diplome, :id_consultant, :date_obtention)");
-        $statement->execute(array(':id_diplome' => $infos['id_diplome'], ':id_consultant' => $this->id, ':date_obtention' => $infos['date_obtention']));
+        $statement = $pdo->prepare("INSERT INTO qualifications (id_qualification, nom_qualification, id_consultant, date_obtention, details) VALUES (:id_qualification, :nom_qualification, :id_consultant, :date_obtention, :details)");
+        $statement->execute(array(':id_qualification' => $infos['id_qualification'], ':nom_qualification' => $infos['nom_qualification'], ':id_consultant' => $this->id, ':date_obtention' => $infos['date_obtention'], ':details' => $infos['details']));
 
         $pdo =null;
 
@@ -171,7 +173,7 @@ Class Consultant {
     public function delete_qualification($id){
         $pdo = Database::connect();
 
-        $statement = $pdo->prepare("DELETE FROM diplomes_obtenus WHERE id_diplome = :id_diplome AND id_consultant = :id_consultant");
+        $statement = $pdo->prepare("DELETE FROM qualifications WHERE id_diplome = :id_diplome AND id_consultant = :id_consultant");
         $statement->execute(array(':id_diplome' => $id, ':id_consultant' => $this->id));
 
         $pdo = null;
@@ -266,11 +268,61 @@ $pdo = null;
     }
 
     public function get_honoraires(){
-        return $this->honoraires:
+        return $this->honoraires;
     }
 
+    public function get_interventions(){ 
+        $pdo = Database::connect(); 
+
+        $statement = $pdo->prepare("SELECT i.id_intervention, i.date, i.details, c.entreprise FROM interventions i JOIN clients c ON c.id_client = i.id_client WHERE id_consultant = :id"); 
+        $statement->execute(array(":id" => $this->id)); 
 
 
+        $pdo = null; 
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);    
+
+    } 
+
+    public function get_qualifications(){ 
+
+        $pdo = Database::connect(); 
+
+        $statement = $pdo->prepare("SELECT * FROM qualifications WHERE id_consultant = :id"); 
+        $statement->execute(array(":id" => $this->id)); 
+
+        $pdo = null; 
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);    
+
+
+    } 
+
+
+    public function get_graphiques(){ 
+
+        $pdo = Database::connect(); 
+
+        $statement = $pdo->prepare("SELECT g.id_graphique, g.id_competence, c.nom, cc.niveau from graphiques g JOIN competences c ON c.id_competence = g.id_competence JOIN competences_consultants cc ON cc.id_competence = g.id_competence WHERE g.id_consultant = :id"); 
+        $statement->execute(array(":id" => $this->id)); 
+
+        $pdo = null; 
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC); 
+
+    } 
+
+    public function get_login() {
+        return $this->login;
+    }
+
+    public function get_salaire() {
+        return $this->salaire;
+    }
+
+    public function get_id() {
+        return $this->id;
+    }
 
 }
 

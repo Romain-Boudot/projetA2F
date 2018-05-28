@@ -4,7 +4,8 @@ class Database {
 
     //connection a la BDD
 
-   static public function connect() {
+    static public function connect() {
+
 
         try {
 
@@ -12,6 +13,7 @@ class Database {
 
         } catch (Exception $e) {
 
+            echo $e;
             return false;
 
         }
