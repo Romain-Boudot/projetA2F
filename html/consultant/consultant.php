@@ -34,17 +34,7 @@
     <title>A2F Advisor</title>
 </head>
 <body>
-    <header>
-        <div class="header-left">
-            <img id="logo-a2f" src="/images/logo-a2f-blanc-02.svg" height="46">
-        </div>
-        <div class="header-right">
-            <div class="btn bold" onclick="location.href='http://<?php echo $_SERVER['HTTP_HOST']; ?>'">Déconnexion</div>
-        </div>
-        <div class="header-right">
-            <div>Bienvenue, <span><?php echo $_SESSION['user']['login']; ?></span></div>
-        </div>
-    </header>
+    <?php include $_SERVER["DOCUMENT_ROOT"] . "/../includes/header.php" ?>
     <nav>
         <div id="image-profile">
             <img src="/images/unknown.png" alt="profile image">
