@@ -1,0 +1,38 @@
+body {
+    height: 100vh;
+    width: 100vw;
+}
+.login-wrapper {
+    width: 400px;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.144);
+    top: 10%;
+    left: calc(50% - 200px);
+    padding: 20px;
+    text-align: center;
+}
+
+.login-wrapper * {
+    display: inline-block;
+}
+
+form {
+    width: 70%;
+}
+
+input[type=text],
+input[type=password] {
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.144);
+    background-color: unset;
+    width: 100%;
+    margin: 5px;
+}
+
+input[type=submit] {
+    border: none;
+    background: grey;
+    border-radius: 3px;
+    padding: 10px 15px;
+    margin: 5px;
+}
