@@ -167,10 +167,10 @@ Class Search {
                 }
             }
         }
+
+        $statement .= " GROUP BY c.id_consultant ORDER BY c.nom";
+
         var_dump($statement);
-
-        $statement .= " GROUP BY c.id_consultant";
-
         $query = $pdo->prepare($statement);
         $query->execute($bindparam);
        $result = $query->fetchAll(PDO::FETCH_ASSOC);
