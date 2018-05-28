@@ -31,19 +31,7 @@ $_SESSION["user"] = array(
 
 <body>
 
-    <header>
-        <div class="header-left">
-            <img id="logo-a2f" src="/images/logo-a2f-blanc-02.svg" height="46">
-        </div>
-        <div class="header-right">
-            <div class="btn bold">Déconnexion</div>
-        </div>
-        <div class="header-right">
-            <div>Bienvenue,
-                <span>romain.boudot</span>
-            </div>
-        </div>
-    </header>
+    <?php include $_SERVER["DOCUMENT_ROOT"] . "/../includes/header.php" ?>
 
     <div class="main-wrapper">
 

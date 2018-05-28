@@ -1,33 +1,10 @@
 <?php
 
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/../classes/Databse.php";
+
     if (isset($_POST["login"]) && isset($_POST["password"])) {
 
-        // password check
 
-        if ($_POST['login'] == "A2Fco") {
-
-            session_start();
-            $_SESSION['user']['type'] = 0;
-            $_SESSION['user']['id'] = 0;
-            $_SESSION['user']['connected'] = true;
-
-        }
-
-        if ($_POST['login'] == "A2Fbm") {
-
-            session_start();
-            $_SESSION['user']['type'] = 1;
-            $_SESSION['user']['id'] = 1;
-            $_SESSION['user']['connected'] = true;
-
-        }
-
-        if ($_POST['login'] == "A2Frh") {
-
-            session_start();
-            $_SESSION['user']['type'] = 2;
-            $_SESSION['user']['id'] = 2;
-            $_SESSION['user']['connected'] = true;
 
         }
 
