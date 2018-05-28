@@ -34,7 +34,9 @@
     <title>A2F Advisor</title>
 </head>
 <body>
+
     <?php include $_SERVER["DOCUMENT_ROOT"] . "/../includes/header.php" ?>
+    
     <nav>
         <div id="image-profile">
             <img src="/images/unknown.png" alt="profile image">

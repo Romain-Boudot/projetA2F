@@ -4,26 +4,18 @@
 
     if (isset($_POST["login"]) && isset($_POST["password"])) {
 
+        if (Databse::login($_POST["login"], $_POST["password"])) {
 
+            header('location: http://' . $_SERVER['HTTP_HOST']);
 
         }
-
-        if (isset($_SESSION['user']['connected'])) {
-
-            if ($_SESSION['user']['connected'] == true) {
-
-                header('location: http://' . $_SERVER['HTTP_HOST']);
-
-            }
-
-        } 
 
     }
 
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
