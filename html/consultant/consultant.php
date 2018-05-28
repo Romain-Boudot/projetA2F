@@ -7,7 +7,7 @@
 
     $_SESSION["user"] = array(
         'id' => 1,
-        'login' => 'elyo',
+        'login' => 'Jean-Didz',
         'type' => 2
     );
 
@@ -62,7 +62,8 @@
             <div class="profile-info salaire"> salaire : <?php echo $consultant->get_salaire(); ?>€</div></div>
         <?php } ?>
         
-        <div class="bottom btn h-56 modif-profile bold">Modifier mon profil</div>
+        <div class="bottom btn h-56 modif-profile bold" 
+                onclick="location.href='#; ?>'">Modifier mon profil</div>
     </nav>
 
     <div class="main-wrapper">
