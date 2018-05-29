@@ -173,16 +173,11 @@ Class Search {
         var_dump($statement);
         $query = $pdo->prepare($statement);
         $query->execute($bindparam);
-       $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
        
 
-return $result;        
+        return $result;        
         var_dump($bindparam);
     } 
 
 }
-
-
-
-
-
