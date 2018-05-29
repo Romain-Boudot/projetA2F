@@ -21,7 +21,7 @@ Class Search {
         }
 
         if(isset($array['competences'])){
-            if (sizeof($array['competences']) > 0){           
+            if ((sizeof($array['competences']['id_competence']) > 0) && (sizeof($array['competences']['niveau']) > 0)){           
                 if ($where == 0) {
                     $statement .= " WHERE ";
                     $where = 1;
@@ -49,39 +49,39 @@ Class Search {
 
         if(isset($array["poles"])){
 
-                  if(sizeof($array["poles"]) > 0){
+            if(sizeof($array["poles"]["id_pole"]) > 0){
 
-            if ($where == 0) {
-                $statement .= " WHERE ";
-                $where = 1;
-            } else{
-                $statement .= " AND ";
-                $where = 1;
-            }
-
-            foreach($array["poles"]["id_pole"] as $key => $value){
-
-                if ($where != 0) {
-                    if ($where == 1) {
-                        $where = 2;
-                    } else {
-                        $statement .= " OR ";
-                    }
+                if ($where == 0) {
+                    $statement .= " WHERE ";
+                    $where = 1;
+                } else{
+                    $statement .= " AND ";
+                    $where = 1;
                 }
-                $statement .= " c.pole = :bp" . $bindparamcpt . " ";
 
-                $bindparam[":bp" . $bindparamcpt] = $value;
+                foreach($array["poles"]["id_pole"] as $key => $value){
 
-                $bindparamcpt ++ ;
+                    if ($where != 0) {
+                        if ($where == 1) {
+                            $where = 2;
+                        } else {
+                            $statement .= " OR ";
+                        }
+                    }
+                    $statement .= " c.pole = :bp" . $bindparamcpt . " ";
+
+                    $bindparam[":bp" . $bindparamcpt] = $value;
+
+                    $bindparamcpt ++ ;
 
 
+                }
             }
-             }
-             
+
         }
                
         if(isset($array["disponibilites"])){
-            if(sizeof($array["disponibilites"]) > 0){
+            if(sizeof($array["disponibilites"]["id_disponibilite"]) > 0){
 
                 if ($where == 0) {
                     $statement .= " WHERE ";
@@ -111,7 +111,7 @@ Class Search {
 
 
         if(isset($array["clients"])){
-            if(sizeof($array["clients"]) > 0){
+            if(sizeof($array["clients"]["id_client"]) > 0){
 
                 if ($where == 0) {
                     $statement .= " WHERE ";
@@ -180,6 +180,57 @@ return $result;
         var_dump($bindparam);
     } 
 
+    static public function show_graph($id_post){
+
+        
+        ini_set('display_errors', 1);
+        ini_set('display_startup_errors', 1);
+        error_reporting(E_ALL);
+
+
+        $pdo = Database::connect();
+
+        $first_level_check = $pdo->prepare("SELECT id_competence FROM competences WHERE id_competence_mere = :id_comp_mere");
+        $first_level_check->execute(array(":id_comp_mere" => $id_post));
+
+        $check = $first_level_check->fetchAll(PDO::FETCH_ASSOC);
+
+        if(sizeof($check) > 0){         
+            foreach ($check as $numero => $array){
+                foreach($array as $key => $value){
+        
+                    $c = 1;
+                    $second_level_check = $pdo->prepare("SELECT id_competence FROM competences WHERE id_competence_mere = :id_second");
+                    $second_level_check->execute(array(":id_second" => $key));
+
+                    $check_again = $second_level_check->fetchAll(PDO::FETCH_ASSOC);
+                    if(sizeof($check_again) == 0){
+                            
+                        echo "1"    ;
+                        $statement = $pdo->prepare("SELECT c.nom, (SELECT COUNT(*) FROM competences_consultants cc WHERE cc.niveau >= 2 AND cc.id_competence = c.id_competence) as count FROM competences c WHERE c.id_competence_mere = :id_comp_mere");
+                        $statement->execute(array(":id_comp_mere" => $id_post));
+                        $graph1 = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+                        echo "2";
+
+                        $statement = $pdo->prepare("SELECT c.nom, (SELECT AVG(cc.niveau) FROM competences_consultants cc WHERE cc.id_competence = c.id_competence) as average FROM competences c WHERE c.id_competence_mere = :id_comp_mere");
+                        $statement->execute(array("id_comp_mere" => $id_post));
+                        $graph2 = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+                        $graphs = array($graph1, $graph2);
+
+                        var_dump($graphs);
+                    } else{
+                    }
+                }
+            }
+        } else{
+
+
+        }
+        
+
+    }
 }
 
 
