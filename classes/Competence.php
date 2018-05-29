@@ -24,8 +24,18 @@ function tab_search($id, $tab) {
 }
  
 class Competence {
+
+    static public function get_name($id = null) {
+
+        if ($id != null) {
+            $db = Database::connect();
+            $statement = $db->prepare("SELECT nom FROM competences WHERE id_competence = :id");
+            $statement->execute(array(":id" => $id));
+            return $statement->fetch()["nom"];
+        } else return false;
+    }
  
-    public function get_array($id = null) {
+    static public function get_array($id = null) {
  
         $db = Database::connect();
 

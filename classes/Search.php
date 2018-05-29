@@ -58,6 +58,8 @@ Class Search {
                     $where = 1;
                 }
 
+                $statement .= " ( ";
+
                 foreach($array["poles"]["id_pole"] as $key => $value){
 
                     if ($where != 0) {
@@ -75,6 +77,8 @@ Class Search {
 
 
                 }
+
+                $statement .= " ) ";
 
             }
 
@@ -140,46 +144,36 @@ Class Search {
         }
 
         if(isset($array["consultant"])){
-            if(sizeof($array["consultant"]) > 0){
 
-                if ($where == 0) {
-                    $statement .= " WHERE ";
-                    $where = 1;
-                } else{
-                    $statement .= " AND ";
-                    $where = 1;
-                }
-
-                foreach($array["consultant"] as $key => $value){
-                    
-                    if ($where != 0) {
-                        if ($where == 1) {
-                            $where = 2;
-                        } else {
-                            $statement .= " OR ";
-                        }
-                    }
-
-                    $statement .= " c.nom LIKE :bp" . $bindparamcpt . "  ";
-
-                    $bindparam[":bp" . $bindparamcpt] = "%".$value."%";
-                    $bindparamcpt ++ ;
-                }
+            if ($where == 0) {
+                $statement .= " WHERE ";
+                $where = 1;
+            } else{
+                $statement .= " AND ";
+                $where = 1;
             }
+
+            $statement .= " c.nom LIKE :bp" . $bindparamcpt . "  ";
+
+            $bindparam[":bp" . $bindparamcpt] = "%".$array["consultant"]."%";
+            $bindparamcpt ++ ;
+
         }
 
         $statement .= " GROUP BY c.id_consultant ORDER BY c.nom";
 
-        var_dump($statement);
-        echo "<br>";
+        // var_dump($statement);
+        // echo "<br>";
         $query = $pdo->prepare($statement);
         $query->execute($bindparam);
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
        
 
+        // var_dump($bindparam);
+        // echo "<br>";
+        // var_dump($result);
+        // exit();
         return $result;        
-        var_dump($bindparam);
-        echo "<br>";
     } 
 
     static public function show_graph($id_post){
@@ -208,7 +202,7 @@ Class Search {
                     $check_again = $second_level_check->fetchAll(PDO::FETCH_ASSOC);
                     if(sizeof($check_again) == 0){
                             
-                        echo "1"    ;
+                        echo "1";
                         $statement = $pdo->prepare("SELECT c.nom, (SELECT COUNT(*) FROM competences_consultants cc WHERE cc.niveau >= 2 AND cc.id_competence = c.id_competence) as count FROM competences c WHERE c.id_competence_mere = :id_comp_mere");
                         $statement->execute(array(":id_comp_mere" => $id_post));
                         $graph1 = $statement->fetchAll(PDO::FETCH_ASSOC);
