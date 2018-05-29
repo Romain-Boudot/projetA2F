@@ -1,5 +1,4 @@
 <?php
-include 'Database.php';
 
 Class Search {
 
@@ -235,9 +234,5 @@ static public function lookup(){
         
 
     }
+  
 }
-
-
-
-
-
