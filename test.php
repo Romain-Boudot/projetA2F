@@ -8,7 +8,7 @@ include 'classes/Search.php';
 ?>
 <pre>
 <?php
-Search::show_graph(142);
+Search::show_graph(4);
 
 
 
