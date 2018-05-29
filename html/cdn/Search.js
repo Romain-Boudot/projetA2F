@@ -15,7 +15,6 @@ class Search {
         this.comp = [];
         this.clients = [];
         this.arr = {};
-        this.select = "<select style=\"background:\"><option selected>1 ou plus</option><option>2 ou plus</option><option>3</option><option>3 ou moins</option><option>2 ou moins</option><option>1 ou moins</option><option>0</option></select>"
         this.table = {
             "1 ou plus" : ">= 1",
             "2 ou plus" : ">= 2",
@@ -27,6 +26,19 @@ class Search {
         }
         Search.load();
 
+    }
+
+    select() {
+        var tmp = "<select>";
+        for (let option in this.table) {
+            if (option == "1 ou plus") {
+                tmp += "<option selected>" + option + "</option>";
+            } else {
+                tmp += "<option>" + option + "</option>";
+            }
+        }
+        tmp += "</select>";
+        return tmp;
     }
 
     static load() {
@@ -65,7 +77,7 @@ class Search {
 
             console.log(this.comp);
                     
-            document.querySelector(".divCompListS").innerHTML += "<div data-name=\"" + e.dataset.name + "\" data-id=\"" + e.dataset.id + "\" class=\"compSelected\">" + e.dataset.name + "&nbsp;&nbsp;|&nbsp;&nbsp;niveau : " + this.select + "<div onclick=\"search.delComp('" + e.dataset.id + "')\" class=\"closeBtn\">&times;</div></div>";
+            document.querySelector(".divCompListS").innerHTML += "<div data-name=\"" + e.dataset.name + "\" data-id=\"" + e.dataset.id + "\" class=\"compSelected\">" + e.dataset.name + "&nbsp;&nbsp;|&nbsp;&nbsp;niveau : " + this.select() + "<div onclick=\"search.delComp('" + e.dataset.id + "')\" class=\"closeBtn\">&times;</div></div>";
             
         } else {
 
@@ -123,8 +135,9 @@ class Search {
 
             console.log(this.comp);
 
-            document.querySelector(".competenceS[data-id='" + e + "']").remove();
             document.querySelector(".compSelected[data-id='" + e + "']").remove();
+            let t = document.querySelector(".competenceS[data-id='" + e + "']");
+            if (t != null) t.remove();
             
         } else {
 
@@ -166,32 +179,53 @@ class Search {
         var disp2M = document.getElementById('disp2M');
         var disp3M = document.getElementById('disp3M');
 
-        (archive != null ? (archive.checked ? this.arr.archive = 1 : this.arr.archive = 0 ) : this.arr.archive = 0 )
-        (poleIndus.checked ? this.arr.poles.id_pole.push(1) : 1+1)
-        (poleDatabase.checked ? this.arr.poles.id_pole.push(3) : 1+1)
-        (poleSi.checked ? this.arr.poles.id_pole.push(2) : 1+1)
-
-        (dispMtn.checked ? this.arr.disponibilites.id_disponibilite.push(1) : 1+1)
-        (disp1M.checked ? this.arr.disponibilites.id_disponibilite.push(2) : 1+1)
-        (disp2M.checked ? this.arr.disponibilites.id_disponibilite.push(3) : 1+1)
-        (disp3M.checked ? this.arr.disponibilites.id_disponibilite.push(4) : 1+1)
-
+        if (archive != null && archive.checked ) {
+            this.arr.archive = 1;
+        } else {
+            this.arr.archive = 0;
+        }
+        if (poleIndus.checked) {
+            this.arr.poles.id_pole.push(1);
+        }
+        if (poleDatabase.checked) {
+            this.arr.poles.id_pole.push(3);
+        }
+        if (poleSi.checked) {
+            this.arr.poles.id_pole.push(2);
+        }
+        if (dispMtn.checked) {
+            this.arr.disponibilites.id_disponibilite.push(1);
+        }
+        if (disp1M.checked) {
+            this.arr.disponibilites.id_disponibilite.push(2)
+        }
+        if (disp2M.checked) {
+            this.arr.disponibilites.id_disponibilite.push(3);
+        }
+        if (disp3M.checked) {
+            this.arr.disponibilites.id_disponibilite.push(4);
+        }
         for (var comp in this.comp) {
-            if (!this.arr.competences.id_competence.includes(comp)) {
-                this.arr.competences.id_competence.push(comp);
-                var a = document.querySelector(".compSelected[data-id='" + comp + "']>select");
+            if (!this.arr.competences.id_competence.includes(this.comp[comp])) {
+                this.arr.competences.id_competence.push(this.comp[comp]);
+                var a = document.querySelector(".compSelected[data-id='" + this.comp[comp] + "']>select");
                 var id = a.options[a.selectedIndex].text;
                 this.arr.competences.niveau.push(this.table[id]);
             }
         }
 
-        for (var client in this.client) {
-            if (!this.arr.competences.id_competence.includes(client)) {
-                this.arr.competences.id_competence.push(client);
+        for (var client in this.clients) {
+            if (!this.arr.clients.id_client.includes(this.clients[client])) {
+                this.arr.clients.id_client.push(this.clients[client]);
             }
         }
 
-        return this.arr;
+        var input = document.getElementById('inputCons').value
+        if (input != "") {
+            this.arr.consultant = document.getElementById('inputCons').value;
+        }
+
+        location.href = "/recherche/resultat/?filter=" + encodeURI(JSON.stringify(this.arr));
 
     }
 
@@ -207,7 +241,6 @@ class Search {
             console.log(id);
             document.querySelector(".divCompList").innerHTML += "<div data-id=\"" + e.dataset.id + "\" class=\"competenceS\">" + e.dataset.name + "&nbsp;&nbsp;|&nbsp;&nbsp;niveau : " + id + "<div onclick=\"search.delComp('" + e.dataset.id + "')\" class=\"closeBtn\">&times;</div></div>";
         })
-
 
     }
 

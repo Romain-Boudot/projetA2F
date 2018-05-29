@@ -36,7 +36,7 @@ $_SESSION["user"] = array(
     <div class="main-wrapper">
 
         <div class="search">
-            <input type="text" class="searchBar" placeholder="Entrez un nom (optionnel)">
+            <input id="inputCons" type="text" class="searchBar" placeholder="Entrez un nom (optionnel)">
 
             <?php
 
@@ -120,6 +120,8 @@ $_SESSION["user"] = array(
             </div>
 
         </div>
+
+        <div class="searchBtn btn" onclick="search.send()">Rechercher</div>
 
     </div>
 

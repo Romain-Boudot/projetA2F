@@ -1,5 +1,4 @@
 <?php
-include 'Database.php';
 
 Class Search {
 
@@ -7,7 +6,7 @@ Class Search {
         $array = json_decode($_GET["filter"], true);
     
 
-            $pdo = Database::connect();
+        $pdo = Database::connect();
         $where = 0;
         $bindparamcpt = 0;
         $bindparam = array();
@@ -76,6 +75,7 @@ Class Search {
 
 
                 }
+
             }
 
         }
@@ -171,13 +171,15 @@ Class Search {
         $statement .= " GROUP BY c.id_consultant ORDER BY c.nom";
 
         var_dump($statement);
+        echo "<br>";
         $query = $pdo->prepare($statement);
         $query->execute($bindparam);
-       $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
        
 
-return $result;        
+        return $result;        
         var_dump($bindparam);
+        echo "<br>";
     } 
 
     static public function show_graph($id_post){
@@ -231,9 +233,5 @@ return $result;
         
 
     }
+  
 }
-
-
-
-
-
