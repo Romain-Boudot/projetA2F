@@ -110,7 +110,10 @@
 
     ?>
 
+
     <div class="profileWrapper">
+        
+        <div onclick="location.href='/recherche/'" class="fixedSearchReturn">Retourner à la recherche</div>
     
         <?php
 

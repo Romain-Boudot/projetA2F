@@ -6,12 +6,6 @@ include_once $_SERVER['DOCUMENT_ROOT'] . "/../classes/Client.php";
 
 session_start();
 
-$_SESSION["user"] = array(
-    "login" => "romain.boudot",
-    "type" => 2,
-    "id" => 1
-)
-
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -22,7 +16,7 @@ $_SESSION["user"] = array(
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="/cdn/main.css">
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="/recherche/main.css">
     <script src="/cdn/Popup.js"></script>
     <script src="/cdn/Dropdown.js"></script>
     <script src="/cdn/Search.js"></script>
