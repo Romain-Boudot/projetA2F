@@ -163,9 +163,7 @@ class Search {
             "disponibilites":{
                 "id_disponibilite":[]
             },
-            "consultant":{
-                "nom":null
-            },
+            "consultant":null,
             "archive": null
         }
 

@@ -1,10 +1,14 @@
 <?php
 
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/../classes/Databse.php";
+    session_start();
+
+    var_dump($_SESSION);
+
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/../classes/Database.php";
 
     if (isset($_POST["login"]) && isset($_POST["password"])) {
 
-        if (Databse::login($_POST["login"], $_POST["password"])) {
+        if (Database::login($_POST["login"], $_POST["password"])) {
 
             header('location: http://' . $_SERVER['HTTP_HOST']);
 
@@ -41,27 +45,3 @@
 
 </body>
 </html>
-<!--
-<form action="http://<?php //echo $_SERVER['HTTP_HOST'];?>/identification" method="post">
-    <span>Consultant</span>
-    <input name="type" type="hidden" value="0">
-    <input name="login" type="text" placeholder="identifiant">
-    <input name="password" type="password" placeholder="mot de passe">
-    <input type="submit" value="Connexion">
-</form>
-<br>
-<form action="http://<?php //echo $_SERVER['HTTP_HOST'];?>/identification" method="post">
-    <span>business manager</span>
-    <input name="type" type="hidden" value="1">
-    <input name="login" type="text" placeholder="identifiant">
-    <input name="password" type="password" placeholder="mot de passe">
-    <input type="submit" value="Connexion">
-</form>
-<br>
-<form action="http://<?php //echo $_SERVER['HTTP_HOST'];?>/identification" method="post">
-    <span>ressources humaines</span>
-    <input name="type" type="hidden" value="2">
-    <input name="login" type="text" placeholder="identifiant">
-    <input name="password" type="password" placeholder="mot de passe">
-    <input type="submit" value="Connexion">
-</form> -->

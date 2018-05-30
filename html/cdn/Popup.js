@@ -2,6 +2,10 @@ class Popup {
 
     static open(id, ...triggers) {
 
+        document.querySelectorAll(".popup").forEach(e => {
+            e.style.visibility = "hidden";
+        })
+
         document.getElementById(id).style.visibility = "visible";
 
         triggers.forEach(e => {

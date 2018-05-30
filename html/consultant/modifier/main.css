@@ -1,0 +1,137 @@
+nav {
+    height: 100vh;
+    width: 300px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.144);
+}
+
+nav .onglet {
+    width: 100%;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.mainWrapper {
+    position: absolute;
+    width: calc(100vw - 300px);
+    height: 100vh;
+    top: 0;
+    right: 0;
+    overflow: auto;
+}
+
+.mainWrapper .popup {
+    visibility: hidden;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: white;
+}
+
+.nav {
+    height: 56px;
+    background-color: rgba(0, 0, 0, .08);
+    line-height: 56px;
+    text-align: center;
+}
+
+#InfoP form {
+    margin: 50px 0 0 150px;
+    padding: 0;
+    width: 30%;
+    min-width: 200px;
+}
+
+form input[type=text] {
+    width: 100%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.244);
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    background: none;
+    margin: 10px 0;
+}
+
+input[type=number] {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.244);
+    border-top: none;
+    border-right: none;
+    border-left: 1px solid rgba(0, 0, 0, 0.244);
+    background: none;
+    width: 75px;
+    text-align: center;
+}
+
+form input[type=submit] {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.244);
+    padding: 10px 15px;
+    margin: 10px auto;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.compListWrapper {
+    width: 80%;
+    margin: 50px 10%;
+}
+
+.dropdownTrigger {
+    cursor: pointer;
+    position: relative;
+}
+
+.dropdownTrigger::before {
+    content: "+";
+    margin-right: 10px;
+    font-weight: bold;
+    right: calc(-100% - 10px);
+}
+
+.dropdownContainer {
+    width: 100%;
+    transition: 0.3s height ease, 0.2s color ease;
+    overflow: hidden;
+}
+
+.compListWrapper>.dropdownTrigger,
+.compListWrapper>.comp {
+    width: calc(100% - 20px);
+    padding: 5px 0 5px 20px;
+}
+
+.compListWrapper>.dropdownContainer>.dropdownTrigger,
+.compListWrapper>.dropdownContainer>.comp {
+    width: calc(100% - 50px);
+    padding: 3px 0 3px 50px;
+}
+
+.compListWrapper>.dropdownContainer>.dropdownContainer>.dropdownTrigger,
+.compListWrapper>.dropdownContainer>.dropdownContainer>.comp {
+    width: calc(100% - 80px);
+    padding: 3px 0 3px 80px;
+}
+
+.compListWrapper>.dropdownContainer>.dropdownContainer>.dropdownContainer>.comp {
+    width: calc(100% - 110px);
+    padding: 3px 0 3px 110px;
+}
+
+.dropdownContainer {
+    box-shadow: inset 0px 0.9px 0px 0px rgba(128, 128, 128, 0.445), inset 0px -0.9px 0px 0px rgba(128, 128, 128, 0.445);
+}
+
+.submit {
+    position: fixed;
+    margin: 10px;
+    padding: 10px 15px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.244);
+    cursor: pointer;
+    border-radius: 5px;
+}

@@ -1,21 +1,22 @@
 <?php
 
     include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Database.php";
+    include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Competence.php";
     include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Consultant.php";
     
     session_start();
 
-    $_SESSION["user"] = array(
-        'id' => 1,
-        'login' => 'Jean-Didz',
-        'type' => 2
-    );
+    // var_dump($_SESSION);
+    // var_dump($_GET);
 
     $id = $_SESSION['user']['id'];
 
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
     }
+
+    // echo $id;
+    // exit();
 
     $consultant = new Consultant($id);
     
@@ -26,6 +27,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/cdn/main.css">
     <link rel="stylesheet" href="/consultant/main.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="/cdn/Chart.bundle.min.js"></script>
@@ -52,10 +54,15 @@
         <?php if ($_SESSION['user']['type'] >= 1 || $_SESSION['user']['login'] == $consultant->get_login()) {?>
             <div class="hr"></div>
             <div class="profile-info salaire"> salaire : <?php echo $consultant->get_salaire(); ?>€</div></div>
-        <?php } ?>
+        <?php
         
-        <div class="bottom btn h-56 modif-profile bold" 
-                onclick="location.href='#; ?>'">Modifier mon profil</div>
+        }
+
+        if ($_SESSION['user']['login'] == $consultant->get_login()) {?>
+
+        <div class="bottom btn h-56 modif-profile bold" onclick="location.href='/consultant/modifier'">Modifier mon profil</div>
+
+        <?php } ?>
     </nav>
 
     <div class="main-wrapper">
@@ -92,12 +99,13 @@
                         }
                     ?>
                 
-                     <?php
+                    <?php
 
                         //$tab = $consultant->get_qualifications();
 
                         //foreach ($tab as $int) {
-                            ?>
+                            
+                    ?>
 
                 </div>
                 <div id="oc2" class="onglet ongletContainer">
@@ -133,87 +141,60 @@
                 </div>
                 <div id="oc3" class="onglet ongletContainer">
                     <?php
-                        
 
                         $cpt = 0;
                         
-                        function tab($name, $tab, $cpt) {
+                        function tab($tab, $cpt) {
 
-                            $html = array();
-
-                            $html[] = "<div id=\"ddc" . $cpt . "\" class=\"dropdownContainer\" >";
+                            ?><div id="ddc<?php echo $cpt; ?>" class="dropdownContainer"><?php
 
                             $cpt += 1;
                             
                             foreach ($tab as $name => $value) {
                                 
-                                if (is_array($value)) {
+                                if ($value["enfant"] != null) {
                                     
-                                    $html[] = "<div id=\"ddt" . $cpt . "\" class=\"dropdownTrigger\">" . $name . "</div>";
+                                    ?><div id="ddt<?php echo $cpt; ?>" class="dropdownTrigger"><?php echo $name; ?></div><?php
                                     
-                                    $returned = tab($name, $value, $cpt);
+                                    $returned = tab($value["enfant"], $cpt);
     
                                     $cpt = $returned["cpt"];
     
-                                    foreach ($returned["html"] as $line) {
-    
-                                        $html[] = $line;
-    
-                                    }
-    
-                                    foreach ($returned["script"] as $line) {
-    
-                                        $script[] = $line;
-    
-                                    }
-    
                                 } else {
     
-                                    $html[] = "<div class=\"comp\">" . $name . " - " . $value . "</div>";
+                                    if ($value["niveau"] == null) $value["niveau"] = 0;
+
+                                    ?><div class="comp"><?php echo $name; ?> - <?php echo $value["niveau"]; ?></div><?php
     
                                 }
                                 
                             }
 
-                            $html[] = "</div>";
+                            ?></div><?php
 
                             return array(
                                 "cpt" => $cpt,
-                                "html" => $html,
-                                "script" => $script
                             );
                         
                         };
 
-                        $html = array();
+                        $comp = Competence::get_array($id);
                         
                         foreach ($comp as $name => $value) {
                         
                             if (is_array($value)) {
 
-                                $html[] = "<div id=\"ddt" . $cpt . "\" class=\"dropdownTrigger\">" . $name . "</div>";
+                                ?><div id="ddt<?php echo $cpt; ?>" class="dropdownTrigger"><?php echo $name ?></div><?php
                                 
-                                $returned = tab($name, $value, $cpt);
+                                $returned = tab($value["enfant"], $cpt);
 
                                 $cpt = $returned["cpt"];
 
-                                foreach ($returned["html"] as $line) {
-
-                                    $html[] = $line;
-
-                                }
-
                             } else {
 
-                                $html[] = "<div>" . $name . " - " . $value . "</div>";
+                                ?><div><?php echo $name; ?> - <?php echo $value; ?></div><?php
 
                             }
-
-                        }
-
-                        foreach ($html as $line) {
-
-                            echo $line . PHP_EOL;
 
                         }
 
@@ -250,17 +231,20 @@
                             "length" => 0
                         )
                     );
+
                     foreach ($graph as $values) {
+
                         if ($graphG[$values['id_graphique']]['length'] > 0) {
                             $graphG[$values['id_graphique']]['label'] .= ",";
                             $graphG[$values['id_graphique']]['data'] .= ",";
                         }
+
                         $graphG[$values['id_graphique']]['label'] .= "\"" . $values['nom'] . "\"";
                         $graphG[$values['id_graphique']]['data'] .= $values['niveau'];
                         $graphG[$values['id_graphique']]['length'] += 1;
                         
 
-                    }  
+                    }
                     //var_dump($graphG);
 
                 if ($graphG[1]["length"] > 2) { ?>

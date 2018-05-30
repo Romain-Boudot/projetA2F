@@ -55,6 +55,7 @@ ul>li {
 .header-right>div {
     display: inline-block;
     margin: 0 2px;
+    padding: 0 15px;
 }
 
 .header-left {
@@ -89,4 +90,12 @@ ul>li {
 .bottom {
     position: absolute;
     bottom: 0;
+}
+
+.noMI {
+    margin: 0 !important;
+}
+
+.mr-1 {
+    margin-right: 1px !important;
 }

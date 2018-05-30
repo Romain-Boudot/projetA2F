@@ -58,6 +58,8 @@ static public function lookup(){
                 $where = 1;
             }
 
+            $statement .= " ( ";
+
             foreach($array["poles"]["id_pole"] as $key => $value){
 
                 if ($where != 0) {
@@ -75,13 +77,16 @@ static public function lookup(){
 
 
             }
+          
+            $statement .= " ) ";
+          
         }
 
     }
 
     if(isset($array["disponibilites"])){
         if(sizeof($array["disponibilites"]["id_disponibilite"]) > 0){
-
+          
             if ($where == 0) {
                 $statement .= " WHERE ";
                 $where = 1;
@@ -138,8 +143,8 @@ static public function lookup(){
         }
     }
 
-    if(isset($array["consultant"])){
-        if(sizeof($array["consultant"]) > 0){
+
+        if(isset($array["consultant"])){
 
             if ($where == 0) {
                 $statement .= " WHERE ";
@@ -149,21 +154,11 @@ static public function lookup(){
                 $where = 1;
             }
 
-            foreach($array["consultant"] as $key => $value){
+            $statement .= " c.nom LIKE :bp" . $bindparamcpt . "  ";
 
-                if ($where != 0) {
-                    if ($where == 1) {
-                        $where = 2;
-                    } else {
-                        $statement .= " OR ";
-                    }
-                }
-
-                $statement .= " c.nom LIKE :bp" . $bindparamcpt . "  ";
-
-                $bindparam[":bp" . $bindparamcpt] = "%".$value."%";
-                $bindparamcpt ++ ;
-            }
+            $bindparam[":bp" . $bindparamcpt] = "%".$array["consultant"]."%";
+            $bindparamcpt ++ ;
+          
         }
     }
 
@@ -173,7 +168,6 @@ static public function lookup(){
     $query = $pdo->prepare($statement);
     $query->execute($bindparam);
     $result = $query->fetchAll(PDO::FETCH_ASSOC);
-
 
     return $result;        
 
