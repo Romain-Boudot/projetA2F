@@ -9,11 +9,8 @@ include 'classes/Search.php';
 ?>
 <pre>
 <?php
-$id = 1;
-while ($id < 305){
-Search::show_graph($id);
-$id++;
-}
+Search::show_graph(6);
+
 
 
 

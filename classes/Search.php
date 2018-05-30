@@ -223,20 +223,17 @@ static public function lookup(){
                 $graph2 = $statement->fetchAll(PDO::FETCH_ASSOC);
 
                 $graphs = array($graph1, $graph2);
+                echo "lol";
 
-                echo $id_post." : NIVEAU 2 OK //
-";
+                var_dump($graphs);
             }else {
-
-                echo $id_post." : INVALIDE //
-";
+                echo "one";
             }
 
 
 
         } else{
-            echo $id_post . " : LVL 1 FAIL //
-";
+            echo "two";
         } 
 
 
