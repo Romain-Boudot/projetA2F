@@ -75,69 +75,20 @@ Class Consultant {
         $pdo = null;
     }
 
-    public function edit($infos){
-        $pdo = Database::connect();
-        $first = true;
-        $statement = "UPDATE consultants SET ";
-        if (isset($infos[':nom'])) {
-            if (!$first) {
-                $statement .= ",";
-            }
-            $statement .= " nom = :nom";
+    public function send_modif(){
+        
+        var_dump($this);
 
-            $first = false;
-        }
-
-        if (isset($infos[':prenom'])) {
-            if (!$first) {
-                $statement .= ",";
-            }
-            $statement .= " prenom = :prenom";
-            $first = false;
-        }
-
-        if (isset($infos[':telephone'])) {
-            if (!$first) {
-                $statement .= ",";
-            }
-            $statement .= " telephone = :telephone";
-            $first = false;
-        }
-
-        if (isset($infos[':email'])) {
-            if (!$first) {
-                $statement .= ",";
-            }
-            $statement .= " email = :email";
-            $first = false;
-        }
-        if (isset($infos[':linkedin'])) {
-            if (!$first) {
-                $statement .= ",";
-            }
-            $statement .= " linkedin = :linkedin";
-            $first = false;
-
-        }
-    
-        if (isset($infos[':pole'])) {
-            if (!$first) {
-                $statement .= ",";
-            }
-            $statement .= " pole = :pole";
-            $first = false;
-
-        }
-
-        if (isset($infos[':honoraires'])) {
-            if (!$first) {
-                $statement .= ",";
-            }
-            $statement .= " honoraires = :honoraires";
-            $first = false;
-
-        }
-
+        $db = Database::connect();
+        $statement = $db->prepare("UPDATE consultants SET nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, linkedin = :linkedin WHERE id_consultant = :id");
+        $statement->execute(array(
+            ":nom" => $this->nom,
+            ":prenom" => $this->prenom,
+            ":email" => $this->email,
+            ":telephone" => $this->telephone,
+            ":linkedin" => $this->linkedin,
+            ":id" => $this->id
+        ));
 
     }
 
@@ -190,12 +141,21 @@ Class Consultant {
     }
 
     public function edit_competence($infos){
+
         $pdo = Database::connect();
 
-        $statement = $pdo->prepare("UPDATE competences_consultants SET niveau = :niveau WHERE id_competence = :id_competence AND id_consultant = :id_consultant");
-        $statement->execute(array(':niveau' => $infos['niveau'], ':id_consultant' => $this->id, ':id_competence' => $infos['id_competence']));
+        $statement = $pdo->prepare("DELETE FROM competences_consultants WHERE id_competence = :id_competence AND id_consultant = :id_consultant");
+        $statement->execute();
+        if ($infos["niveau"] == 0) return;
+        $statement = $pdo->prepare("INSERT INTO competences_consultants (niveau, id_consultant, id_competence) VALUES (?, ?, ?)");
+        $statement->execute(array(
+            $infos['niveau'],
+            $this->id,
+            $infos['id_competence']
+        ));
 
-       $pdo = null; 
+        $pdo = null; 
+    
     }
 
     public function delete_competence($id){
@@ -240,23 +200,40 @@ $pdo = null;
         return $this->nom;
     }
 
+    public function set_nom($nom) {
+        $this->nom = $nom;
+    }
+
     public function get_prenom(){
         return $this->prenom;
     }
 
+    public function set_prenom($prenom){
+        $this->prenom = $prenom;
+    }
 
     public function get_email(){
         return $this->email;
     }
 
+    public function set_email($email){
+        $this->email = $email;
+    }
 
     public function get_telephone(){
         return $this->telephone;
     }
 
+    public function set_telephone($tel){
+        $this->telephone = $tel;
+    }
 
     public function get_linkedin(){
         return $this->linkedin;
+    }
+
+    public function set_linkedin($linkedin){
+        $this->linkedin = $linkedin;
     }
 
     public function get_pole(){

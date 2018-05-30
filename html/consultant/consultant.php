@@ -54,10 +54,15 @@
         <?php if ($_SESSION['user']['type'] >= 1 || $_SESSION['user']['login'] == $consultant->get_login()) {?>
             <div class="hr"></div>
             <div class="profile-info salaire"> salaire : <?php echo $consultant->get_salaire(); ?>€</div></div>
-        <?php } ?>
+        <?php
         
-        <div class="bottom btn h-56 modif-profile bold" 
-                onclick="location.href='#; ?>'">Modifier mon profil</div>
+        }
+
+        if ($_SESSION['user']['login'] == $consultant->get_login()) {?>
+
+        <div class="bottom btn h-56 modif-profile bold" onclick="location.href='/consultant/modifier'">Modifier mon profil</div>
+
+        <?php } ?>
     </nav>
 
     <div class="main-wrapper">

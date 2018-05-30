@@ -102,6 +102,50 @@
 
         }
 
+        if (isset($filter["disponibilites"]["id_disponibilite"])) if (!empty($filter["disponibilites"]["id_disponibilite"])) {
+
+            if ($first) {
+                $first = false;
+                echo '<div class="filter">';
+            } else {
+                echo "<br>";
+            }
+
+            ?>
+                Disponibilitée(s) : 
+            <?php
+
+            $disp = array(
+                "1" => "maintenant",
+                "2" => "dans un mois",
+                "3" => "dans deux mois",
+                "4" => "dans trois mois ou plus"
+            );
+
+            foreach ($filter["disponibilites"]["id_disponibilite"] as $key => $value) {
+                
+                if ($key > 0) echo " ";
+                echo "<span>" . $disp[$value] . "</span>";
+
+            }
+
+        }
+
+        if (isset($filter["consultant"])) if ($filter["consultant"] != "") {
+
+            if ($first) {
+                $first = false;
+                echo '<div class="filter">';
+            } else {
+                echo "<br>";
+            }
+
+            ?>
+                Recherche par nom : <span><?php echo $filter["consultant"]; ?></span>
+            <?php
+
+        }
+
         if (!$first) {
             echo "</div>";
         } else {
