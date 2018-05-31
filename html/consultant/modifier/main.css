@@ -89,6 +89,7 @@ nav .onglet {
 #Inter form .InterSubmit,
 #Qual form .QualSubmit {
     grid-column: 1 / 3;
+    text-align: center;
 }
 
 @media screen and (max-width: 1350px) {
@@ -173,7 +174,17 @@ input[type=number] {
 }
 
 form input[type=submit] {
-    display: block;
+    background-color: rgba(0, 0, 0, 0.244);
+    padding: 10px 15px;
+    margin: 10px auto;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.QualSubmit>*,
+.InterSubmit>* {
+    display: inline-block;
     background-color: rgba(0, 0, 0, 0.244);
     padding: 10px 15px;
     margin: 10px auto;

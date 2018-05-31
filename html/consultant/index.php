@@ -130,7 +130,7 @@
                         <div class="details"><?php echo $int['details']; ?></div>
                     </div>   
 
-                            <?php
+                    <?php
                         }
                     ?>           
                     

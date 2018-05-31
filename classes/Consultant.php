@@ -104,9 +104,8 @@ Class Consultant {
     public function delete_intervention($id){
         $pdo = Database::connect();
 
-        $statement = $pdo->prepare("DELETE FROM interventions WHERE id_interventions = :id_intervention");
-        $statement->bindParam('id_intervention', $id);
-        $statement->execute();
+        $statement = $pdo->prepare("DELETE FROM interventions WHERE id_intervention = :id_intervention AND id_consultant = :id_consultant");
+        $statement->execute(array(':id_intervention' => $id, ':id_consultant' => $this->id));
 
     }
     
@@ -116,18 +115,14 @@ Class Consultant {
         $statement = $pdo->prepare("INSERT INTO qualifications ( nom_qualification, id_consultant, date_obtention, details) VALUES (:nom_qualification, :id_consultant, :date_obtention, :details)");
         $statement->execute(array(':nom_qualification' => $infos['nom_qualification'], ':id_consultant' => $this->id, ':date_obtention' => $infos['date_obtention'], ':details' => $infos['details']));
 
-        $pdo =null;
-
-
     }
 
     public function delete_qualification($id){
         $pdo = Database::connect();
 
-        $statement = $pdo->prepare("DELETE FROM qualifications WHERE id_diplome = :id_diplome AND id_consultant = :id_consultant");
-        $statement->execute(array(':id_diplome' => $id, ':id_consultant' => $this->id));
+        $statement = $pdo->prepare("DELETE FROM qualifications WHERE id_qualification = :id_qualification AND id_consultant = :id_consultant");
+        $statement->execute(array(':id_qualification' => $id, ':id_consultant' => $this->id));
 
-        $pdo = null;
     }
 
     public function add_competence($infos){
@@ -135,8 +130,6 @@ Class Consultant {
 
         $statement = $pdo->prepare("INSERT INTO competences_consultants(id_competence, id_consultant, niveau) VALUES (:id_competence, :id_consultant, :niveau)");
         $statement->execute(array(':id_competence' => $infos['id_competence'], ':id_consultant' => $this->id, ':niveau' => $infos['niveau']));
-
-        $pdo = null;
 
     }
 

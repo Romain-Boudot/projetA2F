@@ -143,6 +143,7 @@
             <form action="/consultant/modifier" method="post">
 
                 <input type="hidden" name="modif" value="int">
+                <input type="hidden" name="action" value="add">                
 
                 <div class="intervention">
                     <div class="infos">Date</div>
@@ -183,6 +184,7 @@
                         <div class="infos"><?php echo $int['date']; ?></div>
                         <div class="infos"><?php echo $int['entreprise']; ?></div>
                         <div class="details"><?php echo $int['details']; ?></div>
+                        <div class="InterSubmit"><div onclick="Intervention.del(<?php echo $int['id_intervention']; ?>)" class="delInt">Supprimer</div></div>
                     </div>
 
                 <?php
@@ -201,6 +203,7 @@
             <form action="/consultant/modifier" method="post">
 
                 <input type="hidden" name="modif" value="qual">
+                <input type="hidden" name="action" value="add">
 
                 <div class="qualification">
                     <div class="infos">Qualification</div>
@@ -231,6 +234,7 @@
                         <div class="infos"><?php echo $qual['nom_qualification']; ?></div>
                         <div class="infos"><?php echo $qual['date_obtention']; ?></div>
                         <div class="details"><?php echo $qual['details']; ?></div>
+                        <div class="QualSubmit"><div onclick="Qualification.del(<?php echo $qual['id_qualification']; ?>)" class="delInt">Supprimer</div></div>
                     </div>
 
                 <?php

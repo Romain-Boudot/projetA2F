@@ -26,3 +26,31 @@ class Competence {
     }
 
 }
+
+class Intervention {
+
+    static del(id) {
+
+        Post.send("/consultant/modifier", {
+            "action" : "delete",
+            "modif" : "int",
+            "id" : id
+        })
+
+    }
+
+}
+
+class Qualification {
+
+    static del(id) {
+
+        Post.send("/consultant/modifier", {
+            "action" : "delete",
+            "modif" : "qual",
+            "id" : id
+        })
+
+    }
+
+}
