@@ -113,8 +113,8 @@ Class Consultant {
     public function add_qualification($infos){
         $pdo = Database::connect();
 
-        $statement = $pdo->prepare("INSERT INTO qualifications (id_qualification, nom_qualification, id_consultant, date_obtention, details) VALUES (:id_qualification, :nom_qualification, :id_consultant, :date_obtention, :details)");
-        $statement->execute(array(':id_qualification' => $infos['id_qualification'], ':nom_qualification' => $infos['nom_qualification'], ':id_consultant' => $this->id, ':date_obtention' => $infos['date_obtention'], ':details' => $infos['details']));
+        $statement = $pdo->prepare("INSERT INTO qualifications ( nom_qualification, id_consultant, date_obtention, details) VALUES (:nom_qualification, :id_consultant, :date_obtention, :details)");
+        $statement->execute(array(':nom_qualification' => $infos['nom_qualification'], ':id_consultant' => $this->id, ':date_obtention' => $infos['date_obtention'], ':details' => $infos['details']));
 
         $pdo =null;
 
@@ -145,7 +145,10 @@ Class Consultant {
         $pdo = Database::connect();
 
         $statement = $pdo->prepare("DELETE FROM competences_consultants WHERE id_competence = :id_competence AND id_consultant = :id_consultant");
-        $statement->execute();
+        $statement->execute(array(
+            ":id_consultant" => $this->id,
+            ":id_competence" => $infos['id_competence']
+        ));
         if ($infos["niveau"] == 0) return;
         $statement = $pdo->prepare("INSERT INTO competences_consultants (niveau, id_consultant, id_competence) VALUES (?, ?, ?)");
         $statement->execute(array(

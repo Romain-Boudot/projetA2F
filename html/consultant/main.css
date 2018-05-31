@@ -281,14 +281,6 @@ ul>li {
     padding: 10px;
 }
 
-.textCenter {
-    text-align: center;
-}
-
-hr {
-    margin: 0;
-}
-
 .clickable {
     cursor: pointer;
 }

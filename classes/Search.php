@@ -144,22 +144,21 @@ static public function lookup(){
     }
 
 
-        if(isset($array["consultant"])){
+    if(isset($array["consultant"])) {
 
-            if ($where == 0) {
-                $statement .= " WHERE ";
-                $where = 1;
-            } else{
-                $statement .= " AND ";
-                $where = 1;
-            }
-
-            $statement .= " c.nom LIKE :bp" . $bindparamcpt . "  ";
-
-            $bindparam[":bp" . $bindparamcpt] = "%".$array["consultant"]."%";
-            $bindparamcpt ++ ;
-          
+        if ($where == 0) {
+            $statement .= " WHERE ";
+            $where = 1;
+        } else{
+            $statement .= " AND ";
+            $where = 1;
         }
+
+        $statement .= " c.nom LIKE :bp" . $bindparamcpt . "  ";
+
+        $bindparam[":bp" . $bindparamcpt] = "%".$array["consultant"]."%";
+        $bindparamcpt ++ ;
+
     }
 
     $statement .= " GROUP BY c.id_consultant ORDER BY c.nom";

@@ -13,16 +13,18 @@
 
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
+    } else {
+        if ($_SESSION['user']['type'] != 0) {
+            echo "vous n'etes pas consultant";
+            exit();
+        }
     }
-
-    // echo $id;
-    // exit();
 
     $consultant = new Consultant($id);
     
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -53,14 +55,14 @@
         
         <?php if ($_SESSION['user']['type'] >= 1 || $_SESSION['user']['login'] == $consultant->get_login()) {?>
             <div class="hr"></div>
-            <div class="profile-info salaire"> salaire : <?php echo $consultant->get_salaire(); ?>€</div></div>
+            <div class="profile-info salaire">salaire : <?php echo $consultant->get_salaire(); ?>€</div></div>
         <?php
         
         }
 
         if ($_SESSION['user']['login'] == $consultant->get_login()) {?>
 
-        <div class="bottom btn h-56 modif-profile bold" onclick="location.href='/consultant/modifier'">Modifier mon profil</div>
+        <a class="bottom btn h-56 modif-profile bold" href="/consultant/modifier">Modifier mon profil</a>
 
         <?php } ?>
     </nav>
@@ -76,9 +78,6 @@
                         <div class="infos">Client</div>
                         <div class="details textCenter">
                             Détails
-                            <div style="float: right;margin-right: 20px">
-                                <i class="material-icons clickable">add</i>
-                            </div>
                         </div>
                     </div>
 
@@ -114,9 +113,6 @@
                         <div class="infos">Date d'obtention</div>
                         <div class="details textCenter">
                             Détails
-                            <div style="float: right;margin-right: 20px">
-                                <i class="material-icons clickable">add</i>
-                            </div>
                         </div>
                     </div>
 
@@ -125,7 +121,7 @@
                     $tab = $consultant->get_qualifications();
                     foreach ($tab as $int) {
                     
-                        ?>
+                    ?>
 
                     <div class="hr"></div>
                     <div class="qualification">

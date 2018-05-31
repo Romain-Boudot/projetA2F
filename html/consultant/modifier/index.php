@@ -2,6 +2,7 @@
 
     include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Database.php";
     include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Competence.php";
+    include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Client.php";    
     include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Consultant.php";
 
     session_start();
@@ -29,6 +30,8 @@
     <link rel="stylesheet" href="/cdn/main.css">
     <script src="/cdn/Dropdown.js"></script>
     <script src="/cdn/Popup.js"></script>
+    <script src="/cdn/Profile.js"></script>
+    <script src="/cdn/Post.js"></script>
     <title>A2F Advisior</title>
 </head>
 <body>
@@ -41,11 +44,13 @@
     </nav>
     <div class="mainWrapper">
 
+        <div onclick="location.href='/consultant'" class="close">Retour</div>
+
         <div class="popup" id="Comp"><div class="nav">Compétences</div>
         
             <!-- // Comp section // -->
         
-            <div onclick="competence.send()" class="submit">Envoyer</div>
+            <div onclick="Competence.send()" class="submit">Envoyer</div>
 
             <div class="compListWrapper">
 
@@ -73,7 +78,7 @@
 
                             if ($value["niveau"] == null) $value["niveau"] = 0;
 
-                            ?><div class="comp"><?php echo $name; ?> <span> </span> <input data-lvl="<?php echo $value["niveau"]; ?>" data-id="<?php echo $value["id_competence"]; ?>" min="0" max="3" type="number" class="compJs bold" value="<?php echo $value["niveau"]; ?>"></div><?php
+                            ?><div class="comp"><?php echo $name; ?> <input data-lvl="<?php echo $value["niveau"]; ?>" data-id="<?php echo $value["id_competence"]; ?>" min="0" max="3" type="number" class="compJs bold" value="<?php echo $value["niveau"]; ?>"></div><?php
 
                         }
                         
@@ -87,7 +92,7 @@
 
                 };
 
-                $comp = Competence::get_array($id);
+                $comp = Competence::get_array($_SESSION['user']['id']);
 
                 foreach ($comp as $name => $value) {
 
@@ -120,10 +125,10 @@
             
                 <input type="hidden" name="modif" value="info">
 
-                <input type="text" name="nom" placeholder="Nom" value="<?php echo $c->get_nom(); ?>">
-                <input type="text" name="prenom" placeholder="Prenom" value="<?php echo $c->get_prenom(); ?>">
-                <input type="text" name="email" placeholder="Email" value="<?php echo $c->get_email(); ?>">
-                <input type="text" name="tel" placeholder="Téléphone" value="<?php echo $c->get_telephone(); ?>">
+                <input type="text" name="nom" placeholder="Nom" value="<?php echo $c->get_nom(); ?>" required>
+                <input type="text" name="prenom" placeholder="Prenom" value="<?php echo $c->get_prenom(); ?>" required>
+                <input type="text" name="email" placeholder="Email" value="<?php echo $c->get_email(); ?>" required>
+                <input type="text" name="tel" placeholder="Téléphone" value="<?php echo $c->get_telephone(); ?>" required>
                 <input type="text" name="linkedin" placeholder="Linkedin" value="<?php echo $c->get_linkedin(); ?>">
 
                 <input type="submit" value="Envoyer">
@@ -133,12 +138,108 @@
         </div>
         <div class="popup" id="Inter"><div class="nav">Interventions</div>
         
-            <!-- // Comp section // -->
+            <!-- // Inter section // -->
+
+            <form action="/consultant/modifier" method="post">
+
+                <input type="hidden" name="modif" value="int">
+
+                <div class="intervention">
+                    <div class="infos">Date</div>
+                    <div class="infos">Client</div>
+                    <div class="details textCenter">
+                        Détails
+                    </div>
+                </div>
+
+                <div class="intervention">
+                    <div class="infos"><input type="date" name="date" required></div>
+                    <div class="infos"><select name="client" required><option selected disabled>Client</option><?php
+                    
+                        $cl = Client::get_array();
+
+                        foreach ($cl as $key => $value) {
+                            
+                            ?><option value="<?php echo $value['id_client']; ?>"><?php echo $value['entreprise']; ?></option><?php
+
+                        }
+
+                    ?></select></div>
+                    <div class="details textCenter">
+                        <textarea placeholder="Détails de l'intervention" name="details" maxlength="500" rows="10" required></textarea>
+                    </div>
+                    <div class="InterSubmit"><input type="submit" value="Envoyer"></div>
+                </div>
+
+                <?php
+
+                    $arr = $c->get_interventions();
+                    foreach ($arr as $int) {
+
+                ?>
+
+                    <div class="hr"></div>
+                    <div class="intervention">
+                        <div class="infos"><?php echo $int['date']; ?></div>
+                        <div class="infos"><?php echo $int['entreprise']; ?></div>
+                        <div class="details"><?php echo $int['details']; ?></div>
+                    </div>
+
+                <?php
+
+                    }
+
+                ?>
+            
+            </form>
 
         </div>
         <div class="popup" id="Qual"><div class="nav">Qualifications</div>
         
-            <!-- // Comp section // -->
+            <!-- // qual section // -->
+
+            <form action="/consultant/modifier" method="post">
+
+                <input type="hidden" name="modif" value="qual">
+
+                <div class="qualification">
+                    <div class="infos">Qualification</div>
+                    <div class="infos">Date d'obtention</div>
+                    <div class="details textCenter">
+                        Détails
+                    </div>
+                </div>
+
+                <div class="qualification">
+                    <div class="infos"><input type="text" name="nom" placeholder="Nom de Qualification" required></div>
+                    <div class="infos"><input type="date" name="date" required></div>
+                    <div class="details textCenter">
+                        <textarea placeholder="Détails de l'intervention" name="details" maxlength="500" rows="10" required></textarea>
+                    </div>
+                    <div class="QualSubmit"><input type="submit" value="Envoyer"></div>
+                </div>
+
+                <?php
+
+                    $arr = $c->get_qualifications();
+                    foreach ($arr as $qual) {
+
+                ?>
+
+                    <div class="hr"></div>
+                    <div class="qualification">
+                        <div class="infos"><?php echo $qual['nom_qualification']; ?></div>
+                        <div class="infos"><?php echo $qual['date_obtention']; ?></div>
+                        <div class="details"><?php echo $qual['details']; ?></div>
+                    </div>
+
+                <?php
+
+                    }
+
+                ?>
+
+                </form>
 
         </div>
         <div class="popup" id="Graph"><div class="nav">Graphiques</div>
