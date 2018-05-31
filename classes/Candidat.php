@@ -39,7 +39,7 @@ class Candidat {
         $pdo = Database::connect();
 
         $add_candidate = $pdo->prepare("INSERT INTO candidats (nom, prenom, telephone, email, linkedin) VALUES (:nom, :prenom, :telephone, :email, :linkedin)");
-        $add_candidate->execute(array(':nom' => $infos['nom'], ':prenom' => $infos['prenom'], ':telephone' => $infos['telephone'], ':email' => $infos['email'], ':linkedin' => $infos['linkedin']);		
+        $add_candidate->execute(array(':nom' => $infos['nom'], ':prenom' => $infos['prenom'], ':telephone' => $infos['telephone'], ':email' => $infos['email'], ':linkedin' => $infos['linkedin']));	
 
         $pdo =  null;
     }
@@ -51,7 +51,7 @@ class Candidat {
         $delete_candidate->bindParam('id', $this->id);
         $delete_candidate->execute();
 
-        $pdo = null:
+        $pdo = null;
     }
 
     public function edit($infos){
@@ -123,7 +123,7 @@ class Candidat {
             $temp1 = "";
         }
         $statement = $pdo->prepare("INSERT INTO entretiens (id_candidat, id_rh, date_entretien".$temp.") VALUES (:id_candidat, :id_rh, :date_entretien".$temp1.")"); 
-        $statement->execute(array(':id_candidat' => $infos['id_candidat'], ':id_rh' => $infos['id_rh'], ':date_entretien' => $infos['date_entretien']);
+        $statement->execute(array(':id_candidat' => $infos['id_candidat'], ':id_rh' => $infos['id_rh'], ':date_entretien' => $infos['date_entretien']));
 
         $pdo = null;
 
@@ -165,9 +165,9 @@ class Candidat {
             }
             $statement .= " details = :details";
         }
-        $statement .= " WHERE id_candidat = ".this->$id;
-        $edit_candidate = $pdo->prepare($statement);
-        $edit_candidate->execute($infos);		
+        $statement .= " WHERE id_candidat = " . $this->id;
+        $edit_interview = $pdo->prepare($statement);
+        $edit_interview->execute($infos);		
 
         $pdo = null;
 
@@ -197,5 +197,17 @@ class Candidat {
         return $this->linkedin;
     }
 
+    public function get_interviews(){
+        
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("SELECT * from intervieuws WHERE id_consultant = :id");
+        $statement->execute(array(":id" => $this->id));
+
+        $pdo = null;
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    }
 
 }
