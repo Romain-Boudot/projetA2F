@@ -23,3 +23,19 @@ Search::show_graph(6);
 
 
 
+<?php
+
+session_start();
+
+function login_redirect() {
+    header('location: http://' . $_SERVER['HTTP_HOST'] . "/login");
+    exit();
+}
+
+if (isset($_SESSION['user']['connected'])) {
+
+    if (!$_SESSION['user']['connected']) login_redirect();
+
+} else login_redirect();
+
+?>
