@@ -142,6 +142,13 @@ form select {
     background: none;
     margin: 10px 0;
     font-size: 15px;
+    font-family: inherit;
+    color: inherit;
+}
+
+input {
+    color: inherit;
+    font-family: inherit;
 }
 
 form input[type=date] {
@@ -161,6 +168,7 @@ form textarea {
     padding: 10px;
     resize: none;
     font-family: inherit;
+    color: inherit;
 }
 
 input[type=number] {
@@ -180,6 +188,7 @@ form input[type=submit] {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 15px;
 }
 
 .QualSubmit>*,
@@ -194,8 +203,8 @@ form input[type=submit] {
 }
 
 .compListWrapper {
-    width: 80%;
-    margin: 50px 10%;
+    width: calc(100% - 300px);
+    margin: 50px 150px;
 }
 
 .dropdownTrigger {
@@ -269,4 +278,9 @@ form input[type=submit] {
 
 .close:hover {
     background-color: rgba(0, 0, 0, 0.244);
+}
+
+.w-50 {
+    width: calc(50% - 225px) !important;
+    margin: 50px 75px 50px 150px !important;
 }

@@ -21,7 +21,7 @@
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -152,7 +152,8 @@
                         Détails
                     </div>
                 </div>
-
+                
+                <div class="hr"></div>
                 <div class="intervention">
                     <div class="infos"><input type="date" name="date" required></div>
                     <div class="infos"><select name="client" required><option selected disabled>Client</option><?php
@@ -213,6 +214,7 @@
                     </div>
                 </div>
 
+                <div class="hr"></div>
                 <div class="qualification">
                     <div class="infos"><input type="text" name="nom" placeholder="Nom de Qualification" required></div>
                     <div class="infos"><input type="date" name="date" required></div>
@@ -249,6 +251,102 @@
         <div class="popup" id="Graph"><div class="nav">Graphiques</div>
         
             <!-- // Comp section // -->
+
+            <div class="compListWrapper w-50">
+
+                <?php
+
+                    function tab_2($tab, $cpt) {
+
+                        ?><div id="ddc<?php echo $cpt; ?>" class="dropdownContainer"><?php
+
+                        $cpt += 1;
+                        
+                        foreach ($tab as $name => $value) {
+                            
+                            if ($value["enfant"] != null) {
+                                
+                                ?><div id="ddt<?php echo $cpt; ?>" class="dropdownTrigger"><?php echo $name; ?></div><?php
+                                
+                                $returned = tab_2($value["enfant"], $cpt);
+
+                                $cpt = $returned["cpt"];
+
+                            } else {
+
+                                if ($value["niveau"] == null) $value["niveau"] = 0;
+
+                                ?><div class="comp"><?php echo $name; ?> - <span><?php echo $value["niveau"]; ?></span></div><?php
+
+                            }
+                            
+                        }
+
+                        ?></div><?php
+
+                        return array(
+                            "cpt" => $cpt,
+                        );
+
+                    };
+
+                    $comp = Competence::get_array($_SESSION['user']['id']);
+
+                    foreach ($comp as $name => $value) {
+
+                        if (is_array($value)) {
+
+                            ?><div id="ddt<?php echo $cpt; ?>" class="dropdownTrigger"><?php echo $name ?></div><?php
+                            
+                            $returned = tab_2($value["enfant"], $cpt);
+
+                            $cpt = $returned["cpt"];
+
+                        } else {
+
+                            ?><div><?php echo $name; ?> - <?php echo $value; ?></div><?php
+
+                        }
+
+                    }
+
+                ?>
+
+            </div>
+
+            <?php
+
+                $graph = $c->get_graphiques();
+                $graphG = array(
+                    1 => array(
+                        "label" => "",
+                        "data" => "",
+                        "length" => 0
+                    ), 2 => array(
+                        "label" => "",
+                        "data" => "",
+                        "length" => 0
+                    ), 3 => array(
+                        "label" => "",
+                        "data" => "",
+                        "length" => 0
+                    )
+                );
+
+                foreach ($graph as $values) {
+
+                    if ($graphG[$values['id_graphique']]['length'] > 0) {
+                        $graphG[$values['id_graphique']]['label'] .= ",";
+                        $graphG[$values['id_graphique']]['data'] .= ",";
+                    }
+
+                    $graphG[$values['id_graphique']]['label'] .= "\"" . $values['nom'] . "\"";
+                    $graphG[$values['id_graphique']]['data'] .= $values['niveau'];
+                    $graphG[$values['id_graphique']]['length'] += 1;
+
+                }
+
+            ?>
         
         </div>
 

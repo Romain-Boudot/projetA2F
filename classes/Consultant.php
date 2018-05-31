@@ -125,7 +125,8 @@ Class Consultant {
 
     }
 
-    public function add_competence($infos){
+    public function add_competence($infos){ // deprecated
+
         $pdo = Database::connect();
 
         $statement = $pdo->prepare("INSERT INTO competences_consultants(id_competence, id_consultant, niveau) VALUES (:id_competence, :id_consultant, :niveau)");
@@ -154,7 +155,8 @@ Class Consultant {
     
     }
 
-    public function delete_competence($id){
+    public function delete_competence($id){ // deprecated
+        
         $pdo = Database::connect();
 
         $statement = $pdo->prepare("DELETE FROM competences_consultants WHERE id_competence = :id_competence AND id_consultant = :id_consultant");
@@ -170,9 +172,7 @@ Class Consultant {
         $statement = $pdo->prepare("INSERT INTO graphiques (id_graphique, id_consultant, id_competence) VALUES (:number, id_consultant, id_competence)");
         $statement->execute(array(':number'=> $number, ':id_consultant' => $infos['id_consultant'], ':id_competence' => $infos['id_competence']));
 
-$pdo = null;        
-        
-
+        $pdo = null;        
 
     }
 

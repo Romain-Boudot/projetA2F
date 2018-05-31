@@ -238,7 +238,6 @@
                         $graphG[$values['id_graphique']]['label'] .= "\"" . $values['nom'] . "\"";
                         $graphG[$values['id_graphique']]['data'] .= $values['niveau'];
                         $graphG[$values['id_graphique']]['length'] += 1;
-                        
 
                     }
                     //var_dump($graphG);

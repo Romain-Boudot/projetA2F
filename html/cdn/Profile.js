@@ -54,3 +54,39 @@ class Qualification {
     }
 
 }
+
+class Graph {
+
+    constructor() {
+
+        this.g1 = {
+            includes : function(id) {
+                for (var a in this) {if (this[a] == id) return true;} return false;
+            },
+            push : function(item) {
+
+            },
+            array : []
+        };
+        this.g2 = {
+            includes : function(id) {
+                for (var a in this) {if (this[a] == id) return true;} return false;
+            }
+        };
+        this.g3 = {
+            includes : function(id) {
+                for (var a in this) {if (this[a] == id) return true;} return false;
+            }
+        };
+
+    }
+
+    addG1(id) {
+
+        if (this.g1.includes(id)) return;
+
+        this.g1;
+
+    }
+
+}
