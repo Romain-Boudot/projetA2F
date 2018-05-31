@@ -276,7 +276,12 @@
 
                                 if ($value["niveau"] == null) $value["niveau"] = 0;
 
-                                ?><div class="comp"><?php echo $name; ?> - <span><?php echo $value["niveau"]; ?></span></div><?php
+                                ?><div class="comp">
+                                    <?php echo $name; ?> - <span><?php echo $value["niveau"]; ?></span>
+                                    <span onclick="g.addG3(<?php echo $value["id_competence"]; ?>, <?php echo $value["niveau"]; ?>, '<?php echo $name; ?>')" class="floatRight">Graph 3</span>
+                                    <span onclick="g.addG2(<?php echo $value["id_competence"]; ?>, <?php echo $value["niveau"]; ?>, '<?php echo $name; ?>')" class="floatRight">Graph 2</span>
+                                    <span onclick="g.addG1(<?php echo $value["id_competence"]; ?>, <?php echo $value["niveau"]; ?>, '<?php echo $name; ?>')" class="floatRight">Graph 1</span>
+                                </div><?php
 
                             }
                             
@@ -347,6 +352,30 @@
                 }
 
             ?>
+
+            <div class="graph">
+
+                <div class="graph1"><span>Graphique 1</span>
+
+                </div>
+
+                <div class="graph2"><span>Graphique 2</span>
+
+                </div>
+
+                <div class="graph3"><span>Graphique 3</span>
+                
+                </div>
+
+            </div>
+
+            <script>
+
+                var g = new Graph;
+                g.load();
+                console.log(g);
+        
+            </script>
         
         </div>
 
@@ -359,3 +388,10 @@
 
 </body>
 </html>
+
+<!-- 
+
+ bouton envoier graph
+ load les graph deja present dans la base de données
+
+-->

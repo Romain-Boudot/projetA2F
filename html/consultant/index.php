@@ -230,6 +230,8 @@
 
                     foreach ($graph as $values) {
 
+                        if ($values["niveau"] == null) $values["niveau"] = 0;
+
                         if ($graphG[$values['id_graphique']]['length'] > 0) {
                             $graphG[$values['id_graphique']]['label'] .= ",";
                             $graphG[$values['id_graphique']]['data'] .= ",";
@@ -240,7 +242,6 @@
                         $graphG[$values['id_graphique']]['length'] += 1;
 
                     }
-                    //var_dump($graphG);
 
                 if ($graphG[1]["length"] > 2) { ?>
 
@@ -257,23 +258,23 @@
                 
                 if ($graphG[2]["length"] > 2) { ?>
                 
-                    <canvas id="chart-p2" class="chartjs" width="200" height="200"></canvas>
-                    <script>
+                <canvas id="chart-p2" class="chartjs" width="200" height="200"></canvas>
+                <script>
                     var co2 = new chartOption();
                     co2.chart.data.datasets[0].data = [<?php echo $graphG[2]["data"]; ?>]
-                    co2.chart.data.labels = [<?php echo $graphG[2]["length"]; ?>]
+                    co2.chart.data.labels = [<?php echo $graphG[2]["label"]; ?>]
                     new Chart(document.getElementById("chart-p2"), co2.option);
-                    </script>
+                </script>
                 
                 <?php }
                 
-                if ($graphG[2]["length"] > 2) { ?>
+                if ($graphG[3]["length"] > 2) { ?>
 
-                    <canvas id="chart-p3" class="chartjs" width="200" height="200"></canvas>
-                    <script>
+                <canvas id="chart-p3" class="chartjs" width="200" height="200"></canvas>
+                <script>
                     var co3 = new chartOption();
                     co3.chart.data.datasets[0].data = [<?php echo $graphG[3]["data"]; ?>]
-                    co3.chart.data.labels = [<?php echo $graphG[3]["length"]; ?>]
+                    co3.chart.data.labels = [<?php echo $graphG[3]["label"]; ?>]
                     new Chart(document.getElementById("chart-p3"), co3.option);
                 </script>
 

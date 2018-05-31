@@ -135,7 +135,7 @@ ul>li {
 
 #chart-wrapper canvas {
     max-height: 300px;
-    max-width: 300px;
+    max-width: 33%;
     display: inline-block !important;
 }
 
