@@ -32,7 +32,7 @@
     <script src="/cdn/Popup.js"></script>
     <script src="/cdn/Profile.js"></script>
     <script src="/cdn/Post.js"></script>
-    <title>A2F Advisior</title>
+    <title>A2F Advisor</title>
 </head>
 <body>
     <nav>
@@ -359,3 +359,6 @@
 
 </body>
 </html>
+
+
+

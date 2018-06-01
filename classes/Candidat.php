@@ -201,7 +201,7 @@ class Candidat {
         
         $pdo = Database::connect();
 
-        $statement = $pdo->prepare("SELECT * from intervieuws WHERE id_consultant = :id");
+        $statement = $pdo->prepare("SELECT i.*, (SELECT nom FROM RH rh WHERE rh.id_rh = i.id_rh) as nom, (SELECT prenom FROM RH rh WHERE rh.id_rh = i.id_rh) as prenom from entretiens i WHERE id_candidat = :id");
         $statement->execute(array(":id" => $this->id));
 
         $pdo = null;

@@ -47,3 +47,48 @@ $candidat = new Candidat($id);
         <a class="bottom btn h-56 modif-profile bold" href="/candidat/modifier">Modifier le profil</a>
 
     </nav>
+
+    <div class="main-wrapper">
+        <div class="relative-wrapper-container">
+            <div style="width: 100%; margin-bottom: 20px; position: relative; height: 0px;overflow: hidden;">fixing div</div>
+
+            <div id="onglets-wrapper">
+                <div id="ot1" class="onglet-label ongletTrigger">Entretiens</div>
+       <div id="oc1" class="onglet ongletContainer">
+                    <div class="intervention">
+                        <div class="infos">Date</div>
+                        <div class="infos">RH</div>
+                        <div class="details textCenter">
+                            Détails
+                        </div>
+                    </div>
+
+<?php
+
+$tab = $candidat->get_interviews();
+foreach ($tab as $int) {
+?>
+
+                    <div class="hr"></div>
+                    <div class="intervention">
+                        <div class="infos"><?php echo $int['date_entretien']; ?></div>
+                        <div class="infos"><?php echo $int['prenom'];
+echo " ";
+echo $int['nom']; ?></div>
+
+                        <div class="details"><?php echo $int['details']; ?></div>
+                    </div>
+
+<?php
+}
+?>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
