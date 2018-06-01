@@ -96,7 +96,7 @@ class Graph {
 
     addG1(id, niveau, name) {
         if (this.g1.push(id, niveau)) {
-            document.querySelector('.graph1').innerHTML += '<div class="graphComp" data-id="' + id + '" data-lvl="' + niveau + '">' + name + " - " + niveau +
+            document.querySelector('.graph1').innerHTML += '<div class="graphComp" data-id="' + id + '" data-lvl="' + niveau + '">' + name +
             "<div onclick='g.delG1(" + id + ")' class='del'>&times;</div></div>";
         }
     }
@@ -107,7 +107,7 @@ class Graph {
     }
     addG2(id, niveau, name) {
         if (this.g2.push(id, niveau)) {
-            document.querySelector('.graph2').innerHTML += '<div class="graphComp" data-id="' + id + '" data-lvl="' + niveau + '">' + name + " - " + niveau +
+            document.querySelector('.graph2').innerHTML += '<div class="graphComp" data-id="' + id + '" data-lvl="' + niveau + '">' + name +
             "<div onclick='g.delG2(" + id + ")' class='del'>&times;</div></div>";
         }
     }
@@ -118,7 +118,7 @@ class Graph {
     }
     addG3(id, niveau, name) {
         if (this.g3.push(id, niveau)) {
-            document.querySelector('.graph3').innerHTML += '<div class="graphComp" data-id="' + id + '" data-lvl="' + niveau + '">' + name + " - " + niveau +
+            document.querySelector('.graph3').innerHTML += '<div class="graphComp" data-id="' + id + '" data-lvl="' + niveau + '">' + name +
             "<div onclick='g.delG3(" + id + ")' class='del'>&times;</div></div>";
         }
     }

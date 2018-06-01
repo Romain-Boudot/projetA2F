@@ -70,6 +70,7 @@ class chartOptionBaton {
                 }]
             },
             "options": {
+                "pointLabelSeperator": "\n",
                 "tooltips": {
                     "enabled": false
                 },

@@ -163,7 +163,7 @@ static public function lookup(){
 
     $statement .= " GROUP BY c.id_consultant ORDER BY c.nom";
 
-    var_dump($statement);
+    // var_dump($statement);
     $query = $pdo->prepare($statement);
     $query->execute($bindparam);
     $result = $query->fetchAll(PDO::FETCH_ASSOC);

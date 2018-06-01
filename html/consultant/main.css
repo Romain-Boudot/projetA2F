@@ -134,8 +134,7 @@ ul>li {
 }
 
 #chart-wrapper canvas {
-    max-height: 300px;
-    max-width: 33%;
+    max-width: 350px;
     display: inline-block !important;
 }
 
