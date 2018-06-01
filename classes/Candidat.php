@@ -12,14 +12,14 @@ class Candidat {
     public function __construct($id){
         $pdo = Database::connect();
 
-        $statement = $pdo->prepare("SELECT * FROM candidats WHERE id = :id");
+        $statement = $pdo->prepare("SELECT * FROM candidats WHERE id_candidat = :id");
         $statement->bindParam('id', $id);
         $statement->execute();
 
         $infos = $statement->fetch();
 
         if($statement){
-            $this->id = $infos['id'];
+            $this->id = $infos['id_candidat'];
             $this->nom = $infos['nom'];
             $this->prenom = $infos['prenom'];
             $this->telephone = $infos['telephone'];

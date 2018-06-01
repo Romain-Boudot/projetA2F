@@ -1,21 +1,20 @@
 
 <?php
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-    include_once $_SERVER["DOCUMENT_ROOT"] . "/projetA2F/classes/Database.php";
-    include_once $_SERVER["DOCUMENT_ROOT"] . "/projetA2F/classes/Competence.php";
-    include_once $_SERVER["DOCUMENT_ROOT"] . "/projetA2F/classes/Candidat.php";
-    
-    session_start();
 
-    // var_dump($_SESSION);
-    // var_dump($_GET);
+include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Database.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Competence.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Candidat.php";
 
-    $id = $_GET['id'];
-        
-    $candidat = new Candidat($id);
+session_start();
+
+// var_dump($_SESSION);
+// var_dump($_GET);
+
+$id = $_GET['id'];
+
+$candidat = new Candidat($id);
     
 ?>
 <!DOCTYPE html>
@@ -25,14 +24,14 @@ error_reporting(E_ALL);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/cdn/main.css">
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="/candidat/main.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="/cdn/Dropdown.js"></script>
     <title>A2F Advisor</title>
 </head>
 <body>
 
-    <?php include $_SERVER["DOCUMENT_ROOT"] . "/projetA2F/includes/header.php" ?>
+    <?php include $_SERVER["DOCUMENT_ROOT"] . "/../includes/header.php" ?>
     
     <nav>
         <div id="image-profile">
