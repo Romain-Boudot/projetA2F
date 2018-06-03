@@ -272,3 +272,42 @@ class Search {
 
 
 // note l'ajout d'une comp reset le select des autres
+
+class S {
+
+    constructor(inputDiv) {
+
+        this.inputDiv = inputDiv;
+
+        inputDiv.onkeydown = function(event) {            
+            if (event.keyCode == 13 || event.keyCode == 188) {
+                return false;
+            }
+        };
+
+        inputDiv.addEventListener("keyup", function(event) {
+
+            event.target.a.keyup(event);
+
+        });
+        inputDiv.a = this;
+
+    }
+
+    keyup(event) {
+
+        console.log(event);
+        if (event.keyCode == 188) {
+
+            var filter = document.getElementById('inputFilter');
+            var input = document.getElementById('textInput');
+            var text = input.innerText;
+            input.innerText = "";
+            filter.innerHTML = filter.innerHTML + "<div contenteditable='false'>" + text + "</div>";
+            input.focus();
+
+        }
+
+    }
+
+}

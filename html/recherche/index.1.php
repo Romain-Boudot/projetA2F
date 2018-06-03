@@ -16,7 +16,7 @@ session_start();
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="/cdn/main.css">
-    <link rel="stylesheet" href="/recherche/main.1.css">
+    <link rel="stylesheet" href="/recherche/main.css">
     <script src="/cdn/Popup.js"></script>
     <script src="/cdn/Dropdown.js"></script>
     <script src="/cdn/Search.js"></script>
@@ -30,12 +30,7 @@ session_start();
     <div class="main-wrapper">
 
         <div class="search">
-
-            <div id="input" class="searchBar"><div id="inputFilter"></div><div id="textInput"></div></div>
-
-            <script>
-                var s = new S(document.getElementById('input'));
-            </script>
+            <input id="inputCons" type="text" class="searchBar" placeholder="Entrez un nom (optionnel)">
 
             <?php
 
