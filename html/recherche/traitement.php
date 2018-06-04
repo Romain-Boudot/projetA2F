@@ -6,18 +6,8 @@ session_start();
 
 $search = new Search();
 
-//$g =  $search->show_graph($id_processing);
+$g =  $search->show_graph($id_processing);
 
-$g = array(
-    "G1" => array(
-        "nom" => array("comp1", "comp2", "comp3"),
-        "count" => array(1, 2, 3)
-    ),
-    "G2" => array(
-        "nom" => array("comp1", "comp2", "comp3"),
-        "average" => array(1, 2, 3)
-    )
-);
 
 ?>
 {
