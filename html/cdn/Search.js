@@ -275,22 +275,39 @@ class Search {
 
 class S {
 
-    constructor(inputDiv) {
+    constructor() {
 
-        this.inputDiv = inputDiv;
+        var input = document.getElementById('input');
+        var inputFilter = document.getElementById('inputFilter');
+        var textInput = document.getElementById('textInput');
 
-        inputDiv.onkeydown = function(event) {            
+        this.DOMelem = {
+            input,
+            inputFilter,
+            textInput
+        };
+
+        this.DOMelem.input.Object = this;
+        this.DOMelem.inputFilter.Object = this;
+        this.DOMelem.textInput.Object = this;
+
+        this.DOMelem.input.onclick = function(event) {
+
+            event.target.Object.DOMelem.textInput.focus();
+
+        }
+
+        this.DOMelem.textInput.onkeydown = function(event) {            
             if (event.keyCode == 13 || event.keyCode == 188) {
                 return false;
             }
         };
 
-        inputDiv.addEventListener("keyup", function(event) {
+        this.DOMelem.textInput.addEventListener("keyup", function(event) {
 
-            event.target.a.keyup(event);
+            event.target.Object.keyup(event);
 
         });
-        inputDiv.a = this;
 
     }
 
@@ -299,12 +316,14 @@ class S {
         console.log(event);
         if (event.keyCode == 188) {
 
-            var filter = document.getElementById('inputFilter');
-            var input = document.getElementById('textInput');
-            var text = input.innerText;
-            input.innerText = "";
-            filter.innerHTML = filter.innerHTML + "<div contenteditable='false'>" + text + "</div>";
-            input.focus();
+            var obj = event.target.Object;
+
+            var text = obj.DOMelem.textInput.innerText;
+            obj.DOMelem.textInput.innerText = "";
+
+            var div = document.createElement("div");
+            div.innerText = text;
+            obj.DOMelem.textInput.insertBefore(div, undefined);
 
         }
 

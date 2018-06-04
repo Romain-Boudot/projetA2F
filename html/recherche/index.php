@@ -31,10 +31,14 @@ session_start();
 
         <div class="search">
 
-            <div id="input" class="searchBar"><div id="inputFilter"></div><div id="textInput"></div></div>
+            <div id="input" class="searchBar">
+                <div id="inputFilter">
+                    <div id="textInput" contenteditable="true"></div>
+                </div>
+            </div>
 
             <script>
-                var s = new S(document.getElementById('input'));
+                var s = new S;
             </script>
 
             <?php

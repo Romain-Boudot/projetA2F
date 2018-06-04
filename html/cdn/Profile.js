@@ -47,7 +47,7 @@ class Competence {
 
         })
 
-        Post.send("/consultant/modifier", {
+        Post.send("/consultant/modifier/", {
             "comp" : encodeURI(JSON.stringify(arr)),
             "modif" : "comp"
         });
@@ -60,7 +60,7 @@ class Intervention {
 
     static del(id) {
 
-        Post.send("/consultant/modifier", {
+        Post.send("/consultant/modifier/", {
             "action" : "delete",
             "modif" : "int",
             "id" : id
@@ -74,7 +74,7 @@ class Qualification {
 
     static del(id) {
 
-        Post.send("/consultant/modifier", {
+        Post.send("/consultant/modifier/", {
             "action" : "delete",
             "modif" : "qual",
             "id" : id
@@ -144,7 +144,7 @@ class Graph {
 
     send() {
 
-        Post.send("/consultant/modifier", {
+        Post.send("/consultant/modifier/", {
             "modif": "graph",
             "graph1": encodeURI(JSON.stringify(this.g1.values)),
             "graph2": encodeURI(JSON.stringify(this.g2.values)),

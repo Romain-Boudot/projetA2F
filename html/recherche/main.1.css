@@ -55,12 +55,29 @@
     cursor: text;
 }
 
-.searchBar>div>div {
+[contenteditable]:focus {
+    outline: 0px solid transparent;
+}
+
+#inputFilter {
+    max-width: 100%;
+}
+
+#textInput {
+    border: none !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#inputFilter>div {
     height: 26px;
     line-height: 23px;
     padding: 3px 6px;
     margin: 3px 6px;
     border: 1px solid rgba(0, 0, 0, 0.144);
+    max-width: calc(100% - 13px);
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 input[type=text] {
