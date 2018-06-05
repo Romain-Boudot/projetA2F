@@ -171,17 +171,48 @@ error_reporting(E_ALL);
 
                         }
 
-                    ?>
+?>
                 </div>
 
-                <script>
 
-                    Dropdown.load();
 
-                </script>
-            
+                        <script>
+
+                        Dropdown.load();
+
+                        </script>
+
             </div>
 
+<?php
+                        $step = $candidat->get_etape();
+?>
+
+        <div id="timeLine">
+            <div class="line">
+                <div class="coloredLine step<?php echo $step; ?>"></div>
+                <div class="point<?php if ($step >= 1) echo " colored"; ?>">
+                    <div class="pointLabel">
+                        1ere appel téléphonique
+                    </div>
+                </div>
+                <div class="point<?php if ($step >= 2) echo " colored"; ?>">
+                    <div class="pointLabel">
+                        1er entretien
+                    </div>
+                </div>
+                <div class="point<?php if ($step >= 3) echo " colored"; ?>">
+                    <div class="pointLabel">
+                        2nd entretien
+                    </div>
+                </div>
+                <div class="point<?php if ($step >= 4) echo " colored"; ?>">
+                    <div class="pointLabel">
+                        3ème entretien
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
 

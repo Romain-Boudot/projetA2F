@@ -170,82 +170,6 @@ ul>li {
     overflow: hidden;
 }
 
-#timeLine {
-    position: relative;
-    bottom: 0;
-    height: 70px;
-    width: 100%;
-    /*background-color: rgba(128, 128, 128, 0.250);*/
-    margin-top: 20px;
-}
-
-#timeLine .line {
-    width: 80%;
-    height: 14px;
-    background-color: #2f336f;
-    position: relative;
-    left: 10%;
-    top: 31px;
-    border-radius: 14px;
-}
-
-#timeLine .line .point {
-    position: absolute;
-    height: 16px;
-    width: 16px;
-    border-radius: 10px;
-    top: -3px;
-    background-color: #fff;
-    border: 2px solid #2f336f;
-}
-
-#timeLine .line .point:hover {
-    background-color: #2f336f;
-    border: 2px solid #fff;
-}
-
-#timeLine .line .point .pointLabel {
-    position: absolute;
-    text-align: center;
-    font-size: 80%;
-    width: 80px;
-    top: 200%;
-    left: 50%;
-    margin-left: -40px;
-}
-
-#timeLine .line .point .tooltip {
-    text-align: center;
-    position: absolute;
-    width: 120px;
-    bottom: 200%;
-    left: 50%;
-    margin-left: -70px;
-    background-color: #575757c9;
-    color: white;
-    border-radius: 5px;
-    padding: 5px 10px;
-    visibility: hidden;
-    opacity: 0;
-}
-
-#timeLine .line .point .tooltip::after {
-    content: " ";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: #575757c9 transparent transparent transparent;
-}
-
-#timeLine .line .point:hover .tooltip {
-    visibility: visible;
-    opacity: 1;
-    transition: 0.4s opacity ease;
-}
-
 .relative-wrapper-container {
     position: relative;
     width: 100%;
@@ -360,4 +284,136 @@ ul>li {
 
 .dropdownContainer {
     box-shadow: inset 0px 0.9px 0px 0px rgba(128, 128, 128, 0.445), inset 0px -0.9px 0px 0px rgba(128, 128, 128, 0.445);
+}
+
+
+.wrapper{
+    max-height: 500px;
+    width: 60vw;
+    margin: 200px;
+    background-color: white;
+}
+
+#timeLine {
+    position: relative;
+    bottom: 0;
+    height: 70px;
+    width: 100%;
+    /*background-color: rgba(128, 128, 128, 0.250);*/
+    margin-top: 20px;
+}
+
+#timeLine .line {
+    width: 80%;
+    height: 14px;
+    background-color: #2f336f;
+    position: relative;
+    left: 10%;
+    top: 31px;
+    border-radius: 14px;
+}
+
+#timeLine .line .coloredLine {
+    height: 100%;
+    transition: 0.2s width ease;
+    background-color: #ff7518;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-radius: 14px;
+}
+
+#timeLine .line .point {
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    border-radius: 10px;
+    top: -3px;
+    background-color: #fff;
+    border: 2px solid #2f336f;
+    z-index: 200;
+}
+
+#timeLine .line .coloredLine.step2 {
+    width: 33%;
+}
+
+#timeLine .line .coloredLine.step3 {
+    width: 66%;
+}
+
+#timeLine .line .coloredLine.step4 {
+    width: 100%;
+}
+
+#timeLine .line .colored {
+    border-color: #ff7518 !important;
+}
+
+#timeLine .line .colored:hover {
+    border-color: #fff !important;
+    background-color: #ff7518 !important;
+}
+
+#timeLine .line .point:nth-child(2) {
+    left: calc(0px - 8px);
+}
+
+#timeLine .line .point:nth-child(3) {
+    left: calc(33% - 8px);
+}
+
+#timeLine .line .point:nth-child(4) {
+    left: calc(66% - 8px);
+}
+
+#timeLine .line .point:nth-child(5) {
+    left: calc(100% - 8px);
+}
+
+#timeLine .line .point:hover {
+    background-color: #2f336f;
+    border: 2px solid #fff;
+}
+
+#timeLine .line .point .pointLabel {
+    position: absolute;
+    text-align: center;
+    font-size: 80%;
+    width: 80px;
+    top: 200%;
+    left: 50%;
+    margin-left: -40px;
+}
+
+#timeLine .line .point .tooltip {
+    text-align: center;
+    position: absolute;
+    width: 120px;
+    bottom: 200%;
+    left: 50%;
+    margin-left: -70px;
+    background-color: #575757c9;
+    color: white;
+    border-radius: 5px;
+    padding: 5px 10px;
+    visibility: hidden;
+    opacity: 0;
+}
+
+#timeLine .line .point .tooltip::after {
+    content: " ";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #575757c9 transparent transparent transparent;
+}
+
+#timeLine .line .point:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+    transition: 0.4s opacity ease;
 }

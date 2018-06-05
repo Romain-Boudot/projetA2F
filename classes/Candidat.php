@@ -7,8 +7,8 @@ class Candidat {
     private $telephone;
     private $email;
     private $linkedin;
-
-
+    private $etape;
+    
     public function __construct($id){
         $pdo = Database::connect();
 
@@ -25,6 +25,7 @@ class Candidat {
             $this->telephone = $infos['telephone'];
             $this->email = $infos['email'];
             $this->linkedin = $infos['linkedin'];
+            $this->etape = $infos['etape'];
         } elseif(!$statement){
             
         }
@@ -241,6 +242,10 @@ class Candidat {
 
     public function get_linkedin(){
         return $this->linkedin;
+    }
+
+    public function get_etape(){
+        return $this->etape;
     }
 
     public function get_interviews(){
