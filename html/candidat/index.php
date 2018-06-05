@@ -1,20 +1,22 @@
-
 <?php
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Database.php";
-include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Competence.php";
-include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Candidat.php";
+    include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Database.php";
+    include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Competence.php";
+    include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Candidat.php";
+    include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/RH.php"; 
+    session_start();
 
-session_start();
+    // var_dump($_SESSION);
+    // var_dump($_GET);
 
-// var_dump($_SESSION);
-// var_dump($_GET);
+    $id = $_GET['id'];
 
-$id = $_GET['id'];
 
-$candidat = new Candidat($id);
+    $candidat = new Candidat($id);
     
 ?>
 <!DOCTYPE html>
@@ -26,6 +28,8 @@ $candidat = new Candidat($id);
     <link rel="stylesheet" href="/cdn/main.css">
     <link rel="stylesheet" href="/candidat/main.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="/cdn/Chart.bundle.min.js"></script>
+    <script src="/cdn/Chart.js"></script>
     <script src="/cdn/Dropdown.js"></script>
     <title>A2F Advisor</title>
 </head>
@@ -44,17 +48,16 @@ $candidat = new Candidat($id);
         <div class="profile-info" data-info="telephone"><?php echo $candidat->get_telephone(); ?></div></div>
         <div class="profile-info" data-info="linkedin"><?php echo $candidat->get_linkedin(); ?></div></div>
         
-        <a class="bottom btn h-56 modif-profile bold" href="/candidat/modifier">Modifier le profil</a>
+        <a class="bottom btn h-56 modif-profile bold" href="/candidat/modifier">Modifier mon profil</a>
 
     </nav>
 
     <div class="main-wrapper">
         <div class="relative-wrapper-container">
             <div style="width: 100%; margin-bottom: 20px; position: relative; height: 0px;overflow: hidden;">fixing div</div>
-
             <div id="onglets-wrapper">
-                <div id="ot1" class="onglet-label ongletTrigger">Entretiens</div>
-       <div id="oc1" class="onglet ongletContainer">
+                <div id="ot1" class="onglet-label ongletTrigger">Entretiens</div><div id="ot2" class="onglet-label ongletTrigger">Qualifications</div><div id="ot3" class="onglet-label ongletTrigger">Compétences</div>
+                <div id="oc1" class="onglet ongletContainer">
                     <div class="intervention">
                         <div class="infos">Date</div>
                         <div class="infos">RH</div>
@@ -63,28 +66,120 @@ $candidat = new Candidat($id);
                         </div>
                     </div>
 
-<?php
+                    <?php
 
-$tab = $candidat->get_interviews();
-foreach ($tab as $int) {
-?>
+                        $tab = $candidat->get_interviews();
+                        foreach ($tab as $int) {
+                            ?>
 
                     <div class="hr"></div>
                     <div class="intervention">
                         <div class="infos"><?php echo $int['date_entretien']; ?></div>
-                        <div class="infos"><?php echo $int['prenom'];
-echo " ";
-echo $int['nom']; ?></div>
-
+                        <div class="infos"><?php echo $int['nom']; echo " "; echo $int['prenom']; ?></div>
                         <div class="details"><?php echo $int['details']; ?></div>
                     </div>
 
-<?php
-}
-?>
-
-
+                            <?php
+                        }
+                    ?>
+                
                 </div>
+                <div id="oc2" class="onglet ongletContainer">
+                    <div class="qualification">
+                        <div class="infos">Qualification</div>
+                        <div class="infos">Date d'obtention</div>
+                        <div class="details textCenter">
+                            Détails
+                        </div>
+                    </div>
+
+                    <?php           
+                    
+                    $tab = $candidat->get_qualifications();
+                    foreach ($tab as $int) {
+                    
+                    ?>
+
+                    <div class="hr"></div>
+                    <div class="qualification">
+                        <div class="infos"><?php echo $int['nom_qualification']; ?></div>
+                        <div class="infos"><?php echo $int['date_obtention']; ?></div>
+                        <div class="details"><?php echo $int['details']; ?></div>
+                    </div>   
+
+                    <?php
+                        }
+                    ?>           
+                    
+                </div>
+                <div id="oc3" class="onglet ongletContainer">
+                    <?php
+
+                        $cpt = 0;
+                        
+                        function tab($tab, $cpt) {
+
+                            ?><div id="ddc<?php echo $cpt; ?>" class="dropdownContainer"><?php
+
+                            $cpt += 1;
+                            
+                            foreach ($tab as $name => $value) {
+                                
+                                if ($value["enfant"] != null) {
+                                    
+                                    ?><div id="ddt<?php echo $cpt; ?>" class="dropdownTrigger"><?php echo $name; ?></div><?php
+                                    
+                                    $returned = tab($value["enfant"], $cpt);
+    
+                                    $cpt = $returned["cpt"];
+    
+                                } else {
+    
+                                    if ($value["niveau"] == null) $value["niveau"] = 0;
+
+                                    ?><div class="comp"><?php echo $name; ?> - <?php echo $value["niveau"]; ?></div><?php
+    
+                                }
+                                
+                            }
+
+                            ?></div><?php
+
+                            return array(
+                                "cpt" => $cpt,
+                            );
+                        
+                        };
+
+                        $comp = Competence::get_array($id);
+                        
+                        foreach ($comp as $name => $value) {
+                        
+                            if (is_array($value)) {
+
+                                ?><div id="ddt<?php echo $cpt; ?>" class="dropdownTrigger"><?php echo $name ?></div><?php
+                                
+                                $returned = tab($value["enfant"], $cpt);
+
+                                $cpt = $returned["cpt"];
+
+                            } else {
+
+                                ?><div><?php echo $name; ?> - <?php echo $value; ?></div><?php
+
+                            }
+
+                        }
+
+                    ?>
+                </div>
+
+                <script>
+
+                    Dropdown.load();
+
+                </script>
+            
             </div>
 
         </div>

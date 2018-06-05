@@ -27,8 +27,6 @@ class Candidat {
             $this->linkedin = $infos['linkedin'];
         } elseif(!$statement){
             
-//            header('location: ../search/');
-//HEADER A CHANGER
         }
         $pdo = null;
 
@@ -174,6 +172,54 @@ class Candidat {
 
     }
 
+
+    public function add_qualification($infos){
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("INSERT INTO qualifications_consultants ( nom_qualification, id_candidat, date_obtention, details) VALUES (:nom_qualification, :id_candidat, :date_obtention, :details)");
+        $statement->execute(array(':nom_qualification' => $infos['nom_qualification'], ':id_candidat' => $this->id, ':date_obtention' => $infos['date_obtention'], ':details' => $infos['details']));
+
+    }
+
+    public function delete_qualification($id){
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("DELETE FROM qualifications_consultants WHERE id_qualification = :id_qualification AND id_candidat = :id_candidat");
+        $statement->execute(array(':id_qualification' => $id, ':id_candidat' => $this->id));
+
+    }
+
+    public function add_competence($infos){ // deprecated
+
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("INSERT INTO competences_candidats(id_competence, id_candidat, niveau) VALUES (:id_competence, :id_candidat, :niveau)");
+        $statement->execute(array(':id_competence' => $infos['id_competence'], ':id_candidat' => $this->id, ':niveau' => $infos['niveau']));
+
+    }
+
+    public function edit_competence($infos){
+
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("DELETE FROM competences_candidats WHERE id_competence = :id_competence AND id_candidat = :id_candidat");
+        $statement->execute(array(
+            ":id_candidat" => $this->id,
+            ":id_competence" => $infos['id_competence']
+        ));
+        if ($infos["niveau"] == 0) return;
+        $statement = $pdo->prepare("INSERT INTO competences_candidats (niveau, id_candidat, id_competence) VALUES (?, ?, ?)");
+        $statement->execute(array(
+            $infos['niveau'],
+            $this->id,
+            $infos['id_competence']
+        ));
+
+        $pdo = null; 
+    
+    }
+
+
     public function get_nom(){
         return $this->nom;
     }
@@ -209,5 +255,20 @@ class Candidat {
         return $statement->fetchAll(PDO::FETCH_ASSOC);
 
     }
+
+    
+    public function get_qualifications(){ 
+
+        $pdo = Database::connect(); 
+
+        $statement = $pdo->prepare("SELECT * FROM qualifications_candidats WHERE id_candidat = :id"); 
+        $statement->execute(array(":id" => $this->id)); 
+
+        $pdo = null; 
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);    
+
+
+    } 
 
 }

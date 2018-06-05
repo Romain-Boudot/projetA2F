@@ -34,7 +34,7 @@
 
         <img src="/images/logo-a2f-blanc-02.svg" alt="logo a2f" height="60">
 
-        <form action="http://<?php echo $_SERVER['HTTP_HOST'];?>/identification" method="post">
+        <form action="http://<?php echo $_SERVER['HTTP_HOST'];?>/identification/" method="post">
             <h3>Connexion</h3><br>
             <input name="login" type="text" placeholder="identifiant"><br>
             <input name="password" type="password" placeholder="mot de passe"><br>
