@@ -1,5 +1,10 @@
 <?php
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
     include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Database.php";
     include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Competence.php";
     include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/RH.php";    
@@ -152,7 +157,7 @@
                     <div class="infos"><input type="date" name="date" required></div>
                     <div class="infos"><select name="client" required><option selected disabled>RH</option><?php
                     
-                        $cl = Client::get_array();
+                        $cl = RH::get_array();
 
                         foreach ($cl as $key => $value) {
                             
@@ -169,14 +174,14 @@
 
                 <?php
 
-                    $arr = $c->get_interventions();
-                    foreach ($arr as $int) {
+                    $arr = $c->get_interviews();
+                        foreach ($arr as $int) {
 
                 ?>
 
                     <div class="hr"></div>
                     <div class="intervention">
-                        <div class="infos"><?php echo $int['date']; ?></div>
+                        <div class="infos"><?php echo $int['date_entretien']; ?></div>
                         <div class="infos"><?php echo $int['nom']; echo " "; echo $int['prenom']; ?></div>
                         <div class="details"><?php echo $int['details']; ?></div>
                         <div class="InterSubmit"><div onclick="Intervention.del(<?php echo $int['id_entretien']; ?>)" class="delInt">Supprimer</div></div>
@@ -210,7 +215,7 @@
 
                 <div class="hr"></div>
                 <div class="qualification">
-                    <div class="infos"><input type="text" name="nom" placeholder="Nom de Qualification" required></div>
+                    <div class="infos"><input type="text" name="nom" placeholder="Nom de la qualification" required></div>
                     <div class="infos"><input type="date" name="date" required></div>
                     <div class="details textCenter">
                         <textarea placeholder="Détails de la qualification" name="details" maxlength="500" rows="10" required></textarea>

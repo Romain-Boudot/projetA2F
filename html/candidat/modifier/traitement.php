@@ -46,8 +46,8 @@ error_reporting(E_ALL);
             
             if (isset($_POST['client']) && isset($_POST['date']) && isset($_POST['details'])) {
                 
-                $c->add_intervention(array(
-                    "id_client" => $_POST["client"],
+                $c->add_interview(array(
+                    "id_rh" => $_POST["rh"],
                     "date" => $_POST["date"],
                     "details" => $_POST["details"]
                 ));
@@ -58,7 +58,7 @@ error_reporting(E_ALL);
 
             if (isset($_POST['id'])) {
 
-                $c->delete_intervention($_POST['id']);
+                $c->delete_interview($_POST['id']);
 
             }
 
