@@ -75,69 +75,20 @@ Class Consultant {
         $pdo = null;
     }
 
-    public function edit($infos){
-        $pdo = Database::connect();
-        $first = true;
-        $statement = "UPDATE consultants SET ";
-        if (isset($infos[':nom'])) {
-            if (!$first) {
-                $statement .= ",";
-            }
-            $statement .= " nom = :nom";
+    public function send_modif(){
+        
+        var_dump($this);
 
-            $first = false;
-        }
-
-        if (isset($infos[':prenom'])) {
-            if (!$first) {
-                $statement .= ",";
-            }
-            $statement .= " prenom = :prenom";
-            $first = false;
-        }
-
-        if (isset($infos[':telephone'])) {
-            if (!$first) {
-                $statement .= ",";
-            }
-            $statement .= " telephone = :telephone";
-            $first = false;
-        }
-
-        if (isset($infos[':email'])) {
-            if (!$first) {
-                $statement .= ",";
-            }
-            $statement .= " email = :email";
-            $first = false;
-        }
-        if (isset($infos[':linkedin'])) {
-            if (!$first) {
-                $statement .= ",";
-            }
-            $statement .= " linkedin = :linkedin";
-            $first = false;
-
-        }
-    
-        if (isset($infos[':pole'])) {
-            if (!$first) {
-                $statement .= ",";
-            }
-            $statement .= " pole = :pole";
-            $first = false;
-
-        }
-
-        if (isset($infos[':honoraires'])) {
-            if (!$first) {
-                $statement .= ",";
-            }
-            $statement .= " honoraires = :honoraires";
-            $first = false;
-
-        }
-
+        $db = Database::connect();
+        $statement = $db->prepare("UPDATE consultants SET nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, linkedin = :linkedin WHERE id_consultant = :id");
+        $statement->execute(array(
+            ":nom" => $this->nom,
+            ":prenom" => $this->prenom,
+            ":email" => $this->email,
+            ":telephone" => $this->telephone,
+            ":linkedin" => $this->linkedin,
+            ":id" => $this->id
+        ));
 
     }
 
@@ -153,52 +104,59 @@ Class Consultant {
     public function delete_intervention($id){
         $pdo = Database::connect();
 
-        $statement = $pdo->prepare("DELETE FROM interventions WHERE id_interventions = :id_intervention");
-        $statement->bindParam('id_intervention', $id);
-        $statement->execute();
+        $statement = $pdo->prepare("DELETE FROM interventions WHERE id_intervention = :id_intervention AND id_consultant = :id_consultant");
+        $statement->execute(array(':id_intervention' => $id, ':id_consultant' => $this->id));
 
     }
     
     public function add_qualification($infos){
         $pdo = Database::connect();
 
-        $statement = $pdo->prepare("INSERT INTO qualifications (id_qualification, nom_qualification, id_consultant, date_obtention, details) VALUES (:id_qualification, :nom_qualification, :id_consultant, :date_obtention, :details)");
-        $statement->execute(array(':id_qualification' => $infos['id_qualification'], ':nom_qualification' => $infos['nom_qualification'], ':id_consultant' => $this->id, ':date_obtention' => $infos['date_obtention'], ':details' => $infos['details']));
-
-        $pdo =null;
-
+        $statement = $pdo->prepare("INSERT INTO qualifications ( nom_qualification, id_consultant, date_obtention, details) VALUES (:nom_qualification, :id_consultant, :date_obtention, :details)");
+        $statement->execute(array(':nom_qualification' => $infos['nom_qualification'], ':id_consultant' => $this->id, ':date_obtention' => $infos['date_obtention'], ':details' => $infos['details']));
 
     }
 
     public function delete_qualification($id){
         $pdo = Database::connect();
 
-        $statement = $pdo->prepare("DELETE FROM qualifications WHERE id_diplome = :id_diplome AND id_consultant = :id_consultant");
-        $statement->execute(array(':id_diplome' => $id, ':id_consultant' => $this->id));
+        $statement = $pdo->prepare("DELETE FROM qualifications WHERE id_qualification = :id_qualification AND id_consultant = :id_consultant");
+        $statement->execute(array(':id_qualification' => $id, ':id_consultant' => $this->id));
 
-        $pdo = null;
     }
 
-    public function add_competence($infos){
+    public function add_competence($infos){ // deprecated
+
         $pdo = Database::connect();
 
         $statement = $pdo->prepare("INSERT INTO competences_consultants(id_competence, id_consultant, niveau) VALUES (:id_competence, :id_consultant, :niveau)");
         $statement->execute(array(':id_competence' => $infos['id_competence'], ':id_consultant' => $this->id, ':niveau' => $infos['niveau']));
 
-        $pdo = null;
-
     }
 
     public function edit_competence($infos){
+
         $pdo = Database::connect();
 
-        $statement = $pdo->prepare("UPDATE competences_consultants SET niveau = :niveau WHERE id_competence = :id_competence AND id_consultant = :id_consultant");
-        $statement->execute(array(':niveau' => $infos['niveau'], ':id_consultant' => $this->id, ':id_competence' => $infos['id_competence']));
+        $statement = $pdo->prepare("DELETE FROM competences_consultants WHERE id_competence = :id_competence AND id_consultant = :id_consultant");
+        $statement->execute(array(
+            ":id_consultant" => $this->id,
+            ":id_competence" => $infos['id_competence']
+        ));
+        if ($infos["niveau"] == 0) return;
+        $statement = $pdo->prepare("INSERT INTO competences_consultants (niveau, id_consultant, id_competence) VALUES (?, ?, ?)");
+        $statement->execute(array(
+            $infos['niveau'],
+            $this->id,
+            $infos['id_competence']
+        ));
 
-       $pdo = null; 
+        $pdo = null; 
+    
     }
 
-    public function delete_competence($id){
+    public function delete_competence($id){ // deprecated
+        
         $pdo = Database::connect();
 
         $statement = $pdo->prepare("DELETE FROM competences_consultants WHERE id_competence = :id_competence AND id_consultant = :id_consultant");
@@ -214,9 +172,7 @@ Class Consultant {
         $statement = $pdo->prepare("INSERT INTO graphiques (id_graphique, id_consultant, id_competence) VALUES (:number, id_consultant, id_competence)");
         $statement->execute(array(':number'=> $number, ':id_consultant' => $infos['id_consultant'], ':id_competence' => $infos['id_competence']));
 
-$pdo = null;        
-        
-
+        $pdo = null;        
 
     }
 
@@ -240,23 +196,40 @@ $pdo = null;
         return $this->nom;
     }
 
+    public function set_nom($nom) {
+        $this->nom = $nom;
+    }
+
     public function get_prenom(){
         return $this->prenom;
     }
 
+    public function set_prenom($prenom){
+        $this->prenom = $prenom;
+    }
 
     public function get_email(){
         return $this->email;
     }
 
+    public function set_email($email){
+        $this->email = $email;
+    }
 
     public function get_telephone(){
         return $this->telephone;
     }
 
+    public function set_telephone($tel){
+        $this->telephone = $tel;
+    }
 
     public function get_linkedin(){
         return $this->linkedin;
+    }
+
+    public function set_linkedin($linkedin){
+        $this->linkedin = $linkedin;
     }
 
     public function get_pole(){

@@ -60,7 +60,7 @@ ul>li {
 
 .hr {
     width: 100%;
-    height: 0.9px;
+    height: 1px;
     background-color: rgba(128, 128, 128, 0.445);
     margin: 10px 0px;
 }
@@ -281,14 +281,6 @@ ul>li {
     padding: 10px;
 }
 
-.textCenter {
-    text-align: center;
-}
-
-hr {
-    margin: 0;
-}
-
 .clickable {
     cursor: pointer;
 }
@@ -325,6 +317,17 @@ hr {
     cursor: pointer;
 }
 
+.dropdownTrigger {
+    position: relative;
+}
+
+.dropdownTrigger::before {
+    content: "+";
+    margin-right: 10px;
+    font-weight: bold;
+    right: calc(-100% - 10px);
+}
+
 .dropdownContainer,
 .ongletContainer {
     width: 100%;
@@ -334,25 +337,25 @@ hr {
 
 .ongletContainer>.dropdownTrigger,
 .ongletContainer>.comp {
-    width: calc(100% - 10px);
-    padding: 5px 0 5px 10px;
+    width: calc(100% - 20px);
+    padding: 5px 0 5px 20px;
 }
 
 .ongletContainer>.dropdownContainer>.dropdownTrigger,
 .ongletContainer>.dropdownContainer>.comp {
-    width: calc(100% - 20px);
-    padding: 3px 0 3px 20px;
+    width: calc(100% - 50px);
+    padding: 3px 0 3px 50px;
 }
 
 .ongletContainer>.dropdownContainer>.dropdownContainer>.dropdownTrigger,
 .ongletContainer>.dropdownContainer>.dropdownContainer>.comp {
-    width: calc(100% - 30px);
-    padding: 3px 0 3px 30px;
+    width: calc(100% - 80px);
+    padding: 3px 0 3px 80px;
 }
 
 .ongletContainer>.dropdownContainer>.dropdownContainer>.dropdownContainer>.comp {
-    width: calc(100% - 40px);
-    padding: 3px 0 3px 40px;
+    width: calc(100% - 110px);
+    padding: 3px 0 3px 110px;
 }
 
 .dropdownContainer {

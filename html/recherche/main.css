@@ -318,3 +318,14 @@ select {
 select:focus {
     outline: none;
 }
+
+.searchBtn {
+    position: relative;
+    height: 50px;
+    line-height: 50px;
+    display: inline-block;
+    width: 300px;
+    top: calc(15% + 20px);
+    left: calc(50% - 150px);
+    text-align: center;
+}

@@ -2,6 +2,15 @@
 
 class Client {
 
+    static public function get_name($id = null) {
+        if ($id != null) {
+            $db = Database::connect();
+            $statement = $db->prepare("SELECT entreprise FROM clients WHERE id_client = :id");
+            $statement->execute(array(":id" => $id));
+            return $statement->fetch()["entreprise"];
+        } else return false;
+    }
+
     static public function get_array() {
 
         $db = Database::connect();

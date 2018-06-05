@@ -1,0 +1,72 @@
+.profileWrapper {
+    position: relative;
+    max-width: 70%;
+    top: 20px;
+    left: 15%;
+    text-align: center;
+}
+
+.profile {
+    max-width: 400px;
+    width: calc(24% - 40px);
+    min-width: 300px;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.144);
+    display: inline-block;
+    position: relative;
+    text-align: left;
+    cursor: pointer;
+}
+
+.profile img {
+    width: 35%;
+    overflow: hidden;
+    border-radius: 600px;
+    float: left;
+    top: 0;
+    left: 0;
+}
+
+.nom,
+.prenom,
+.email,
+.telephone,
+.pole {
+    width: calc(65% - 4px);
+    text-align: center;
+    float: right;
+    padding: 2px 2px;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+
+.filter {
+    background-color: rgb(221, 221, 221);
+    position: relative;
+    padding: 66px 10px 10px 10px;
+    font-size: 80%;
+    line-height: 20px;
+}
+
+.filter span {
+    border: 0.9px solid rgba(0, 0, 0, 0.144);
+    padding: 0 2px;
+}
+
+.fixedSearchReturn {
+    position: absolute;
+    top: 0;
+    right: calc(100% + 10px);
+    width: calc(15% - 20px);
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.144);
+    cursor: pointer;
+    text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.fixedSearchReturn:hover {
+    background-color: rgba(0, 0, 0, 0.344);
+}

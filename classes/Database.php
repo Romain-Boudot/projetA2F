@@ -35,46 +35,63 @@ class Database {
         $answer = $statement->fetch();
 
 
-        if ($answer == true) {
+        if ($answer != false) {
     
-            return true;
-    
-        } else {
-    
-            $statement = $db->prepare("SELECT * FROM BM WHERE login = :login AND mot_de_passe = :password");
-            $statement->execute(array(
-                ":login" => $login,
-                ":password" => $password
-            ));
-
-            $answer = $statement->fetch();
-        }
-    
-        if ($answer == true) {
-    
-            return true;
-    
-        } else {
-    
-            $statement = $db->prepare("SELECT * FROM RH WHERE login = :login AND mot_de_passe = :password");
-            $statement->execute(array(
-                ":login" => $login,
-                ":password" => $password
-            ));
-
-            $answer = $statement->fetch();
-        }
-    
-        if ($answer == true) {
+            $_SESSION['user'] = array(
+                "connected" => true,
+                "login" => $answer["login"],
+                "id" => $answer["id_consultant"],
+                "type" => 0
+            );
 
             return true;
+    
+        }
 
-        } else {
+        $statement = $db->prepare("SELECT * FROM BM WHERE login = :login AND mot_de_passe = :password");
+        $statement->execute(array(
+            ":login" => $login,
+            ":password" => $password
+        ));
 
-            return false;
+        $answer = $statement->fetch();
+
+    
+        if ($answer != false) {
+    
+            $_SESSION['user'] = array(
+                "connected" => true,
+                "login" => $answer["login"],
+                "id" => $answer["id_bm"],
+                "type" => 1
+            );
+
+            return true;
+    
+        }
+    
+        $statement = $db->prepare("SELECT * FROM RH WHERE login = :login AND mot_de_passe = :password");
+        $statement->execute(array(
+            ":login" => $login,
+            ":password" => $password
+        ));
+
+        $answer = $statement->fetch();
+    
+        if ($answer != false) {
+
+            $_SESSION['user'] = array(
+                "connected" => true,
+                "login" => $answer["login"],
+                "id" => $answer["id_rh"],
+                "type" => 2
+            );
+
+            return true;
 
         }
 
+        return false;
 
     }
 
