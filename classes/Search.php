@@ -144,7 +144,7 @@ static public function lookup(){
     }
 
 
-    if(isset($array["consultant"])) {
+    if(isset($array["consultant"])) if (sizeof($array["consultant"])) {
 
         if ($where == 0) {
             $statement .= " WHERE ";
@@ -154,10 +154,20 @@ static public function lookup(){
             $where = 1;
         }
 
-        $statement .= " c.nom LIKE :bp" . $bindparamcpt . "  ";
+        $statement .= " ( ";
 
-        $bindparam[":bp" . $bindparamcpt] = "%".$array["consultant"]."%";
-        $bindparamcpt ++ ;
+        foreach ($array["consultant"] as $key => $value) {
+            
+            if ($key > 0) $statement .= " OR ";
+
+            $statement .= " c.nom LIKE :bp" . $bindparamcpt . "  ";
+            
+            $bindparam[":bp" . $bindparamcpt] = "%".$value."%";
+            $bindparamcpt ++ ;
+        
+        }
+
+        $statement .= " ) ";
 
     }
 

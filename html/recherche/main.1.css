@@ -2,14 +2,24 @@
 .popup {
     position: absolute;
     top: 56px;
-    left: 0;
     width: 100vw;
     height: calc(100vh - 56px);
+    overflow: auto;
+    -webkit-box-shadow: -13px 0px 10px -10px rgba(0,0,0,0.75);
+    -moz-box-shadow: -13px 0px 10px -10px rgba(0,0,0,0.75);
+    box-shadow: -13px 0px 10px -10px rgba(0,0,0,0.75);
+}
+
+.main-wrapper {
+    left: 0;
+    width: 100vw;
 }
 
 .popup {
     visibility: hidden;
     background-color: white;
+    right: 0;
+    width: 30%;
 }
 
 .search,
@@ -46,13 +56,31 @@
     margin: 5px;
 }
 
+.ml {
+    margin-left: 30px !important;
+}
+
 .searchBar {
+    position: relative;
     width: 70%;
-    min-height: 34px;
-    line-height: 34px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.144);
+    min-height: 33px;
+    /* border: 1px solid rgba(0, 0, 0, 0.144); */
+    background-color: rgba(255, 255, 255, 0.473);
     text-align: left;
     cursor: text;
+}
+
+.searchBar select {
+    width: 110px;
+}
+
+.searchBar::before {
+    content: "Recherche : ";
+    position: absolute;
+    right: calc(100% + 20px);
+    width: 90px;
+    height: 44px;
+    line-height: 44px;
 }
 
 [contenteditable]:focus {
@@ -64,6 +92,8 @@
 }
 
 #textInput {
+    height: 28px !important;
+    line-height: 30px !important;
     border: none !important;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -73,7 +103,7 @@
     height: 26px;
     line-height: 23px;
     padding: 3px 6px;
-    margin: 3px 6px;
+    margin: 4px 0 4px 6px;
     border: 1px solid rgba(0, 0, 0, 0.144);
     max-width: calc(100% - 13px);
     overflow: hidden;
@@ -125,13 +155,13 @@ input[type=checkbox]:checked + .checkbox {
 
 .closeBtn {
     transform: scale(1.5);
-    margin: 0 5px;
+    margin: 0 5px 0 20px;
     cursor: pointer;
     float: right;
 }
 
 .filterGrid {
-    margin: 10px;
+    margin: 0 10px;
     display: grid;
     grid-template-columns: 50% 50%;
     justify-items: stretch;
@@ -262,33 +292,9 @@ input[type=checkbox]:checked + .checkbox {
     max-height: calc(100% - 50px);
 }
 
-.compList,
-.compListSelected {
-    text-align: left;
-    position: relative;
-    width: 100%;
-}
-
-.compList,
-.compListSelected,
-.clientList,
-.clientListSelected {
-    position: absolute;
-    top: 15%;
-    height: calc(70% - 105px);
-    width: calc(35% - 5px);
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.144);
-}
-
-.compList,
-.clientList {
-    left: 15%;
-}
-
 .compListContainer,
 .clientListContainer {
-    margin: 20px;
+    margin: 40px 20px 20px 20px;
     overflow: auto;
     height: calc(100% - 40px);
     width: calc(100% - 40px);
@@ -299,17 +305,20 @@ input[type=checkbox]:checked + .checkbox {
     right: 15%;
 }
 
+/* ================================================ */
+
 .compSelectClose,
 .clientSelectClose {
-    height: 50px;
-    line-height: 50px;
-    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    font-size: 30px;
     position: absolute;
-    width: 300px;
-    top: calc(70% + 50px);
-    left: calc(50% - 150px);
-    text-align: center;
+    top: 5px;
+    left: 5px;
+    background-color: rgba(0, 0, 0, 0) !important;
 }
+
+/* ================================================ */
 
 .competence,
 .client {
