@@ -91,7 +91,7 @@ session_start();
 
             <div id="input" class="searchBar">
                 <div id="inputFilter">
-                    <div id="textInput" contenteditable="true"></div>
+                    <input type="text" id="textInput">
                 </div>
             </div>
 

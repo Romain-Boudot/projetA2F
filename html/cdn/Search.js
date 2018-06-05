@@ -366,8 +366,8 @@ class S {
 
             var obj = event.target.Object;
 
-            var text = obj.DOMelem.textInput.innerText;
-            obj.DOMelem.textInput.innerText = "";
+            var text = obj.DOMelem.textInput.value;
+            obj.DOMelem.textInput.value = "";
 
             var id = obj.genId();
 
@@ -383,7 +383,17 @@ class S {
 
         } else {
 
-            var text = event.target.Object.DOMelem.textInput.innerText;
+            var text = event.target.Object.DOMelem.textInput.value;
+
+            if (text == "") {
+                var compContainer = document.querySelector(".sugestedComp");
+                var clientContainer = document.querySelector(".sugestedClient")
+
+                compContainer.innerHTML = "";
+                clientContainer.innerHTML = "";
+
+                return;
+            }
 
             var antiFreez = {
                 "competence" : 0,
@@ -398,7 +408,7 @@ class S {
 
             for (var e in this.sugest.competence){
 
-                if (e.indexOf(text) > -1 && antiFreez.competence < 16) {
+                if (e.toLowerCase().indexOf(text.toLowerCase()) > -1 && antiFreez.competence < 16) {
 
                     compContainer.innerHTML += "<div onclick='s.addFComp(this.dataset.id, this.dataset.name)' data-name='" + e + "' class='sugestedItem' data-id='" + this.sugest.competence[e] + "'>" + e + "</div>";
                     antiFreez.competence++;
@@ -407,9 +417,9 @@ class S {
 
             };
 
-            for (var e in this.sugest.competence){
+            for (var e in this.sugest.client){
 
-                if (e.indexOf(text) > -1) {
+                if (e.toLowerCase().indexOf(text.toLowerCase()) > -1) {
 
                     clientContainer.innerHTML += "<div onclick='s.addFClient(this.dataset.id, this.dataset.name)' data-name='" + e + "' class='sugestedItem' data-id='" + this.sugest.client[e] + "'>" + e + "</div>";
                     antiFreez.client++;                    
