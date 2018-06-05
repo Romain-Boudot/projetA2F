@@ -1,6 +1,8 @@
 <?php
 include 'Database.php';
 
+include $_SERVER["DOCUMENT_ROOT"] . "/../classes/Database.php";
+
 Class Search {
 
     static public function lookup(){
@@ -162,10 +164,66 @@ Class Search {
 
                     $statement .= " c.nom LIKE :bp" . $bindparamcpt . "  ";
 
-                    $bindparam[":bp" . $bindparamcpt] = "%".$value."%";
-                    $bindparamcpt ++ ;
+        $bindparam[":bp" . $bindparamcpt] = "%".$array["consultant"]."%";
+        $bindparamcpt ++ ;
+
+    }
+
+    $statement .= " GROUP BY c.id_consultant ORDER BY c.nom";
+
+    var_dump($statement);
+    $query = $pdo->prepare($statement);
+    $query->execute($bindparam);
+    $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+    return $result;        
+
+} 
+
+static public function show_graph($id_post){
+
+    $valid = 0;
+
+    $pdo = Database::connect();
+
+    $first_level_check = $pdo->prepare("SELECT id_competence FROM competences WHERE id_competence_mere = :id_comp_mere");
+    $first_level_check->execute(array(":id_comp_mere" => $id_post));
+
+    $check = $first_level_check->fetchAll(PDO::FETCH_ASSOC);
+    if(sizeof($check) > 0){         
+        foreach($check as $list => $array){
+            foreach($array as $key => $id){
+
+                $second_level_check = $pdo->prepare("SELECT id_competence FROM competences WHERE id_competence_mere = :id_comp_mere");
+                $second_level_check->execute(array(":id_comp_mere" => $id));
+
+                $check_two = $second_level_check->fetchAll(PDO::FETCH_ASSOC);
+                
+                if(sizeof($check_two) != 0){
+                    $valid++;
                 }
+
             }
+
+        }            
+
+
+        if($valid == 0){
+
+            $statement = $pdo->prepare("SELECT c.nom, (SELECT COUNT(*) FROM competences_consultants cc WHERE cc.niveau >= 2 AND cc.id_competence = c.id_competence) as count FROM competences c WHERE c.id_competence_mere = :id_comp_mere");
+            $statement->execute(array(":id_comp_mere" => $id_post));
+            $graph1 = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+
+            $statement = $pdo->prepare("SELECT c.nom, (SELECT AVG(cc.niveau) FROM competences_consultants cc WHERE cc.id_competence = c.id_competence) as average FROM competences c WHERE c.id_competence_mere = :id_comp_mere");
+            $statement->execute(array("id_comp_mere" => $id_post));
+            $graph2 = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+            $graphs = array($graph1, $graph2);
+
+            return $graphs;
+        }else {
+            return false;        
         }
 
         $statement .= " GROUP BY c.id_consultant ORDER BY c.nom";
