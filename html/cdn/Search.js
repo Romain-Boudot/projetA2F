@@ -300,6 +300,10 @@ class S {
             "1 ou moins" : "<= 1",
             "0" : "= 0"
         };
+        this.sugest = {
+            "competence" : {},
+            "client" : {}
+        }
 
         this.DOMelem.input.onclick = function(event) {
 
@@ -377,6 +381,43 @@ class S {
                 "onclick" : "s.delFilter('consultant', '" + id + "')"
             })
 
+        } else {
+
+            var text = event.target.Object.DOMelem.textInput.innerText;
+
+            var antiFreez = {
+                "competence" : 0,
+                "client" : 0
+            };
+
+            var compContainer = document.querySelector(".sugestedComp");
+            var clientContainer = document.querySelector(".sugestedClient")
+
+            compContainer.innerHTML = "";
+            clientContainer.innerHTML = "";
+
+            for (var e in this.sugest.competence){
+
+                if (e.indexOf(text) > -1 && antiFreez.competence < 16) {
+
+                    compContainer.innerHTML += "<div onclick='s.addFComp(this.dataset.id, this.dataset.name)' data-name='" + e + "' class='sugestedItem' data-id='" + this.sugest.competence[e] + "'>" + e + "</div>";
+                    antiFreez.competence++;
+
+                }
+
+            };
+
+            for (var e in this.sugest.competence){
+
+                if (e.indexOf(text) > -1) {
+
+                    clientContainer.innerHTML += "<div onclick='s.addFClient(this.dataset.id, this.dataset.name)' data-name='" + e + "' class='sugestedItem' data-id='" + this.sugest.client[e] + "'>" + e + "</div>";
+                    antiFreez.client++;                    
+
+                }
+
+            };
+
         }
 
     }
@@ -411,6 +452,34 @@ class S {
         var a = document.querySelector("[data-id='" + id + "'][data-type='" + type + "']")
 
         if (a != null) a.remove();
+
+    }
+
+    addFComp(id, name) {
+
+        s.addFilter({
+            "text" : name,
+            "dataset" : {
+                "type" : "competence",
+                "id" : id,
+                "name" : name
+            },
+            "onclick" : "s.delFilter('competence', '" + id + "')"
+        });
+
+    }
+
+    addFClient(id, name) {
+
+        s.addFilter({
+            "text" : name,
+            "dataset" : {
+                "type" : "client",
+                "id" : id,
+                "name" : name
+            },
+            "onclick" : "s.delFilter('client', '" + id + "')"
+        });
 
     }
 
@@ -453,6 +522,18 @@ class S {
             e.e = e;
 
         })
+
+        document.querySelectorAll(".competence").forEach(e => {
+
+            this.sugest.competence[e.dataset.name] = e.dataset.id;
+
+        });
+
+        document.querySelectorAll(".client").forEach(e => {
+
+            this.sugest.client[e.dataset.name] = e.dataset.id;
+
+        });
 
     }
 

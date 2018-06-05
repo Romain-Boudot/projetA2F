@@ -12,7 +12,7 @@ if (strlen($str) > 15 && sizeof(explode(" ", $str)) > 1) {
     for ($key = 0; $key < sizeof($string); $key++) {
     
         // si ce mot et le mot d'apres reunis font moins de 15 caractere de long
-        if ((strlen($string[$key]) + strlen($string[$key + 1])) < 15) {
+        if ($key+1 < sizeof($string)) if ((strlen($string[$key]) + strlen($string[$key + 1])) < 15) {
     
             $final[] = $string[$key] . " " . $string[$key + 1];
             $key++;

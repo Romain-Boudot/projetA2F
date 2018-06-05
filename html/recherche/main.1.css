@@ -372,3 +372,39 @@ select:focus {
     left: calc(50% - 150px);
     text-align: center;
 }
+
+.sugest {
+    width: 90%;
+    margin: 20px 5%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.sugest .sugestedItem {
+    position: relative;
+    padding: 3px 20px 3px 10px;
+    border: 1px solid rgba(0, 0, 0, 0.144);
+    margin: 5px 0 0 0;
+    max-width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sugest .sugestedItem::after {
+    content: "+";
+    position: absolute;
+    left: calc(100% - 14px);
+    font-weight: bold;
+}
+
+.sugest>* {
+    margin: 10px 10px;
+}
+
+.labelComp {
+    grid-column: 1 / 2;
+}
+
+.labelClient {
+    grid-column: 2 / 3;
+}

@@ -101,7 +101,7 @@ session_start();
 
             <?php
 
-                if ($_SESSION['user']['type'] == 2 || true) {
+                if ($_SESSION['user']['type'] == 2) {
 
             ?>
 
@@ -116,6 +116,13 @@ session_start();
                 }
 
             ?>
+
+            <div class="sugest">
+                <label class="labelComp">Compétence(s)</label>
+                <label class="labelClient">Client(s)</label>
+                <div class="sugestedComp borderRight"></div>
+                <div class="sugestedClient"></div>
+            </div>
 
         </div>
 
