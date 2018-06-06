@@ -68,6 +68,15 @@ class Intervention {
 
     }
 
+    static del_candidat(id) {
+
+        Post.send("/candidat/modifier/", {
+            "action" : "delete",
+            "modif" : "int",
+            "id" : id
+        })
+
+    }
 }
 
 class Qualification {
@@ -82,6 +91,15 @@ class Qualification {
 
     }
 
+    static del_candidat(id) {
+
+        Post.send("/candidat/modifier/", {
+            "action" : "delete",
+            "modif" : "qual",
+            "id" : id
+        })
+
+    }
 }
 
 class Graph {

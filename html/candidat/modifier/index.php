@@ -12,7 +12,7 @@ error_reporting(E_ALL);
 
     session_start();
 
-        $c = new Candidat($_GET['id']);
+        $c = new Candidat(1);
 
     if (isset($_POST['modif'])) {
         include_once "traitement.php";
@@ -43,7 +43,7 @@ error_reporting(E_ALL);
     </nav>
     <div class="mainWrapper">
 
-        <div onclick="location.href='/candidat'" class="close">Retour</div>
+        <div onclick="location.href='/candidat/'" class="close">Retour</div>
 
         <div class="popup" id="Comp"><div class="nav">Compétences</div>
         
@@ -120,7 +120,7 @@ error_reporting(E_ALL);
         
             <!-- // infos section // -->
 
-            <form action="/candidat/modifier" method="post">
+            <form action="/candidat/modifier/" method="post">
             
                 <input type="hidden" name="modif" value="info">
 
@@ -139,7 +139,7 @@ error_reporting(E_ALL);
         
             <!-- // Inter section // -->
 
-            <form action="/candidat/modifier" method="post">
+            <form action="/candidat/modifier/" method="post">
 
                 <input type="hidden" name="modif" value="int">
                 <input type="hidden" name="action" value="add">                
@@ -155,19 +155,20 @@ error_reporting(E_ALL);
                 <div class="hr"></div>
                 <div class="intervention">
                     <div class="infos"><input type="date" name="date" required></div>
-                    <div class="infos"><select name="client" required><option selected disabled>RH</option><?php
+                    <div class="infos"><select name="RH" required><option selected disabled>RH</option><?php
                     
                         $cl = RH::get_array();
 
                         foreach ($cl as $key => $value) {
-                            
-                            ?><option value="<?php echo $value['id_client']; ?>"><?php echo $value['nom']; echo " "; echo $value['prenom']; ?></option><?php
+
+
+                            ?><option value="<?php echo $value['id_rh']; ?>"><?php echo $value['nom']; echo " "; echo $value['prenom']; ?></option><?php
 
                         }
 
                     ?></select></div>
                     <div class="details textCenter">
-                        <textarea placeholder="Détails de l'entretien" name="details" maxlength="500" rows="10" required></textarea>
+                        <textarea placeholder="Détails de l'intervention" name="details" maxlength="500" rows="10" required></textarea>
                     </div>
                     <div class="InterSubmit"><input type="submit" value="Envoyer"></div>
                 </div>
@@ -175,7 +176,7 @@ error_reporting(E_ALL);
                 <?php
 
                     $arr = $c->get_interviews();
-                        foreach ($arr as $int) {
+                    foreach ($arr as $int) {
 
                 ?>
 
@@ -184,7 +185,7 @@ error_reporting(E_ALL);
                         <div class="infos"><?php echo $int['date_entretien']; ?></div>
                         <div class="infos"><?php echo $int['nom']; echo " "; echo $int['prenom']; ?></div>
                         <div class="details"><?php echo $int['details']; ?></div>
-                        <div class="InterSubmit"><div onclick="Intervention.del(<?php echo $int['id_entretien']; ?>)" class="delInt">Supprimer</div></div>
+                        <div class="InterSubmit"><div onclick="Intervention.del_candidat(<?php echo $int['id_interview']; ?>)" class="delInt">Supprimer</div></div>
                     </div>
 
                 <?php
@@ -200,7 +201,7 @@ error_reporting(E_ALL);
         
             <!-- // qual section // -->
 
-            <form action="/candidat/modifier" method="post">
+            <form action="/candidat/modifier/" method="post">
 
                 <input type="hidden" name="modif" value="qual">
                 <input type="hidden" name="action" value="add">
@@ -218,7 +219,7 @@ error_reporting(E_ALL);
                     <div class="infos"><input type="text" name="nom" placeholder="Nom de la qualification" required></div>
                     <div class="infos"><input type="date" name="date" required></div>
                     <div class="details textCenter">
-                        <textarea placeholder="Détails de la qualification" name="details" maxlength="500" rows="10" required></textarea>
+                        <textarea placeholder="Détails de l'intervention" name="details" maxlength="500" rows="10" required></textarea>
                     </div>
                     <div class="QualSubmit"><input type="submit" value="Envoyer"></div>
                 </div>
@@ -235,7 +236,7 @@ error_reporting(E_ALL);
                         <div class="infos"><?php echo $qual['nom_qualification']; ?></div>
                         <div class="infos"><?php echo $qual['date_obtention']; ?></div>
                         <div class="details"><?php echo $qual['details']; ?></div>
-                        <div class="QualSubmit"><div onclick="Qualification.del(<?php echo $qual['id_qualification']; ?>)" class="delInt">Supprimer</div></div>
+                        <div class="QualSubmit"><div onclick="Qualification.del_candidat(<?php echo $qual['id_qualification']; ?>)" class="delInt">Supprimer</div></div>
                     </div>
 
                 <?php
@@ -257,6 +258,3 @@ error_reporting(E_ALL);
 
 </body>
 </html>
-
-
-

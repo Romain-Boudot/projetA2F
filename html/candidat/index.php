@@ -10,10 +10,8 @@ error_reporting(E_ALL);
     include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/RH.php"; 
     session_start();
 
-    // var_dump($_SESSION);
-    // var_dump($_GET);
 
-    $id = $_GET['id'];
+    $id = 1;
 
 
     $candidat = new Candidat($id);

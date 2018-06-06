@@ -34,7 +34,7 @@
 
         $c->send_modif();
 
-        exit();
+//        exit();
 
     } elseif ($_POST['modif'] == "comp") {
 
@@ -62,7 +62,7 @@
                 
                 $c->add_interview(array(
                     "id_rh" => $_POST["RH"],
-                    "date" => $_POST["date"],
+                    "date_entretien" => $_POST["date"],
                     "details" => $_POST["details"]
                 ));
                 

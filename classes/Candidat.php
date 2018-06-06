@@ -55,10 +55,8 @@ class Candidat {
 
     public function send_modif(){
         
-        var_dump($this);
-
         $db = Database::connect();
-        $statement = $db->prepare("UPDATE candidats SET nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, linkedin = :linkedin WHERE id_consultant = :id");
+        $statement = $db->prepare("UPDATE candidats SET nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, linkedin = :linkedin WHERE id_candidat = :id");
         $statement->execute(array(
             ":nom" => $this->nom,
             ":prenom" => $this->prenom,
@@ -78,16 +76,13 @@ class Candidat {
 
     public function add_interview($infos) {
         $pdo = Database::connect();
-        if(isset($infos['details'])) {
-            $temp = ", details";
-            $temp1 = ", :details";
-        }
-        else {
-            $temp = "";
-            $temp1 = "";
-        }
-        $statement = $pdo->prepare("INSERT INTO entretiens (id_candidat, id_rh, date_entretien".$temp.") VALUES (:id_candidat, :id_rh, :date_entretien".$temp1.")"); 
-        $statement->execute(array(':id_candidat' => $infos['id_candidat'], ':id_rh' => $infos['id_rh'], ':date_entretien' => $infos['date_entretien']));
+        
+        $statement = $pdo->prepare("INSERT INTO entretiens (id_candidat, id_rh, date_entretien, details) VALUES (:id_candidat, :id_rh, :date_entretien, :details)"); 
+
+
+        $statement->execute(array(':id_candidat' => $this->id, ':id_rh' => $infos['id_rh'], ':date_entretien' => $infos['date_entretien'], ':details' => $infos['details']));
+        
+        var_dump( $infos);
 
         $pdo = null;
 
