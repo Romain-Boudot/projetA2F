@@ -16,7 +16,7 @@ session_start();
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="/cdn/main.css">
-    <link rel="stylesheet" href="/recherche/main.1.css">
+    <link rel="stylesheet" href="/recherche/main.css">
     <script src="/cdn/Popup.js"></script>
     <script src="/cdn/Dropdown.js"></script>
     <script src="/cdn/Search.js"></script>
