@@ -277,19 +277,19 @@ class S {
 
     constructor() {
 
-        var input = document.getElementById('input');
-        var inputFilter = document.getElementById('inputFilter');
-        var textInput = document.getElementById('textInput');
-
         this.DOMelem = {
-            input,
-            inputFilter,
-            textInput
+            input : document.getElementById('input'),
+            inputFilter : document.getElementById('inputFilter'),
+            textInput : {
+                input : document.querySelector('#textInput input'),
+                container : document.getElementById('textInput')
+            },
+            sugest : document.querySelector(".sugest")
         };
 
         this.DOMelem.input.Object = this;
         this.DOMelem.inputFilter.Object = this;
-        this.DOMelem.textInput.Object = this;
+        this.DOMelem.textInput.input.Object = this;
         this.idIncrement = 0;
         this.table = {
             "1 ou plus" : ">= 1",
@@ -308,18 +308,18 @@ class S {
         this.DOMelem.input.onclick = function(event) {
 
             if (typeof event.target.Object !== "undefined") {
-                event.target.Object.DOMelem.textInput.focus();
+                event.target.Object.DOMelem.textInput.input.focus();
             }
 
         }
 
-        this.DOMelem.textInput.onkeydown = function(event) {            
+        this.DOMelem.textInput.input.onkeydown = function(event) {            
             if (event.keyCode == 13 || event.keyCode == 188) {
                 return false;
             }
         };
 
-        this.DOMelem.textInput.addEventListener("keyup", function(event) {
+        this.DOMelem.textInput.input.addEventListener("keyup", function(event) {
 
             event.target.Object.keyup(event);
 
@@ -361,17 +361,17 @@ class S {
 
     keyup(event) {
 
-        console.log(event);
         if (event.keyCode == 188) {
 
-            var obj = event.target.Object;
+            var text = obj.DOMelem.textInput.input.value.trim();
 
-            var text = obj.DOMelem.textInput.value;
-            obj.DOMelem.textInput.value = "";
+            if (text == "") return;
 
-            var id = obj.genId();
+            this.DOMelem.textInput.input.value = "";
 
-            obj.addFilter({
+            var id = this.genId();
+
+            this.addFilter({
                 "text" : text,
                 "dataset" : {
                     "type" : "consultant",
@@ -383,7 +383,7 @@ class S {
 
         } else {
 
-            var text = event.target.Object.DOMelem.textInput.value;
+            var text = event.target.Object.DOMelem.textInput.input.value.trim();
 
             if (text == "") {
                 var compContainer = document.querySelector(".sugestedComp");
@@ -392,7 +392,10 @@ class S {
                 compContainer.innerHTML = "";
                 clientContainer.innerHTML = "";
 
+                this.DOMelem.sugest.style.display = "none";
+
                 return;
+
             }
 
             var antiFreez = {
@@ -428,6 +431,12 @@ class S {
 
             };
 
+            if (antiFreez.client > 0 || antiFreez.competence > 0) {
+                this.DOMelem.sugest.style.display = "grid";                
+            } else {
+                this.DOMelem.sugest.style.display = "none";                
+            }
+
         }
 
     }
@@ -453,7 +462,7 @@ class S {
             div.innerHTML += '<div onclick="' + arr.onclick + '" class="closeBtn">&times;</div>';
         }
         
-        this.DOMelem.inputFilter.insertBefore(div, this.DOMelem.textInput);
+        this.DOMelem.inputFilter.insertBefore(div, this.DOMelem.textInput.container);
 
     }
 

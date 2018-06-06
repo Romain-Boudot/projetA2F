@@ -91,13 +91,12 @@ session_start();
 
             <div id="input" class="searchBar">
                 <div id="inputFilter">
-                    <input type="text" id="textInput">
+                    <div id="textInput">
+                        <input type="text" placeholder="Compétences, Clients, Nom consultant (séparé par une virgule)">
+                    </div>
                 </div>
             </div>
 
-            <script>
-                var s = new S;
-            </script>
 
             <?php
 
@@ -125,6 +124,10 @@ session_start();
             </div>
 
         </div>
+
+        <script>
+            var s = new S;
+        </script>
 
         <div class="searchBtn btn" onclick="s.send()">Rechercher</div>
 
