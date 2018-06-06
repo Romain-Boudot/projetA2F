@@ -53,55 +53,20 @@ class Candidat {
         $pdo = null;
     }
 
-    public function edit($infos){
-        $pdo = Database::connect();
-        $first = true;
-        $statement = "UPDATE candidats SET ";
-        if (isset($infos[':nom'])) {
-            if (!$first) {
-                $statement .= ",";
-            }
-            $statement .= " nom = :nom";
+    public function send_modif(){
+        
+        var_dump($this);
 
-            $first = false;
-        }
-
-        if (isset($infos[':prenom'])) {
-            if (!$first) {
-                $statement .= ",";
-            }
-            $statement .= " prenom = :prenom";
-            $first = false;
-        }
-
-        if (isset($infos[':telephone'])) {
-            if (!$first) {
-                $statement .= ",";
-            }
-            $statement .= " telephone = :telephone";
-            $first = false;
-        }
-
-        if (isset($infos[':email'])) {
-            if (!$first) {
-                $statement .= ",";
-            }
-            $statement .= " email = :email";
-            $first = false;
-        }
-        if (isset($infos[':linkedin'])) {
-            if (!$first) {
-                $statement .= ",";
-            }
-            $statement .= " linkedin = :linkedin";
-            $first = false;
-
-        }
-        $statement .= " WHERE id_candidat = ".$this->id;
-        $edit_candidate = $pdo->prepare($statement);
-        $edit_candidate->execute($infos);		
-
-        $pdo = null;
+        $db = Database::connect();
+        $statement = $db->prepare("UPDATE candidats SET nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, linkedin = :linkedin WHERE id_consultant = :id");
+        $statement->execute(array(
+            ":nom" => $this->nom,
+            ":prenom" => $this->prenom,
+            ":email" => $this->email,
+            ":telephone" => $this->telephone,
+            ":linkedin" => $this->linkedin,
+            ":id" => $this->id
+        ));
 
     }
 
@@ -221,31 +186,56 @@ class Candidat {
     }
 
 
+    public function get_id(){
+        return $this->id;
+    }
+
     public function get_nom(){
         return $this->nom;
+    }
+
+    public function set_nom($nom) {
+        $this->nom = $nom;
     }
 
     public function get_prenom(){
         return $this->prenom;
     }
 
+    public function set_prenom($prenom){
+        $this->prenom = $prenom;
+    }
 
     public function get_email(){
         return $this->email;
     }
 
+    public function set_email($email){
+        $this->email = $email;
+    }
 
     public function get_telephone(){
         return $this->telephone;
     }
 
+    public function set_telephone($tel){
+        $this->telephone = $tel;
+    }
 
     public function get_linkedin(){
         return $this->linkedin;
     }
 
+    public function set_linkedin($linkedin){
+        $this->linkedin = $linkedin;
+    }
+
     public function get_etape(){
         return $this->etape;
+    }
+
+    public function set_etape($etape){
+        $this->etape = $etape;
     }
 
     public function get_interviews(){

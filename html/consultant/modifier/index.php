@@ -44,7 +44,7 @@
     </nav>
     <div class="mainWrapper">
 
-        <div onclick="location.href='/consultant'" class="close">Retour</div>
+        <div onclick="location.href='/consultant/'" class="close">Retour</div>
 
         <div class="popup" id="Comp"><div class="nav">Compétences</div>
         
@@ -121,7 +121,7 @@
         
             <!-- // infos section // -->
 
-            <form action="/consultant/modifier" method="post">
+            <form action="/consultant/modifier/" method="post">
             
                 <input type="hidden" name="modif" value="info">
 
@@ -140,7 +140,7 @@
         
             <!-- // Inter section // -->
 
-            <form action="/consultant/modifier" method="post">
+            <form action="/consultant/modifier/" method="post">
 
                 <input type="hidden" name="modif" value="int">
                 <input type="hidden" name="action" value="add">                
@@ -201,7 +201,7 @@
         
             <!-- // qual section // -->
 
-            <form action="/consultant/modifier" method="post">
+            <form action="/consultant/modifier/" method="post">
 
                 <input type="hidden" name="modif" value="qual">
                 <input type="hidden" name="action" value="add">

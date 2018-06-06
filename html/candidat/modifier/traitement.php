@@ -1,9 +1,6 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
-     if ($_POST['modif'] == "info") {
+    if ($_POST['modif'] == "info") {
 
         if (isset($_POST['nom'])) {
             if ($c->get_nom() != $_POST["nom"]) {
@@ -39,15 +36,32 @@ error_reporting(E_ALL);
 
         exit();
 
+    } elseif ($_POST['modif'] == "comp") {
+
+        $co = JSON_decode(urldecode($_POST['comp']), true);
+
+        foreach ($co as $k => $v) {
+
+            if ($v["oldLvl"] == $v["lvl"]) continue;
+
+            if ($v["lvl"] > 3 || $v["lvl"] < 0) continue;
+
+            $c->edit_competence(array(
+                "niveau" => $v["lvl"],
+                "id_competence" => $v["id"]
+            ));
+
+        }
+
     } elseif ($_POST['modif'] == "int") {
 
         if (isset($_POST['action'])) if ($_POST['action'] == "add") {
 
             
-            if (isset($_POST['client']) && isset($_POST['date']) && isset($_POST['details'])) {
+            if (isset($_POST['RH']) && isset($_POST['date']) && isset($_POST['details'])) {
                 
                 $c->add_interview(array(
-                    "id_rh" => $_POST["rh"],
+                    "id_rh" => $_POST["RH"],
                     "date" => $_POST["date"],
                     "details" => $_POST["details"]
                 ));
@@ -63,6 +77,31 @@ error_reporting(E_ALL);
             }
 
         }
+
+    } elseif ($_POST['modif'] == "qual") {
+
+        if (isset($_POST['action'])) if ($_POST['action'] == "add") {
+
+            if (isset($_POST['nom']) && isset($_POST['date']) && isset($_POST['details'])) {
+                
+                $c->add_qualification(array(
+                    "nom_qualification" => $_POST["nom"],
+                    "date_obtention" => $_POST["date"],
+                    "details" => $_POST["details"]
+                ));
+                
+            }
+
+        } elseif ($_POST['action'] == "delete") {
+            
+            if (isset($_POST['id'])) {
+
+                $c->delete_qualification($_POST['id']);
+
+            }
+
+        }
+
     }
 
-    header("location: http://" . $_SERVER['HTTP_HOST'] . "/candidat/modifier");
+//    header("location: http://" . $_SERVER['HTTP_HOST'] . "/candidat/modifier");
