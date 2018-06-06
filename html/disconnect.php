@@ -2,6 +2,6 @@
 
     session_start();
     session_destroy();
-    header('location: http://' . $_SERVER['HTTP_HOST'] . '/login');
+    header('location: http://' . $_SERVER['HTTP_HOST'] . '/identification');
 
 ?>

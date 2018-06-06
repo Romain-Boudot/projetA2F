@@ -15,12 +15,12 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="/cdn/main.css">
+    <link rel="stylesheet" href="/cdn/main.1.css">
     <link rel="stylesheet" href="/recherche/main.css">
     <script src="/cdn/Popup.js"></script>
     <script src="/cdn/Dropdown.js"></script>
     <script src="/cdn/Search.js"></script>
-    <title>A2F Advisor</title>
+    <title>Recherche</title>
 </head>
 
 <body>
@@ -30,7 +30,26 @@ session_start();
     <div class="main-wrapper">
 
         <div class="search">
-    
+            <input id="inputCons" type="text" class="searchBar" placeholder="Entrez un nom (optionnel)">
+
+            <?php
+
+                if ($_SESSION['user']['type'] == 2) {
+
+            ?>
+
+            <label for="archive">
+                <input type="checkbox" name="archive" id="archive">
+                <div for="archive" class="checkbox">✔</div>
+                archive
+            </label>
+
+            <?php
+
+                }
+
+            ?>
+
             <div class="filterGrid">
 
                 <div class="filterGridLeft borderRight">
@@ -80,56 +99,23 @@ session_start();
                     </label>
                 </div>
 
-                <div class="filterGridLarge borderTop">
+                <div class="filterGridLarge borderTop divClientList">
 
-                    <div class="btn fakeComp" onclick="Popup.open('popupClient', s)">Selection des clients</div>
-                    <div class="btn fakeComp ml" onclick="Popup.open('popupComp', s)">Selection des competences</div>
+                    <div class="btn fakeComp" onclick="Popup.open('popupClient')">Selection des clients</div>
 
                 </div>
 
-            </div>
+                <div class="filterGridLarge borderTop divCompList">
 
-            <div id="input" class="searchBar">
-                <div id="inputFilter">
-                    <div id="textInput">
-                        <input type="text" placeholder="Compétences, Clients, Nom consultant (séparé par une virgule)">
-                    </div>
+                    <div class="btn fakeComp" onclick="Popup.open('popupComp')">Selection des competences</div>
+
                 </div>
-            </div>
 
-
-            <?php
-
-                if ($_SESSION['user']['type'] == 2) {
-
-            ?>
-
-            <label for="archive">
-                <input type="checkbox" name="archive" id="archive">
-                <div for="archive" class="checkbox">✔</div>
-                archive
-            </label>
-
-            <?php
-
-                }
-
-            ?>
-
-            <div class="sugest">
-                <label class="labelComp">Compétence(s)</label>
-                <label class="labelClient">Client(s)</label>
-                <div class="sugestedComp borderRight"></div>
-                <div class="sugestedClient"></div>
             </div>
 
         </div>
 
-        <script>
-            var s = new S;
-        </script>
-
-        <div class="searchBtn btn" onclick="s.send()">Rechercher</div>
+        <div class="searchBtn btn" onclick="search.send()">Rechercher</div>
 
     </div>
 
@@ -222,40 +208,60 @@ session_start();
 
         </div>
 
-        <div class="compSelectClose btn close" onclick="Popup.close('popupComp', s)">&times;</div>
+        <div class="compListSelected">
+
+            <div class="compListContainer divCompListS">
+
+            </div>
+
+        </div>
+
+        <div class="compSelectClose btn close" onclick="Popup.close('popupComp', search)">Valider</div>
 
     </div>
 
     <div class="popup" id="popupClient">
 
-        <div class="clientListContainer">
+        <div class="compList">
 
-            <?php
+            <div class="clientListContainer">
 
-            $c = Client::get_array();
+                <?php
 
-            foreach ($c as $client) {
+                $c = Client::get_array();
+
+                foreach ($c as $client) {
+
+                    ?>
+
+                    <div data-name="<?php echo $client["entreprise"] ?>" data-id="<?php echo $client["id_client"]; ?>" class="client">
+                        <?php echo $client["entreprise"] ?>
+                    </div>
+
+                    <?php
+                    
+                }
 
                 ?>
 
-                <div data-name="<?php echo $client["entreprise"] ?>" data-id="<?php echo $client["id_client"]; ?>" class="client">
-                    <?php echo $client["entreprise"] ?>
-                </div>
-
-                <?php
-                
-            }
-
-            ?>
+            </div>
 
         </div>
 
-        <div class="clientSelectClose btn close" onclick="Popup.close('popupClient', s)">&times;</div>
+        <div class="clientListSelected">
+
+            <div class="clientListContainer divClientListS">
+
+            </div>
+
+        </div>
+
+        <div class="clientSelectClose btn close" onclick="Popup.close('popupClient')">Valider</div>
 
     </div>
 
     <script>
-        s.load();
+        var search = new Search();
     </script>
 
 </body>

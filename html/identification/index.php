@@ -1,10 +1,12 @@
 <?php
 
+    ini_set('display_errors', 1);
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/../classes/Database.php";
+
     session_start();
 
-    var_dump($_SESSION);
+    var_dump($_POST);
 
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/../classes/Database.php";
 
     if (isset($_POST["login"]) && isset($_POST["password"])) {
 
@@ -34,7 +36,7 @@
 
         <img src="/images/logo-a2f-blanc-02.svg" alt="logo a2f" height="60">
 
-        <form action="http://<?php echo $_SERVER['HTTP_HOST'];?>/identification" method="post">
+        <form action="http://<?php echo $_SERVER['HTTP_HOST'];?>/identification/" method="post">
             <h3>Connexion</h3><br>
             <input name="login" type="text" placeholder="identifiant"><br>
             <input name="password" type="password" placeholder="mot de passe"><br>

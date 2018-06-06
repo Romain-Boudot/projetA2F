@@ -121,7 +121,7 @@
         
             <!-- // infos section // -->
 
-            <form action="/consultant/modifier" method="post">
+            <form action="/consultant/modifier/" method="post">
             
                 <input type="hidden" name="modif" value="info">
 
@@ -140,7 +140,7 @@
         
             <!-- // Inter section // -->
 
-            <form action="/consultant/modifier" method="post">
+            <form action="/consultant/modifier/" method="post">
 
                 <input type="hidden" name="modif" value="int">
                 <input type="hidden" name="action" value="add">                
@@ -201,7 +201,7 @@
         
             <!-- // qual section // -->
 
-            <form action="/consultant/modifier" method="post">
+            <form action="/consultant/modifier/" method="post">
 
                 <input type="hidden" name="modif" value="qual">
                 <input type="hidden" name="action" value="add">
@@ -250,7 +250,9 @@
         </div>
         <div class="popup" id="Graph"><div class="nav">Graphiques</div>
         
-            <!-- // Comp section // -->
+            <!-- // Graph section // -->
+
+            <div onclick="g.send()" class="submit">Envoyer</div>
 
             <div class="compListWrapper w-50">
 
@@ -276,7 +278,12 @@
 
                                 if ($value["niveau"] == null) $value["niveau"] = 0;
 
-                                ?><div class="comp"><?php echo $name; ?> - <span><?php echo $value["niveau"]; ?></span></div><?php
+                                ?><div class="comp">
+                                    <?php echo $name; ?> - <span><?php echo $value["niveau"]; ?></span>
+                                    <span onclick="g.addG3(<?php echo $value["id_competence"]; ?>, <?php echo $value["niveau"]; ?>, '<?php echo $name; ?>')" class="floatRight">Graph 3</span>
+                                    <span onclick="g.addG2(<?php echo $value["id_competence"]; ?>, <?php echo $value["niveau"]; ?>, '<?php echo $name; ?>')" class="floatRight">Graph 2</span>
+                                    <span onclick="g.addG1(<?php echo $value["id_competence"]; ?>, <?php echo $value["niveau"]; ?>, '<?php echo $name; ?>')" class="floatRight">Graph 1</span>
+                                </div><?php
 
                             }
                             
@@ -319,34 +326,69 @@
                 $graph = $c->get_graphiques();
                 $graphG = array(
                     1 => array(
-                        "label" => "",
-                        "data" => "",
-                        "length" => 0
+                        "label" => array(),
+                        "data" => array(),
+                        "id" => array()
                     ), 2 => array(
-                        "label" => "",
-                        "data" => "",
-                        "length" => 0
+                        "label" => array(),
+                        "data" => array(),
+                        "id" => array()
                     ), 3 => array(
-                        "label" => "",
-                        "data" => "",
-                        "length" => 0
+                        "label" => array(),
+                        "data" => array(),
+                        "id" => array()
                     )
                 );
 
                 foreach ($graph as $values) {
 
-                    if ($graphG[$values['id_graphique']]['length'] > 0) {
-                        $graphG[$values['id_graphique']]['label'] .= ",";
-                        $graphG[$values['id_graphique']]['data'] .= ",";
-                    }
+                    if ($values['niveau'] == null) $values['niveau'] = "0";
 
-                    $graphG[$values['id_graphique']]['label'] .= "\"" . $values['nom'] . "\"";
-                    $graphG[$values['id_graphique']]['data'] .= $values['niveau'];
-                    $graphG[$values['id_graphique']]['length'] += 1;
+                    $graphG[$values['id_graphique']]['label'][] = $values['nom'];
+                    $graphG[$values['id_graphique']]['data'][] = $values['niveau'];
+                    $graphG[$values['id_graphique']]['id'][] = $values['id_competence'];                    
 
                 }
+                // echo '<pre style="text-align: left;">';
+                // var_dump($graphG);
+                // echo '</pre>';
 
             ?>
+
+            <div class="graph">
+
+                <div class="graph1"><span>Graphique 1</span>
+                    <?php
+                        foreach ($graphG[1]["label"] as $key => $value) {
+                            ?><div class="graphComp" data-id="<?php echo $graphG[1]["id"][$key]; ?>" data-lvl="<?php echo $graphG[1]["niveau"][$key]; ?>"><?php echo $value; ?><div onclick='g.delG1(<?php echo $graphG[1]["id"][$key]; ?>)' class='del'>&times;</div></div><?php
+                        }
+                    ?>
+                </div>
+
+                <div class="graph2"><span>Graphique 2</span>
+                    <?php
+                        foreach ($graphG[2]["label"] as $key => $value) {
+                            ?><div class="graphComp" data-id="<?php echo $graphG[2]["id"][$key]; ?>" data-lvl="<?php echo $graphG[2]["niveau"][$key]; ?>"><?php echo $value; ?><div onclick='g.delG2(<?php echo $graphG[2]["id"][$key]; ?>)' class='del'>&times;</div></div><?php
+                        }
+                    ?>
+                </div>
+
+                <div class="graph3"><span>Graphique 3</span>
+                    <?php
+                        foreach ($graphG[3]["label"] as $key => $value) {
+                            ?><div class="graphComp" data-id="<?php echo $graphG[3]["id"][$key]; ?>" data-lvl="<?php echo $graphG[3]["niveau"][$key]; ?>"><?php echo $value; ?><div onclick='g.delG3(<?php echo $graphG[3]["id"][$key]; ?>)' class='del'>&times;</div></div><?php
+                        }
+                    ?>
+                </div>
+
+            </div>
+
+            <script>
+
+                var g = new Graph;
+                g.load();
+        
+            </script>
         
         </div>
 
@@ -359,3 +401,10 @@
 
 </body>
 </html>
+
+<!-- 
+
+ bouton envoier graph
+ load les graph deja present dans la base de données
+
+-->

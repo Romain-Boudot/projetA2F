@@ -131,7 +131,7 @@
 
         }
 
-        if (isset($filter["consultant"])) if ($filter["consultant"] != "") {
+        if (isset($filter["consultant"])) if (!empty($filter["consultant"])) {
 
             if ($first) {
                 $first = false;
@@ -141,8 +141,15 @@
             }
 
             ?>
-                Recherche par nom : <span><?php echo $filter["consultant"]; ?></span>
+                Recherche par nom : 
             <?php
+
+            foreach ($filter["consultant"] as $key => $value) {
+                
+                if ($key > 0) echo " ";
+                echo "<span>" . $value . "</span>";
+
+            }
 
         }
 
