@@ -396,6 +396,7 @@ select:focus {
     max-width: 80%;
     overflow: hidden;
     text-overflow: ellipsis;
+    cursor: pointer;
 }
 
 .sugest .sugestedItem::after {
