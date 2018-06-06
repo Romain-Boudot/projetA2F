@@ -1,5 +1,7 @@
 <?php
 
+include $_SERVER["DOCUMENT_ROOT"] . "/../classes/Database.php";
+
 Class Search {
 
 static public function lookup(){
@@ -200,6 +202,7 @@ static public function show_graph($id_post){
                 $second_level_check->execute(array(":id_comp_mere" => $id));
 
                 $check_two = $second_level_check->fetchAll(PDO::FETCH_ASSOC);
+
                 if(sizeof($check_two) != 0){
                     $valid++;
                 }
