@@ -76,8 +76,6 @@ Class Consultant {
     }
 
     public function send_modif(){
-        
-        var_dump($this);
 
         $db = Database::connect();
         $statement = $db->prepare("UPDATE consultants SET nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, linkedin = :linkedin WHERE id_consultant = :id");

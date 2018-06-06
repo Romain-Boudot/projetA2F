@@ -34,8 +34,6 @@
 
         $c->send_modif();
 
-        exit();
-
     } elseif ($_POST['modif'] == "comp") {
 
         $co = JSON_decode(urldecode($_POST['comp']), true);
@@ -148,4 +146,4 @@
 
     }
 
-    header("location: http://" . $_SERVER['HTTP_HOST'] . "/consultant/modifier");
+    header("location: http://" . $_SERVER['HTTP_HOST'] . "/consultant/modifier/");
