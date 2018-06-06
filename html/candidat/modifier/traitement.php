@@ -34,6 +34,8 @@
 
         $c->send_modif();
 
+        exit();
+
     } elseif ($_POST['modif'] == "comp") {
 
         $co = JSON_decode(urldecode($_POST['comp']), true);
@@ -56,10 +58,10 @@
         if (isset($_POST['action'])) if ($_POST['action'] == "add") {
 
             
-            if (isset($_POST['client']) && isset($_POST['date']) && isset($_POST['details'])) {
+            if (isset($_POST['RH']) && isset($_POST['date']) && isset($_POST['details'])) {
                 
-                $c->add_intervention(array(
-                    "id_client" => $_POST["client"],
+                $c->add_interview(array(
+                    "id_rh" => $_POST["RH"],
                     "date" => $_POST["date"],
                     "details" => $_POST["details"]
                 ));
@@ -70,7 +72,7 @@
 
             if (isset($_POST['id'])) {
 
-                $c->delete_intervention($_POST['id']);
+                $c->delete_interview($_POST['id']);
 
             }
 
@@ -100,50 +102,6 @@
 
         }
 
-    } elseif ($_POST['modif'] == "graph") {
-        
-        if (isset($_POST['graph1'])) {
-
-            $g = JSON_decode(urldecode($_POST['graph1']), true);
-
-            $c->delete_graphique(1);
-
-            foreach ($g as $k => $v) {
-                
-                $c->add_graphique(1, $k);
-
-            }
-
-        }
-
-        if (isset($_POST['graph2'])) {
-
-            $g = JSON_decode(urldecode($_POST['graph2']), true);
-
-            $c->delete_graphique(2);
-
-            foreach ($g as $k => $v) {
-                
-                $c->add_graphique(2, $k);
-
-            }
-
-        }
-
-        if (isset($_POST['graph3'])) {
-
-            $g = JSON_decode(urldecode($_POST['graph3']), true);
-
-            $c->delete_graphique(3);
-
-            foreach ($g as $k => $v) {
-                
-                $c->add_graphique(3, $k);
-
-            }
-
-        }
-
     }
 
-    header("location: http://" . $_SERVER['HTTP_HOST'] . "/consultant/modifier/");
+//    header("location: http://" . $_SERVER['HTTP_HOST'] . "/candidat/modifier");

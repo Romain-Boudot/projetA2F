@@ -293,7 +293,7 @@
                 <div class="line">
                     <div class="point">
                         <div class="tooltip">
-                            Arriver dans l'entreprise
+                            Arrivée dans l'entreprise
                         </div>
                         <div class="pointLabel">
                             14 mai 2018

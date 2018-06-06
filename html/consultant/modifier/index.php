@@ -32,7 +32,7 @@
     <script src="/cdn/Popup.js"></script>
     <script src="/cdn/Profile.js"></script>
     <script src="/cdn/Post.js"></script>
-    <title>A2F Advisior</title>
+    <title>A2F Advisor</title>
 </head>
 <body>
     <nav>
@@ -44,7 +44,7 @@
     </nav>
     <div class="mainWrapper">
 
-        <div onclick="location.href='/consultant'" class="close">Retour</div>
+        <div onclick="location.href='/consultant/'" class="close">Retour</div>
 
         <div class="popup" id="Comp"><div class="nav">Compétences</div>
         
