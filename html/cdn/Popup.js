@@ -28,4 +28,16 @@ class Popup {
 
     }
 
+    static oneOpen(id, ...triggers) {
+
+        document.getElementById(id).style.visibility = "visible";
+
+        triggers.forEach(e => {
+            if (e.onPopupClose) {
+                e.onPopupClose();
+            }
+        })
+
+    }
+
 }

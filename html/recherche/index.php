@@ -29,6 +29,33 @@ session_start();
 
     <div class="main-wrapper">
 
+        <div onclick="Popup.oneOpen('help')" class="helpTrigger">Aide</div>
+        <div onclick="Popup.close('help')" id="help" class="help">
+
+            <div>
+                Saisie :
+                <div>
+                    - Vous pouvez entrer :
+                    <div>
+                        <div>- des noms de consultants, séparés par des virgules,</div>
+                        <div>- des compétences et des clients, cliquable dans les suggestions.</div>
+                    </div>
+                </div> 
+            </div>
+
+            <div>
+                Niveaux :
+                <div>
+                    <div>- Niveau 0 : Aucune notion</div>
+                    <div>- Niveau 1 : Débutant, peut prendre en main l'activité avec l'aide d'un expert</div>
+                    <div>- Niveau 2 : Autonome sur l'activité</div>
+                    <div>- Niveau 3 : Expert, peut transmettre son savoir</div>
+                </div> 
+            </div>
+                
+
+        </div>
+
         <div class="search">
     
             <div class="filterGrid">
@@ -92,7 +119,7 @@ session_start();
             <div id="input" class="searchBar">
                 <div id="inputFilter">
                     <div id="textInput">
-                        <input type="text" placeholder="Compétences, Clients, Nom consultant (séparé par une virgule)">
+                        <input type="text">
                     </div>
                 </div>
             </div>
@@ -160,6 +187,7 @@ session_start();
 
                                 <div id="ddt<?php echo $cpt?>" class="dropdownTrigger">
                                     <?php echo $name; ?>
+                                    <div data-name="<?php echo $name; ?>" data-id="<?php echo $value["id_competence"]; ?>" class="competence borderComp">ajouter aux filtres</div>
                                 </div>
 
                                 <?php

@@ -1,12 +1,8 @@
 <?php
 
-    ini_set('display_errors', 1);
     include_once $_SERVER['DOCUMENT_ROOT'] . "/../classes/Database.php";
 
     session_start();
-
-    var_dump($_POST);
-
 
     if (isset($_POST["login"]) && isset($_POST["password"])) {
 

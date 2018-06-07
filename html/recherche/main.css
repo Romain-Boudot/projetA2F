@@ -262,6 +262,26 @@ input[type=checkbox]:checked + .checkbox {
     cursor: pointer;
 }
 
+.dropdownTrigger>div {
+    display: inline;
+    font-size: 13px;
+    border: 1px solid rgba(0, 0, 0, .08);
+    padding: 0px 4px !important;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.dropdownTrigger:hover>div {
+    transition: 0.2s opacity ease;
+    opacity: 1;
+    visibility: visible;
+}
+
+.dropdownTrigger>div::after {
+    content: "";
+    display: none;
+}
+
 .dropdownContainer {
     width: 100%;
     transition: 0.3s height ease, 0.2s color ease;
@@ -416,4 +436,33 @@ select:focus {
 
 .labelClient {
     grid-column: 2 / 3;
+}
+
+.help,
+.helpTrigger {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 10px 10px;
+    border: 1px solid rgba(0, 0, 0, .08);
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.144);
+    /* -webkit-box-shadow: inset 0px 0px 0px 2px rgba(255,255,255,1);
+    -moz-box-shadow: inset 0px 0px 0px 2px rgba(255,255,255,1);
+    box-shadow: inset 0px 0px 0px 2px rgba(255,255,255,1); */
+}
+
+.help {
+    visibility: hidden;
+    max-width: calc(15% - 40px);
+}
+
+.help div {
+    display: block;
+    margin: 0;
+    padding: 2px 0 0 10px;
+}
+
+.help>div {
+    padding: 2px 0 0 0 !important;
 }

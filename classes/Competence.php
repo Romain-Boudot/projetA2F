@@ -25,14 +25,34 @@ function tab_search($id, $tab) {
  
 class Competence {
 
-    static public function get_name($id = null) {
+    static public function is_last($id) {
 
-        if ($id != null) {
-            $db = Database::connect();
-            $statement = $db->prepare("SELECT nom FROM competences WHERE id_competence = :id");
-            $statement->execute(array(":id" => $id));
-            return $statement->fetch()["nom"];
-        } else return false;
+        $db = Database::connect();
+        $statement = $db->prepare("SELECT nom FROM competences WHERE id_competence_mere = :id");
+        $statement->execute(array(":id" => $id));
+        $answer = $statement->fetchAll(PDO::FETCH_ASSOC);
+        if (!$answer) return true;
+        if ($answer > 0) return false;
+        else return true;
+
+    }
+
+    static public function get_children($id) {
+
+        $db = Database::connect();
+        $statement = $db->prepare("SELECT id_competence FROM competences WHERE id_competence_mere = :id");
+        $statement->execute(array(":id" => $id));
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
+    static public function get_name($id) {
+
+        $db = Database::connect();
+        $statement = $db->prepare("SELECT nom FROM competences WHERE id_competence = :id");
+        $statement->execute(array(":id" => $id));
+        return $statement->fetch()["nom"];
+
     }
  
     static public function get_array($id = null) {
