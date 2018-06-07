@@ -49,7 +49,7 @@ error_reporting(E_ALL);
         
             <!-- // Comp section // -->
         
-            <div onclick="Competence.send()" class="submit">Envoyer</div>
+            <div onclick="Competence.send_candidat()" class="submit">Envoyer</div>
 
             <div class="compListWrapper">
 
@@ -185,7 +185,7 @@ error_reporting(E_ALL);
                         <div class="infos"><?php echo $int['date_entretien']; ?></div>
                         <div class="infos"><?php echo $int['nom']; echo " "; echo $int['prenom']; ?></div>
                         <div class="details"><?php echo $int['details']; ?></div>
-                        <div class="InterSubmit"><div onclick="Intervention.del_candidat(<?php echo $int['id_interview']; ?>)" class="delInt">Supprimer</div></div>
+                        <div class="InterSubmit"><div onclick="Intervention.del_candidat(<?php echo $int['id_entretien']; ?>)" class="delInt">Supprimer</div></div>
                     </div>
 
                 <?php

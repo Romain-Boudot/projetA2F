@@ -87,6 +87,21 @@ class Candidat {
         $pdo = null;
 
     }
+    
+    
+    public function delete_interview($id){
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("DELETE FROM entretiens WHERE id_entretien = :id");
+
+        $statement->execute(array(':id' => $id));
+
+        $pdo = null;
+
+
+    }
+
+
 
     public function edit_interview($infos){
         $pdo = Database::connect();
