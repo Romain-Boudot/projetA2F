@@ -42,5 +42,3 @@ class Security {
     }
 
 }
-
-Security::gen_token();
