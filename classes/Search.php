@@ -1,6 +1,5 @@
 <?php
 
-include $_SERVER["DOCUMENT_ROOT"] . "/../classes/Database.php";
 
 Class Search {
 

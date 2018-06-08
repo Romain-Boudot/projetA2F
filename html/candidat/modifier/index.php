@@ -12,7 +12,29 @@ error_reporting(E_ALL);
 
     session_start();
 
-        $c = new Candidat(1);
+/*
+    if(isset($_GET['id'])){
+
+        $id = $_GET['id'];
+    
+        $c = new Candidat($id);
+    }
+    elseif(isset($_POST['id_cons'])){
+        
+        $id = $_POST['id_cons'];
+
+        $c = new Candidat($id);
+    }
+
+    else{
+        echo "Candidat introuvable";
+        exit();
+    
+    }
+ */
+    $id = 1;
+
+    $c = new Candidat($id);
 
     if (isset($_POST['modif'])) {
         include_once "traitement.php";
@@ -123,6 +145,7 @@ error_reporting(E_ALL);
             <form action="/candidat/modifier/" method="post">
             
                 <input type="hidden" name="modif" value="info">
+<!--                <input type="hidden" name="id_cons" value="<?php echo $id; ?>">                -->
 
                 <input type="text" name="nom" placeholder="Nom" value="<?php echo $c->get_nom(); ?>" required>
                 <input type="text" name="prenom" placeholder="Prenom" value="<?php echo $c->get_prenom(); ?>" required>
@@ -133,7 +156,8 @@ error_reporting(E_ALL);
                 <input type="submit" value="Envoyer">
 
             </form>
-        
+
+
         </div>
         <div class="popup" id="Inter"><div class="nav">Entretiens</div>
         
@@ -143,8 +167,9 @@ error_reporting(E_ALL);
 
                 <input type="hidden" name="modif" value="int">
                 <input type="hidden" name="action" value="add">                
-
-                <div class="intervention">
+                <input type="hidden" name="id" value="<?php echo $id ?>">                
+               
+                     <div class="intervention">
                     <div class="infos">Date</div>
                     <div class="infos">RH</div>
                     <div class="details textCenter">
@@ -205,6 +230,8 @@ error_reporting(E_ALL);
 
                 <input type="hidden" name="modif" value="qual">
                 <input type="hidden" name="action" value="add">
+                
+                <input type="hidden" name="id" value="<?php echo $id ?>">                
 
                 <div class="qualification">
                     <div class="infos">Qualification</div>

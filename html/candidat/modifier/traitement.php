@@ -34,7 +34,7 @@
 
         $c->send_modif();
 
-//        exit();
+        exit();
 
     } elseif ($_POST['modif'] == "comp") {
 
@@ -104,4 +104,5 @@
 
     }
 
-//    header("location: http://" . $_SERVER['HTTP_HOST'] . "/candidat/modifier");
+
+header("location: http://" . $_SERVER['HTTP_HOST'] . "/candidat/modifier/?id=" . $_POST['id_cons']);

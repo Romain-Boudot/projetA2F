@@ -11,9 +11,9 @@ error_reporting(E_ALL);
     session_start();
 
 
+
+    //$id = $_GET['id'];
     $id = 1;
-
-
     $candidat = new Candidat($id);
     
 ?>
@@ -46,7 +46,7 @@ error_reporting(E_ALL);
         <div class="profile-info" data-info="telephone"><?php echo $candidat->get_telephone(); ?></div></div>
         <div class="profile-info" data-info="linkedin"><?php echo $candidat->get_linkedin(); ?></div></div>
         
-        <a class="bottom btn h-56 modif-profile bold" href="/candidat/modifier">Modifier mon profil</a>
+        <a class="bottom btn h-56 modif-profile bold" href='/candidat/modifier?id=<?php echo $id; ?>'>Modifier mon profil</a>
 
     </nav>
 

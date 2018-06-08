@@ -178,20 +178,21 @@ class Candidat {
 
         $pdo = Database::connect();
 
-        $statement = $pdo->prepare("DELETE FROM competences_candidats WHERE id_competence = :id_competence AND id_candidat = :id_candidat");
+        $statement = $pdo->prepare("DELETE FROM `competences_candidats` WHERE `id_competence` = :id_competence AND `id_candidat` = :id_candidat");
         $statement->execute(array(
             ":id_candidat" => $this->id,
             ":id_competence" => $infos['id_competence']
         ));
-        if ($infos["niveau"] == 0) return;
-        $statement = $pdo->prepare("INSERT INTO competences_candidats (niveau, id_candidat, id_competence) VALUES (?, ?, ?)");
+//        if ($infos["niveau"] == 0) return;
+        $statement = $pdo->prepare("INSERT INTO competences_candidats (niveau, id_candidat, id_competence) VALUES (:niv, :idca, :idco)");
         $statement->execute(array(
-            $infos['niveau'],
-            $this->id,
-            $infos['id_competence']
+           ':niv' => $infos['niveau'],
+           ':idca' => $this->id,
+           ':idco' => $infos['id_competence']
         ));
-
-        $pdo = null; 
+        
+        var_dump($statement);
+            $pdo = null; 
     
     }
 
