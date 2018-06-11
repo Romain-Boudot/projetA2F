@@ -54,7 +54,7 @@ class Competence {
 
     }
 
-    static send_candidat() {
+    static send_candidat(id_ca) {
 
         var arr = [];
 
@@ -74,7 +74,8 @@ class Competence {
 
         Post.send("/candidat/modifier/", {
             "comp" : encodeURI(JSON.stringify(arr)),
-            "modif" : "comp"
+            "modif" : "comp",
+            "id_cons" : id_ca
         });
 
     }
@@ -92,12 +93,13 @@ class Intervention {
 
     }
 
-    static del_candidat(id) {
+    static del_candidat(id, idcs) {
 
         Post.send("/candidat/modifier/", {
             "action" : "delete",
             "modif" : "int",
-            "id" : id
+            "id" : id,
+            "id_cons" : idcs
         })
 
     }
@@ -115,12 +117,13 @@ class Qualification {
 
     }
 
-    static del_candidat(id) {
+    static del_candidat(id, idcs) {
 
         Post.send("/candidat/modifier/", {
             "action" : "delete",
             "modif" : "qual",
-            "id" : id
+            "id" : id,
+            "id_cons" : idcs
         })
 
     }

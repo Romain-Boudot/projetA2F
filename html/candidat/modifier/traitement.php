@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 
     if ($_POST['modif'] == "info") {
 
@@ -34,7 +38,6 @@
 
         $c->send_modif();
 
-        exit();
 
     } elseif ($_POST['modif'] == "comp") {
 
@@ -103,6 +106,8 @@
         }
 
     }
+$id = $c->get_id();
 
 
-header("location: http://" . $_SERVER['HTTP_HOST'] . "/candidat/modifier/?id=" . $_POST['id_cons']);
+header("location: http://" . $_SERVER['HTTP_HOST'] . "/candidat/modifier/?id=" . $id ."");
+//header("location: http://" . $_SERVER['HTTP_HOST'] . "/");

@@ -12,27 +12,23 @@ error_reporting(E_ALL);
 
     session_start();
 
-/*
+
     if(isset($_GET['id'])){
 
         $id = $_GET['id'];
     
-        $c = new Candidat($id);
     }
     elseif(isset($_POST['id_cons'])){
         
         $id = $_POST['id_cons'];
 
-        $c = new Candidat($id);
     }
 
     else{
         echo "Candidat introuvable";
         exit();
-    
     }
- */
-    $id = 1;
+ 
 
     $c = new Candidat($id);
 
@@ -65,13 +61,13 @@ error_reporting(E_ALL);
     </nav>
     <div class="mainWrapper">
 
-        <div onclick="location.href='/candidat/'" class="close">Retour</div>
+    <div onclick="location.href='/candidat/?id=<?php echo $id; ?>'" class="close">Retour</div>
 
         <div class="popup" id="Comp"><div class="nav">Compétences</div>
         
             <!-- // Comp section // -->
         
-            <div onclick="Competence.send_candidat()" class="submit">Envoyer</div>
+            <div onclick="Competence.send_candidat(<?php echo $id; ?>)" class="submit">Envoyer</div>
 
             <div class="compListWrapper">
 
@@ -145,7 +141,7 @@ error_reporting(E_ALL);
             <form action="/candidat/modifier/" method="post">
             
                 <input type="hidden" name="modif" value="info">
-<!--                <input type="hidden" name="id_cons" value="<?php echo $id; ?>">                -->
+                <input type="hidden" name="id_cons" value="<?php echo $id; ?>">   
 
                 <input type="text" name="nom" placeholder="Nom" value="<?php echo $c->get_nom(); ?>" required>
                 <input type="text" name="prenom" placeholder="Prenom" value="<?php echo $c->get_prenom(); ?>" required>
@@ -167,7 +163,7 @@ error_reporting(E_ALL);
 
                 <input type="hidden" name="modif" value="int">
                 <input type="hidden" name="action" value="add">                
-                <input type="hidden" name="id" value="<?php echo $id ?>">                
+                <input type="hidden" name="id_cons" value="<?php echo $id ?>">                
                
                      <div class="intervention">
                     <div class="infos">Date</div>
@@ -210,7 +206,7 @@ error_reporting(E_ALL);
                         <div class="infos"><?php echo $int['date_entretien']; ?></div>
                         <div class="infos"><?php echo $int['nom']; echo " "; echo $int['prenom']; ?></div>
                         <div class="details"><?php echo $int['details']; ?></div>
-                        <div class="InterSubmit"><div onclick="Intervention.del_candidat(<?php echo $int['id_entretien']; ?>)" class="delInt">Supprimer</div></div>
+                        <div class="InterSubmit"><div onclick="Intervention.del_candidat(<?php echo $int['id_entretien']; ?>, <?php echo $id; ?>)" class="delInt">Supprimer</div></div>
                     </div>
 
                 <?php
@@ -231,7 +227,7 @@ error_reporting(E_ALL);
                 <input type="hidden" name="modif" value="qual">
                 <input type="hidden" name="action" value="add">
                 
-                <input type="hidden" name="id" value="<?php echo $id ?>">                
+                <input type="hidden" name="id_cons" value="<?php echo $id; ?>">                
 
                 <div class="qualification">
                     <div class="infos">Qualification</div>
@@ -263,7 +259,7 @@ error_reporting(E_ALL);
                         <div class="infos"><?php echo $qual['nom_qualification']; ?></div>
                         <div class="infos"><?php echo $qual['date_obtention']; ?></div>
                         <div class="details"><?php echo $qual['details']; ?></div>
-                        <div class="QualSubmit"><div onclick="Qualification.del_candidat(<?php echo $qual['id_qualification']; ?>)" class="delInt">Supprimer</div></div>
+                        <div class="QualSubmit"><div onclick="Qualification.del_candidat(<?php echo $qual['id_qualification']; ?>, <?php echo $id; ?>)" class="delInt">Supprimer</div></div>
                     </div>
 
                 <?php

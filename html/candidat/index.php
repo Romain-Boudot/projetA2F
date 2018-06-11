@@ -11,9 +11,14 @@ error_reporting(E_ALL);
     session_start();
 
 
+    if(isset($_GET['id'])){
+        $id = $_GET['id'];
+    }
+    else{
+        echo "Candidat non reconnu";
+        exit();
+    }
 
-    //$id = $_GET['id'];
-    $id = 1;
     $candidat = new Candidat($id);
     
 ?>
