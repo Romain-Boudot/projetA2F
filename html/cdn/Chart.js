@@ -52,16 +52,13 @@ class chartOption {
 
 class chartOptionBaton {
 
-    constructor() {
-
-        Chart.defaults.global.legend.labels.boxWidth = 5
-
-        this.chart = {
+    static test(data, label, option = null) {
+        return {
             "type": "bar",
             "data": {
-                "labels": [],
+                "labels": label,
                 "datasets": [{
-                    "data": [],
+                    "data": data,
                     "backgroundColor": "#4582cf88",
                     "borderColor": "#2f336f",
                     "fill": false,
@@ -70,6 +67,7 @@ class chartOptionBaton {
                 }]
             },
             "options": {
+                "ticks" : option,
                 "pointLabelSeperator": "\n",
                 "tooltips": {
                     "enabled": false
@@ -92,9 +90,7 @@ class chartOptionBaton {
                 },
                 "scales": {
                     "yAxes": [{
-                        "ticks": {
-                            "beginAtZero": true
-                        }
+                        "ticks": option
                     }],
                     "xAxes": [{
                         "maxBarThickness": 50
@@ -102,10 +98,6 @@ class chartOptionBaton {
                 }
             }
         }
-    }
-
-    get option() {
-        return this.chart
     }
 
 }

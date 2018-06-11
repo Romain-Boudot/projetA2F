@@ -15,6 +15,8 @@ class Dropdown {
             trigger.addEventListener("click", (e) => {
 
                 // current id of the foreach 
+                if (typeof e.target.trigger === "undefined") return;
+
                 let id = e.target.trigger.id.slice(3);
 
                 let c = document.getElementById("ddc" + id);

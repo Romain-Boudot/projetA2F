@@ -8,6 +8,8 @@
 
     session_start();
 
+    Security::check_login(array(0, 1, 2));
+
     $result = Search::lookup();
 
     $filter = JSON_decode($_GET['filter'], true);

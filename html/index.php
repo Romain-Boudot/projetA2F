@@ -1,20 +1,12 @@
 <?php
 
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/../classes/Security.php";
+
     session_start();
 
-    function login_redirect() {
-        header('location: http://' . $_SERVER['HTTP_HOST'] . "/identification");
-        exit();
-    }
+    Security::check_login(array(0, 1, 2));
 
-    if (isset($_SESSION['user']['connected'])) {
-
-        if ($_SESSION['user']['connected'] != true) login_redirect();
-
-    } else login_redirect();
-
-
-    header("location: http://" . $_SERVER['HTTP_HOST'] . "/recherche");
+    header("location: http://" . $_SERVER['HTTP_HOST'] . "/recherche/");
     exit();
 
 ?>

@@ -286,60 +286,110 @@ Class Search {
 
     } 
 
+    static public function graph_query($id, $deep = false) {
+
+        $pdo = Database::connect();
+        
+        if (Competence::is_last($id)) {
+            
+            $returned = array();
+
+            if ($deep) {
+                
+                $statement = $pdo->prepare("SELECT c.nom, (SELECT COUNT(*) FROM competences_consultants cc WHERE cc.niveau >= 2 AND cc.id_competence = c.id_competence) as count FROM competences c WHERE c.id_competence = :id_comp");
+                $statement->execute(array(":id_comp" => $id));
+                $returned["count"] = $statement->fetch();
+            
+            } else {
+
+                $statement = $pdo->prepare("SELECT c.nom, (SELECT COUNT(*) FROM competences_consultants cc WHERE EXISTS (SELECT * FROM competences_consultants cccc WHERE CAST ) AND cc.id_competence = c.id_competence) as count FROM competences c WHERE c.id_competence = :id_comp");
+                $statement->execute(array(":id_comp" => $id));
+                $returned["count"] = $statement->fetch();
+
+            }
+
+            $statement = $pdo->prepare("SELECT c.nom, (SELECT AVG(cc.niveau) FROM competences_consultants cc WHERE cc.id_competence = c.id_competence) as average FROM competences c WHERE c.id_competence = :id_comp");
+            $statement->execute(array("id_comp" => $id));
+            $returned["average"] = $statement->fetch();
+
+            return $returned;
+
+        } else {
+
+            $first_level_check = $pdo->prepare("SELECT nom, id_competence FROM competences WHERE id_competence_mere = :id_comp_mere");
+            $first_level_check->execute(array(":id_comp_mere" => $id));
+            $filles = $first_level_check->fetchAll(PDO::FETCH_ASSOC); 
+
+            $returned = array();
+            $count = 0;
+            $average = 0;
+            $cpt = 0;
+
+            foreach ($filles as $key => $value) {
+                
+                $returned = Search::graph_query($value["id_competence"], true);
+                $count += $returned["count"]["count"];
+                $average += $returned["average"]["average"];
+                $cpt++;
+
+            }
+
+            return array(
+                "count" => array(
+                    "count" => $count
+                ),
+                "average" => array(
+                    "average" => $average / $cpt
+                )
+            );
+
+        }
+
+    }
+
     static public function show_graph($id_post){
 
-        $valid = 0;
+        if ($id_post < 4 || Competence::is_last($id_post)) return false;
+
+        $graphs = array(
+            0 => array(),
+            1 => array()
+        );
 
         $pdo = Database::connect();
 
-        $first_level_check = $pdo->prepare("SELECT id_competence FROM competences WHERE id_competence_mere = :id_comp_mere");
+        $first_level_check = $pdo->prepare("SELECT nom, id_competence FROM competences WHERE id_competence_mere = :id_comp_mere");
         $first_level_check->execute(array(":id_comp_mere" => $id_post));
+        $filles = $first_level_check->fetchAll(PDO::FETCH_ASSOC);   
 
-        $check = $first_level_check->fetchAll(PDO::FETCH_ASSOC);
-        if(sizeof($check) > 0){         
-            foreach($check as $list => $array){
-                foreach($array as $key => $id){
-
-                    $second_level_check = $pdo->prepare("SELECT id_competence FROM competences WHERE id_competence_mere = :id_comp_mere");
-                    $second_level_check->execute(array(":id_comp_mere" => $id));
-
-                    $check_two = $second_level_check->fetchAll(PDO::FETCH_ASSOC);
-
-                    if(sizeof($check_two) != 0){
-                        $valid++;
-                    }
-
-                }
-
-            }            
-
-
-            if($valid == 0){
-
-                $statement = $pdo->prepare("SELECT c.nom, (SELECT COUNT(*) FROM competences_consultants cc WHERE cc.niveau >= 2 AND cc.id_competence = c.id_competence) as count FROM competences c WHERE c.id_competence_mere = :id_comp_mere");
-                $statement->execute(array(":id_comp_mere" => $id_post));
-                $graph1 = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-
-                $statement = $pdo->prepare("SELECT c.nom, (SELECT AVG(cc.niveau) FROM competences_consultants cc WHERE cc.id_competence = c.id_competence) as average FROM competences c WHERE c.id_competence_mere = :id_comp_mere");
-                $statement->execute(array("id_comp_mere" => $id_post));
-                $graph2 = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-                $graphs = array($graph1, $graph2);
-
-                return $graphs;
-            }else {
-                return false;        
-            }
-
-
-
-        } else{
-            return false;
-        } 
-
+        foreach ($filles as $key => $value) {
+   
+            $arr = Search::graph_query($value["id_competence"]);
+        
+            $graphs[0][] = array(
+                "nom" => $value["nom"],
+                "count" => $arr["count"]["count"]
+            );
+            $graphs[1][] = array(
+                "nom" => $value["nom"],
+                "average" => $arr["average"]["average"]
+            );
+        
+        }
+        
+        return $graphs;
 
     }
 
 }
 
+/* 
+$statement = $pdo->prepare("SELECT c.nom, (SELECT COUNT(*) FROM competences_consultants cc WHERE cc.niveau >= 2 AND cc.id_competence = c.id_competence) as count FROM competences c WHERE c.id_competence_mere = :id_comp_mere");
+            $statement->execute(array(":id_comp_mere" => $id_post));
+            $graph1 = $statement->fetchAll(PDO::FETCH_ASSOC);
+            
+            
+            $statement = $pdo->prepare("SELECT c.nom, (SELECT AVG(cc.niveau) FROM competences_consultants cc WHERE cc.id_competence = c.id_competence) as average FROM competences c WHERE c.id_competence_mere = :id_comp_mere");
+            $statement->execute(array("id_comp_mere" => $id_post));
+            $graph2 = $statement->fetchAll(PDO::FETCH_ASSOC);
+            */

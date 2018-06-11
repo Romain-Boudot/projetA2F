@@ -1,10 +1,13 @@
 <?php
 
 include_once $_SERVER['DOCUMENT_ROOT'] . "/../classes/Database.php";
+include_once $_SERVER['DOCUMENT_ROOT'] . "/../classes/Security.php";
 include_once $_SERVER['DOCUMENT_ROOT'] . "/../classes/Competence.php";
 include_once $_SERVER['DOCUMENT_ROOT'] . "/../classes/Client.php";
 
 session_start();
+
+Security::check_login(array(0, 1, 2));
 
 ?>
 <!DOCTYPE html>
