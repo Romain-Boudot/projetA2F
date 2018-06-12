@@ -315,7 +315,7 @@ ul>li {
 
 #timeLine .line .coloredLine {
     height: 100%;
-    transition: 0.2s width ease;
+    transition: 0.5s width ease;
     background-color: #ff7518;
     position: absolute;
     left: 0;
@@ -332,6 +332,11 @@ ul>li {
     background-color: #fff;
     border: 2px solid #2f336f;
     z-index: 200;
+    cursor: pointer;
+}
+
+#timeLine .line .coloredLine.step1 {
+    width: 0%;
 }
 
 #timeLine .line .coloredLine.step2 {
