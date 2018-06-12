@@ -28,9 +28,21 @@ class Security {
 
         if (isset($_SESSION['user']['connected'])) {
 
-            if (!$_SESSION['user']['connected']) header("locaton: http://" . $_SERVER['HTTP_HOST'] . "/identification/");
+            echo 'pass';
 
-        } else header("locaton: http://" . $_SERVER['HTTP_HOST'] . "/identification/");
+            if (!$_SESSION['user']['connected']) {
+            
+                header("Location: http://" . $_SERVER['HTTP_HOST'] . "/identification/");
+                exit();
+                
+            }
+
+        } else {
+
+            header("Location: http://" . $_SERVER['HTTP_HOST'] . "/identification/");
+            exit();
+
+        }
 
         if (!in_array($_SESSION['user']['type'], $lvl)) {
 

@@ -286,27 +286,16 @@ Class Search {
 
     } 
 
-    static public function graph_query($id, $deep = false) {
+    static public function graph_query($id) {
 
         $pdo = Database::connect();
+        $returned = array();
         
         if (Competence::is_last($id)) {
-            
-            $returned = array();
-
-            if ($deep) {
-                
-                $statement = $pdo->prepare("SELECT c.nom, (SELECT COUNT(*) FROM competences_consultants cc WHERE cc.niveau >= 2 AND cc.id_competence = c.id_competence) as count FROM competences c WHERE c.id_competence = :id_comp");
-                $statement->execute(array(":id_comp" => $id));
-                $returned["count"] = $statement->fetch();
-            
-            } else {
-
-                $statement = $pdo->prepare("SELECT c.nom, (SELECT COUNT(*) FROM competences_consultants cc WHERE EXISTS (SELECT * FROM competences_consultants cccc WHERE CAST ) AND cc.id_competence = c.id_competence) as count FROM competences c WHERE c.id_competence = :id_comp");
-                $statement->execute(array(":id_comp" => $id));
-                $returned["count"] = $statement->fetch();
-
-            }
+                        
+            $statement = $pdo->prepare("SELECT c.nom, (SELECT COUNT(*) FROM competences_consultants cc WHERE cc.niveau >= 2 AND cc.id_competence = c.id_competence) as count FROM competences c WHERE c.id_competence = :id_comp");
+            $statement->execute(array(":id_comp" => $id));
+            $returned["count"] = $statement->fetch();
 
             $statement = $pdo->prepare("SELECT c.nom, (SELECT AVG(cc.niveau) FROM competences_consultants cc WHERE cc.id_competence = c.id_competence) as average FROM competences c WHERE c.id_competence = :id_comp");
             $statement->execute(array("id_comp" => $id));
@@ -316,32 +305,45 @@ Class Search {
 
         } else {
 
-            $first_level_check = $pdo->prepare("SELECT nom, id_competence FROM competences WHERE id_competence_mere = :id_comp_mere");
-            $first_level_check->execute(array(":id_comp_mere" => $id));
-            $filles = $first_level_check->fetchAll(PDO::FETCH_ASSOC); 
+            $statement = $pdo->prepare("SELECT
+                    count(id_consultant) as count
+                FROM
+                    consultants c1
+                WHERE
+                    CAST((
+                        SELECT 
+                            AVG(COALESCE((SELECT
+                                cc.niveau
+                            FROM
+                                competences_consultants cc
+                            WHERE
+                                cc.id_competence = c.id_competence
+                            AND
+                                cc.id_consultant = c1.id_consultant), 0))
+                        FROM competences c
+                        WHERE id_competence_mere = :id_comp_mere) as DECIMAL(6, 3)) >= 2");
+            $statement->execute(array(":id_comp_mere" => $id));
+            $returned["count"] = $statement->fetch(); 
 
-            $returned = array();
-            $count = 0;
-            $average = 0;
-            $cpt = 0;
+            $statement = $pdo->prepare("SELECT
+                    AVG(CAST((
+                        SELECT 
+                            AVG(COALESCE((SELECT
+                                cc.niveau
+                            FROM
+                                competences_consultants cc
+                            WHERE
+                                cc.id_competence = c.id_competence
+                            AND
+                                cc.id_consultant = c1.id_consultant), 0))
+                        FROM competences c
+                        WHERE id_competence_mere = :id_comp_mere) as DECIMAL(6, 3))) as average
+                FROM
+                    consultants c1");
+            $statement->execute(array(":id_comp_mere" => $id));
+            $returned["average"] = $statement->fetch();     
 
-            foreach ($filles as $key => $value) {
-                
-                $returned = Search::graph_query($value["id_competence"], true);
-                $count += $returned["count"]["count"];
-                $average += $returned["average"]["average"];
-                $cpt++;
-
-            }
-
-            return array(
-                "count" => array(
-                    "count" => $count
-                ),
-                "average" => array(
-                    "average" => $average / $cpt
-                )
-            );
+            return $returned;
 
         }
 
