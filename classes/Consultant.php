@@ -52,7 +52,11 @@ Class Consultant {
         $statement = $pdo->prepare("INSERT INTO consultants (nom, prenom, telephone, email, linkedin, pole, honoraires) VALUES (:nom, :prenom, :email, :linkedin, :pole, :honoraires)");
         $statement->execute(array(':nom' => $infos['nom'], ':prenom' => $infos['prenom'], ':email' => $infos['email'], ':linkedin' => $infos['linkedin'], ':pole' => $infos['pole'], ':honoraires' => $infos['honoraires']));
 
+        $last = $pdo->lastInsertId(); 
+        
         $pdo = null;
+
+        return $last;
     }
 
 

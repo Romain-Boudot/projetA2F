@@ -196,7 +196,7 @@ error_reporting(E_ALL);
                 <div class="coloredLine step<?php echo $step; ?>"></div>
                 <div class="point<?php if ($step >= 1) echo " colored"; ?>">
                     <div class="pointLabel">
-                        1ere appel téléphonique
+                        1er appel téléphonique
                     </div>
                 </div>
                 <div class="point<?php if ($step >= 2) echo " colored"; ?>">
