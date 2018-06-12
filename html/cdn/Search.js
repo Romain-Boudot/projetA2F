@@ -292,13 +292,12 @@ class S {
         this.DOMelem.textInput.input.Object = this;
         this.idIncrement = 0;
         this.table = {
-            "1 ou plus" : ">= 1",
-            "2 ou plus" : ">= 2",
-            "3" : "= 3",
-            "3 ou moins" : "<= 3",
-            "2 ou moins" : "<= 2",
-            "1 ou moins" : "<= 1",
-            "0" : "= 0"
+            "égal à 0" : "=0",
+            "inf./égal à 1" : "m=1",
+            "sup./égal à 1" : "p=1",
+            "inf./égal à 2" : "m=2",
+            "sup./égal à 2" : "p=2",
+            "égal à 3" : "=3"
         };
         this.sugest = {
             "competence" : {},
@@ -342,7 +341,7 @@ class S {
     select() {
         var tmp = "<select>";
         for (let option in this.table) {
-            if (option == "1 ou plus") {
+            if (option == "sup./égal à 1") {
                 tmp += "<option selected>" + option + "</option>";
             } else {
                 tmp += "<option>" + option + "</option>";
@@ -363,7 +362,7 @@ class S {
 
         if (event.keyCode == 188) {
 
-            var text = obj.DOMelem.textInput.input.value.trim();
+            var text = this.DOMelem.textInput.input.value.trim();
 
             if (text == "") return;
 
@@ -463,6 +462,8 @@ class S {
         }
         
         this.DOMelem.inputFilter.insertBefore(div, this.DOMelem.textInput.container);
+
+        this.DOMelem.textInput.input.value = "";
 
     }
 

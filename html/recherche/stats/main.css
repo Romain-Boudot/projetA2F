@@ -1,0 +1,9 @@
+.compWrapper {
+    height: calc(100vh - 56px);
+    width: 300px;
+}
+
+.graphWrapper {
+    height: calc(100vh - 56px);
+    width: calc(100vw - 300px);
+}
