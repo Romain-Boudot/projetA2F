@@ -74,6 +74,9 @@ class Candidat {
         $infos['telephone'] = $this->telephone;
         $infos['email'] = $this->email;
         $infos['linkedin'] = $this->linkedin;
+        $infos['pole'] = 1;
+        $infos['login'] = "qrenaud";
+        $infos['mot_de_passe'] = "password";
 
         $id = Consultant::add($infos);
 
@@ -90,11 +93,11 @@ class Candidat {
 
         foreach($qualif as $key => $value){
         
-            $c->add_qualifications($value);
+            $c->add_qualification($value);
 
         }
 
-
+    echo "win";
 
 //        delete();
     }
