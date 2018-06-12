@@ -1,29 +1,29 @@
 <?php 
 
+include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Database.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Competence.php";
 include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Search.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/../includes/splitstr.php";
 
 session_start();
 
 $search = new Search();
-$id_processing = 34;
+$id_processing = $_GET["id"];
 $g =  $search->show_graph($id_processing);
-echo "<pre>";
-var_dump($g);
-echo "</pre>";
 
 if (!$g) {
     echo "[-1]";
     exit();
 }
 
-
 ?>
 {
+    "id":"idgraph<?php echo $id_processing; ?>",
     "G1":{ 
         "label": [<?php
             foreach ($g[0] as $k => $skill) {
                 if ($k != 0) echo ","; 
-                echo "\"" . $skill["nom"] . "\"";
+                echo splitstr($skill["nom"]);
             }
         ?>],
         "data": [<?php 
@@ -33,11 +33,11 @@ if (!$g) {
             }
         ?>]
     },
-    "G2":{ 
+    "G2":{
         "label": [<?php 
             foreach ($g[1] as $k => $skill) {
                 if ($k != 0) echo ",";
-                echo "\"" . $skill["nom"] . "\"";
+                echo splitstr($skill["nom"]);
             }
         ?>],
         "data": [<?php 
@@ -47,9 +47,8 @@ if (!$g) {
                     echo 0;
                 } else {
                     echo $skill["average"];
-                }
-                
-        }
+                }    
+            }
         ?>]
     }
 }
