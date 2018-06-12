@@ -152,7 +152,7 @@ class Candidat {
     public function add_qualification($infos){
         $pdo = Database::connect();
 
-        $statement = $pdo->prepare("INSERT INTO qualifications_consultants ( nom_qualification, id_candidat, date_obtention, details) VALUES (:nom_qualification, :id_candidat, :date_obtention, :details)");
+        $statement = $pdo->prepare("INSERT INTO qualifications_candidats ( nom_qualification, id_candidat, date_obtention, details) VALUES (:nom_qualification, :id_candidat, :date_obtention, :details)");
         $statement->execute(array(':nom_qualification' => $infos['nom_qualification'], ':id_candidat' => $this->id, ':date_obtention' => $infos['date_obtention'], ':details' => $infos['details']));
 
     }
@@ -160,7 +160,7 @@ class Candidat {
     public function delete_qualification($id){
         $pdo = Database::connect();
 
-        $statement = $pdo->prepare("DELETE FROM qualifications_consultants WHERE id_qualification = :id_qualification AND id_candidat = :id_candidat");
+        $statement = $pdo->prepare("DELETE FROM qualifications_candidats WHERE id_qualification = :id_qualification AND id_candidat = :id_candidat");
         $statement->execute(array(':id_qualification' => $id, ':id_candidat' => $this->id));
 
     }
