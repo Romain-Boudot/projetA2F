@@ -54,6 +54,31 @@ class Competence {
 
     }
 
+    static send_candidat(id_ca) {
+
+        var arr = [];
+
+        document.querySelectorAll(".compJs").forEach(e => {
+
+            if (e.dataset.lvl != e.value) {
+                
+                arr.push({
+                    "oldLvl": e.dataset.lvl,
+                    "lvl": e.value,
+                    "id": e.dataset.id
+                })
+                
+            }
+
+        })
+
+        Post.send("/candidat/modifier/", {
+            "comp" : encodeURI(JSON.stringify(arr)),
+            "modif" : "comp",
+            "id_cons" : id_ca
+        });
+
+    }
 }
 
 class Intervention {
@@ -68,6 +93,16 @@ class Intervention {
 
     }
 
+    static del_candidat(id, idcs) {
+
+        Post.send("/candidat/modifier/", {
+            "action" : "delete",
+            "modif" : "int",
+            "id" : id,
+            "id_cons" : idcs
+        })
+
+    }
 }
 
 class Qualification {
@@ -82,6 +117,16 @@ class Qualification {
 
     }
 
+    static del_candidat(id, idcs) {
+
+        Post.send("/candidat/modifier/", {
+            "action" : "delete",
+            "modif" : "qual",
+            "id" : id,
+            "id_cons" : idcs
+        })
+
+    }
 }
 
 class Graph {
