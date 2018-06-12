@@ -1,0 +1,331 @@
+.main-wrapper,
+.popup {
+    position: absolute;
+    top: 56px;
+    left: 0;
+    width: 100vw;
+    height: calc(100vh - 56px);
+}
+
+.popup {
+    visibility: hidden;
+    background-color: white;
+}
+
+.search,
+.clientSelect {
+    position: relative;
+    top: 15%;
+    left: 15%;
+    max-width: calc(70% - 80px);
+    max-height: calc(70% - 80px);
+    background-color: rgba(0, 0, 0, 0.144);
+    text-align: center;
+    overflow: auto;
+}
+
+.search {
+    padding: 40px 40px 30px 40px;
+}
+
+.clientSelect {
+    padding: 40px;
+}
+
+.search * {
+    display: inline-block;
+}
+
+.filterContainer {
+    text-align: left;
+    margin: 10px 0;
+    width: 100%;
+}
+
+.filterContainer>div {
+    margin: 5px;
+}
+
+.searchBar {
+    width: 70%;
+}
+
+input[type=text] {
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.144);
+    background-color: unset;
+}
+
+input[type=checkbox] {
+    opacity: 0;
+    position: absolute;
+}
+
+.checkbox {
+    height: 12px;
+    width: 12px;
+    margin: 2px;
+    padding: 1px;
+    font-size: 12px;
+    line-height: 12px;
+    background-color: rgba(0, 0, 0, 0.144);
+    transition: 0.2s color ease;
+    color: rgba(0, 0, 0, 0);
+}
+
+input[type=checkbox]:checked + .checkbox {
+    color: inherit;
+}
+
+/* input[type=checkbox]:not(:checked) + .checkbox {
+    color: rgba(0, 0, 0, 0);
+} */
+
+.filterContainer .comp {
+    border: 0.5px solid rgba(0, 0, 0, 0.144);
+}
+
+.filterContainer>div {
+    padding: 2px;    
+}
+
+.closeBtn {
+    transform: scale(1.5);
+    margin: 0 5px;
+    cursor: pointer;
+    float: right;
+}
+
+.filterGrid {
+    margin: 10px;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-items: stretch;
+    align-items: stretch;
+    max-height: calc(100% - 50px);
+}
+
+.filterGrid>div {
+    margin: 10px 0;
+}
+
+.filterGridLeft {
+    grid-column: 1/2;
+}
+
+.filterGridRight {
+    grid-column: 2/3;
+}
+
+.filterGridLarge {
+    grid-column: 1/3;
+}
+
+.borderRight,
+.borderBottom,
+.borderLeft,
+.borderTop {
+    position: relative;
+}
+
+.borderRight::after,
+.borderLeft::after,
+.borderTop::after,
+.borderBottom::after {
+    content: "";
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.144);
+}
+
+.borderBottom::after {
+    bottom: -10px;
+    width: 100%;
+    left: 0%;
+    height: 0.9px;
+}
+
+.borderTop::after {
+    top: -10px;
+    left: 0%;
+    width: 100%;
+    height: 0.9px;
+}
+
+.borderRight::after {
+    top: 5%;
+    right: 0;
+    width: 0.9px;
+    height: 90%;
+}
+
+.borderLeft::after {
+    top: 5%;
+    left: 0;
+    width: 0.9px;
+    height: 90%;
+}
+
+.competenceS,
+.clientS {
+    padding: 2px;
+    margin: 2px;
+    border: 0.9px solid rgba(0, 0, 0, 0.144);
+}
+
+.fakeComp {
+    padding: 2.9px;
+    margin: 2px;
+}
+
+.pole,
+.disp {
+    padding: 2.9px;
+    margin: 2px;
+    background-color: rgba(0, 0, 0, 0.050);
+    cursor: default;
+}
+
+.dropdownTrigger,
+.ongletTrigger {
+    cursor: pointer;
+}
+
+.dropdownContainer {
+    width: 100%;
+    transition: 0.3s height ease, 0.2s color ease;
+    overflow: hidden;
+}
+
+.compList .dropdownTrigger,
+.compList .competence {
+    width: calc(100% - 5px);
+    padding: 5px 0 5px 5px;
+}
+
+.compList .dropdownContainer>.dropdownTrigger,
+.compList .dropdownContainer>.competence {
+    width: calc(100% - 40px);
+    padding: 3px 0 3px 40px;
+}
+
+.compList .dropdownContainer>.dropdownContainer>.dropdownTrigger,
+.compList .dropdownContainer>.dropdownContainer>.competence {
+    width: calc(100% - 80px);
+    padding: 3px 0 3px 80px;
+}
+
+.compList .dropdownContainer>.dropdownContainer>.dropdownContainer>.competence {
+    width: calc(100% - 120px);
+    padding: 3px 0 3px 120px;
+}
+
+.dropdownContainer {
+    box-shadow: inset 0px 0.9px 0px 0px rgba(128, 128, 128, 0.445), inset 0px -0.9px 0px 0px rgba(128, 128, 128, 0.445);
+}
+
+.compSelectContainer {
+    width: 100%;
+    max-height: calc(100% - 50px);
+}
+
+.compList,
+.compListSelected {
+    text-align: left;
+    position: relative;
+    width: 100%;
+}
+
+.compList,
+.compListSelected,
+.clientList,
+.clientListSelected {
+    position: absolute;
+    top: 15%;
+    height: calc(70% - 105px);
+    width: calc(35% - 5px);
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.144);
+}
+
+.compList,
+.clientList {
+    left: 15%;
+}
+
+.compListContainer,
+.clientListContainer {
+    margin: 20px;
+    overflow: auto;
+    height: calc(100% - 40px);
+    width: calc(100% - 40px);
+}
+
+.compListSelected,
+.clientListSelected {
+    right: 15%;
+}
+
+.compSelectClose,
+.clientSelectClose {
+    height: 50px;
+    line-height: 50px;
+    display: inline-block;
+    position: absolute;
+    width: 300px;
+    top: calc(70% + 50px);
+    left: calc(50% - 150px);
+    text-align: center;
+}
+
+.competence,
+.client {
+    position: relative;
+    cursor: pointer;
+}
+
+.client {
+    margin-bottom: 5px;
+}
+
+.competence::after,
+.client::after {
+    content: "+";
+    font-weight: bolder;
+    margin-left: 10px;
+}
+
+.compSelected,
+.clientSelected {
+    border: 1px solid rgba(0, 0, 0, 0.144);
+    position: relative;
+    padding: 2px 5px;
+    margin-bottom: 5px;
+}
+
+select {
+    overflow: hidden;
+    padding: 0px 0 !important;
+    font-family: inherit;
+    height: 20px;
+    line-height: 20px;
+    /* width: 3.5em; */
+    border: none;
+    box-shadow: none;
+    background-image: none;
+    -webkit-appearance: none;
+}
+
+select:focus {
+    outline: none;
+}
+
+.searchBtn {
+    position: relative;
+    height: 50px;
+    line-height: 50px;
+    display: inline-block;
+    width: 300px;
+    top: calc(15% + 20px);
+    left: calc(50% - 150px);
+    text-align: center;
+}

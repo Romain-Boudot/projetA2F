@@ -8,6 +8,8 @@
 
     session_start();
 
+    Security::check_login(array(0, 1, 2));
+
     $result = Search::lookup();
 
     $filter = JSON_decode($_GET['filter'], true);
@@ -36,6 +38,15 @@
 
         $first = true;
 
+        $lvl_array = array(
+            "=0" => "égale à 0",
+            "m=1" => "inf./égal à 1",
+            "p=1" => "sup./égal à 1",
+            "m=2" => "inf./égal à 2",
+            "p=2" => "sup./égal à 2",
+            "=3" => "égal à 3"
+        );
+
         if (isset($filter["competences"]["id_competence"])) if (!empty($filter["competences"]["id_competence"])) {
 
             if ($first) {
@@ -52,7 +63,7 @@
             foreach ($filter["competences"]["id_competence"] as $key => $value) {
                 
                 if ($key > 0) echo " ";
-                echo "<span>" . Competence::get_name($value) . " - niv. " . $filter["competences"]["niveau"][$key] . "</span>";
+                echo "<span>" . Competence::get_name($value) . " - niv. " . $lvl_array[$filter["competences"]["niveau"][$key]] . "</span>";
 
             }
 
@@ -131,7 +142,7 @@
 
         }
 
-        if (isset($filter["consultant"])) if ($filter["consultant"] != "") {
+        if (isset($filter["consultant"])) if (!empty($filter["consultant"])) {
 
             if ($first) {
                 $first = false;
@@ -141,8 +152,15 @@
             }
 
             ?>
-                Recherche par nom : <span><?php echo $filter["consultant"]; ?></span>
+                Recherche par nom : 
             <?php
+
+            foreach ($filter["consultant"] as $key => $value) {
+                
+                if ($key > 0) echo " ";
+                echo "<span>" . $value . "</span>";
+
+            }
 
         }
 

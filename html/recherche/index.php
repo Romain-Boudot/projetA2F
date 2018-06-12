@@ -1,10 +1,13 @@
 <?php
 
 include_once $_SERVER['DOCUMENT_ROOT'] . "/../classes/Database.php";
+include_once $_SERVER['DOCUMENT_ROOT'] . "/../classes/Security.php";
 include_once $_SERVER['DOCUMENT_ROOT'] . "/../classes/Competence.php";
 include_once $_SERVER['DOCUMENT_ROOT'] . "/../classes/Client.php";
 
 session_start();
+
+Security::check_login(array(0, 1, 2));
 
 ?>
 <!DOCTYPE html>
@@ -20,7 +23,7 @@ session_start();
     <script src="/cdn/Popup.js"></script>
     <script src="/cdn/Dropdown.js"></script>
     <script src="/cdn/Search.js"></script>
-    <title>Recherche</title>
+    <title>A2F Advisor</title>
 </head>
 
 <body>
@@ -29,27 +32,35 @@ session_start();
 
     <div class="main-wrapper">
 
+        <div onclick="Popup.oneOpen('help')" class="helpTrigger">Aide</div>
+        <div onclick="Popup.close('help')" id="help" class="help">
+
+            <div>
+                Saisie :
+                <div>
+                    - Vous pouvez entrer :
+                    <div>
+                        <div>- des noms de consultants, séparés par des virgules,</div>
+                        <div>- des compétences et des clients, cliquable dans les suggestions.</div>
+                    </div>
+                </div> 
+            </div>
+
+            <div>
+                Niveaux :
+                <div>
+                    <div>- Niveau 0 : Aucune notion</div>
+                    <div>- Niveau 1 : Débutant, peut prendre en main l'activité avec l'aide d'un expert</div>
+                    <div>- Niveau 2 : Autonome sur l'activité</div>
+                    <div>- Niveau 3 : Expert, peut transmettre son savoir</div>
+                </div> 
+            </div>
+                
+
+        </div>
+
         <div class="search">
-            <input id="inputCons" type="text" class="searchBar" placeholder="Entrez un nom (optionnel)">
-
-            <?php
-
-                if ($_SESSION['user']['type'] == 2) {
-
-            ?>
-
-            <label for="archive">
-                <input type="checkbox" name="archive" id="archive">
-                <div for="archive" class="checkbox">✔</div>
-                archive
-            </label>
-
-            <?php
-
-                }
-
-            ?>
-
+    
             <div class="filterGrid">
 
                 <div class="filterGridLeft borderRight">
@@ -99,23 +110,56 @@ session_start();
                     </label>
                 </div>
 
-                <div class="filterGridLarge borderTop divClientList">
+                <div class="filterGridLarge borderTop">
 
-                    <div class="btn fakeComp" onclick="Popup.open('popupClient')">Selection des clients</div>
-
-                </div>
-
-                <div class="filterGridLarge borderTop divCompList">
-
-                    <div class="btn fakeComp" onclick="Popup.open('popupComp')">Selection des competences</div>
+                    <div class="btn fakeComp" onclick="Popup.open('popupClient', s)">Selection des clients</div>
+                    <div class="btn fakeComp ml" onclick="Popup.open('popupComp', s)">Selection des competences</div>
 
                 </div>
 
             </div>
 
+            <div id="input" class="searchBar">
+                <div id="inputFilter">
+                    <div id="textInput">
+                        <input type="text">
+                    </div>
+                </div>
+            </div>
+
+
+            <?php
+
+                if ($_SESSION['user']['type'] == 2) {
+
+            ?>
+
+            <label for="archive">
+                <input type="checkbox" name="archive" id="archive">
+                <div for="archive" class="checkbox">✔</div>
+                archive
+            </label>
+
+            <?php
+
+                }
+
+            ?>
+
+            <div class="sugest">
+                <label class="labelComp">Compétence(s)</label>
+                <label class="labelClient">Client(s)</label>
+                <div class="sugestedComp borderRight"></div>
+                <div class="sugestedClient"></div>
+            </div>
+
         </div>
 
-        <div class="searchBtn btn" onclick="search.send()">Rechercher</div>
+        <script>
+            var s = new S;
+        </script>
+
+        <div class="searchBtn btn" onclick="s.send()">Rechercher</div>
 
     </div>
 
@@ -146,6 +190,7 @@ session_start();
 
                                 <div id="ddt<?php echo $cpt?>" class="dropdownTrigger">
                                     <?php echo $name; ?>
+                                    <div data-name="<?php echo $name; ?>" data-id="<?php echo $value["id_competence"]; ?>" class="competence borderComp">ajouter aux filtres</div>
                                 </div>
 
                                 <?php
@@ -208,60 +253,40 @@ session_start();
 
         </div>
 
-        <div class="compListSelected">
-
-            <div class="compListContainer divCompListS">
-
-            </div>
-
-        </div>
-
-        <div class="compSelectClose btn close" onclick="Popup.close('popupComp', search)">Valider</div>
+        <div class="compSelectClose btn close" onclick="Popup.close('popupComp', s)">&times;</div>
 
     </div>
 
     <div class="popup" id="popupClient">
 
-        <div class="compList">
+        <div class="clientListContainer">
 
-            <div class="clientListContainer">
+            <?php
 
-                <?php
+            $c = Client::get_array();
 
-                $c = Client::get_array();
-
-                foreach ($c as $client) {
-
-                    ?>
-
-                    <div data-name="<?php echo $client["entreprise"] ?>" data-id="<?php echo $client["id_client"]; ?>" class="client">
-                        <?php echo $client["entreprise"] ?>
-                    </div>
-
-                    <?php
-                    
-                }
+            foreach ($c as $client) {
 
                 ?>
 
-            </div>
+                <div data-name="<?php echo $client["entreprise"] ?>" data-id="<?php echo $client["id_client"]; ?>" class="client">
+                    <?php echo $client["entreprise"] ?>
+                </div>
+
+                <?php
+                
+            }
+
+            ?>
 
         </div>
 
-        <div class="clientListSelected">
-
-            <div class="clientListContainer divClientListS">
-
-            </div>
-
-        </div>
-
-        <div class="clientSelectClose btn close" onclick="Popup.close('popupClient')">Valider</div>
+        <div class="clientSelectClose btn close" onclick="Popup.close('popupClient', s)">&times;</div>
 
     </div>
 
     <script>
-        var search = new Search();
+        s.load();
     </script>
 
 </body>
