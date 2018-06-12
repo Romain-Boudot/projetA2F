@@ -10,11 +10,14 @@ error_reporting(E_ALL);
     include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/RH.php"; 
     session_start();
 
-    // var_dump($_SESSION);
-    // var_dump($_GET);
 
-    $id = $_GET['id'];
-
+    if(isset($_GET['id'])){
+        $id = $_GET['id'];
+    }
+    else{
+        echo "Candidat non reconnu";
+        exit();
+    }
 
     $candidat = new Candidat($id);
     
@@ -48,7 +51,7 @@ error_reporting(E_ALL);
         <div class="profile-info" data-info="telephone"><?php echo $candidat->get_telephone(); ?></div></div>
         <div class="profile-info" data-info="linkedin"><?php echo $candidat->get_linkedin(); ?></div></div>
         
-        <a class="bottom btn h-56 modif-profile bold" href="/candidat/modifier">Modifier mon profil</a>
+        <a class="bottom btn h-56 modif-profile bold" href='/candidat/modifier?id=<?php echo $id; ?>'>Modifier mon profil</a>
 
     </nav>
 
