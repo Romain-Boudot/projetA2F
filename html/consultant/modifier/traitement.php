@@ -34,8 +34,6 @@
 
         $c->send_modif();
 
-        exit();
-
     } elseif ($_POST['modif'] == "comp") {
 
         $co = JSON_decode(urldecode($_POST['comp']), true);
@@ -102,6 +100,50 @@
 
         }
 
+    } elseif ($_POST['modif'] == "graph") {
+        
+        if (isset($_POST['graph1'])) {
+
+            $g = JSON_decode(urldecode($_POST['graph1']), true);
+
+            $c->delete_graphique(1);
+
+            foreach ($g as $k => $v) {
+                
+                $c->add_graphique(1, $k);
+
+            }
+
+        }
+
+        if (isset($_POST['graph2'])) {
+
+            $g = JSON_decode(urldecode($_POST['graph2']), true);
+
+            $c->delete_graphique(2);
+
+            foreach ($g as $k => $v) {
+                
+                $c->add_graphique(2, $k);
+
+            }
+
+        }
+
+        if (isset($_POST['graph3'])) {
+
+            $g = JSON_decode(urldecode($_POST['graph3']), true);
+
+            $c->delete_graphique(3);
+
+            foreach ($g as $k => $v) {
+                
+                $c->add_graphique(3, $k);
+
+            }
+
+        }
+
     }
 
-    header("location: http://" . $_SERVER['HTTP_HOST'] . "/consultant/modifier");
+    header("location: http://" . $_SERVER['HTTP_HOST'] . "/consultant/modifier/");

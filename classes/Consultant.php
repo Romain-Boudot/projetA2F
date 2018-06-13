@@ -76,8 +76,6 @@ Class Consultant {
     }
 
     public function send_modif(){
-        
-        var_dump($this);
 
         $db = Database::connect();
         $statement = $db->prepare("UPDATE consultants SET nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, linkedin = :linkedin WHERE id_consultant = :id");
@@ -166,11 +164,11 @@ Class Consultant {
 
     }
 
-    public function add_graphique($number, $infos){
+    public function add_graphique($number, $id){
         $pdo = Database::connect();
 
-        $statement = $pdo->prepare("INSERT INTO graphiques (id_graphique, id_consultant, id_competence) VALUES (:number, id_consultant, id_competence)");
-        $statement->execute(array(':number'=> $number, ':id_consultant' => $infos['id_consultant'], ':id_competence' => $infos['id_competence']));
+        $statement = $pdo->prepare("INSERT INTO graphiques (id_graphique, id_consultant, id_competence) VALUES (:number, :id_consultant, :id_competence)");
+        $statement->execute(array(':number'=> $number, ':id_consultant' => $this->id, ':id_competence' => $id));
 
         $pdo = null;        
 
@@ -185,7 +183,7 @@ Class Consultant {
         $pdo = null;
     }
 
-    public function edit_graphique($number, $infos){
+    public function edit_graphique($number, $infos){ // deprecated
 
         $this->delete_graphique($number);
         $this->add_graphique($number, $infos);
@@ -276,7 +274,7 @@ Class Consultant {
 
         $pdo = Database::connect(); 
 
-        $statement = $pdo->prepare("SELECT g.id_graphique, g.id_competence, c.nom, cc.niveau from graphiques g JOIN competences c ON c.id_competence = g.id_competence JOIN competences_consultants cc ON cc.id_competence = g.id_competence WHERE g.id_consultant = :id"); 
+        $statement = $pdo->prepare("SELECT g.id_graphique, g.id_competence, c.nom, ( SELECT niveau FROM competences_consultants cc WHERE cc.id_competence = g.id_competence AND cc.id_consultant = g.id_consultant ) as niveau from graphiques g JOIN competences c ON c.id_competence = g.id_competence WHERE g.id_consultant = :id"); 
         $statement->execute(array(":id" => $this->id)); 
 
         $pdo = null; 

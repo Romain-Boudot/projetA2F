@@ -1,0 +1,9 @@
+<?php
+
+
+
+phpinfo()
+
+echo "bonjour"
+
+?>

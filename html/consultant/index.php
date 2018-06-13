@@ -21,6 +21,8 @@
     }
 
     $consultant = new Consultant($id);
+
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/../includes/splitstr.php";
     
 ?>
 <!DOCTYPE html>
@@ -209,6 +211,12 @@
 
                 <?php
                 
+                    function split($str) {
+
+
+
+                    }
+
                     $graph = $consultant->get_graphiques();
                     $graphG = array(
                         1 => array(
@@ -230,17 +238,18 @@
 
                     foreach ($graph as $values) {
 
+                        if ($values["niveau"] == null) $values["niveau"] = 0;
+
                         if ($graphG[$values['id_graphique']]['length'] > 0) {
                             $graphG[$values['id_graphique']]['label'] .= ",";
                             $graphG[$values['id_graphique']]['data'] .= ",";
                         }
 
-                        $graphG[$values['id_graphique']]['label'] .= "\"" . $values['nom'] . "\"";
+                        $graphG[$values['id_graphique']]['label'] .= splitstr($values['nom']);
                         $graphG[$values['id_graphique']]['data'] .= $values['niveau'];
                         $graphG[$values['id_graphique']]['length'] += 1;
 
                     }
-                    //var_dump($graphG);
 
                 if ($graphG[1]["length"] > 2) { ?>
 
@@ -250,31 +259,31 @@
                     var co1 = new chartOption();
                     co1.chart.data.datasets[0].data = [<?php echo $graphG[1]["data"]; ?>]
                     co1.chart.data.labels = [<?php echo $graphG[1]["label"]; ?>]
-                    new Chart(document.getElementById("chart-p1"), co1.option);
+                    c1 = new Chart(document.getElementById("chart-p1"), co1.option);
                 </script>
 
                 <?php }
                 
                 if ($graphG[2]["length"] > 2) { ?>
                 
-                    <canvas id="chart-p2" class="chartjs" width="200" height="200"></canvas>
-                    <script>
+                <canvas id="chart-p2" class="chartjs" width="200" height="200"></canvas>
+                <script>
                     var co2 = new chartOption();
                     co2.chart.data.datasets[0].data = [<?php echo $graphG[2]["data"]; ?>]
-                    co2.chart.data.labels = [<?php echo $graphG[2]["length"]; ?>]
-                    new Chart(document.getElementById("chart-p2"), co2.option);
-                    </script>
+                    co2.chart.data.labels = [<?php echo $graphG[2]["label"]; ?>]
+                    c2 = new Chart(document.getElementById("chart-p2"), co2.option);
+                </script>
                 
                 <?php }
                 
-                if ($graphG[2]["length"] > 2) { ?>
+                if ($graphG[3]["length"] > 2) { ?>
 
-                    <canvas id="chart-p3" class="chartjs" width="200" height="200"></canvas>
-                    <script>
+                <canvas id="chart-p3" class="chartjs" width="200" height="200"></canvas>
+                <script>
                     var co3 = new chartOption();
                     co3.chart.data.datasets[0].data = [<?php echo $graphG[3]["data"]; ?>]
-                    co3.chart.data.labels = [<?php echo $graphG[3]["length"]; ?>]
-                    new Chart(document.getElementById("chart-p3"), co3.option);
+                    co3.chart.data.labels = [<?php echo $graphG[3]["label"]; ?>]
+                    c3 = new Chart(document.getElementById("chart-p3"), co3.option);
                 </script>
 
                 <?php } ?>
@@ -284,7 +293,7 @@
                 <div class="line">
                     <div class="point">
                         <div class="tooltip">
-                            Arriver dans l'entreprise
+                            Arrivée dans l'entreprise
                         </div>
                         <div class="pointLabel">
                             14 mai 2018
