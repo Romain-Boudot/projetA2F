@@ -63,13 +63,15 @@ class Dropdown {
 
                 if (c.style.height == "0px") {
 
+                    if (document.getElementById("onglets-wrapper"))
+                        document.getElementById("onglets-wrapper").classList.add("shadow");
                     document.querySelectorAll(".ongletTrigger").forEach(trig => {
 
                         if (trig != trigger) {
-                            trig.style.backgroundColor = "unset";
-                            document.getElementById("oc" + trig.id.slice(2)).style.color = "rgba(0, 0, 0, 0)";
+                            trig.style.backgroundColor = "rgba(0, 0, 0, .1)";
+                            //document.getElementById("oc" + trig.id.slice(2)).style.color = "rgba(0, 0, 0, 0)";
                         } else {
-                            trig.style.backgroundColor = "rgba(0, 0, 0, 0.144)";
+                            trig.style.backgroundColor = "unset";
                         }
 
                         setTimeout(() => {
@@ -105,9 +107,11 @@ class Dropdown {
 
                 } else {
 
-                    e.target.trigger.style.backgroundColor = "unset";
-                    c.style.color = "rgba(0, 0, 0, 0)";
+                    e.target.trigger.style.backgroundColor = "rgba(0, 0, 0, .1)";
+                    //c.style.color = "rgba(0, 0, 0, 0)";
                     c.style.height = document.getElementById('oc' + id).scrollHeight + "px";
+                    if (document.getElementById("onglets-wrapper"))
+                        document.getElementById("onglets-wrapper").classList.remove("shadow");
 
                     setTimeout(() => {
 

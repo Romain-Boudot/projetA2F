@@ -1,13 +1,13 @@
 <?php
 
     include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Database.php";
+    include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Security.php";
     include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Competence.php";
     include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Consultant.php";
     
     session_start();
 
-    // var_dump($_SESSION);
-    // var_dump($_GET);
+    Security::check_login(array(0, 1, 2));
 
     $id = $_SESSION['user']['id'];
 
@@ -22,6 +22,8 @@
 
     $consultant = new Consultant($id);
 
+    $pole = $consultant->get_pole();
+
     include_once $_SERVER['DOCUMENT_ROOT'] . "/../includes/splitstr.php";
     
 ?>
@@ -31,6 +33,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        :root {
+            --main-color: <?php
+                if ($pole == 0) echo "#06436f";
+                if ($pole == 1) echo "#f7931e";
+                if ($pole == 2) echo "#259225";
+                if ($pole == 3) echo "#f05944";
+            ?>;
+            --main-color-light: <?php
+                if ($pole == 0) echo "#06436f88";
+                if ($pole == 1) echo "#f7931e88";
+                if ($pole == 2) echo "#25922588";
+                if ($pole == 3) echo "#f0594488";
+            ?>;
+            --auto-color: <?php
+                if ($pole == 0) echo "white";
+                else echo "inerit"
+            ?>;
+        }
+    </style>
     <link rel="stylesheet" href="/cdn/main.css">
     <link rel="stylesheet" href="/consultant/main.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -49,15 +71,20 @@
         </div>
         <div class="profile-info bold" style="text-transform: uppercase;">pôle <?php echo $consultant->get_nom_pole(); ?></div>
         <div class="hr"></div>
+        <div class="profile-info left">Prénom :</div>
         <div class="profile-info" data-info="prenom"><?php echo $consultant->get_prenom(); ?></div>
+        <div class="profile-info left">Nom :</div>
         <div class="profile-info" data-info="nom"><?php echo $consultant->get_nom(); ?></div>
-        <div class="profile-info" data-info="email"><?php echo $consultant->get_email(); ?></div></div>
-        <div class="profile-info" data-info="telephone"><?php echo $consultant->get_telephone(); ?></div></div>
-        <div class="profile-info" data-info="linkedin"><?php echo $consultant->get_linkedin(); ?></div></div>
+        <div class="profile-info left">Email :</div>
+        <a href="mailto:<?php echo $consultant->get_email(); ?>" class="profile-info underline" data-info="email"><?php echo $consultant->get_email(); ?></a>
+        <div class="profile-info left">Téléphone :</div>
+        <div class="profile-info" data-info="telephone"><?php echo $consultant->get_telephone(); ?></div>
+        <div class="profile-info left">LinkedIn :</div>
+        <a href="<?php echo $consultant->get_linkedin(); ?>" class="profile-info underline" data-info="linkedin"><?php echo $consultant->get_linkedin(); ?></a>
         
         <?php if ($_SESSION['user']['type'] >= 1 || $_SESSION['user']['login'] == $consultant->get_login()) {?>
             <div class="hr"></div>
-            <div class="profile-info salaire">salaire : <?php echo $consultant->get_salaire(); ?>€</div></div>
+            <div class="profile-info salaire">salaire : <?php echo $consultant->get_salaire(); ?>€</div>
         <?php
         
         }
@@ -210,12 +237,6 @@
             <div id="chart-wrapper">
 
                 <?php
-                
-                    function split($str) {
-
-
-
-                    }
 
                     $graph = $consultant->get_graphiques();
                     $graphG = array(
@@ -288,19 +309,21 @@
 
                 <?php } ?>
 
+            </div>   
+        </div>
+        <div style="text-align: right; margin-top: 50px">
+            <div style="width: 200px; position: absolute; right:0; text-align: center;">
+                <?php
+                if ($pole == 1) {
+                    ?><img class="logo" src="/images/schema-industrie-15.svg" alt="logo Indus" width="150"><?php
+                } elseif ($pole == 2) {
+                    ?><img class="logo" src="/images/visuel-si.svg" alt="logo Si" width="150"><?php
+                } elseif ($pole == 3) {
+                    ?><img class="logo" src="/images/schema-database-17.svg" alt="logo database" width="150"><?php
+                }
+                ?>
+                <div class="logoTitle"><?php echo $consultant->get_nom_pole(); ?></div>
             </div>
-            <div id="timeLine">
-                <div class="line">
-                    <div class="point">
-                        <div class="tooltip">
-                            Arrivée dans l'entreprise
-                        </div>
-                        <div class="pointLabel">
-                            14 mai 2018
-                        </div>
-                    </div>
-                </div>
-            </div>         
         </div>
     </div>
 
