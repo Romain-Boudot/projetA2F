@@ -129,8 +129,6 @@ Class Search {
                         $array["competences"]["niveau"][$key]
                     );
 
-                    debug($returned);
-
                     $statement .= $returned["statement"];
                     $bindparam = $returned["bindparam"];
                     $bindparamcpt = $returned["bindparamcpt"];
@@ -273,14 +271,9 @@ Class Search {
         }
 
         $statement .= " GROUP BY c.id_consultant ORDER BY c.nom";
-        debug($statement);
-        debug($bindparam);
         $query = $pdo->prepare($statement);
         $query->execute($bindparam);
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
-
-        debug($result);
-        exit();
 
         return $result;        
 
@@ -297,7 +290,7 @@ Class Search {
             $statement->execute(array(":id_comp" => $id));
             $returned["count"] = $statement->fetch();
 
-            $statement = $pdo->prepare("SELECT c.nom, (SELECT AVG(cc.niveau) FROM competences_consultants cc WHERE cc.id_competence = c.id_competence) as average FROM competences c WHERE c.id_competence = :id_comp");
+            $statement = $pdo->prepare("SELECT AVG(CAST(COALESCE((SELECT AVG(cc.niveau) FROM competences_consultants cc WHERE cc.id_competence = :id_comp AND cc.id_consultant = c.id_consultant), 0) as DECIMAL(6, 3))) as average FROM consultants c");
             $statement->execute(array("id_comp" => $id));
             $returned["average"] = $statement->fetch();
 
@@ -351,7 +344,7 @@ Class Search {
 
     static public function show_graph($id_post){
 
-        if ($id_post < 4 || Competence::is_last($id_post)) return false;
+        if (Competence::is_last($id_post)) return false;
 
         $graphs = array(
             0 => array(),

@@ -119,24 +119,15 @@ a {
     color: white;
 }
 
-.bgcolorSi {
-    background-color: #259225;
-}
-
-.bgcolorDb {
-    background-color: #f05944;
-}
-
-.bgcolorIn {
-    background-color: #f7931e;
-}
-
-.bgcolorDf {
-    background-color: #06436f;
-}
-
-.autoColor {
-    color: var(--auto-color);
+:root {
+    --color-si: #259225;
+    --color-db: #f05944;
+    --color-in: #f7931e;
+    --color-df: #06436f;
+    --color-si-light: #259225aa;
+    --color-db-light: #f05944aa;
+    --color-in-light: #f7931eaa;
+    --color-df-light: #06436faa;
 }
 
 .mainColor {

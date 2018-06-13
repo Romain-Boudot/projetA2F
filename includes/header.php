@@ -15,6 +15,10 @@
     <?php } ?>
 
     <div class="header-right mr-1">
+        <a class="btn btn-header bold noMI autoColor" href="/recherche/stats">Statistiques</a>
+    </div>
+
+    <div class="header-right mr-1">
         <a class="btn btn-header bold noMI autoColor" href="/recherche">Recherche</a>
     </div>
 
