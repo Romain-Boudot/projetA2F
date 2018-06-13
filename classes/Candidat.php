@@ -39,13 +39,13 @@ class Candidat {
         $pdo = Database::connect();
 
         $add_candidate = $pdo->prepare("INSERT INTO candidats (nom, prenom, telephone, email, linkedin) VALUES (:nom, :prenom, :telephone, :email, :linkedin)");
-        $add_candidate->execute(array(':nom' => $infos['nom'], ':prenom' => $infos['prenom'], ':telephone' => $infos['telephone'], ':email' => $infos['email'], ':linkedin' => $infos['linkedin']);		
+        $add_candidate->execute(array(':nom' => $infos['nom'], ':prenom' => $infos['prenom'], ':telephone' => $infos['telephone'], ':email' => $infos['email'], ':linkedin' => $infos['linkedin']));		
 
         $pdo =  null;
     }
 
     public function delete(){
-        $pdo = Database::connect();
+        $pdo = Database::connect(); 
 
         $delete_candidate = $pdo->prepare("DELETE FROM candidats WHERE id_candidat = :id");
         $delete_candidate->bindParam('id', $this->id);
