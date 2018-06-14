@@ -22,6 +22,8 @@ class Database {
 
     public function login($login, $password) {
 
+        sleep(1);
+
         $db = Database::connect();
 
         if ($db == false) return false;

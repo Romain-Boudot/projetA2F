@@ -57,6 +57,7 @@
     <link rel="stylesheet" href="/consultant/main.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="/cdn/Chart.bundle.min.js"></script>
+    <script src="/cdn/Ajax.js"></script>
     <script src="/cdn/Chart.js"></script>
     <script src="/cdn/Dropdown.js"></script>
     <title>A2F Advisor</title>
@@ -67,7 +68,33 @@
     
     <nav>
         <div id="image-profile">
-            <img src="/images/unknown.png" alt="profile image">
+            <img class="photoUploadHover" src="/images/profil/<?php
+                if (file_exists($_SERVER["DOCUMENT_ROOT"] . "/images/profil/" . $consultant->get_id() . ".png")) echo $consultant->get_id() . ".png";
+                elseif (file_exists($_SERVER["DOCUMENT_ROOT"] . "/images/profil/" . $consultant->get_id() . ".jpg")) echo $consultant->get_id() . ".jpg";
+                elseif (file_exists($_SERVER["DOCUMENT_ROOT"] . "/images/profil/" . $consultant->get_id() . ".jpeg")) echo $consultant->get_id() . ".jpeg";
+                else echo "unknown.png";
+            ?>" alt="profile image">
+            <?php if ($id == $_SESSION['user']['id']) {?>
+            <form id="photoForm" class="photoUpload" action="/consultant/traitement.php" method="post">
+                <input type="hidden" name="action" value="img">
+                <input id="uploadPhoto" class="hidden" type="file" name="file">
+                <label for="uploadPhoto"><i class="material-icons plus">add</i></label>
+            </form>
+            <script>
+                var form = document.getElementById("photoForm");
+                var refresh = 0;
+                var inputimg = document.getElementById("uploadPhoto");
+                inputimg.onchange = function() {   
+                    var img = new FormData();
+                    img.append('file', inputimg.files[0]);
+                    Ajax.post("/consultant/traitement.php?action=img", img, function(data) {
+                        //console.log(JSON.parse(data)[0]);
+                        document.querySelector("#image-profile img").setAttribute("src" ,document.querySelector("#image-profile img").getAttribute("src") + "?" + refresh);
+                        refresh++;
+                    });
+                }
+            </script>
+            <?php } ?>
         </div>
         <div class="profile-info bold" style="text-transform: uppercase;">pôle <?php echo $consultant->get_nom_pole(); ?></div>
         <div class="hr"></div>
@@ -311,21 +338,15 @@
 
             </div>   
         </div>
-        <div style="text-align: right; margin-top: 50px">
-            <div style="width: 200px; position: absolute; right:0; text-align: center;">
-                <?php
-                if ($pole == 1) {
-                    ?><img class="logo" src="/images/schema-industrie-15.svg" alt="logo Indus" width="150"><?php
-                } elseif ($pole == 2) {
-                    ?><img class="logo" src="/images/visuel-si.svg" alt="logo Si" width="150"><?php
-                } elseif ($pole == 3) {
-                    ?><img class="logo" src="/images/schema-database-17.svg" alt="logo database" width="150"><?php
-                }
-                ?>
-                <div class="logoTitle"><?php echo $consultant->get_nom_pole(); ?></div>
-            </div>
-        </div>
     </div>
-
+    <?php
+    if ($pole == 1) {
+        ?><img class="logo" src="/images/schema-industrie-15.svg" alt="logo Indus" width="300"><?php
+    } elseif ($pole == 2) {
+        ?><img class="logo" src="/images/visuel-si.svg" alt="logo Si" width="300"><?php
+    } elseif ($pole == 3) {
+        ?><img class="logo" src="/images/schema-database-17.svg" alt="logo database" width="300"><?php
+    }
+    ?>
 </body>
 </html>

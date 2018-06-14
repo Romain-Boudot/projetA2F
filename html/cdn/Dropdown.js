@@ -50,7 +50,6 @@ class Dropdown {
         triggers.forEach(trigger => {
 
             // close div.ongletBack
-            console.log(trigger)
             document.getElementById("oc" + trigger.id.slice(2)).style.height = "0px";
             document.getElementById("oc" + trigger.id.slice(2)).style.color = "rgba(0, 0, 0, 0)";
 
