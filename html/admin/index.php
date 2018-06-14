@@ -24,6 +24,9 @@ if ($_SESSION['user']['type'] == 0 && 0) {
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/cdn/main.css">
     <link rel="stylesheet" href="/admin/main.css">
+    <script src="/cdn/Ajax.js"></script>
+    <script src="/cdn/Post.js"></script>
+    <script src="/cdn/Admin.js"></script>
     <script src="/cdn/Dropdown.js"></script>
     <script src="/cdn/Popup.js"></script>
     <script src="/cdn/Profile.js"></script>
@@ -59,21 +62,31 @@ if ($_SESSION['user']['type'] == 0 && 0) {
                             
                             if ($value["enfant"] != null) {
                                 
-                                ?><div id="ddt<?php echo $cpt; ?>" class="dropdownTrigger"><?php echo $name; ?></div><?php
+                                ?><div id="ddt<?php echo $cpt; ?>" class="dropdownTrigger"><?php echo $name; ?>
+                                <div onclick="Admin.addDaughter(<?php echo $value["id_competence"]; ?>, <?php echo $cpt; ?>)" data-name="<?php echo $name; ?>" data-id="<?php echo $value["id_competence"]; ?>" class="competence borderComp">Ajouter une compétence fille</div>
+                                <div onclick="Post.send('admin/traitement.php', { 'id' : '<?php echo $value["id_competence"]; ?>' , 'action' : 'delete'})" data-name="<?php echo $name; ?>" data-id="<?php echo $value["id_competence"]; ?>" class="competence borderComp">Supprimer</div>
+                            
+                                </div>
                                 
+                                <?php
+
                                 $returned = tab($value["enfant"], $cpt);
 
                                 $cpt = $returned["cpt"];
 
                             } else {
 
-                                ?><div class="Comp"><?php echo $name; ?></div><?php
+                                ?><div class="competence"><?php echo $name; ?>
+                                    <div onclick="Post.send('admin/traitement.php', { 'id' : '<?php echo $value["id_competence"]; ?>' , 'action' : 'delete'})" data-name="<?php echo $name; ?>" data-id="<?php echo $value["id_competence"]; ?>" class="competence borderComp">Supprimer</div>
+                                </div><?php
 
                             }
                             
                         }
 
-                        ?></div><?php
+                        ?>
+
+                        </div><?php
 
                         return array(
                             "cpt" => $cpt,
@@ -87,7 +100,12 @@ if ($_SESSION['user']['type'] == 0 && 0) {
                     
                         if (is_array($value)) {
 
-                            ?><div id="ddt<?php echo $cpt; ?>" class="dropdownTrigger"><?php echo $name ?></div><?php
+                            ?><div id="ddt<?php echo $cpt; ?>" class="dropdownTrigger"><?php echo $name ?>
+
+                            <div onclick="Admin.addDaughter(<?php echo $value["id_competence"]; ?>, <?php echo $cpt; ?>)" data-name="<?php echo $name; ?>" data-id="<?php echo $value["id_competence"]; ?>" class="competence borderComp">Ajouter une compétence fille</div>
+                            
+
+                            </div><?php
                             
                             $returned = tab($value["enfant"], $cpt);
 

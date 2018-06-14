@@ -215,6 +215,21 @@ form input[type=submit] {
     position: relative;
 }
 
+.dropdownTrigger>div {
+    display: inline;
+    font-size: 13px;
+    border: 1px solid rgba(0, 0, 0, .08);
+    padding: 0px 4px !important;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.dropdownTrigger:hover>div {
+    transition: 0.2s opacity ease;
+    opacity: 1;
+    visibility: visible;
+}
+
 .dropdownTrigger::before {
     content: "+";
     margin-right: 10px;
@@ -228,10 +243,22 @@ form input[type=submit] {
     overflow: hidden;
 }
 
+.relative-wrapper-container>#addDaughter {
+    margin-bottom: 3px;
+    margin-left: 20px;
+    padding: 3px 0;
+}
+
 .relative-wrapper-container>.dropdownTrigger,
 .relative-wrapper-container>.comp {
     width: calc(100% - 20px);
     padding: 5px 0 5px 20px;
+}
+
+.relative-wrapper-container>.dropdownContainer>#addDaughter {
+    margin-bottom: 3px;
+    margin-left: 50px;
+    padding: 3px 0;
 }
 
 .relative-wrapper-container>.dropdownContainer>.dropdownTrigger,
@@ -240,6 +267,11 @@ form input[type=submit] {
     padding: 3px 0 3px 50px;
 }
 
+.relative-wrapper-container>.dropdownContainer>.dropdownContainer>#addDaughter {
+    margin-bottom: 3px;
+    margin-left: 80px;
+    padding: 3px 0;
+}
 .relative-wrapper-container>.dropdownContainer>.dropdownContainer>.dropdownTrigger,
 .relative-wrapper-container>.dropdownContainer>.dropdownContainer>.comp {
     width: calc(100% - 80px);
@@ -249,6 +281,20 @@ form input[type=submit] {
 .relative-wrapper-container>.dropdownContainer>.dropdownContainer>.dropdownContainer>.comp {
     width: calc(100% - 110px);
     padding: 3px 0 3px 110px;
+}
+
+.relative-wrapper-container>.dropdownContainer>.dropdownContainer>.dropdownContainer>#addDaughter {
+    margin-bottom: 3px;
+    margin-left: 110px;
+    padding: 3px 0;
+}
+
+input[type=text] {
+    border: 1px solid rgba(0, 0, 0, .1);
+}
+
+input[type=text]:focus {
+    border: 1px solid rgba(0, 0, 0, .1);
 }
 
 .dropdownContainer {
@@ -330,4 +376,24 @@ form input[type=submit] {
     font-weight: bold;
     background-color: rgba(0, 0, 0, .1);
     margin-left: 5px;
+}
+
+.competence {
+    width: calc(100% - 120px);
+    padding: 3px 0 3px 120px;
+}
+
+.competence>div {
+    display: inline;
+    font-size: 13px;
+    border: 1px solid rgba(0, 0, 0, .08);
+    padding: 0px 4px !important;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.competence:hover>div {
+    transition: 0.2s opacity ease;
+    opacity: 1;
+    visibility: visible;
 }
