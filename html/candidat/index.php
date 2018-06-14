@@ -72,7 +72,7 @@ error_reporting(E_ALL);
                 <div id="oc1" class="onglet ongletContainer">
                     <div class="intervention">
                         <div class="infos">Date</div>
-                        <div class="infos">RH</div>
+                        <div class="infos">Responsable</div>
                         <div class="details textCenter">
                             Détails
                         </div>
