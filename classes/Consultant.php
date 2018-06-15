@@ -307,7 +307,7 @@ Class Consultant {
         $login = substr($prenom, 0, 1) . $nom;
 
         $cpt = 0;
-        while (Security::login_validity($login)) {
+        while (!Security::login_validity($login)) {
             $cpt++;
             $login = substr($prenom, 0, 1) . $nom . $cpt;
         }

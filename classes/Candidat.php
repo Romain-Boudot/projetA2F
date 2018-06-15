@@ -72,25 +72,39 @@ class Candidat {
 
         $data = Consultant::register($this->nom, $this->prenom, $id_pole);
         
-        $c = new Consultant($data['id']); 
+        if(isset($data) {
+            $c = new Consultant($data['id']); 
+            if(isset($c){
+                $comp = $this->get_competences();
+                $qualif = $this->get_qualifications();
+                foreach($comp as $key => $value){
 
-        $comp = $this->get_competences();
-        $qualif = $this->get_qualifications();
-        echo "<pre>";
-        var_dump($comp);
-        var_dump($qualif);
-        echo "</pre>";
-        foreach($comp as $key => $value){
-            
-            $c->add_competence($value);    
+                    $c->add_competence($value);    
+                    
+                } 
 
-        } 
+                foreach($qualif as $key => $value){
 
-        foreach($qualif as $key => $value){
-        
-            $c->add_qualification($value);
+                    $c->add_qualification($value);
 
+                }
+                
+                $pdo = Database::connect();
+
+                $statement = $pdo->prepare("DELETE FROM * WHERE id_candidat = :idcandidat");
+                $statement->execute(array("idcandidat"=> $this->id));
+
+                $pdo = null;
+
+                return $data["url"];
+    
+            }else{
+                exit();
+            }
+        } else {
+            exit();
         }
+
 
         //        delete();
         
