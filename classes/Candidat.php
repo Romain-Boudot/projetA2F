@@ -69,9 +69,37 @@ class Candidat {
     }
 
     public function transfer(){
+        $infos['nom'] = $this->nom;
+        $infos['prenom'] = $this->prenom;
+        $infos['telephone'] = $this->telephone;
+        $infos['email'] = $this->email;
+        $infos['linkedin'] = $this->linkedin;
+        $infos['pole'] = 1;
+        $infos['login'] = "qrenaud";
+        $infos['mot_de_passe'] = "password";
 
-        Consultant::add();
-        delete();
+        $id = Consultant::add($infos);
+
+        $c = new Consultant($id); 
+
+        $comp = $this->get_competences();
+        $qualif = $this->get_qualifications();
+
+        foreach($comp as $key => $value){
+            
+            $c->add_competence($value);    
+
+        } 
+
+        foreach($qualif as $key => $value){
+        
+            $c->add_qualification($value);
+
+        }
+
+    echo "win";
+
+//        delete();
     }
 
     public function add_interview($infos) {
@@ -282,5 +310,18 @@ class Candidat {
 
 
     } 
+
+    public function get_competences(){
+        
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("SELECT * FROM competences_candidats WHERE id_candidat = :id");
+        $statement->execute(array(":id" => $this->id));
+
+        $pdo = null;
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    }
 
 }
