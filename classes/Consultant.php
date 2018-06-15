@@ -46,13 +46,15 @@ Class Consultant {
 
     }
 
-    public static function add($infos){
+    public static function add($infos) { // deprecated
+
         $pdo = Database::connect();
         
         $statement = $pdo->prepare("INSERT INTO consultants (nom, prenom, telephone, email, linkedin, pole, honoraires) VALUES (:nom, :prenom, :email, :linkedin, :pole, :honoraires)");
         $statement->execute(array(':nom' => $infos['nom'], ':prenom' => $infos['prenom'], ':email' => $infos['email'], ':linkedin' => $infos['linkedin'], ':pole' => $infos['pole'], ':honoraires' => $infos['honoraires']));
 
         $pdo = null;
+
     }
 
 
@@ -295,6 +297,60 @@ Class Consultant {
         return $this->id;
     }
 
+    static public function register($nom, $prenom, $pole) {
+
+        $login = substr($prenom, 0, 1) . $nom;
+
+        $cpt = 0;
+        while (Security::login_validity($login)) {
+            $cpt++;
+            $login = substr($prenom, 0, 1) . $nom . $cpt;
+        }
+
+        $token = hash("sha256", $login . bin2hex(random_bytes(50)) . $pole);
+
+        $pdo = Database::connect();
+        
+        $statement = $pdo->prepare("INSERT INTO consultants (nom, prenom, pole, login, token) VALUES (:nom, :prenom, :pole, :login, :token)");
+        $statement->execute(array(
+            ':nom' => $nom,
+            ':prenom' => $prenom,
+            ':pole' => $pole,
+            ':login' => $login,
+            ':token' => $token
+        ));
+
+        $pdo = null;
+
+        $url = "http://" . $_SERVER["HTTP_HOST"] . "/register/?token=" . $token;
+
+        return $url;
+
+    }
+
+    static public function set_password($login, $token, $pwd, $pwd_verif) {
+
+        if ($pwd != $pwd_verif) return false;
+
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("SELECT * FROM consultants WHERE login = :login AND token = :token");
+        $statement->execute(array(
+            ":login" => $login,
+            ":token" => $token
+        ));
+
+        if ($statement->fetch() == false) return false;
+
+        $statement = $pdo->prepare("UPDATE consultants SET mot_de_passe = :pwd, token = null WHERE login = :login");
+        $statement->execute(array(
+            ":pwd" => hash("sha256", $pwd),
+            ":login" => $login,
+            ":token" => $token
+        ));
+
+        return true;
+            
+    }
+
 }
-
-

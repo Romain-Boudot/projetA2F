@@ -1,6 +1,7 @@
 <?php
 
     include_once $_SERVER['DOCUMENT_ROOT'] . "/../classes/Database.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/../classes/Security.php";
     include_once $_SERVER['DOCUMENT_ROOT'] . "/../classes/Competence.php";
     include_once $_SERVER['DOCUMENT_ROOT'] . "/../classes/Pole.php";
     include_once $_SERVER['DOCUMENT_ROOT'] . "/../classes/Client.php";
@@ -14,11 +15,6 @@
 
     $filter = JSON_decode($_GET['filter'], true);
 
-    // echo "<pre>";
-    // var_dump(JSON_decode($_GET['filter'], true);
-    // echo "</pre>";
-    // exit();
-
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -26,6 +22,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        :root {
+            --main-color: <?php
+                if ($_SESSION['user']['pole'] == 0) echo "#06436f";
+                if ($_SESSION['user']['pole'] == 1) echo "#f7931e";
+                if ($_SESSION['user']['pole'] == 2) echo "#259225";
+                if ($_SESSION['user']['pole'] == 3) echo "#f05944";
+            ?>;
+            --auto-color: <?php
+                if ($_SESSION['user']['pole'] == 0) echo "white";
+                else echo "inerit"
+            ?>;
+        }
+    </style>
     <link rel="stylesheet" href="/cdn/main.css">
     <link rel="stylesheet" href="main.css">
     <title>A2F Advisior</title>
@@ -182,7 +192,7 @@
             foreach ($result as $key => $value) {
 
         ?>
-        <div onclick="location.href='http://<?php echo $_SERVER['HTTP_HOST'] . '/consultant/?id=' . $value['id_consultant']; ?>'" class="profile">
+        <div onclick="location.href='http://<?php echo $_SERVER['HTTP_HOST'] . '/consultant/?id=' . $value['id_consultant']; ?>'" class="profile pole<?php echo $value['pole']; ?>">
 
             <img src="/images/unknown.png" alt="profile photo">
 
