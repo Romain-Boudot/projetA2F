@@ -308,10 +308,17 @@ catch(Exception $e) {
     public function get_id() {
         return $this->id;
     }
+    
+    
+    static public function register($nom, $prenom, $pole) {
 
-}
+        $login = substr($prenom, 0, 1) . $nom;
 
-
+        $cpt = 0;
+        while (Security::login_validity($login)) {
+            $cpt++;
+            $login = substr($prenom, 0, 1) . $nom . $cpt;
+        }
 
         $token = hash("sha256", $login . bin2hex(random_bytes(50)) . $pole);
 
