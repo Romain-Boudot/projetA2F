@@ -299,12 +299,12 @@ Class Consultant {
 
     static public function register($nom, $prenom, $pole) {
 
-        $login = substr($prenom, 0, 1) . $nom;
+        $login = strtolower(substr($prenom, 0, 1) . $nom);
 
         $cpt = 0;
-        while (Security::login_validity($login)) {
+        while (!Security::login_validity($login)) {
             $cpt++;
-            $login = substr($prenom, 0, 1) . $nom . $cpt;
+            $login = strtolower(substr($prenom, 0, 1) . $nom . $cpt);
         }
 
         $token = hash("sha256", $login . bin2hex(random_bytes(50)) . $pole);
@@ -328,29 +328,41 @@ Class Consultant {
 
     }
 
-    static public function set_password($login, $token, $pwd, $pwd_verif) {
+    public function set_password($pwd, $pwd_verif) {
 
         if ($pwd != $pwd_verif) return false;
 
         $pdo = Database::connect();
 
-        $statement = $pdo->prepare("SELECT * FROM consultants WHERE login = :login AND token = :token");
-        $statement->execute(array(
-            ":login" => $login,
-            ":token" => $token
-        ));
-
-        if ($statement->fetch() == false) return false;
-
         $statement = $pdo->prepare("UPDATE consultants SET mot_de_passe = :pwd, token = null WHERE login = :login");
         $statement->execute(array(
-            ":pwd" => hash("sha256", $pwd),
-            ":login" => $login,
-            ":token" => $token
+            ":pwd" => $pwd,
+            ":login" => $this->login,
         ));
+
+        //hash("sha256", $pwd)
 
         return true;
             
+    }
+
+    static public function get_consultant_via_token($token){
+
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("SELECT * FROM consultants WHERE token = :token");
+        $statement->execute(array(
+            ":token" => $token
+        ));
+
+        $answer = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($answer == false || sizeof($answer) > 1) return false;
+
+        $pdo = null;
+
+        return new Consultant($answer[0]["id_consultant"]);
+
     }
 
 }
