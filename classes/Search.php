@@ -92,13 +92,21 @@ Class Search {
             "=3" => " = 3 "
         );
 
-        $statement = "SELECT c.* from consultants c JOIN interventions i ON i.id_consultant = c.id_consultant JOIN clients cl ON cl.id_client=i.id_client ";
+        $statement = "SELECT c.* from consultants c ";
 
         if(isset($array['disponibilites'])){
-            if(sizeof($array['disponibilites']) > 0){ 
+            if(sizeof($array['disponibilites']['id_disponibilite']) > 0){ 
                 $statement .= " JOIN disponibilite_consultant dc ON dc.id_consultant = c.id_consultant ";
             }
         }
+
+        if(isset($array['clients'])){
+            if(sizeof($array['clients']['id_client']) > 0){
+                $statement .= " JOIN interventions i ON i.id_consultant = c.id_consultant JOIN clients cl ON cl.id_client=i.id_client ";
+            }
+
+        }
+
 
         if(isset($array['competences'])) {
 
@@ -274,7 +282,8 @@ Class Search {
         $query = $pdo->prepare($statement);
         $query->execute($bindparam);
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
-
+        
+        var_dump($statement);
         return $result;        
 
     } 
