@@ -1,11 +1,13 @@
 .compWrapper {
     position: absolute;
     top: 56px;
-    height: calc(100vh - 56px);
-    width: 400px;
-    -webkit-box-shadow: 13px 0px 10px -10px rgba(0,0,0,0.75);
-    -moz-box-shadow: 13px 0px 10px -10px rgba(0,0,0,0.75);
-    box-shadow: 13px 0px 10px -10px rgba(0,0,0,0.75);
+    height: calc(100vh - 96px);
+    width: calc(400px - 40px);
+    padding: 20px;
+    -webkit-box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, .2);
+    -moz-box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, .2);
+    box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, .2);
+    overflow: auto;
 }
 
 .graphWrapper {
@@ -80,7 +82,7 @@
     grid-template-columns: auto 50% auto;
     grid-template-rows: auto;
     width: calc(100% - 40px);
-    padding: 20px;
+    padding: 20px 20px 0 20px;
 }
 
 canvas {
@@ -103,4 +105,21 @@ canvas {
 
 .disabled {
     color: #00000080;
+}
+
+.loader {
+    position: absolute;
+    top: calc(50% - 45px);
+    left: calc(50% - 45px);
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid var(--color-df);
+    border-radius: 50%;
+    width: 90px;
+    height: 90px;
+    animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

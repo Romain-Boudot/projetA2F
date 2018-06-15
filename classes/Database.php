@@ -22,6 +22,8 @@ class Database {
 
     public function login($login, $password) {
 
+        sleep(1);
+
         $db = Database::connect();
 
         if ($db == false) return false;
@@ -41,6 +43,7 @@ class Database {
                 "connected" => true,
                 "login" => $answer["login"],
                 "id" => $answer["id_consultant"],
+                "pole" => $answer["pole"],
                 "type" => 0
             );
 
@@ -63,6 +66,7 @@ class Database {
                 "connected" => true,
                 "login" => $answer["login"],
                 "id" => $answer["id_bm"],
+                "pole" => 0,
                 "type" => 1
             );
 
@@ -84,6 +88,7 @@ class Database {
                 "connected" => true,
                 "login" => $answer["login"],
                 "id" => $answer["id_rh"],
+                "pole" => 0,
                 "type" => 2
             );
 
