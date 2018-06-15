@@ -22,13 +22,25 @@ if ($_POST['action'] == "delete"){
         $statement->execute(array(":idcomp" => $id_comp));
         
         $pdo = null;
+        header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/index.php');
         exit();
 
     } else { 
         exit(); 
-}
+    }
 
-}elseif($_POST['action'] == "add"){
+} elseif ($_POST['action'] == "add") {
+    
+    $pdo = Database::connect();
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $statement = $pdo->prepare("INSERT INTO competences (nom, id_competence_mere) VALUES (:nom, :idcompmere)");
+    $statement->execute(array(":nom" => $_POST['nom'], ":idcompmere" => $id_comp));
+
+    $pdo = null;
+    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/index.php');
+    exit();
+
+} elseif($_POST['action'] == "add_bm"){
     $pdo = Database::connect();
  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $statement = $pdo->prepare("INSERT INTO competences (nom, id_competence_mere) VALUES (:nom, :idcompmere)");
@@ -37,6 +49,42 @@ if ($_POST['action'] == "delete"){
     $pdo = null;
     exit();
 
-} else { 
+}elseif($_POST['action'] == "add_rh"){
+    $pdo = Database::connect();
+ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $statement = $pdo->prepare("INSERT INTO competences (nom, id_competence_mere) VALUES (:nom, :idcompmere)");
+    $statement->execute(array(":nom" => $_POST['nom'], ":idcompmere" => $id_comp));
+
+    $pdo = null;
+    exit();
+
+}elseif($_POST['action'] == "add_client"){
+    $pdo = Database::connect();
+ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $statement = $pdo->prepare("INSERT INTO competences (nom, id_competence_mere) VALUES (:nom, :idcompmere)");
+    $statement->execute(array(":nom" => $_POST['nom']));
+
+    $pdo = null;
+    exit();
+
+}elseif($_POST['action'] == "add_consultant"){
+    $pdo = Database::connect();
+ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $statement = $pdo->prepare("INSERT INTO competences (nom, id_competence_mere) VALUES (:nom, :idcompmere)");
+    $statement->execute(array(":nom" => $_POST['nom'], ":idcompmere" => $id_comp));
+
+    $pdo = null;
+    exit();
+
+}elseif($_POST['action'] == "add_candidat"){
+    $pdo = Database::connect();
+ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $statement = $pdo->prepare("INSERT INTO competences (nom, id_competence_mere) VALUES (:nom, :idcompmere)");
+    $statement->execute(array(":nom" => $_POST['nom'], ":idcompmere" => $id_comp));
+
+    $pdo = null;
+    exit();
+
+}else { 
     exit(); 
 }

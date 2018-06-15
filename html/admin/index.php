@@ -77,7 +77,7 @@ if ($_SESSION['user']['type'] == 0 && 0) {
                             } else {
 
                                 ?><div class="competence"><?php echo $name; ?>
-                                    <div onclick="Post.send('admin/traitement.php', { 'id' : '<?php echo $value["id_competence"]; ?>' , 'action' : 'delete'})" data-name="<?php echo $name; ?>" data-id="<?php echo $value["id_competence"]; ?>" class="competence borderComp">Supprimer</div>
+                                    <div onclick="Post.send('/admin/traitement.php', { 'id' : '<?php echo $value["id_competence"]; ?>' , 'action' : 'delete'})" data-name="<?php echo $name; ?>" data-id="<?php echo $value["id_competence"]; ?>" class="competence borderComp">Supprimer</div>
                                 </div><?php
 
                             }
@@ -103,7 +103,6 @@ if ($_SESSION['user']['type'] == 0 && 0) {
                             ?><div id="ddt<?php echo $cpt; ?>" class="dropdownTrigger"><?php echo $name ?>
 
                             <div onclick="Admin.addDaughter(<?php echo $value["id_competence"]; ?>, <?php echo $cpt; ?>)" data-name="<?php echo $name; ?>" data-id="<?php echo $value["id_competence"]; ?>" class="competence borderComp">Ajouter une compétence fille</div>
-                            
 
                             </div><?php
                             
@@ -128,7 +127,7 @@ if ($_SESSION['user']['type'] == 0 && 0) {
                 <?php
 
                     $rh = RH::get_array();
-                    
+                    ?><pre> <?php var_dump($rh);?></pre><?php 
                     foreach ($rh as $name => $value) {
                         
                         ?><div><?php  echo $value['nom']; ?> - 
@@ -136,6 +135,21 @@ if ($_SESSION['user']['type'] == 0 && 0) {
                     <?php 
                     }
                     ?>
+
+                <!-- <div class="popup" id="rh"><div class="nav">Responsable</div> -->
+                    
+                    <form action="/admin/index.php/" method="post">
+                    
+                        <input type="hidden" name="" value="info">
+
+                        <input type="text" name="nom" placeholder="Nom" required>
+                        <input type="text" name="prenom" placeholder="Prenom" required>
+
+                        <input type="submit" value="Envoyer">
+
+                    </form>
+                
+                <!-- </div> -->
             </div>
         </div>
 
@@ -152,6 +166,21 @@ if ($_SESSION['user']['type'] == 0 && 0) {
                 <?php 
                 }
                 ?>
+
+                <!-- <div class="popup" id="rh"><div class="nav">Responsable</div> -->
+    
+                    <form action="/admin/index.php/" method="post">
+                    
+                        <input type="hidden" name="action" value="add_rh">
+
+                        <input type="text" name="nom" placeholder="Nom" required>
+                        <input type="text" name="prenom" placeholder="Prenom" required>
+
+                        <input type="submit" value="Envoyer">
+
+                    </form>
+            
+                <!-- </div> -->
             </div>
         </div>
 
@@ -167,7 +196,22 @@ if ($_SESSION['user']['type'] == 0 && 0) {
                     <?php echo $value['prenom']; ?></div>
                 <?php 
                 }
-                ?> 
+                ?>
+                
+                <!-- <div class="popup" id="rh"><div class="nav">Responsable</div> -->
+    
+                    <form action="/admin/index.php/" method="post">
+                        
+                        <input type="hidden" name="action" value="info">
+
+                        <input type="text" name="nom" placeholder="Nom" required>
+                        <input type="text" name="prenom" placeholder="Prenom" required>
+
+                        <input type="submit" value="Envoyer">
+
+                    </form>
+        
+                <!-- </div> -->
             </div>
         </div>
 
@@ -184,6 +228,20 @@ if ($_SESSION['user']['type'] == 0 && 0) {
                 <?php 
                 }
                 ?> 
+                <!-- <div class="popup" id="rh"><div class="nav">Responsable</div> -->
+    
+                    <form action="/admin/index.php/" method="post">
+                            
+                        <input type="hidden" name="" value="info">
+
+                        <input type="text" name="nom" placeholder="Nom" required>
+                        <input type="text" name="prenom" placeholder="Prenom" required>
+
+                        <input type="submit" value="Envoyer">
+
+                    </form>
+            
+                <!-- </div> -->
             </div>
         </div>
         <div class="popup" id="client"><div class="nav">Clients</div>
@@ -197,7 +255,21 @@ if ($_SESSION['user']['type'] == 0 && 0) {
                     ?><div><?php  echo $value['entreprise'];?></div>
                 <?php 
                 }
-                ?> 
+                ?>
+                <!-- <div class="popup" id="rh"><div class="nav">Responsable</div> -->
+    
+                    <form action="/admin/index.php/" method="post">
+                        
+                        <input type="hidden" name="" value="info">
+
+                        <input type="text" name="nom" placeholder="Nom" required>
+                        <input type="text" name="prenom" placeholder="Prenom" required>
+
+                        <input type="submit" value="Envoyer">
+
+                       </form>
+    
+                <!-- </div> -->
             </div>
         </div>
     </div> 

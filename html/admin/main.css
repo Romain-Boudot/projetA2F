@@ -243,6 +243,14 @@ form input[type=submit] {
     overflow: hidden;
 }
 
+.relative-wrapper-container {
+    padding: 20px;
+}
+
+.relative-wrapper-container>div{
+    margin-bottom: 10px;
+}
+
 .relative-wrapper-container>#addDaughter {
     margin-bottom: 3px;
     margin-left: 20px;
