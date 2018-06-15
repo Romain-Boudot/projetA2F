@@ -4,6 +4,14 @@
 
     session_start();
 
+    if (isset($_GET["token"])) {
+
+        $pass = true;
+        include_once "register.php";
+        exit();
+
+    }
+
     if (isset($_POST["login"]) && isset($_POST["password"])) {
 
         if (Database::login($_POST["login"], $_POST["password"])) {
