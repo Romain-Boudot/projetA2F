@@ -30,7 +30,7 @@ if ($_GET["action"] == "timeline") {
 
     
 
-    $candidat->transfer();    
+    $candidat->transfer(3);    
 
         echo "nice3";
 

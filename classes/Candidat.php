@@ -70,9 +70,9 @@ class Candidat {
 
     public function transfer($id_pole){
 
-        //$data = Consultant::register($this->nom, $this->prenom, $id_pole);
+        $data = Consultant::register($this->nom, $this->prenom, $id_pole);
         
-//        $c = new Consultant($data['id']); 
+        $c = new Consultant($data['id']); 
 
         $comp = $this->get_competences();
         $qualif = $this->get_qualifications();
