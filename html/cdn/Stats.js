@@ -10,6 +10,8 @@ class Stats {
 
     static get_stats(id) {
 
+        var wrapper = document.querySelector('.graphWrapper');
+        wrapper.innerHTML = "<div class='loader'></div>";
         Ajax.get("/recherche/stats/traitement.php?id=" + id, Stats.add_stats);
 
     }

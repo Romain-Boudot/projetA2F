@@ -33,6 +33,9 @@ error_reporting(E_ALL);
     <link rel="stylesheet" href="/candidat/main.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="/cdn/Chart.bundle.min.js"></script>
+    <script src="/cdn/Ajax.js"></script>
+    <script src="/cdn/url_get.js"></script>
+    <script src="/cdn/Candidat.js"></script>
     <script src="/cdn/Chart.js"></script>
     <script src="/cdn/Dropdown.js"></script>
     <title>A2F Advisor</title>
@@ -184,18 +187,17 @@ error_reporting(E_ALL);
 
                         }
 
-?>
+                ?>
                 </div>
-
-
-
-                        <script>
-
-                        Dropdown.load();
-
-                        </script>
+                
+                <script>
+                    Dropdown.load();
+                </script>
 
             </div>
+            <?php
+                $step = $candidat->get_etape();
+            ?>
 
 <?php
                         $step = $candidat->get_etape();
@@ -208,24 +210,23 @@ error_reporting(E_ALL);
                     <div class="pointLabel">
                         1er appel téléphonique
                     </div>
-                </div>
-                <div class="point<?php if ($step >= 2) echo " colored"; ?>">
-                    <div class="pointLabel">
-                        1er entretien
+                    <div onclick="C.ajust_tm(2)" class="point<?php if ($step >= 2) echo " colored"; ?>">
+                        <div class="pointLabel">
+                            1er entretien
+                        </div>
                     </div>
-                </div>
-                <div class="point<?php if ($step >= 3) echo " colored"; ?>">
-                    <div class="pointLabel">
-                        2nd entretien
+                    <div onclick="C.ajust_tm(3)" class="point<?php if ($step >= 3) echo " colored"; ?>">
+                        <div class="pointLabel">
+                            2nd entretien
+                        </div>
                     </div>
-                </div>
-                <div class="point<?php if ($step >= 4) echo " colored"; ?>">
-                    <div class="pointLabel">
-                        3ème entretien
+                    <div onclick="C.ajust_tm(4)" class="point<?php if ($step >= 4) echo " colored"; ?>">
+                        <div class="pointLabel">
+                            3ème entretien
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
     </div>
 

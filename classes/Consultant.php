@@ -46,27 +46,19 @@ Class Consultant {
 
     }
 
-    public static function add($infos){
-    try {
-    
-        $pdo = Database::connect();
+    public static function add($infos) { // deprecated
+
+    $pdo = Database::connect();
 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
         $statement = $pdo->prepare("INSERT INTO `consultants` (`nom`, `prenom`, `login`, `mot_de_passe`, `email`, `telephone`, `linkedin`, `pole`) VALUES (:nom, :prenom, :login, :mdp, :email, :telephone, :linkedin, :pole)");
         $statement->execute(array(':nom' => $infos['nom'], ':prenom' => $infos['prenom'], ':email' => $infos['email'], ':linkedin' => $infos['linkedin'], ':pole' => $infos['pole'], ':telephone' => $infos['telephone'], ':login' => $infos['login'], ':mdp' => $infos['mot_de_passe']));
-    }
      //   $last = $pdo->lastInsertId(); 
-        
-//        $pdo = null;
 
-catch(Exception $e) {
-    echo 'Exception -> ';
-    var_dump($e->getMessage());
-}
+        $pdo = null;
 
-//        return $last;
     }
 
 

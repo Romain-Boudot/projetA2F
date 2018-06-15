@@ -1,13 +1,13 @@
 <?php
 
     include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Database.php";
+    include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Security.php";
     include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Competence.php";
     include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Consultant.php";
     
     session_start();
 
-    // var_dump($_SESSION);
-    // var_dump($_GET);
+    Security::check_login(array(0, 1, 2));
 
     $id = $_SESSION['user']['id'];
 
@@ -22,6 +22,8 @@
 
     $consultant = new Consultant($id);
 
+    $pole = $consultant->get_pole();
+
     include_once $_SERVER['DOCUMENT_ROOT'] . "/../includes/splitstr.php";
     
 ?>
@@ -31,10 +33,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        :root {
+            --main-color: <?php
+                if ($pole == 0) echo "#06436f";
+                if ($pole == 1) echo "#f7931e";
+                if ($pole == 2) echo "#259225";
+                if ($pole == 3) echo "#f05944";
+            ?>;
+            --main-color-light: <?php
+                if ($pole == 0) echo "#06436f88";
+                if ($pole == 1) echo "#f7931e88";
+                if ($pole == 2) echo "#25922588";
+                if ($pole == 3) echo "#f0594488";
+            ?>;
+            --auto-color: <?php
+                if ($pole == 0) echo "white";
+                else echo "inerit"
+            ?>;
+        }
+    </style>
     <link rel="stylesheet" href="/cdn/main.css">
     <link rel="stylesheet" href="/consultant/main.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="/cdn/Chart.bundle.min.js"></script>
+    <script src="/cdn/Ajax.js"></script>
     <script src="/cdn/Chart.js"></script>
     <script src="/cdn/Dropdown.js"></script>
     <title>A2F Advisor</title>
@@ -45,19 +68,50 @@
     
     <nav>
         <div id="image-profile">
-            <img src="/images/unknown.png" alt="profile image">
+            <img class="photoUploadHover" src="/images/profil/<?php
+                if (file_exists($_SERVER["DOCUMENT_ROOT"] . "/images/profil/" . $consultant->get_id() . ".png")) echo $consultant->get_id() . ".png";
+                elseif (file_exists($_SERVER["DOCUMENT_ROOT"] . "/images/profil/" . $consultant->get_id() . ".jpg")) echo $consultant->get_id() . ".jpg";
+                elseif (file_exists($_SERVER["DOCUMENT_ROOT"] . "/images/profil/" . $consultant->get_id() . ".jpeg")) echo $consultant->get_id() . ".jpeg";
+                else echo "unknown.png";
+            ?>" alt="profile image">
+            <?php if ($id == $_SESSION['user']['id']) {?>
+            <form id="photoForm" class="photoUpload" action="/consultant/traitement.php" method="post">
+                <input type="hidden" name="action" value="img">
+                <input id="uploadPhoto" class="hidden" type="file" name="file">
+                <label for="uploadPhoto"><i class="material-icons plus">add</i></label>
+            </form>
+            <script>
+                var form = document.getElementById("photoForm");
+                var refresh = 0;
+                var inputimg = document.getElementById("uploadPhoto");
+                inputimg.onchange = function() {   
+                    var img = new FormData();
+                    img.append('file', inputimg.files[0]);
+                    Ajax.post("/consultant/traitement.php?action=img", img, function(data) {
+                        //console.log(JSON.parse(data)[0]);
+                        document.querySelector("#image-profile img").setAttribute("src" ,document.querySelector("#image-profile img").getAttribute("src") + "?" + refresh);
+                        refresh++;
+                    });
+                }
+            </script>
+            <?php } ?>
         </div>
         <div class="profile-info bold" style="text-transform: uppercase;">pôle <?php echo $consultant->get_nom_pole(); ?></div>
         <div class="hr"></div>
+        <div class="profile-info left">Prénom :</div>
         <div class="profile-info" data-info="prenom"><?php echo $consultant->get_prenom(); ?></div>
+        <div class="profile-info left">Nom :</div>
         <div class="profile-info" data-info="nom"><?php echo $consultant->get_nom(); ?></div>
-        <div class="profile-info" data-info="email"><?php echo $consultant->get_email(); ?></div></div>
-        <div class="profile-info" data-info="telephone"><?php echo $consultant->get_telephone(); ?></div></div>
-        <div class="profile-info" data-info="linkedin"><?php echo $consultant->get_linkedin(); ?></div></div>
+        <div class="profile-info left">Email :</div>
+        <a href="mailto:<?php echo $consultant->get_email(); ?>" class="profile-info underline" data-info="email"><?php echo $consultant->get_email(); ?></a>
+        <div class="profile-info left">Téléphone :</div>
+        <div class="profile-info" data-info="telephone"><?php echo $consultant->get_telephone(); ?></div>
+        <div class="profile-info left">LinkedIn :</div>
+        <a href="<?php echo $consultant->get_linkedin(); ?>" class="profile-info underline" data-info="linkedin"><?php echo $consultant->get_linkedin(); ?></a>
         
         <?php if ($_SESSION['user']['type'] >= 1 || $_SESSION['user']['login'] == $consultant->get_login()) {?>
             <div class="hr"></div>
-            <div class="profile-info salaire">salaire : <?php echo $consultant->get_salaire(); ?>€</div></div>
+            <div class="profile-info salaire">salaire : <?php echo $consultant->get_salaire(); ?>€</div>
         <?php
         
         }
@@ -210,12 +264,6 @@
             <div id="chart-wrapper">
 
                 <?php
-                
-                    function split($str) {
-
-
-
-                    }
 
                     $graph = $consultant->get_graphiques();
                     $graphG = array(
@@ -288,21 +336,17 @@
 
                 <?php } ?>
 
-            </div>
-            <div id="timeLine">
-                <div class="line">
-                    <div class="point">
-                        <div class="tooltip">
-                            Arrivée dans l'entreprise
-                        </div>
-                        <div class="pointLabel">
-                            14 mai 2018
-                        </div>
-                    </div>
-                </div>
-            </div>         
+            </div>   
         </div>
     </div>
-
+    <?php
+    if ($pole == 1) {
+        ?><img class="logo" src="/images/schema-industrie-15.svg" alt="logo Indus" width="300"><?php
+    } elseif ($pole == 2) {
+        ?><img class="logo" src="/images/visuel-si.svg" alt="logo Si" width="300"><?php
+    } elseif ($pole == 3) {
+        ?><img class="logo" src="/images/schema-database-17.svg" alt="logo database" width="300"><?php
+    }
+    ?>
 </body>
 </html>

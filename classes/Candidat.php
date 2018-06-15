@@ -271,6 +271,12 @@ class Candidat {
 
     public function set_etape($etape){
         $this->etape = $etape;
+        $db = Database::connect();
+        $statement = $db->prepare("UPDATE candidats SET etape = :etape WHERE id_candidat = :id");
+        $statement->execute(array(
+            ":etape" => $this->etape,
+            ":id" => $this->id
+        ));
     }
 
     public function get_interviews(){
