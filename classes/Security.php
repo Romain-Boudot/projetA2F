@@ -28,8 +28,6 @@ class Security {
 
         if (isset($_SESSION['user']['connected'])) {
 
-            echo 'pass';
-
             if (!$_SESSION['user']['connected']) {
             
                 header("Location: http://" . $_SERVER['HTTP_HOST'] . "/identification/");

@@ -1,8 +1,6 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
+    Security::check_login(array(0, 1, 2));
 
     if ($_POST['modif'] == "info") {
 
