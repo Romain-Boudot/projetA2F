@@ -28,6 +28,8 @@ if ($_GET["action"] == "timeline") {
  
 }elseif ($_GET["action"] == "transfer") {
 
+    
+
     $candidat->transfer();    
 
         echo "nice3";

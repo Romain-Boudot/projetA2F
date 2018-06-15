@@ -312,3 +312,55 @@ catch(Exception $e) {
 }
 
 
+
+        $token = hash("sha256", $login . bin2hex(random_bytes(50)) . $pole);
+
+        $pdo = Database::connect();
+        
+        $statement = $pdo->prepare("INSERT INTO consultants (nom, prenom, pole, login, token) VALUES (:nom, :prenom, :pole, :login, :token)");
+        $statement->execute(array(
+            ':nom' => $nom,
+            ':prenom' => $prenom,
+            ':pole' => $pole,
+            ':login' => $login,
+            ':token' => $token
+        ));
+
+        $id = $pdo->lastInsertID();
+
+        $pdo = null;
+
+        $url = "http://" . $_SERVER["HTTP_HOST"] . "/register/?token=" . $token;
+
+        return array(
+            "url" => $url,
+            "id" => $id);
+
+    }
+
+    static public function set_password($login, $token, $pwd, $pwd_verif) {
+
+        if ($pwd != $pwd_verif) return false;
+
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("SELECT * FROM consultants WHERE login = :login AND token = :token");
+        $statement->execute(array(
+            ":login" => $login,
+            ":token" => $token
+        ));
+
+        if ($statement->fetch() == false) return false;
+
+        $statement = $pdo->prepare("UPDATE consultants SET mot_de_passe = :pwd, token = null WHERE login = :login");
+        $statement->execute(array(
+            ":pwd" => hash("sha256", $pwd),
+            ":login" => $login,
+            ":token" => $token
+        ));
+
+        return true;
+            
+    }
+
+}

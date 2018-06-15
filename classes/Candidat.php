@@ -68,23 +68,18 @@ class Candidat {
 
     }
 
-    public function transfer(){
-        $infos['nom'] = $this->nom;
-        $infos['prenom'] = $this->prenom;
-        $infos['telephone'] = $this->telephone;
-        $infos['email'] = $this->email;
-        $infos['linkedin'] = $this->linkedin;
-        $infos['pole'] = 1;
-        $infos['login'] = "qrenaud";
-        $infos['mot_de_passe'] = "password";
+    public function transfer($id_pole){
 
-        $id = Consultant::add($infos);
-
-        $c = new Consultant($id); 
+        //$data = Consultant::register($this->nom, $this->prenom, $id_pole);
+        
+//        $c = new Consultant($data['id']); 
 
         $comp = $this->get_competences();
         $qualif = $this->get_qualifications();
-
+        echo "<pre>";
+        var_dump($comp);
+        var_dump($qualif);
+        echo "</pre>";
         foreach($comp as $key => $value){
             
             $c->add_competence($value);    
@@ -97,9 +92,10 @@ class Candidat {
 
         }
 
-    echo "win";
+        //        delete();
+        
+        //return $data['url'];
 
-//        delete();
     }
 
     public function add_interview($infos) {
