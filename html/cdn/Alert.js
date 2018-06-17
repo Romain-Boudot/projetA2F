@@ -7,7 +7,7 @@ class Alert {
     }
 
     static open(elem) {
-        
+
         elem.id = "AlertOpened";
 
         if (document.getElementById("AlertOpened") != null) {
@@ -26,7 +26,7 @@ class Alert {
 
     static popup(obj = {
         title: "Erreur",
-        text: "Une erreur est survenue",
+        text: "Erreur inconnue",
         showCancelButton: false,
         cancelText: "Cancel",
         confirmColor: "#bbbbbb",
@@ -49,6 +49,7 @@ class Alert {
         back.style.height = "100vh";
         back.style.top = "0";
         back.style.left = "0";
+        back.style.zIndex = "10000";
         back.appendChild(block);
 
         title.innerText = obj.title;
@@ -71,7 +72,7 @@ class Alert {
         confirm.style.backgroundColor = obj.confirmColor;
         confirm.innerText = obj.confirmText;
         confirm.onclick = obj.confirm;
-        
+
         if (obj.showCancelButton) {
             var cancel = confirm.cloneNode(true);
             cancel.innerText = "Annuler";
@@ -97,7 +98,7 @@ class Alert {
 
     static load_page(url) {
 
-       
+
 
         Ajax.get(url, function(e) {
             var back = document.createElement("div");
@@ -118,10 +119,11 @@ class Alert {
             back.style.height = "100vh";
             back.style.top = "0";
             back.style.left = "0";
+            back.style.zIndex = "10000";
             back.appendChild(block);
-    
+
             Alert.open(back);
-        
+
         })
 
     }

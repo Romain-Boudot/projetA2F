@@ -2,6 +2,20 @@
 
 class Security {
 
+    static public function check_file($fileName) {
+
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("SELECT * FROM fichiers_consultant WHERE id_consultant = :id AND nom_serveur = :nom");
+        $statement->execute(array(":id" => $_SESSION['user']['id'], ":nom" => $fileName));
+        if ($statement->fetch() != false) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
     static public function login_validity($login) {
 
         $pdo = Database::connect();

@@ -244,6 +244,52 @@ Class Consultant {
         return $this->honoraires;
     }
 
+    public function get_files($type = "") {
+
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("SELECT * FROM fichiers_consultants WHERE id_consultant = :id AND type LIKE :type");
+        $statement->execute(array(
+            ":id" => $this->id,
+            ":type" => $type
+        ));
+
+        $pdo = null;
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
+    public function add_file($trueName, $serverName, $type) {
+
+        $pdo = Database::connect();
+        
+        $statement = $pdo->prepare("INSERT INTO fichiers_consultants VALUES (?, ?, ?, ?)");
+        $statement->execute(array(
+            $serverName,
+            $this->id,
+            $trueName,
+            $type
+        ));
+
+        $pdo = null;
+
+    }
+
+    public function del_file($serverFileName) {
+
+        $pdo = Database::connect();
+        
+        $statement = $pdo->prepare("DELETE FROM fichiers_consultants WHERE id_consultant = :id AND nom_serveur = :name");
+        $statement->execute(array(
+            ":id" => $this->id,
+            ":name" => $serverFileName
+        ));
+
+        $pdo = null;
+
+    }
+
     public function get_interventions(){ 
         $pdo = Database::connect(); 
 
@@ -341,6 +387,8 @@ Class Consultant {
         ));
 
         //hash("sha256", $pwd)
+
+        $pdo = null;
 
         return true;
             

@@ -58,6 +58,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="/cdn/Chart.bundle.min.js"></script>
     <script src="/cdn/Ajax.js"></script>
+    <script src="/cdn/Alert.js"></script>
     <script src="/cdn/Chart.js"></script>
     <script src="/cdn/Dropdown.js"></script>
     <title>A2F Advisor</title>
@@ -69,10 +70,12 @@
     <nav>
         <div id="image-profile">
             <img class="photoUploadHover" src="/images/profil/<?php
-                if (file_exists($_SERVER["DOCUMENT_ROOT"] . "/images/profil/" . $consultant->get_id() . ".png")) echo $consultant->get_id() . ".png";
-                elseif (file_exists($_SERVER["DOCUMENT_ROOT"] . "/images/profil/" . $consultant->get_id() . ".jpg")) echo $consultant->get_id() . ".jpg";
-                elseif (file_exists($_SERVER["DOCUMENT_ROOT"] . "/images/profil/" . $consultant->get_id() . ".jpeg")) echo $consultant->get_id() . ".jpeg";
-                else echo "unknown.png";
+                $files = $consultant->get_files("img");
+                if (isset($files[0])) {
+                    echo $files[0]["nom_serveur"];
+                } else {
+                    echo "unknown.png";
+                }
             ?>" alt="profile image">
             <?php if ($id == $_SESSION['user']['id']) {?>
             <form id="photoForm" class="photoUpload" action="/consultant/traitement.php" method="post">
@@ -82,15 +85,27 @@
             </form>
             <script>
                 var form = document.getElementById("photoForm");
-                var refresh = 0;
                 var inputimg = document.getElementById("uploadPhoto");
                 inputimg.onchange = function() {   
                     var img = new FormData();
                     img.append('file', inputimg.files[0]);
                     Ajax.post("/consultant/traitement.php?action=img", img, function(data) {
-                        //console.log(JSON.parse(data)[0]);
-                        document.querySelector("#image-profile img").setAttribute("src" ,document.querySelector("#image-profile img").getAttribute("src") + "?" + refresh);
-                        refresh++;
+                        data= JSON.parse(data);
+                        // console.log(data);
+                        if (data.code == 1) {
+                            document.querySelector("#image-profile img").setAttribute("src" , "/images/profil/" + data.name);
+                        } else if (data.code < -1) {
+                            Alert.popup({
+                                title: "Erreur",
+                                text: data.message,
+                                showCancelButton: false,
+                                confirmColor: "#bbbbbb",
+                                confirmText: "Retour",
+                                confirm: function() {
+                                    Alert.close();
+                                }
+                            })
+                        }
                     });
                 }
             </script>
@@ -338,6 +353,15 @@
 
             </div>   
         </div>
+
+        <div class="fileUpload">
+        
+            <div class="addFile">
+                <i class="material-icons">add</i>
+            </div>
+        
+        </div>
+
     </div>
     <?php
     if ($pole == 1) {

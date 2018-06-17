@@ -17,7 +17,7 @@ if (!isset($_GET['file'])) {
 }
 
 if ($_SESSION['user']['type'] == 0) {
-    if (explode("-", $_GET['file'])[0] != $_SESSION['user']['id']) {
+    if (!Security::check_file($_GET['file'])) {
         include_once $_SERVER['DOCUMENT_ROOT'] . "/erreurs/403.php";
         exit();
     }
