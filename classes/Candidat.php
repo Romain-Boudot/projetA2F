@@ -72,9 +72,9 @@ class Candidat {
 
         $data = Consultant::register($this->nom, $this->prenom, $id_pole);
         
-        if(isset($data) {
+        if(isset($data)) {
             $c = new Consultant($data['id']); 
-            if(isset($c){
+            if(isset($c)) {
                 $comp = $this->get_competences();
                 $qualif = $this->get_qualifications();
                 foreach($comp as $key => $value){
