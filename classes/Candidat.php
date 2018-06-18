@@ -44,7 +44,7 @@ class Candidat {
     }
 
     public function delete(){
-        $pdo = Database::connect();
+        $pdo = Database::connect(); 
 
         $delete_candidate = $pdo->prepare("DELETE FROM candidats WHERE id_candidat = :id");
         $delete_candidate->bindParam('id', $this->id);
@@ -321,6 +321,18 @@ class Candidat {
 
     } 
 
+    static public function get_array() {
+    
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("SELECT * from candidats ORDER BY nom");
+        $statement->execute();
+        $array = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return $array;
+
+
+    }
     public function get_competences(){
         
         $pdo = Database::connect();
@@ -368,6 +380,5 @@ class Candidat {
             "id" => $id);
 
     }
-
 
 }
