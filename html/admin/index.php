@@ -162,8 +162,16 @@ if ($_SESSION['user']['type'] == 0 && 0) {
                 foreach ($bm as $name => $value) {
                     
                     ?><div><?php  echo $value['nom']; ?> - 
-                    <?php echo $value['prenom']; ?></div>
+                    <?php echo $value['prenom']; 
+                    
+                    echo "<form action='/admin/index.php/' method='post'>
+                    <input type='hidden' name='action' value='delete_bm'>
+                    <input type='hidden' name='id_bm' value='" .$value['id_bm'] . "'>
+                    
+                    <input type='submit' value='Supprimer'";?></div>
                 <?php 
+                   
+
                 }
                 ?>
 
