@@ -17,6 +17,20 @@ Security::check_login(array(0, 1, 2));
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        :root {
+            --main-color: <?php
+                if ($_SESSION['user']['pole'] == 0) echo "#06436f";
+                if ($_SESSION['user']['pole'] == 1) echo "#f7931e";
+                if ($_SESSION['user']['pole'] == 2) echo "#259225";
+                if ($_SESSION['user']['pole'] == 3) echo "#f05944";
+            ?>;
+            --auto-color: <?php
+                if ($_SESSION['user']['pole'] == 0) echo "white";
+                else echo "inerit"
+            ?>;
+        }
+    </style>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="/cdn/main.css">
     <link rel="stylesheet" href="/recherche/main.css">
@@ -32,7 +46,7 @@ Security::check_login(array(0, 1, 2));
 
     <div class="main-wrapper">
 
-        <div onclick="Popup.oneOpen('help')" class="helpTrigger">Aide</div>
+        <div onclick="Popup.oneOpen('help')" class="helpTrigger"><i class="material-icons">help_outline</i></div>
         <div onclick="Popup.close('help')" id="help" class="help">
 
             <div>
@@ -159,7 +173,7 @@ Security::check_login(array(0, 1, 2));
             var s = new S;
         </script>
 
-        <div class="searchBtn btn" onclick="s.send()">Rechercher</div>
+        <div class="searchBtn" onclick="s.send()">Rechercher</div>
 
     </div>
 
@@ -203,8 +217,9 @@ Security::check_login(array(0, 1, 2));
 
                             ?>
 
-                                <div data-name="<?php echo $name; ?>" data-id="<?php echo $value["id_competence"]; ?>" class="competence">
+                                <div class="competencefake">
                                     <?php echo $name; ?>
+                                    <div data-name="<?php echo $name; ?>" data-id="<?php echo $value["id_competence"]; ?>" class="competence borderComp">ajouter aux filtres</div>
                                 </div>
 
                             <?php

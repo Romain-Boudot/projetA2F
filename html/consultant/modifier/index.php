@@ -1,19 +1,17 @@
 <?php
 
     include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Database.php";
+    include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Security.php";
     include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Competence.php";
     include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Client.php";    
     include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Consultant.php";
 
     session_start();
 
-    if ($_SESSION['user']['type'] == 0) {
-        $c = new Consultant($_SESSION['user']['id']);
-    } else {
-        echo "vous n'etes pas un consultant, vous n'avez pas de page de profil.";
-        exit();
-    }
-
+    Security::check_login(array(0));
+    
+    $c = new Consultant($_SESSION['user']['id']);
+    
     if (isset($_POST['modif'])) {
         include_once "traitement.php";
     }
@@ -129,7 +127,7 @@
                 <input type="text" name="prenom" placeholder="Prenom" value="<?php echo $c->get_prenom(); ?>" required>
                 <input type="text" name="email" placeholder="Email" value="<?php echo $c->get_email(); ?>" required>
                 <input type="text" name="tel" placeholder="Téléphone" value="<?php echo $c->get_telephone(); ?>" required>
-                <input type="text" name="linkedin" placeholder="Linkedin" value="<?php echo $c->get_linkedin(); ?>">
+                <input type="text" name="linkedin" placeholder="Linkedin (http://...)" value="<?php echo $c->get_linkedin(); ?>">
 
                 <input type="submit" value="Envoyer">
 

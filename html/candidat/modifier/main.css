@@ -4,11 +4,15 @@ nav {
     position: fixed;
     top: 0;
     left: 0;
-    background-color: rgba(0, 0, 0, 0.144);
+    z-index: 2000;
+    background-color: rgba(0, 0, 0, .1);
+    -webkit-box-shadow: 4px 2px 15px 5px rgba(0,0,0,0.3);
+    -moz-box-shadow: 4px 2px 15px 5px rgba(0,0,0,0.3);
+    box-shadow: 4px 2px 15px 5px rgba(0,0,0,0.3);
 }
 
 nav .onglet {
-    width: 100%;
+    width: calc(100% - 20px);
     padding: 5px 10px;
     cursor: pointer;
 }
@@ -35,7 +39,8 @@ nav .onglet {
 
 .nav {
     height: 56px;
-    background-color: rgba(0, 0, 0, .08);
+    background-color: var(--color-df);
+    color: white;
     line-height: 56px;
     text-align: center;
 }
@@ -182,19 +187,24 @@ input[type=number] {
 }
 
 form input[type=submit] {
-    background-color: rgba(0, 0, 0, 0.244);
     padding: 10px 15px;
     margin: 10px auto;
-    border: none;
+    border: 2px solid rgba(0, 0, 0, .1);
     border-radius: 5px;
     cursor: pointer;
     font-size: 15px;
+    background-color: rgba(0, 0, 0, 0);
+    transition: .2s background-color ease, .2s color ease;
+}
+
+form input[type=submit]:hover {
+    background-color: var(--color-df);
+    color: white;
 }
 
 .QualSubmit>*,
 .InterSubmit>* {
     display: inline-block;
-    background-color: rgba(0, 0, 0, 0.244);
     padding: 10px 15px;
     margin: 10px auto;
     border: none;
@@ -203,6 +213,9 @@ form input[type=submit] {
 }
 
 .compListWrapper {
+    position: absolute;
+    top: 56px;
+    left: 0;
     width: calc(100% - 300px);
     margin: 50px 150px;
 }
@@ -254,33 +267,76 @@ form input[type=submit] {
 
 .submit {
     position: fixed;
-    margin: 10px;
+    margin: 10px 10px 10px 25px;
     padding: 10px 15px;
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.244);
     cursor: pointer;
     border-radius: 5px;
+    border: 2px solid rgba(0, 0, 0, .1);
+    transition: .2s background-color ease, .2s color ease; 
+}
+
+.submit:hover {
+    background-color: var(--color-df);
+    color: white;
 }
 
 .close {
     position: absolute;
     display: inline-block;
     z-index: 1000;
-    height: 26px;
-    line-height: 26px;
+    height: 22px;
+    line-height: 22px;
     top: 5px;
     right: 5px;
     padding: 10px 15px;
     cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.144);
+    background-color: rgba(0, 0, 0, 0);
+    border: 2px solid white;
+    color: white;
     border-radius: 5px;
+    transition: .2s background-color ease, .2s color ease;
 }
 
 .close:hover {
-    background-color: rgba(0, 0, 0, 0.244);
+    color: inherit;
+    background-color: rgba(255, 255, 255, 1);
 }
 
 .w-50 {
     width: calc(50% - 225px) !important;
     margin: 50px 75px 50px 150px !important;
+}
+.delInt {
+    border: 2px solid rgba(0, 0, 0, .1);
+    transition: .2s background-color ease, .2s color ease;    
+}
+
+.delInt:hover {
+    background-color: var(--color-df);
+    color: white;
+}
+
+.del {
+    float: right;
+    margin: 0 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.comp .floatRight {
+    display: none;
+    position: relative;
+    opacity: 0;
+    cursor: pointer;
+    font-size: 85%;
+    border: 1px solid rgba(0, 0, 0, .1);
+    padding: 0 5px;
+    margin-left: 5px;
+}
+
+.comp:hover .floatRight {
+    opacity: 1;
+    display: inline-block;
+    transition: .2s opcaity ease;
 }

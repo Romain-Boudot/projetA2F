@@ -2,25 +2,111 @@
 
 class Security {
 
+    static public function check_file($fileName) {
+
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("SELECT * FROM fichiers_consultants WHERE id_consultant = :id AND nom_serveur = :nom");
+        $statement->execute(array(":id" => $_SESSION['user']['id'], ":nom" => $fileName));
+        if ($statement->fetch() != false) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    static public function login_validity($login) {
+
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("SELECT * FROM consultants WHERE login = :login");
+        $statement->execute(array(":login" => $login));
+        if ($statement->fetch() != false) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
     static public function gen_token($id) {
 
         $token = bin2hex(random_bytes(32));
+        
+        $cpt = $_SESSION['user']['token'][0];
 
-        $_SESSION['user']['token'][$token] = $id;
+        if ($cpt = 3) {
+            
+            $cpt1 = 1;
+            while(isset($_SESSION['user']['token'][$cpt1 + 1]) && $cpt1 < 3) {
+                $_SESSION['user']['token'][$cpt1] = $_SESSION['user']['token'][$cpt1 + 1];
+                $cpt1++;
+            }
 
-        return true;
+            $_SESSION['user']['token'][$cpt1 + 1] = array(
+                "token" => $token,
+                "id" => $id
+            );
+
+        } else {
+    
+            $_SESSION['user']['token'][$cpt + 1] = array(
+                "token" => $token,
+                "id" => $id
+            );
+            
+            $_SESSION['user']['token'][0] += 1;
+
+        }
+
+        return $token;
 
     }
 
     static public function check_token($token, $id) {
 
-        if ($_SESSION['user']['token'][$token] == $id) {
+        for($cpt = 1; $cpt < sizeof($_SESSION['user']['token']); $cpt++) {
 
-            unset($_SESSION['user']['token'][$token]);
+            if (!isset($_SESSION['user']['token'][$cpt]['token'])) continue;
 
-            return true;
+            if ($_SESSION['user']['token'][$cpt]['token'] == $token) {
 
-        } else return false;
+                if ($_SESSION['user']['token'][$cpt]['id'] == $id) {
+
+                    $cpt1 = $cpt;
+
+                    while(isset($_SESSION['user']['token'][$cpt1 + 1])) {
+
+                        $_SESSION['user']['token'][$cpt1 + 1] = $_SESSION['user']['token'][$cpt1];
+                        $cpt1++;
+
+                    }
+
+                    $_SESSION['user']['token'][0] -= 1;
+
+                    return true;
+
+                } else {
+
+                    $cpt1 = $cpt;
+
+                    while($_SESSION['user']['token'][$cpt1 + 1]) {
+
+                        $_SESSION['user']['token'][$cpt1 + 1] = $_SESSION['user']['token'][$cpt1];
+                        $cpt1++;
+
+                    }
+
+                    $_SESSION['user']['token'][0] -= 1;
+
+                }
+                
+            }
+
+        }
+
+        return false;
 
     }
 

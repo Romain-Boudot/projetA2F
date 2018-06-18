@@ -5,9 +5,9 @@
     width: 100vw;
     height: calc(100vh - 56px);
     overflow: auto;
-    -webkit-box-shadow: -13px 0px 10px -10px rgba(0,0,0,0.75);
-    -moz-box-shadow: -13px 0px 10px -10px rgba(0,0,0,0.75);
-    box-shadow: -13px 0px 10px -10px rgba(0,0,0,0.75);
+    -webkit-box-shadow: -3px 2px 0px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow: -3px 2px 0px 0px rgba(0,0,0,0.2);
+    box-shadow: -3px 2px 0px 0px rgba(0,0,0,0.2);
 }
 
 .main-wrapper {
@@ -29,13 +29,17 @@
     left: 15%;
     max-width: calc(70% - 80px);
     max-height: calc(70% - 80px);
-    background-color: rgba(0, 0, 0, 0.144);
     text-align: center;
     overflow: auto;
+    -webkit-box-shadow: 0px 23px 58px -19px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 23px 58px -19px rgba(0,0,0,0.75);
+    box-shadow: 0px 23px 58px -19px rgba(0,0,0,0.75);
+    border-radius: 5px;
 }
 
 .search {
     padding: 40px 40px 30px 40px;
+    z-index: 500;
 }
 
 .clientSelect {
@@ -68,6 +72,7 @@
     background-color: rgba(255, 255, 255, 0.473);
     text-align: left;
     cursor: text;
+    border: 1px solid rgba(0, 0, 0, .5);
 }
 
 .searchBar select {
@@ -206,7 +211,7 @@ input[type=checkbox]:checked + .checkbox {
 .borderBottom::after {
     content: "";
     position: absolute;
-    background-color: rgba(0, 0, 0, 0.144);
+    background-color: rgba(0, 0, 0, .5);
 }
 
 .borderBottom::after {
@@ -262,16 +267,19 @@ input[type=checkbox]:checked + .checkbox {
     cursor: pointer;
 }
 
-.dropdownTrigger>div {
+.dropdownTrigger>div,
+.competencefake>div {
     display: inline;
     font-size: 13px;
     border: 1px solid rgba(0, 0, 0, .08);
     padding: 0px 4px !important;
     opacity: 0;
     visibility: hidden;
+    cursor: pointer;
 }
 
-.dropdownTrigger:hover>div {
+.dropdownTrigger:hover>div,
+.competencefake:hover>div {
     transition: 0.2s opacity ease;
     opacity: 1;
     visibility: visible;
@@ -289,24 +297,24 @@ input[type=checkbox]:checked + .checkbox {
 }
 
 .compList .dropdownTrigger,
-.compList .competence {
+.compList .competencefake {
     width: calc(100% - 5px);
     padding: 5px 0 5px 5px;
 }
 
 .compList .dropdownContainer>.dropdownTrigger,
-.compList .dropdownContainer>.competence {
+.compList .dropdownContainer>.competencefake {
     width: calc(100% - 40px);
     padding: 3px 0 3px 40px;
 }
 
 .compList .dropdownContainer>.dropdownContainer>.dropdownTrigger,
-.compList .dropdownContainer>.dropdownContainer>.competence {
+.compList .dropdownContainer>.dropdownContainer>.competencefake {
     width: calc(100% - 80px);
     padding: 3px 0 3px 80px;
 }
 
-.compList .dropdownContainer>.dropdownContainer>.dropdownContainer>.competence {
+.compList .dropdownContainer>.dropdownContainer>.dropdownContainer>.competencefake {
     width: calc(100% - 120px);
     padding: 3px 0 3px 120px;
 }
@@ -324,7 +332,6 @@ input[type=checkbox]:checked + .checkbox {
 .clientListContainer {
     margin: 40px 20px 20px 20px;
     overflow: auto;
-    height: calc(100% - 40px);
     width: calc(100% - 40px);
 }
 
@@ -358,7 +365,6 @@ input[type=checkbox]:checked + .checkbox {
     margin-bottom: 5px;
 }
 
-.competence::after,
 .client::after {
     content: "+";
     font-weight: bolder;
@@ -396,9 +402,18 @@ select:focus {
     line-height: 50px;
     display: inline-block;
     width: 300px;
-    top: calc(15% + 20px);
+    top: calc(15% + 50px);
     left: calc(50% - 150px);
     text-align: center;
+    border: 2px solid rgba(0, 0, 0, .1);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: .2s background-color ease, .2s color ease;
+}
+
+.searchBtn:hover {
+    background-color: var(--main-color);
+    color: var(--auto-color);
 }
 
 .sugest {
@@ -438,18 +453,29 @@ select:focus {
     grid-column: 2 / 3;
 }
 
-.help,
 .helpTrigger {
     position: absolute;
     top: 10px;
     left: 10px;
+}
+
+.helpTrigger>i {
+    padding: 5px;
+    cursor: pointer;
+    font-size: 35px !important;
+    color: rgb(161, 161, 161);
+    z-index: 600;
+}
+
+.help {
+    position: absolute;
+    top: 10px;
+    left: 10px;
     padding: 10px 10px;
+    z-index: 650;
     border: 1px solid rgba(0, 0, 0, .08);
     cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.144);
-    /* -webkit-box-shadow: inset 0px 0px 0px 2px rgba(255,255,255,1);
-    -moz-box-shadow: inset 0px 0px 0px 2px rgba(255,255,255,1);
-    box-shadow: inset 0px 0px 0px 2px rgba(255,255,255,1); */
+    background-color: rgb(221, 221, 221);
 }
 
 .help {
@@ -465,4 +491,20 @@ select:focus {
 
 .help>div {
     padding: 2px 0 0 0 !important;
+}
+
+.btn:not(a) {
+    cursor: pointer !important;
+}
+
+.btn:not(a):not(.close) {
+    padding: 5px 10px;
+    border: 2px solid rgba(0, 0, 0, .1);
+    border-radius: 3px;
+    transition: .2s background-color ease, .2s color ease;
+}
+
+.btn:not(a):not(.close):hover {
+    background-color: var(--main-color);
+    color: var(--auto-color);
 }

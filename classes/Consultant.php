@@ -46,13 +46,19 @@ Class Consultant {
 
     }
 
-    public static function add($infos){
-        $pdo = Database::connect();
-        
-        $statement = $pdo->prepare("INSERT INTO consultants (nom, prenom, telephone, email, linkedin, pole, honoraires) VALUES (:nom, :prenom, :email, :linkedin, :pole, :honoraires)");
-        $statement->execute(array(':nom' => $infos['nom'], ':prenom' => $infos['prenom'], ':email' => $infos['email'], ':linkedin' => $infos['linkedin'], ':pole' => $infos['pole'], ':honoraires' => $infos['honoraires']));
+    public static function add($infos) { // deprecated
+
+    $pdo = Database::connect();
+
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+
+        $statement = $pdo->prepare("INSERT INTO `consultants` (`nom`, `prenom`, `login`, `mot_de_passe`, `email`, `telephone`, `linkedin`, `pole`) VALUES (:nom, :prenom, :login, :mdp, :email, :telephone, :linkedin, :pole)");
+        $statement->execute(array(':nom' => $infos['nom'], ':prenom' => $infos['prenom'], ':email' => $infos['email'], ':linkedin' => $infos['linkedin'], ':pole' => $infos['pole'], ':telephone' => $infos['telephone'], ':login' => $infos['login'], ':mdp' => $infos['mot_de_passe']));
+     //   $last = $pdo->lastInsertId(); 
 
         $pdo = null;
+
     }
 
 
@@ -242,6 +248,52 @@ Class Consultant {
         return $this->honoraires;
     }
 
+    public function get_files($type = "") {
+
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("SELECT * FROM fichiers_consultants WHERE id_consultant = :id AND type LIKE :type");
+        $statement->execute(array(
+            ":id" => $this->id,
+            ":type" => $type
+        ));
+
+        $pdo = null;
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
+    public function add_file($trueName, $serverName, $type) {
+
+        $pdo = Database::connect();
+        
+        $statement = $pdo->prepare("INSERT INTO fichiers_consultants VALUES (?, ?, ?, ?)");
+        $statement->execute(array(
+            $serverName,
+            $this->id,
+            $trueName,
+            $type
+        ));
+
+        $pdo = null;
+
+    }
+
+    public function del_file($serverFileName) {
+
+        $pdo = Database::connect();
+        
+        $statement = $pdo->prepare("DELETE FROM fichiers_consultants WHERE id_consultant = :id AND nom_serveur = :name");
+        $statement->execute(array(
+            ":id" => $this->id,
+            ":name" => $serverFileName
+        ));
+
+        $pdo = null;
+
+    }
+
     public function get_interventions(){ 
         $pdo = Database::connect(); 
 
@@ -294,7 +346,91 @@ Class Consultant {
     public function get_id() {
         return $this->id;
     }
+    
+    static public function get_array() {
+
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("SELECT * from consultants ORDER BY nom");
+        $statement->execute();
+        $array = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return $array;
+      
+    }
+    
+    static public function register($nom, $prenom, $pole) {
+
+        $login = strtolower(substr($prenom, 0, 1) . $nom);
+
+        $cpt = 0;
+        while (!Security::login_validity($login)) {
+            $cpt++;
+            $login = strtolower(substr($prenom, 0, 1) . $nom . $cpt);
+        }
+
+        $token = hash("sha256", $login . bin2hex(random_bytes(50)) . $pole);
+
+        $pdo = Database::connect();
+        
+        $statement = $pdo->prepare("INSERT INTO consultants (nom, prenom, pole, login, token) VALUES (:nom, :prenom, :pole, :login, :token)");
+        $statement->execute(array(
+            ':nom' => $nom,
+            ':prenom' => $prenom,
+            ':pole' => $pole,
+            ':login' => $login,
+            ':token' => $token
+        ));
+
+        $id = $pdo->lastInsertID();
+
+        $pdo = null;
+
+        $url = "http://" . $_SERVER["HTTP_HOST"] . "/register/?token=" . $token;
+
+        return array(
+            "url" => $url,
+            "id" => $id);
+
+    }
+
+    public function set_password($pwd, $pwd_verif) {
+
+        if ($pwd != $pwd_verif) return false;
+
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("UPDATE consultants SET mot_de_passe = :pwd, token = null WHERE login = :login");
+        $statement->execute(array(
+            ":pwd" => $pwd,
+            ":login" => $this->login,
+        ));
+
+        //hash("sha256", $pwd)
+
+        $pdo = null;
+
+        return true;
+            
+    }
+
+    static public function get_consultant_via_token($token){
+
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("SELECT * FROM consultants WHERE token = :token");
+        $statement->execute(array(
+            ":token" => $token
+        ));
+
+        $answer = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($answer == false || sizeof($answer) > 1) return false;
+
+        $pdo = null;
+
+        return new Consultant($answer[0]["id_consultant"]);
+
+    }
 
 }
-
-

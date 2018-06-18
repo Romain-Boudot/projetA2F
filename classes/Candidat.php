@@ -37,14 +37,14 @@ class Candidat {
     public static function add($infos) {
         $pdo = Database::connect();
 
-        $add_candidate = $pdo->prepare("INSERT INTO candidats (nom, prenom, telephone, email, linkedin) VALUES (:nom, :prenom, :telephone, :email, :linkedin)");
-        $add_candidate->execute(array(':nom' => $infos['nom'], ':prenom' => $infos['prenom'], ':telephone' => $infos['telephone'], ':email' => $infos['email'], ':linkedin' => $infos['linkedin']));	
+        $add_candidate = $pdo->prepare("INSERT INTO candidats (nom, prenom) VALUES (:nom, :prenom)");
+        $add_candidate->execute(array(':nom' => $infos['nom'], ':prenom' => $infos['prenom']));	
 
         $pdo =  null;
     }
 
     public function delete(){
-        $pdo = Database::connect();
+        $pdo = Database::connect(); 
 
         $delete_candidate = $pdo->prepare("DELETE FROM candidats WHERE id_candidat = :id");
         $delete_candidate->bindParam('id', $this->id);
@@ -68,10 +68,48 @@ class Candidat {
 
     }
 
-    public function transfer(){
+    public function transfer($id_pole){
 
-        Consultant::add();
-        delete();
+        $data = Consultant::register($this->nom, $this->prenom, $id_pole);
+        
+        if(isset($data)) {
+            $c = new Consultant($data['id']); 
+            if(isset($c)) {
+                $comp = $this->get_competences();
+                $qualif = $this->get_qualifications();
+                foreach($comp as $key => $value){
+
+                    $c->add_competence($value);    
+                    
+                } 
+
+                foreach($qualif as $key => $value){
+
+                    $c->add_qualification($value);
+
+                }
+                
+                $pdo = Database::connect();
+
+                $statement = $pdo->prepare("DELETE FROM * WHERE id_candidat = :idcandidat");
+                $statement->execute(array("idcandidat"=> $this->id));
+
+                $pdo = null;
+
+                return $data["url"];
+    
+            }else{
+                exit();
+            }
+        } else {
+            exit();
+        }
+
+
+        //        delete();
+        
+        //return $data['url'];
+
     }
 
     public function add_interview($infos) {
@@ -245,6 +283,52 @@ class Candidat {
         return $this->etape;
     }
 
+    public function get_files($type = "") {
+
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("SELECT * FROM fichiers_candidats WHERE id_candidat = :id AND type LIKE :type");
+        $statement->execute(array(
+            ":id" => $this->id,
+            ":type" => $type
+        ));
+
+        $pdo = null;
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
+    public function add_file($trueName, $serverName, $type) {
+
+        $pdo = Database::connect();
+        
+        $statement = $pdo->prepare("INSERT INTO fichiers_candidats VALUES (?, ?, ?, ?)");
+        $statement->execute(array(
+            $serverName,
+            $this->id,
+            $trueName,
+            $type
+        ));
+
+        $pdo = null;
+
+    }
+
+    public function del_file($serverFileName) {
+
+        $pdo = Database::connect();
+        
+        $statement = $pdo->prepare("DELETE FROM fichiers_candidats WHERE id_candidat = :id AND nom_serveur = :name");
+        $statement->execute(array(
+            ":id" => $this->id,
+            ":name" => $serverFileName
+        ));
+
+        $pdo = null;
+
+    }
+
     public function set_etape($etape){
         $this->etape = $etape;
         $db = Database::connect();
@@ -282,5 +366,30 @@ class Candidat {
 
 
     } 
+
+    static public function get_array() {
+    
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("SELECT * from candidats ORDER BY nom");
+        $statement->execute();
+        $array = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return $array;
+
+
+    }
+    public function get_competences(){
+        
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("SELECT * FROM competences_candidats WHERE id_candidat = :id");
+        $statement->execute(array(":id" => $this->id));
+
+        $pdo = null;
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    }
 
 }
