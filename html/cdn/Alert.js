@@ -136,7 +136,7 @@ class Alert {
             opened.remove();
         }, 500);
 
-        Alert.open(elem);
+        if (elem != null) Alert.open(elem);
 
     }
 

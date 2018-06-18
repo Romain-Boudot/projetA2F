@@ -61,6 +61,7 @@
     <script src="/cdn/Alert.js"></script>
     <script src="/cdn/Chart.js"></script>
     <script src="/cdn/Dropdown.js"></script>
+    <script src="/consultant/main.js"></script>
     <title>A2F Advisor</title>
 </head>
 <body>
@@ -79,36 +80,9 @@
             ?>" alt="profile image">
             <?php if ($id == $_SESSION['user']['id']) {?>
             <form id="photoForm" class="photoUpload" action="/consultant/traitement.php" method="post">
-                <input type="hidden" name="action" value="img">
                 <input id="uploadPhoto" class="hidden" type="file" name="file">
                 <label for="uploadPhoto"><i class="material-icons plus">add</i></label>
             </form>
-            <script>
-                var form = document.getElementById("photoForm");
-                var inputimg = document.getElementById("uploadPhoto");
-                inputimg.onchange = function() {   
-                    var img = new FormData();
-                    img.append('file', inputimg.files[0]);
-                    Ajax.post("/consultant/traitement.php?action=img", img, function(data) {
-                        data= JSON.parse(data);
-                        // console.log(data);
-                        if (data.code == 1) {
-                            document.querySelector("#image-profile img").setAttribute("src" , "/images/profil/" + data.name);
-                        } else if (data.code < -1) {
-                            Alert.popup({
-                                title: "Erreur",
-                                text: data.message,
-                                showCancelButton: false,
-                                confirmColor: "#bbbbbb",
-                                confirmText: "Retour",
-                                confirm: function() {
-                                    Alert.close();
-                                }
-                            })
-                        }
-                    });
-                }
-            </script>
             <?php } ?>
         </div>
         <div class="profile-info bold" style="text-transform: uppercase;">pôle <?php echo $consultant->get_nom_pole(); ?></div>
@@ -356,9 +330,43 @@
 
         <div class="fileUpload">
         
-            <div class="addFile">
-                <i class="material-icons">add</i>
+            <?php
+
+                $files = $consultant->get_files("pdf");
+
+                foreach ($files as $key => $value) {
+                    
+                    ?><div class="file">
+                        <a href="/?file=<?php echo $value["nom_serveur"]; ?>" target="_blank" class="clickable">
+                            <img src="/images/pdf.svg" alt="svg pdf" height="20">
+                            <?php echo $value["vrai_nom"]; ?>
+                        </a>
+                        <i onclick="Consultant.delFile(this)" data-servername="<?php echo $value["nom_serveur"]; ?>" class="material-icons floatRight clickable">delete</i>
+                        <a class="floatRight clickable" href="/?file=<?php echo $value["nom_serveur"]; ?>" target="_blank"><img src="/images/download.svg" alt="svg pdf" height="20"></a>
+                    </div><?php
+
+                }
+
+                if (sizeof($files) != 5) {
+
+                    ?><div class="addFile">
+                        <label for="fileInput">
+                            <i class="material-icons">add</i>
+                        </label>
+                        <div class="label">Ajout d'un fichier<br>(1Mo max.)</div>
+                    </div><?php
+
+                }
+
+            ?>
+
+            <div class="hidden">
+                <input id="fileInput" type="file">
             </div>
+
+            <script>
+                Consultant.load();
+            </script>
         
         </div>
 
