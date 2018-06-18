@@ -12,6 +12,8 @@ error_reporting(E_ALL);
     session_start();
 
 
+    Security::check_login(array(1,2));
+
     if(isset($_GET['id'])){
         $id = $_GET['id'];
     }

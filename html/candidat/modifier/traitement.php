@@ -1,4 +1,5 @@
 <?php
+    include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Security.php";
 
     Security::check_login(array(0, 1, 2));
 

@@ -375,9 +375,11 @@ Class Search {
 
                     $statement .= " ( ";
 
-                    foreach ($array['etape'] as $key => $value) {
+                    foreach ($array['etape'] as $key => $value){
 
-                        if ($key > 0) $statement .= " OR ";
+                        if ($key > 0){
+                            $statement .= " OR ";
+                        }
 
                         $statement .= " c.etape = :bp" . $bindparamcpt ." ";
 

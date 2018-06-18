@@ -7,13 +7,12 @@ include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Consultant.php";
 include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Candidat.php";
 include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/BM.php";
 include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/RH.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Security.php";
 
 session_start();
 
-if ($_SESSION['user']['type'] == 0 && 0) {
-    echo "vous n'avez pas accès à la page d'administration en tant que consultant";
-        exit();
-    }
+Security::check_login(array(1,2));
+
 ?>
 
 <!DOCTYPE html>
