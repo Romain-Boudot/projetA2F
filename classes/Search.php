@@ -287,6 +287,8 @@ Class Search {
 
                 $statement = "SELECT c.* from candidats c ";
 
+
+
                 if(isset($array['competences'])) {
 
                     if ((sizeof($array['competences']['id_competence']) > 0) && (sizeof($array['competences']['niveau']) > 0)) {
@@ -358,6 +360,34 @@ Class Search {
 
                     $statement .= " ) ";
 
+                }
+
+                if(isset($array['etape'])){
+                    if(sizeof($array['etape']) > 0){
+                                
+                    if ($where == 0) {
+                        $statement .= " WHERE ";
+                        $where = 1;
+                    } else{
+                        $statement .= " AND ";
+                        $where = 1;
+                    }
+
+                    $statement .= " ( ";
+
+                    foreach ($array['etape'] as $key => $value) {
+
+                        if ($key > 0) $statement .= " OR ";
+
+                        $statement .= " c.etape = :bp" . $bindparamcpt ." ";
+
+                        $bindparam["bp" . $bindparamcpt] = $value;
+                        $bindparamcpt++;
+                    }
+
+                    $statement .= " ) ";
+
+                    }
                 }
 
                 $statement .= " GROUP BY c.id_candidat ORDER BY c.nom";
