@@ -26,7 +26,7 @@ class RH {
             $login = substr($prenom, 0, 1) . $nom . $cpt;
         }
 
-        $token = hash("sha256", $login . bin2hex(random_bytes(50)) . $pole);
+        $token = hash("sha256", $login . bin2hex(random_bytes(50)));
 
         $pdo = Database::connect();
         

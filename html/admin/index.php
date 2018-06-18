@@ -7,8 +7,11 @@ include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Consultant.php";
 include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Candidat.php";
 include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/BM.php";
 include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/RH.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Security.php";
 
 session_start();
+
+$token = Security::gen_token('4');
 
 if ($_SESSION['user']['type'] == 0 && 0) {
     echo "vous n'avez pas accès à la page d'administration en tant que consultant";
@@ -138,9 +141,10 @@ if ($_SESSION['user']['type'] == 0 && 0) {
 
                 <!-- <div class="popup" id="rh"><div class="nav">Responsable</div> -->
                     
-                    <form action="/admin/index.php/" method="post">
-                    
-                        <input type="hidden" name="" value="info">
+                    <form action="/admin/traitement.php/" method="post">
+                        
+                        <input type="hidden" name="token" value="<?php echo $token; ?>" >
+                        <input type="hidden" name='action' value='add_rh'>
 
                         <input type="text" name="nom" placeholder="Nom" required>
                         <input type="text" name="prenom" placeholder="Prenom" required>
@@ -164,7 +168,8 @@ if ($_SESSION['user']['type'] == 0 && 0) {
                     ?><div><?php  echo $value['nom']; ?> - 
                     <?php echo $value['prenom']; 
                     
-                    echo "<form action='/admin/index.php/' method='post'>
+                    echo "<form action='/admin/traitement.php/' method='post'>
+                    <input type='hidden' name='token' value=" . $token ." >
                     <input type='hidden' name='action' value='delete_bm'>
                     <input type='hidden' name='id_bm' value='" .$value['id_bm'] . "'>
                     
@@ -177,9 +182,9 @@ if ($_SESSION['user']['type'] == 0 && 0) {
 
                 <!-- <div class="popup" id="rh"><div class="nav">Responsable</div> -->
     
-                    <form action="/admin/index.php/" method="post">
+                <form action="/admin/traitement.php/" method="post">
                     
-                        <input type="hidden" name="action" value="add_rh">
+                        <input type="hidden" name="action" value="add_bm">
 
                         <input type="text" name="nom" placeholder="Nom" required>
                         <input type="text" name="prenom" placeholder="Prenom" required>
@@ -201,19 +206,33 @@ if ($_SESSION['user']['type'] == 0 && 0) {
                 foreach ($cons as $nsame => $value) {
                     
                     ?><div><?php  echo $value['nom']; ?> - 
-                    <?php echo $value['prenom']; ?></div>
+                    <?php echo $value['prenom']; ?> - Pole 
+                    <?php echo $value['nom_pole']; ?></div>
                 <?php 
                 }
                 ?>
                 
                 <!-- <div class="popup" id="rh"><div class="nav">Responsable</div> -->
     
-                    <form action="/admin/index.php/" method="post">
+                <form action="/admin/traitement.php/" method="post">
                         
-                        <input type="hidden" name="action" value="info">
+                        <input type="hidden" name="action" value="add_consultant">
+                        <input type="hidden" name="token" value="<?php echo $token; ?>" >
 
                         <input type="text" name="nom" placeholder="Nom" required>
                         <input type="text" name="prenom" placeholder="Prenom" required>
+                        <select name="pole" required><option selected disabled>Pole</option><?php
+
+                        $p = array(
+                            "1" => "SI",
+                            "2" => "Indus",
+                            "3" => "Database"
+                        );
+                        for($i=1; $i <= 3; $i++){
+                            ?>
+                            <option value=" <?php echo $i; ?>"><?php echo $p[$i]; ?> </option><?php
+                        }
+                        ?>
 
                         <input type="submit" value="Envoyer">
 
@@ -238,12 +257,14 @@ if ($_SESSION['user']['type'] == 0 && 0) {
                 ?> 
                 <!-- <div class="popup" id="rh"><div class="nav">Responsable</div> -->
     
-                    <form action="/admin/index.php/" method="post">
+                <form action="/admin/traitement.php/" method="post">
                             
-                        <input type="hidden" name="" value="info">
+                        <input type="hidden" name="" value="add_candidat">
+                        <input type="hidden" name="token" value="<?php echo $token; ?>" >
 
                         <input type="text" name="nom" placeholder="Nom" required>
                         <input type="text" name="prenom" placeholder="Prenom" required>
+
 
                         <input type="submit" value="Envoyer">
 
@@ -266,9 +287,10 @@ if ($_SESSION['user']['type'] == 0 && 0) {
                 ?>
                 <!-- <div class="popup" id="rh"><div class="nav">Responsable</div> -->
     
-                    <form action="/admin/index.php/" method="post">
+                <form action="/admin/traitement.php/" method="post">
                         
-                        <input type="hidden" name="" value="info">
+                        <input type="hidden" name="" value="add_client">
+                        <input type="hidden" name="token" value="<?php echo $token; ?>" >
 
                         <input type="text" name="nom" placeholder="Nom" required>
                         <input type="text" name="prenom" placeholder="Prenom" required>

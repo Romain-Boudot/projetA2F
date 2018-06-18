@@ -7,14 +7,32 @@ error_reporting(E_ALL);
 include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Security.php";
 include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Database.php";
 include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Competence.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Client.php";    
+include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Consultant.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Candidat.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/BM.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/RH.php";
+
 
 session_start();
+
+Security::check_token($_POST['token'], '42');
 Security::check_login(array(0, 1, 2));
 
-if (!isset($_POST['action']) || !isset($_POST["id"])) exit();
-$id_comp = $_POST["id"];
+if (!isset($_POST['action']) ){
+     exit();
+}
+
 
 if ($_POST['action'] == "delete") {
+    if(isset($_POST["id"])){
+        $id_comp = $_POST["id"];
+
+    }else{
+        exit();
+    }
+
+
     if (Competence::is_last($id_comp)) {
         $pdo = Database::connect();
 
@@ -91,8 +109,8 @@ if ($_POST['action'] == "delete") {
 
     Consultant::register($_POST['nom'], $_POST['prenom'], $_POST['pole']);
     
-    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/index.php');
-    exit();
+    //header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/index.php');
+    //exit();
 
 } elseif ($_POST['action'] == "delete_candidat") {
 
