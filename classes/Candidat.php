@@ -283,6 +283,52 @@ class Candidat {
         return $this->etape;
     }
 
+    public function get_files($type = "") {
+
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("SELECT * FROM fichiers_candidats WHERE id_candidat = :id AND type LIKE :type");
+        $statement->execute(array(
+            ":id" => $this->id,
+            ":type" => $type
+        ));
+
+        $pdo = null;
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
+    public function add_file($trueName, $serverName, $type) {
+
+        $pdo = Database::connect();
+        
+        $statement = $pdo->prepare("INSERT INTO fichiers_candidats VALUES (?, ?, ?, ?)");
+        $statement->execute(array(
+            $serverName,
+            $this->id,
+            $trueName,
+            $type
+        ));
+
+        $pdo = null;
+
+    }
+
+    public function del_file($serverFileName) {
+
+        $pdo = Database::connect();
+        
+        $statement = $pdo->prepare("DELETE FROM fichiers_candidats WHERE id_candidat = :id AND nom_serveur = :name");
+        $statement->execute(array(
+            ":id" => $this->id,
+            ":name" => $serverFileName
+        ));
+
+        $pdo = null;
+
+    }
+
     public function set_etape($etape){
         $this->etape = $etape;
         $db = Database::connect();

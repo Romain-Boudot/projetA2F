@@ -41,10 +41,12 @@ error_reporting(E_ALL);
     </style>
     <script src="/cdn/Chart.bundle.min.js"></script>
     <script src="/cdn/Ajax.js"></script>
+    <script src="/cdn/Alert.js"></script>
     <script src="/cdn/url_get.js"></script>
     <script src="/cdn/Candidat.js"></script>
     <script src="/cdn/Chart.js"></script>
     <script src="/cdn/Dropdown.js"></script>
+    <script src="/candidat/main.js"></script>
     <title>A2F Advisor</title>
 </head>
 <body>
@@ -239,6 +241,57 @@ error_reporting(E_ALL);
                     </div>
                 </div>
             </div>
+
+            <?php
+
+            if ($id == $_SESSION["user"]["id"]) {
+
+            ?>
+
+            <div class="fileUpload">
+            
+                <?php
+
+                    $files = $candidat->get_files("pdf");
+
+                    foreach ($files as $key => $value) {
+                        
+                        ?><div class="file">
+                            <a href="/?file=<?php echo $value["nom_serveur"]; ?>" target="_blank" class="clickable">
+                                <img src="/images/pdf.svg" alt="svg pdf" height="20">
+                                <?php echo $value["vrai_nom"]; ?>
+                            </a>
+                            <i onclick="Candidat.delFile(this)" data-servername="<?php echo $value["nom_serveur"]; ?>" class="material-icons floatRight clickable">delete</i>
+                            <a class="floatRight clickable" href="/?file=<?php echo $value["nom_serveur"]; ?>" target="_blank"><img src="/images/download.svg" alt="svg pdf" height="20"></a>
+                        </div><?php
+                        
+                    }
+                
+                ?>
+
+                <div class="addFile" <?php if (sizeof($files) == 5) echo 'style="display: none;"'; ?>>
+                    <label for="fileInput">
+                        <i class="material-icons">add</i>
+                    </label>
+                    <div class="label">Ajout d'un fichier<br>(1Mo max.)</div>
+                </div>
+
+                <div class="hidden">
+                    <input id="fileInput" type="file">
+                </div>
+
+                <script>
+                    Candidat.load();
+                </script>
+        
+            </div>
+
+            <?php 
+
+                }
+            
+            ?>
+
         </div>
     </div>
 
