@@ -24,7 +24,7 @@
 
     <?php if ($_SESSION['user']["type"] >= 1 || 1) {?>
     <div class="header-right mr-1">
-        <a class="btn btn-header bold noMI" href="/admin">Page Admin</a>
+        <a class="btn btn-header bold noMI autoColor" href="/admin">Page Admin</a>
     </div>
     <?php } ?>
 

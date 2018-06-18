@@ -209,20 +209,18 @@ error_reporting(E_ALL);
                 </script>
 
             </div>
+
             <?php
                 $step = $candidat->get_etape();
             ?>
 
-<?php
-                        $step = $candidat->get_etape();
-?>
-
-        <div id="timeLine">
-            <div class="line">
-                <div class="coloredLine step<?php echo $step; ?>"></div>
-                <div class="point<?php if ($step >= 1) echo " colored"; ?>">
-                    <div class="pointLabel">
-                        1er appel téléphonique
+            <div id="timeLine">
+                <div class="line">
+                    <div class="coloredLine step<?php echo $step; ?>"></div>
+                    <div onclick="C.ajust_tm(1)" class="point<?php if ($step >= 1) echo " colored"; ?>">
+                        <div class="pointLabel">
+                            1ere appel téléphonique
+                        </div>
                     </div>
                     <div onclick="C.ajust_tm(2)" class="point<?php if ($step >= 2) echo " colored"; ?>">
                         <div class="pointLabel">
