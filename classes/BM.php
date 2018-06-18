@@ -1,12 +1,12 @@
 <?php
 
-class RH {
+class BM {
 
     static public function get_array() {
     
         $pdo = Database::connect();
 
-        $statement = $pdo->prepare("SELECT * from RH ORDER BY nom");
+        $statement = $pdo->prepare("SELECT * from BM ORDER BY nom");
         $statement->execute();
         $array = $statement->fetchAll(PDO::FETCH_ASSOC);
 
@@ -14,8 +14,7 @@ class RH {
 
 
     }
-
-
+    
     static public function register($nom, $prenom) {
 
         $login = substr($prenom, 0, 1) . $nom;
@@ -30,7 +29,7 @@ class RH {
 
         $pdo = Database::connect();
         
-        $statement = $pdo->prepare("INSERT INTO RH (nom, prenom, login, token) VALUES (:nom, :prenom, :login, :token)");
+        $statement = $pdo->prepare("INSERT INTO BM (nom, prenom, login, token) VALUES (:nom, :prenom, :login, :token)");
         $statement->execute(array(
             ':nom' => $nom,
             ':prenom' => $prenom,

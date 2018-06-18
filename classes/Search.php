@@ -92,189 +92,285 @@ Class Search {
             "=3" => " = 3 "
         );
 
-        $statement = "SELECT c.* from consultants c JOIN interventions i ON i.id_consultant = c.id_consultant JOIN clients cl ON cl.id_client=i.id_client ";
+        if(isset($array['candidats'])){
+            if($array['candidats'] == false){
 
-        if(isset($array['disponibilites'])){
-            if(sizeof($array['disponibilites']) > 0){ 
-                $statement .= " JOIN disponibilite_consultant dc ON dc.id_consultant = c.id_consultant ";
-            }
-        }
+                $statement = "SELECT c.* from consultants c ";
 
-        if(isset($array['competences'])) {
-
-            if ((sizeof($array['competences']['id_competence']) > 0) && (sizeof($array['competences']['niveau']) > 0)) {
-                
-                if ($where == 0) {
-                    $statement .= " WHERE ";
-                    $where = 1;
+                if(isset($array['disponibilites'])){
+                    if(sizeof($array['disponibilites']['id_disponibilite']) > 0){ 
+                        $statement .= " JOIN disponibilite_consultant dc ON dc.id_consultant = c.id_consultant ";
+                    }
                 }
 
-                foreach($array["competences"]["id_competence"] as $key => $value){
+                if(isset($array['clients'])){
+                    if(sizeof($array['clients']['id_client']) > 0){
+                        $statement .= " JOIN interventions i ON i.id_consultant = c.id_consultant JOIN clients cl ON cl.id_client=i.id_client ";
+                    }
 
-                    if ($where != 0) {
-                        if ($where == 1) {
-                            $where = 2;
-                        } else {
+                }
+
+
+                if(isset($array['competences'])) {
+
+                    if ((sizeof($array['competences']['id_competence']) > 0) && (sizeof($array['competences']['niveau']) > 0)) {
+
+                        if ($where == 0) {
+                            $statement .= " WHERE ";
+                            $where = 1;
+                        }
+
+                        foreach($array["competences"]["id_competence"] as $key => $value){
+
+                            if ($where != 0) {
+                                if ($where == 1) {
+                                    $where = 2;
+                                } else {
+                                    $statement .= " AND ";
+                                }
+                            }
+
+                            $returned = average_skill(
+                                array(
+                                    "bindparamcpt" => $bindparamcpt,
+                                    "bindparam" => $bindparam,
+                                    "lvl" => $lvl_array
+                                ),
+                                $value,
+                                $array["competences"]["niveau"][$key]
+                            );
+
+                            $statement .= $returned["statement"];
+                            $bindparam = $returned["bindparam"];
+                            $bindparamcpt = $returned["bindparamcpt"];
+
+                            // $statement .= " EXISTS (SELECT * FROM competences_consultants ccc WHERE ccc.id_consultant = c.id_consultant AND ccc.id_competence = :bp" . $bindparamcpt . " AND ccc.niveau = :bp" . ($bindparamcpt + 1) . " ) ";
+
+                            // $bindparam[":bp" . $bindparamcpt] = $value;
+                            // $bindparam[":bp" . ($bindparamcpt + 1)] = $array["competences"]["niveau"][$key];
+                            // $bindparamcpt += 2;
+
+                        }
+
+                    }
+
+                }
+
+                if(isset($array["poles"])){
+
+                    if(sizeof($array["poles"]["id_pole"]) > 0){
+
+                        if ($where == 0) {
+                            $statement .= " WHERE ";
+                            $where = 1;
+                        } else{
                             $statement .= " AND ";
+                            $where = 1;
                         }
+
+                        $statement .= " ( ";
+
+                        foreach($array["poles"]["id_pole"] as $key => $value){
+
+                            if ($where != 0) {
+                                if ($where == 1) {
+                                    $where = 2;
+                                } else {
+                                    $statement .= " OR ";
+                                }
+                            }
+                            $statement .= " c.pole = :bp" . $bindparamcpt . " ";
+
+                            $bindparam[":bp" . $bindparamcpt] = $value;
+
+                            $bindparamcpt ++ ;
+
+
+                        }
+
+                        $statement .= " ) ";
+
                     }
 
-                    $returned = average_skill(
-                        array(
-                            "bindparamcpt" => $bindparamcpt,
-                            "bindparam" => $bindparam,
-                            "lvl" => $lvl_array
-                        ),
-                        $value,
-                        $array["competences"]["niveau"][$key]
-                    );
-
-                    $statement .= $returned["statement"];
-                    $bindparam = $returned["bindparam"];
-                    $bindparamcpt = $returned["bindparamcpt"];
-
-                    // $statement .= " EXISTS (SELECT * FROM competences_consultants ccc WHERE ccc.id_consultant = c.id_consultant AND ccc.id_competence = :bp" . $bindparamcpt . " AND ccc.niveau = :bp" . ($bindparamcpt + 1) . " ) ";
-
-                    // $bindparam[":bp" . $bindparamcpt] = $value;
-                    // $bindparam[":bp" . ($bindparamcpt + 1)] = $array["competences"]["niveau"][$key];
-                    // $bindparamcpt += 2;
-
                 }
 
-            }
+                if(isset($array["disponibilites"])){
+                    if(sizeof($array["disponibilites"]["id_disponibilite"]) > 0){
 
-        }
-
-        if(isset($array["poles"])){
-
-            if(sizeof($array["poles"]["id_pole"]) > 0){
-
-                if ($where == 0) {
-                    $statement .= " WHERE ";
-                    $where = 1;
-                } else{
-                    $statement .= " AND ";
-                    $where = 1;
-                }
-
-                $statement .= " ( ";
-
-                foreach($array["poles"]["id_pole"] as $key => $value){
-
-                    if ($where != 0) {
-                        if ($where == 1) {
-                            $where = 2;
-                        } else {
-                            $statement .= " OR ";
-                        }
-                    }
-                    $statement .= " c.pole = :bp" . $bindparamcpt . " ";
-
-                    $bindparam[":bp" . $bindparamcpt] = $value;
-
-                    $bindparamcpt ++ ;
-
-
-                }
-            
-                $statement .= " ) ";
-            
-            }
-
-        }
-
-        if(isset($array["disponibilites"])){
-            if(sizeof($array["disponibilites"]["id_disponibilite"]) > 0){
-            
-                if ($where == 0) {
-                    $statement .= " WHERE ";
-                    $where = 1;
-                } else{
-                    $statement .= " AND ";
-                    $where = 1;
-                }
-
-                foreach($array["disponibilites"]["id_disponibilite"] as $key => $value){
-
-                    if ($where != 0) {
-                        if ($where == 1) {
-                            $where = 2;
-                        } else {
-                            $statement .= " OR ";
-                        }
-                    }
-
-                    $statement .= " dc.id_disponibilite = :bp" . $bindparamcpt . " ";
-
-                    $bindparam[":bp" . $bindparamcpt] = $value;
-                    $bindparamcpt ++ ;
-                }
-            }
-        }
-
-
-        if(isset($array["clients"])){
-            if(sizeof($array["clients"]["id_client"]) > 0){
-
-                if ($where == 0) {
-                    $statement .= " WHERE ";
-                    $where = 1;
-                } else{
-                    $statement .= " AND ";
-                    $where = 1;
-                }
-
-                foreach($array["clients"]["id_client"] as $key => $value){
-
-                    if ($where != 0) {
-                        if ($where == 1) {
-                            $where = 2;
-                        } else {
+                        if ($where == 0) {
+                            $statement .= " WHERE ";
+                            $where = 1;
+                        } else{
                             $statement .= " AND ";
+                            $where = 1;
+                        }
+
+                        foreach($array["disponibilites"]["id_disponibilite"] as $key => $value){
+
+                            if ($where != 0) {
+                                if ($where == 1) {
+                                    $where = 2;
+                                } else {
+                                    $statement .= " OR ";
+                                }
+                            }
+
+                            $statement .= " dc.id_disponibilite = :bp" . $bindparamcpt . " ";
+
+                            $bindparam[":bp" . $bindparamcpt] = $value;
+                            $bindparamcpt ++ ;
                         }
                     }
-
-                    $statement .= " i.id_client = :bp" . $bindparamcpt . " ";
-
-                    $bindparam[":bp" . $bindparamcpt] = $value;
-                    $bindparamcpt ++ ;
                 }
+
+
+                if(isset($array["clients"])){
+                    if(sizeof($array["clients"]["id_client"]) > 0){
+
+                        if ($where == 0) {
+                            $statement .= " WHERE ";
+                            $where = 1;
+                        } else{
+                            $statement .= " AND ";
+                            $where = 1;
+                        }
+
+                        foreach($array["clients"]["id_client"] as $key => $value){
+
+                            if ($where != 0) {
+                                if ($where == 1) {
+                                    $where = 2;
+                                } else {
+                                    $statement .= " AND ";
+                                }
+                            }
+
+                            $statement .= " i.id_client = :bp" . $bindparamcpt . " ";
+
+                            $bindparam[":bp" . $bindparamcpt] = $value;
+                            $bindparamcpt ++ ;
+                        }
+                    }
+                }
+
+
+                if(isset($array["consultant"])) if (sizeof($array["consultant"])) {
+
+                    if ($where == 0) {
+                        $statement .= " WHERE ";
+                        $where = 1;
+                    } else{
+                        $statement .= " AND ";
+                        $where = 1;
+                    }
+
+                    $statement .= " ( ";
+
+                    foreach ($array["consultant"] as $key => $value) {
+
+                        if ($key > 0) $statement .= " OR ";
+
+                        $statement .= " c.nom LIKE :bp" . $bindparamcpt . "  ";
+
+                        $bindparam[":bp" . $bindparamcpt] = "%".$value."%";
+                        $bindparamcpt ++ ;
+
+                    }
+
+                    $statement .= " ) ";
+
+                }
+
+                $statement .= " GROUP BY c.id_consultant ORDER BY c.nom";
+
+            }elseif($array['candidats'] == true){
+
+                $statement = "SELECT c.* from candidats c ";
+
+                if(isset($array['competences'])) {
+
+                    if ((sizeof($array['competences']['id_competence']) > 0) && (sizeof($array['competences']['niveau']) > 0)) {
+
+                        if ($where == 0) {
+                            $statement .= " WHERE ";
+                            $where = 1;
+                        }
+
+                        foreach($array["competences"]["id_competence"] as $key => $value){
+
+                            if ($where != 0) {
+                                if ($where == 1) {
+                                    $where = 2;
+                                } else {
+                                    $statement .= " AND ";
+                                }
+                            }
+
+                            $returned = average_skill(
+                                array(
+                                    "bindparamcpt" => $bindparamcpt,
+                                    "bindparam" => $bindparam,
+                                    "lvl" => $lvl_array
+                                ),
+                                $value,
+                                $array["competences"]["niveau"][$key]
+                            );
+
+                            $statement .= $returned["statement"];
+                            $bindparam = $returned["bindparam"];
+                            $bindparamcpt = $returned["bindparamcpt"];
+
+
+                            // $statement .= " EXISTS (SELECT * FROM competences_consultants ccc WHERE ccc.id_consultant = c.id_consultant AND ccc.id_competence = :bp" . $bindparamcpt . " AND ccc.niveau = :bp" . ($bindparamcpt + 1) . " ) ";
+
+                            // $bindparam[":bp" . $bindparamcpt] = $value;
+                            // $bindparam[":bp" . ($bindparamcpt + 1)] = $array["competences"]["niveau"][$key];
+                            // $bindparamcpt += 2;
+
+                        }
+
+                    }
+
+                }
+
+                if(isset($array["consultant"])) if (sizeof($array["consultant"])) {
+
+                    if ($where == 0) {
+                        $statement .= " WHERE ";
+                        $where = 1;
+                    } else{
+                        $statement .= " AND ";
+                        $where = 1;
+                    }
+
+                    $statement .= " ( ";
+
+                    foreach ($array["consultant"] as $key => $value) {
+
+                        if ($key > 0) $statement .= " OR ";
+
+                        $statement .= " c.nom LIKE :bp" . $bindparamcpt . "  ";
+
+                        $bindparam[":bp" . $bindparamcpt] = "%".$value."%";
+                        $bindparamcpt ++ ;
+
+                    }
+
+                    $statement .= " ) ";
+
+                }
+
+                $statement .= " GROUP BY c.id_candidat ORDER BY c.nom";
+
+
             }
         }
 
-
-        if(isset($array["consultant"])) if (sizeof($array["consultant"])) {
-
-            if ($where == 0) {
-                $statement .= " WHERE ";
-                $where = 1;
-            } else{
-                $statement .= " AND ";
-                $where = 1;
-            }
-
-            $statement .= " ( ";
-
-            foreach ($array["consultant"] as $key => $value) {
-                
-                if ($key > 0) $statement .= " OR ";
-
-                $statement .= " c.nom LIKE :bp" . $bindparamcpt . "  ";
-                
-                $bindparam[":bp" . $bindparamcpt] = "%".$value."%";
-                $bindparamcpt ++ ;
-            
-            }
-
-            $statement .= " ) ";
-
-        }
-
-        $statement .= " GROUP BY c.id_consultant ORDER BY c.nom";
         $query = $pdo->prepare($statement);
         $query->execute($bindparam);
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
-
+        
+        var_dump($statement);
         return $result;        
 
     } 
