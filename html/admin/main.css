@@ -1,0 +1,407 @@
+nav {
+    height: 100vh;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.144);
+}
+
+nav .onglet {
+    width: 100%;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.mainWrapper {
+    position: absolute;
+    width: calc(100vw - 250px);
+    height: 100vh;
+    top: 0;
+    right: 0;
+    overflow: auto;
+}
+
+.mainWrapper .popup {
+    visibility: hidden;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: white;
+    z-index: 600;
+}
+
+.nav {
+    height: 56px;
+    background-color: rgba(0, 0, 0, .08);
+    line-height: 56px;
+    text-align: center;
+}
+
+#InfoP form{
+    margin: 50px 0 0 150px;
+    padding: 0;
+    width: 30%;
+    min-width: 200px;
+}
+
+#Inter form,
+#Qual form  {
+    position: relative;
+    width: 80%;
+    left: 10%;
+    top: 70px;
+    margin: 10px 0;
+}
+
+#Inter form .intervention,
+#Qual form .qualification {
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    grid-template-rows: 50% 50%;
+}
+
+#Inter form .infos:nth-child(1),
+#Qual form .infos:nth-child(1) {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    padding: 10px;
+    text-align: center;
+}
+
+#Inter form .infos:nth-child(2),
+#Qual form .infos:nth-child(2) {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    padding: 10px;
+    text-align: center;
+}
+
+#Inter form .details,
+#Qual form .details {
+    grid-column: 3 / 6;
+    grid-row: 1 / 3;
+    padding: 10px;
+}
+
+#Inter form .InterSubmit,
+#Qual form .QualSubmit {
+    grid-column: 1 / 3;
+    text-align: center;
+}
+
+@media screen and (max-width: 1350px) {
+    #Inter form .infos:nth-child(1),
+    #Qual form .infos:nth-child(1) {
+        grid-column: 1 / 3;
+        grid-row: 1 / 2;
+        padding: 10px;
+        text-align: center;
+    }
+    
+    #Inter form .infos:nth-child(2),
+    #Qual form .infos:nth-child(2) {
+        grid-column: 4 / 6;
+        grid-row: 1 / 2;
+        padding: 10px;
+        text-align: center;
+    }
+    
+    #Inter form .details,
+    #Qual form .details {
+        grid-column: 2 / 6;
+        grid-row: 2 / 3;
+        padding: 10px;
+    }
+
+    #Inter form .InterSubmit,
+    #Qual form .QualSubmit {
+        grid-column: 1 / 2;
+    }
+}
+
+form input[type=text] {
+    width: 100%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.244);
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    background: none;
+    margin: 10px 0;
+    font-size: 15px;
+}
+
+form select {
+    width: 100%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.244);
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    background: none;
+    margin: 10px 0;
+    font-size: 15px;
+    font-family: inherit;
+    color: inherit;
+}
+
+input {
+    color: inherit;
+    font-family: inherit;
+}
+
+form input[type=date] {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.244);
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    background: none;
+    margin: 10px 0;
+    font-size: 15px;
+}
+
+form textarea {
+    width: calc(100% - 20px);
+    border: 1px solid rgba(0, 0, 0, 0.244);
+    background: none;
+    padding: 10px;
+    resize: none;
+    font-family: inherit;
+    color: inherit;
+}
+
+input[type=number] {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.244);
+    border-top: none;
+    border-right: none;
+    border-left: 1px solid rgba(0, 0, 0, 0.244);
+    background: none;
+    width: 75px;
+    text-align: center;
+}
+
+form input[type=submit] {
+    background-color: rgba(0, 0, 0, 0.244);
+    padding: 10px 15px;
+    margin: 10px auto;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.QualSubmit>*,
+.InterSubmit>* {
+    display: inline-block;
+    background-color: rgba(0, 0, 0, 0.244);
+    padding: 10px 15px;
+    margin: 10px auto;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.compListWrapper {
+    position: absolute;
+    top: 56px;
+    left: 0;
+    width: calc(100% - 300px);
+    margin: 50px 150px;
+}
+
+.dropdownTrigger {
+    cursor: pointer;
+    position: relative;
+}
+
+.dropdownTrigger>div {
+    display: inline;
+    font-size: 13px;
+    border: 1px solid rgba(0, 0, 0, .08);
+    padding: 0px 4px !important;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.dropdownTrigger:hover>div {
+    transition: 0.2s opacity ease;
+    opacity: 1;
+    visibility: visible;
+}
+
+.dropdownTrigger::before {
+    content: "+";
+    margin-right: 10px;
+    font-weight: bold;
+    right: calc(-100% - 10px);
+}
+
+.dropdownContainer {
+    width: 100%;
+    transition: 0.3s height ease, 0.2s color ease;
+    overflow: hidden;
+}
+
+.relative-wrapper-container {
+    padding: 20px;
+}
+
+.relative-wrapper-container>div{
+    margin-bottom: 10px;
+}
+
+.relative-wrapper-container>#addDaughter {
+    margin-bottom: 3px;
+    margin-left: 20px;
+    padding: 3px 0;
+}
+
+.relative-wrapper-container>.dropdownTrigger,
+.relative-wrapper-container>.comp {
+    width: calc(100% - 20px);
+    padding: 5px 0 5px 20px;
+}
+
+.relative-wrapper-container>.dropdownContainer>#addDaughter {
+    margin-bottom: 3px;
+    margin-left: 50px;
+    padding: 3px 0;
+}
+
+.relative-wrapper-container>.dropdownContainer>.dropdownTrigger,
+.relative-wrapper-container>.dropdownContainer>.comp {
+    width: calc(100% - 50px);
+    padding: 3px 0 3px 50px;
+}
+
+.relative-wrapper-container>.dropdownContainer>.dropdownContainer>#addDaughter {
+    margin-bottom: 3px;
+    margin-left: 80px;
+    padding: 3px 0;
+}
+.relative-wrapper-container>.dropdownContainer>.dropdownContainer>.dropdownTrigger,
+.relative-wrapper-container>.dropdownContainer>.dropdownContainer>.comp {
+    width: calc(100% - 80px);
+    padding: 3px 0 3px 80px;
+}
+
+.relative-wrapper-container>.dropdownContainer>.dropdownContainer>.dropdownContainer>.comp {
+    width: calc(100% - 110px);
+    padding: 3px 0 3px 110px;
+}
+
+.relative-wrapper-container>.dropdownContainer>.dropdownContainer>.dropdownContainer>#addDaughter {
+    margin-bottom: 3px;
+    margin-left: 110px;
+    padding: 3px 0;
+}
+
+input[type=text] {
+    border: 1px solid rgba(0, 0, 0, .1);
+}
+
+input[type=text]:focus {
+    border: 1px solid rgba(0, 0, 0, .1);
+}
+
+.dropdownContainer {
+    box-shadow: inset 0px 0.9px 0px 0px rgba(128, 128, 128, 0.445), inset 0px -0.9px 0px 0px rgba(128, 128, 128, 0.445);
+}
+
+.submit {
+    position: fixed;
+    margin: 10px;
+    padding: 10px 15px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.244);
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.close {
+    position: absolute;
+    display: inline-block;
+    z-index: 1000;
+    height: 26px;
+    line-height: 26px;
+    top: 5px;
+    right: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.144);
+    border-radius: 5px;
+}
+
+.close:hover {
+    background-color: rgba(0, 0, 0, 0.244);
+}
+
+.w-50 {
+    width: calc(50% - 225px) !important;
+    margin: 50px 75px 50px 150px !important;
+}
+
+.graph {
+    position: absolute;
+    top: 56px;
+    right: 0;
+    width: calc(49% - 225px) !important;
+    margin: 50px 150px 50px 75px !important;
+}
+
+.graph>div {
+    position: relative;
+    width: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.144);
+    margin: 30px 0;
+}
+
+.graph>div>span {
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
+    position: relative;
+    width: 100%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.144);
+}
+
+.graphComp {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.del {
+    float: right;
+    margin: 0 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.comp .floatRight {
+    float: right;
+    cursor: pointer;
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, .1);
+    margin-left: 5px;
+}
+
+.competence {
+    width: calc(100% - 120px);
+    padding: 3px 0 3px 120px;
+}
+
+.competence>div {
+    display: inline;
+    font-size: 13px;
+    border: 1px solid rgba(0, 0, 0, .08);
+    padding: 0px 4px !important;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.competence:hover>div {
+    transition: 0.2s opacity ease;
+    opacity: 1;
+    visibility: visible;
+}

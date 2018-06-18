@@ -22,6 +22,12 @@
         <a class="btn btn-header bold noMI autoColor" href="/recherche">Recherche</a>
     </div>
 
+    <?php if ($_SESSION['user']["type"] >= 1 || 1) {?>
+    <div class="header-right mr-1">
+        <a class="btn btn-header bold noMI" href="/admin">Page Admin</a>
+    </div>
+    <?php } ?>
+
     <div class="header-right">
         <div class="autoColor">Bienvenue, <span><?php echo $_SESSION['user']['login']; ?></span></div>
     </div>

@@ -5,6 +5,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
     include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Database.php";
+    include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Security.php";
     include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Competence.php";
     include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Candidat.php";
     include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/RH.php"; 
@@ -66,7 +67,16 @@ error_reporting(E_ALL);
         <div class="profile-info left">LinkedIn :</div>
         <a href="<?php echo $candidat->get_linkedin(); ?>" class="profile-info underline" data-info="linkedin"><?php echo $candidat->get_linkedin(); ?></a>
 
-        <a class="bottom btn h-56 modif-profile bold" href='/candidat/modifier?id=<?php echo $id; ?>'>Modifier le profil</a>
+        <form action="/candidat/traitement.php" method="get">
+
+                <input type="hidden" name="action" value="transfer"> 
+            <input type="hidden" name="id" value=" <?php echo $id; ?> ">
+
+            <input type="submit" value="Envoyer">
+
+        </form>
+
+        <a class="bottom btn h-56 modif-profile bold" href='/candidat/modifier?id=<?php echo $id; ?>'>Modifier mon profil</a>
 
     </nav>
 
@@ -78,7 +88,7 @@ error_reporting(E_ALL);
                 <div id="oc1" class="onglet ongletContainer">
                     <div class="intervention">
                         <div class="infos">Date</div>
-                        <div class="infos">RH</div>
+                        <div class="infos">Responsable</div>
                         <div class="details textCenter">
                             Détails
                         </div>
@@ -201,13 +211,16 @@ error_reporting(E_ALL);
                 $step = $candidat->get_etape();
             ?>
 
-            <div id="timeLine">
-                <div class="line">
-                    <div class="coloredLine step<?php echo $step; ?>"></div>
-                    <div onclick="C.ajust_tm(1)" class="point<?php if ($step >= 1) echo " colored"; ?>">
-                        <div class="pointLabel">
-                            1ere appel téléphonique
-                        </div>
+<?php
+                        $step = $candidat->get_etape();
+?>
+
+        <div id="timeLine">
+            <div class="line">
+                <div class="coloredLine step<?php echo $step; ?>"></div>
+                <div class="point<?php if ($step >= 1) echo " colored"; ?>">
+                    <div class="pointLabel">
+                        1er appel téléphonique
                     </div>
                     <div onclick="C.ajust_tm(2)" class="point<?php if ($step >= 2) echo " colored"; ?>">
                         <div class="pointLabel">
