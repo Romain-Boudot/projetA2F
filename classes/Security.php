@@ -2,6 +2,20 @@
 
 class Security {
 
+    static public function login_validity($login) {
+
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("SELECT * FROM consultants WHERE login = :login");
+        $statement->execute(array(":login" => $login));
+        if ($statement->fetch() != false) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
     static public function gen_token($id) {
 
         $token = bin2hex(random_bytes(32));

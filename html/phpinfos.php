@@ -1,9 +1,5 @@
 <?php
 
-
-
-phpinfo()
-
-echo "bonjour"
+phpinfo();
 
 ?>
