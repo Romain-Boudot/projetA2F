@@ -85,7 +85,7 @@ class S {
 
     keyup(event) {
 
-        if (event.keyCode == 188) {
+        if (event.keyCode == 188 || event.keyCode == 13) {
 
             var text = this.DOMelem.textInput.input.value.trim();
 
@@ -283,6 +283,8 @@ class S {
     }
 
     send() {
+
+        s.keyup({keyCode: 13});
 
         this.arr = {
             "competences":{
