@@ -44,7 +44,8 @@ class Database {
                 "login" => $answer["login"],
                 "id" => $answer["id_consultant"],
                 "pole" => $answer["pole"],
-                "type" => 0
+                "type" => 0,
+                "token" => array(0)
             );
 
             return true;
@@ -67,7 +68,8 @@ class Database {
                 "login" => $answer["login"],
                 "id" => $answer["id_bm"],
                 "pole" => 0,
-                "type" => 1
+                "type" => 1,
+                "token" => array(0)
             );
 
             return true;
@@ -89,7 +91,8 @@ class Database {
                 "login" => $answer["login"],
                 "id" => $answer["id_rh"],
                 "pole" => 0,
-                "type" => 2
+                "type" => 2,
+                "token" => array(0)
             );
 
             return true;

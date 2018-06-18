@@ -39,6 +39,7 @@
 
 .search {
     padding: 40px 40px 30px 40px;
+    z-index: 500;
 }
 
 .clientSelect {
@@ -452,12 +453,26 @@ select:focus {
     grid-column: 2 / 3;
 }
 
-.help,
 .helpTrigger {
     position: absolute;
     top: 10px;
     left: 10px;
+}
+
+.helpTrigger>i {
+    padding: 5px;
+    cursor: pointer;
+    font-size: 35px !important;
+    color: rgb(161, 161, 161);
+    z-index: 600;
+}
+
+.help {
+    position: absolute;
+    top: 10px;
+    left: 10px;
     padding: 10px 10px;
+    z-index: 650;
     border: 1px solid rgba(0, 0, 0, .08);
     cursor: pointer;
     background-color: rgb(221, 221, 221);

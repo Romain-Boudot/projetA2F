@@ -71,6 +71,26 @@ class Ajax {
         };
 
         xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.send(param);
+
+    }
+
+    static file(url, param, callback) {
+
+        var xhr = Ajax.getXMLHttpRequest();
+
+        xhr.onreadystatechange = function() {
+
+            if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
+
+                callback(xhr.responseText);
+
+            }
+
+        };
+
+        xhr.open("POST", url, true);
 
         xhr.send(param);
 

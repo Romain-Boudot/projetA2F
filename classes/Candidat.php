@@ -44,7 +44,7 @@ class Candidat {
     }
 
     public function delete(){
-        $pdo = Database::connect();
+        $pdo = Database::connect(); 
 
         $delete_candidate = $pdo->prepare("DELETE FROM candidats WHERE id_candidat = :id");
         $delete_candidate->bindParam('id', $this->id);
@@ -283,6 +283,52 @@ class Candidat {
         return $this->etape;
     }
 
+    public function get_files($type = "") {
+
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("SELECT * FROM fichiers_candidats WHERE id_candidat = :id AND type LIKE :type");
+        $statement->execute(array(
+            ":id" => $this->id,
+            ":type" => $type
+        ));
+
+        $pdo = null;
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
+    public function add_file($trueName, $serverName, $type) {
+
+        $pdo = Database::connect();
+        
+        $statement = $pdo->prepare("INSERT INTO fichiers_candidats VALUES (?, ?, ?, ?)");
+        $statement->execute(array(
+            $serverName,
+            $this->id,
+            $trueName,
+            $type
+        ));
+
+        $pdo = null;
+
+    }
+
+    public function del_file($serverFileName) {
+
+        $pdo = Database::connect();
+        
+        $statement = $pdo->prepare("DELETE FROM fichiers_candidats WHERE id_candidat = :id AND nom_serveur = :name");
+        $statement->execute(array(
+            ":id" => $this->id,
+            ":name" => $serverFileName
+        ));
+
+        $pdo = null;
+
+    }
+
     public function set_etape($etape){
         $this->etape = $etape;
         $db = Database::connect();
@@ -321,6 +367,18 @@ class Candidat {
 
     } 
 
+    static public function get_array() {
+    
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("SELECT * from candidats ORDER BY nom");
+        $statement->execute();
+        $array = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return $array;
+
+
+    }
     public function get_competences(){
         
         $pdo = Database::connect();
@@ -333,6 +391,5 @@ class Candidat {
         return $statement->fetchAll(PDO::FETCH_ASSOC);
 
     }
-    
 
 }

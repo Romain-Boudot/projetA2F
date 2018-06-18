@@ -4,15 +4,11 @@ nav {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 2000;
-    background-color: rgba(0, 0, 0, .1);
-    -webkit-box-shadow: 4px 2px 15px 5px rgba(0,0,0,0.3);
-    -moz-box-shadow: 4px 2px 15px 5px rgba(0,0,0,0.3);
-    box-shadow: 4px 2px 15px 5px rgba(0,0,0,0.3);
+    background-color: rgba(0, 0, 0, 0.144);
 }
 
 nav .onglet {
-    width: calc(100% - 20px);
+    width: 100%;
     padding: 5px 10px;
     cursor: pointer;
 }
@@ -39,8 +35,7 @@ nav .onglet {
 
 .nav {
     height: 56px;
-    background-color: var(--color-df);
-    color: white;
+    background-color: rgba(0, 0, 0, .08);
     line-height: 56px;
     text-align: center;
 }
@@ -187,24 +182,19 @@ input[type=number] {
 }
 
 form input[type=submit] {
+    background-color: rgba(0, 0, 0, 0.244);
     padding: 10px 15px;
     margin: 10px auto;
-    border: 2px solid rgba(0, 0, 0, .1);
+    border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 15px;
-    background-color: rgba(0, 0, 0, 0);
-    transition: .2s background-color ease, .2s color ease;
-}
-
-form input[type=submit]:hover {
-    background-color: var(--color-df);
-    color: white;
 }
 
 .QualSubmit>*,
 .InterSubmit>* {
     display: inline-block;
+    background-color: rgba(0, 0, 0, 0.244);
     padding: 10px 15px;
     margin: 10px auto;
     border: none;
@@ -225,6 +215,21 @@ form input[type=submit]:hover {
     position: relative;
 }
 
+.dropdownTrigger>div {
+    display: inline;
+    font-size: 13px;
+    border: 1px solid rgba(0, 0, 0, .08);
+    padding: 0px 4px !important;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.dropdownTrigger:hover>div {
+    transition: 0.2s opacity ease;
+    opacity: 1;
+    visibility: visible;
+}
+
 .dropdownTrigger::before {
     content: "+";
     margin-right: 10px;
@@ -238,27 +243,66 @@ form input[type=submit]:hover {
     overflow: hidden;
 }
 
-.compListWrapper>.dropdownTrigger,
-.compListWrapper>.comp {
+.relative-wrapper-container {
+    padding: 20px;
+}
+
+.relative-wrapper-container>div{
+    margin-bottom: 10px;
+}
+
+.relative-wrapper-container>#addDaughter {
+    margin-bottom: 3px;
+    margin-left: 20px;
+    padding: 3px 0;
+}
+
+.relative-wrapper-container>.dropdownTrigger,
+.relative-wrapper-container>.comp {
     width: calc(100% - 20px);
     padding: 5px 0 5px 20px;
 }
 
-.compListWrapper>.dropdownContainer>.dropdownTrigger,
-.compListWrapper>.dropdownContainer>.comp {
+.relative-wrapper-container>.dropdownContainer>#addDaughter {
+    margin-bottom: 3px;
+    margin-left: 50px;
+    padding: 3px 0;
+}
+
+.relative-wrapper-container>.dropdownContainer>.dropdownTrigger,
+.relative-wrapper-container>.dropdownContainer>.comp {
     width: calc(100% - 50px);
     padding: 3px 0 3px 50px;
 }
 
-.compListWrapper>.dropdownContainer>.dropdownContainer>.dropdownTrigger,
-.compListWrapper>.dropdownContainer>.dropdownContainer>.comp {
+.relative-wrapper-container>.dropdownContainer>.dropdownContainer>#addDaughter {
+    margin-bottom: 3px;
+    margin-left: 80px;
+    padding: 3px 0;
+}
+.relative-wrapper-container>.dropdownContainer>.dropdownContainer>.dropdownTrigger,
+.relative-wrapper-container>.dropdownContainer>.dropdownContainer>.comp {
     width: calc(100% - 80px);
     padding: 3px 0 3px 80px;
 }
 
-.compListWrapper>.dropdownContainer>.dropdownContainer>.dropdownContainer>.comp {
+.relative-wrapper-container>.dropdownContainer>.dropdownContainer>.dropdownContainer>.comp {
     width: calc(100% - 110px);
     padding: 3px 0 3px 110px;
+}
+
+.relative-wrapper-container>.dropdownContainer>.dropdownContainer>.dropdownContainer>#addDaughter {
+    margin-bottom: 3px;
+    margin-left: 110px;
+    padding: 3px 0;
+}
+
+input[type=text] {
+    border: 1px solid rgba(0, 0, 0, .1);
+}
+
+input[type=text]:focus {
+    border: 1px solid rgba(0, 0, 0, .1);
 }
 
 .dropdownContainer {
@@ -267,54 +311,64 @@ form input[type=submit]:hover {
 
 .submit {
     position: fixed;
-    margin: 10px 10px 10px 25px;
+    margin: 10px;
     padding: 10px 15px;
     text-align: center;
+    background-color: rgba(0, 0, 0, 0.244);
     cursor: pointer;
     border-radius: 5px;
-    border: 2px solid rgba(0, 0, 0, .1);
-    transition: .2s background-color ease, .2s color ease; 
-}
-
-.submit:hover {
-    background-color: var(--color-df);
-    color: white;
 }
 
 .close {
     position: absolute;
     display: inline-block;
     z-index: 1000;
-    height: 22px;
-    line-height: 22px;
+    height: 26px;
+    line-height: 26px;
     top: 5px;
     right: 5px;
     padding: 10px 15px;
     cursor: pointer;
-    background-color: rgba(0, 0, 0, 0);
-    border: 2px solid white;
-    color: white;
+    background-color: rgba(0, 0, 0, 0.144);
     border-radius: 5px;
-    transition: .2s background-color ease, .2s color ease;
 }
 
 .close:hover {
-    color: inherit;
-    background-color: rgba(255, 255, 255, 1);
+    background-color: rgba(0, 0, 0, 0.244);
 }
 
 .w-50 {
     width: calc(50% - 225px) !important;
     margin: 50px 75px 50px 150px !important;
 }
-.delInt {
-    border: 2px solid rgba(0, 0, 0, .1);
-    transition: .2s background-color ease, .2s color ease;    
+
+.graph {
+    position: absolute;
+    top: 56px;
+    right: 0;
+    width: calc(49% - 225px) !important;
+    margin: 50px 150px 50px 75px !important;
 }
 
-.delInt:hover {
-    background-color: var(--color-df);
-    color: white;
+.graph>div {
+    position: relative;
+    width: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.144);
+    margin: 30px 0;
+}
+
+.graph>div>span {
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
+    position: relative;
+    width: 100%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.144);
+}
+
+.graphComp {
+    width: 100%;
+    margin-bottom: 10px;
 }
 
 .del {
@@ -325,18 +379,29 @@ form input[type=submit]:hover {
 }
 
 .comp .floatRight {
-    display: none;
-    position: relative;
-    opacity: 0;
+    float: right;
     cursor: pointer;
-    font-size: 85%;
-    border: 1px solid rgba(0, 0, 0, .1);
-    padding: 0 5px;
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, .1);
     margin-left: 5px;
 }
 
-.comp:hover .floatRight {
+.competence {
+    width: calc(100% - 120px);
+    padding: 3px 0 3px 120px;
+}
+
+.competence>div {
+    display: inline;
+    font-size: 13px;
+    border: 1px solid rgba(0, 0, 0, .08);
+    padding: 0px 4px !important;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.competence:hover>div {
+    transition: 0.2s opacity ease;
     opacity: 1;
-    display: inline-block;
-    transition: .2s opcaity ease;
+    visibility: visible;
 }

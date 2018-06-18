@@ -32,12 +32,21 @@ error_reporting(E_ALL);
     <link rel="stylesheet" href="/cdn/main.css">
     <link rel="stylesheet" href="/candidat/main.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --main-color: #06436f;
+            --main-color-light: #06436f88;
+            --auto-color: white;
+        }
+    </style>
     <script src="/cdn/Chart.bundle.min.js"></script>
     <script src="/cdn/Ajax.js"></script>
+    <script src="/cdn/Alert.js"></script>
     <script src="/cdn/url_get.js"></script>
     <script src="/cdn/Candidat.js"></script>
     <script src="/cdn/Chart.js"></script>
     <script src="/cdn/Dropdown.js"></script>
+    <script src="/candidat/main.js"></script>
     <title>A2F Advisor</title>
 </head>
 <body>
@@ -46,23 +55,28 @@ error_reporting(E_ALL);
     
     <nav>
         <div id="image-profile">
-            <img src="/images/unknown.png" alt="profile image">
+            <img src="/images/profil/unknown.png" alt="profile image">
         </div>
         <div class="hr"></div>
+        <div class="profile-info left">Prénom :</div>
         <div class="profile-info" data-info="prenom"><?php echo $candidat->get_prenom(); ?></div>
+        <div class="profile-info left">Nom :</div>
         <div class="profile-info" data-info="nom"><?php echo $candidat->get_nom(); ?></div>
-        <div class="profile-info" data-info="email"><?php echo $candidat->get_email(); ?></div></div>
-        <div class="profile-info" data-info="telephone"><?php echo $candidat->get_telephone(); ?></div></div>
-        <div class="profile-info" data-info="linkedin"><?php echo $candidat->get_linkedin(); ?></div></div>
+        <div class="profile-info left">Email :</div>
+        <a href="mailto:<?php echo $candidat->get_email(); ?>" class="profile-info underline" data-info="email"><?php echo $candidat->get_email(); ?></a>
+        <div class="profile-info left">Téléphone :</div>
+        <div class="profile-info" data-info="telephone"><?php echo $candidat->get_telephone(); ?></div>
+        <div class="profile-info left">LinkedIn :</div>
+        <a href="<?php echo $candidat->get_linkedin(); ?>" class="profile-info underline" data-info="linkedin"><?php echo $candidat->get_linkedin(); ?></a>
 
-            <form action="/candidat/traitement.php" method="get">
-    
-                    <input type="hidden" name="action" value="transfer"> 
-                <input type="hidden" name="id" value=" <?php echo $id; ?> ">
-    
-                <input type="submit" value="Envoyer">
+        <form action="/candidat/traitement.php" method="get">
 
-            </form>
+                <input type="hidden" name="action" value="transfer"> 
+            <input type="hidden" name="id" value=" <?php echo $id; ?> ">
+
+            <input type="submit" value="Envoyer">
+
+        </form>
 
         <a class="bottom btn h-56 modif-profile bold" href='/candidat/modifier?id=<?php echo $id; ?>'>Modifier mon profil</a>
 
@@ -227,6 +241,57 @@ error_reporting(E_ALL);
                     </div>
                 </div>
             </div>
+
+            <?php
+
+            if ($id == $_SESSION["user"]["id"]) {
+
+            ?>
+
+            <div class="fileUpload">
+            
+                <?php
+
+                    $files = $candidat->get_files("pdf");
+
+                    foreach ($files as $key => $value) {
+                        
+                        ?><div class="file">
+                            <a href="/?file=<?php echo $value["nom_serveur"]; ?>" target="_blank" class="clickable">
+                                <img src="/images/pdf.svg" alt="svg pdf" height="20">
+                                <?php echo $value["vrai_nom"]; ?>
+                            </a>
+                            <i onclick="Candidat.delFile(this)" data-servername="<?php echo $value["nom_serveur"]; ?>" class="material-icons floatRight clickable">delete</i>
+                            <a class="floatRight clickable" href="/?file=<?php echo $value["nom_serveur"]; ?>" target="_blank"><img src="/images/download.svg" alt="svg pdf" height="20"></a>
+                        </div><?php
+                        
+                    }
+                
+                ?>
+
+                <div class="addFile" <?php if (sizeof($files) == 5) echo 'style="display: none;"'; ?>>
+                    <label for="fileInput">
+                        <i class="material-icons">add</i>
+                    </label>
+                    <div class="label">Ajout d'un fichier<br>(1Mo max.)</div>
+                </div>
+
+                <div class="hidden">
+                    <input id="fileInput" type="file">
+                </div>
+
+                <script>
+                    Candidat.load();
+                </script>
+        
+            </div>
+
+            <?php 
+
+                }
+            
+            ?>
+
         </div>
     </div>
 
