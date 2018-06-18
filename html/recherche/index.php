@@ -46,7 +46,7 @@ Security::check_login(array(0, 1, 2));
 
     <div class="main-wrapper">
 
-        <div onclick="Popup.oneOpen('help')" class="helpTrigger">Aide</div>
+        <div onclick="Popup.oneOpen('help')" class="helpTrigger"><i class="material-icons">help_outline</i></div>
         <div onclick="Popup.close('help')" id="help" class="help">
 
             <div>

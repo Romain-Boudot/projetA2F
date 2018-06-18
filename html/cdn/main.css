@@ -133,3 +133,7 @@ a {
 .mainColor {
     background-color: var(--main-color);
 }
+
+.autoColor {
+    color: var(--auto-color);
+}

@@ -49,7 +49,7 @@
             ?>;
             --auto-color: <?php
                 if ($pole == 0) echo "white";
-                else echo "inerit"
+                else echo "inerit";
             ?>;
         }
     </style>
@@ -58,8 +58,10 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="/cdn/Chart.bundle.min.js"></script>
     <script src="/cdn/Ajax.js"></script>
+    <script src="/cdn/Alert.js"></script>
     <script src="/cdn/Chart.js"></script>
     <script src="/cdn/Dropdown.js"></script>
+    <script src="/consultant/main.js"></script>
     <title>A2F Advisor</title>
 </head>
 <body>
@@ -69,31 +71,18 @@
     <nav>
         <div id="image-profile">
             <img class="photoUploadHover" src="/images/profil/<?php
-                if (file_exists($_SERVER["DOCUMENT_ROOT"] . "/images/profil/" . $consultant->get_id() . ".png")) echo $consultant->get_id() . ".png";
-                elseif (file_exists($_SERVER["DOCUMENT_ROOT"] . "/images/profil/" . $consultant->get_id() . ".jpg")) echo $consultant->get_id() . ".jpg";
-                elseif (file_exists($_SERVER["DOCUMENT_ROOT"] . "/images/profil/" . $consultant->get_id() . ".jpeg")) echo $consultant->get_id() . ".jpeg";
-                else echo "unknown.png";
+                $files = $consultant->get_files("img");
+                if (isset($files[0])) {
+                    echo $files[0]["nom_serveur"];
+                } else {
+                    echo "unknown.png";
+                }
             ?>" alt="profile image">
             <?php if ($id == $_SESSION['user']['id']) {?>
             <form id="photoForm" class="photoUpload" action="/consultant/traitement.php" method="post">
-                <input type="hidden" name="action" value="img">
                 <input id="uploadPhoto" class="hidden" type="file" name="file">
                 <label for="uploadPhoto"><i class="material-icons plus">add</i></label>
             </form>
-            <script>
-                var form = document.getElementById("photoForm");
-                var refresh = 0;
-                var inputimg = document.getElementById("uploadPhoto");
-                inputimg.onchange = function() {   
-                    var img = new FormData();
-                    img.append('file', inputimg.files[0]);
-                    Ajax.post("/consultant/traitement.php?action=img", img, function(data) {
-                        //console.log(JSON.parse(data)[0]);
-                        document.querySelector("#image-profile img").setAttribute("src" ,document.querySelector("#image-profile img").getAttribute("src") + "?" + refresh);
-                        refresh++;
-                    });
-                }
-            </script>
             <?php } ?>
         </div>
         <div class="profile-info bold" style="text-transform: uppercase;">pôle <?php echo $consultant->get_nom_pole(); ?></div>
@@ -338,6 +327,49 @@
 
             </div>   
         </div>
+
+        <div class="fileUpload">
+        
+            <?php
+
+                $files = $consultant->get_files("pdf");
+
+                foreach ($files as $key => $value) {
+                    
+                    ?><div class="file">
+                        <a href="/?file=<?php echo $value["nom_serveur"]; ?>" target="_blank" class="clickable">
+                            <img src="/images/pdf.svg" alt="svg pdf" height="20">
+                            <?php echo $value["vrai_nom"]; ?>
+                        </a>
+                        <i onclick="Consultant.delFile(this)" data-servername="<?php echo $value["nom_serveur"]; ?>" class="material-icons floatRight clickable">delete</i>
+                        <a class="floatRight clickable" href="/?file=<?php echo $value["nom_serveur"]; ?>" target="_blank"><img src="/images/download.svg" alt="svg pdf" height="20"></a>
+                    </div><?php
+
+                }
+
+                if (sizeof($files) != 5) {
+
+                    ?><div class="addFile">
+                        <label for="fileInput">
+                            <i class="material-icons">add</i>
+                        </label>
+                        <div class="label">Ajout d'un fichier<br>(1Mo max.)</div>
+                    </div><?php
+
+                }
+
+            ?>
+
+            <div class="hidden">
+                <input id="fileInput" type="file">
+            </div>
+
+            <script>
+                Consultant.load();
+            </script>
+        
+        </div>
+
     </div>
     <?php
     if ($pole == 1) {
