@@ -300,13 +300,14 @@ Class Consultant {
     public function get_id() {
         return $this->id;
     }
-
+    
+    
     static public function register($nom, $prenom, $pole) {
 
         $login = substr($prenom, 0, 1) . $nom;
 
         $cpt = 0;
-        while (Security::login_validity($login)) {
+        while (!Security::login_validity($login)) {
             $cpt++;
             $login = substr($prenom, 0, 1) . $nom . $cpt;
         }
@@ -324,11 +325,15 @@ Class Consultant {
             ':token' => $token
         ));
 
+        $id = $pdo->lastInsertID();
+
         $pdo = null;
 
         $url = "http://" . $_SERVER["HTTP_HOST"] . "/register/?token=" . $token;
 
-        return $url;
+        return array(
+            "url" => $url,
+            "id" => $id);
 
     }
 

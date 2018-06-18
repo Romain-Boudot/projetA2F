@@ -68,38 +68,48 @@ class Candidat {
 
     }
 
-    public function transfer(){
-        $infos['nom'] = $this->nom;
-        $infos['prenom'] = $this->prenom;
-        $infos['telephone'] = $this->telephone;
-        $infos['email'] = $this->email;
-        $infos['linkedin'] = $this->linkedin;
-        $infos['pole'] = 1;
-        $infos['login'] = "qrenaud";
-        $infos['mot_de_passe'] = "password";
+    public function transfer($id_pole){
 
-        $id = Consultant::add($infos);
-
-        $c = new Consultant($id); 
-
-        $comp = $this->get_competences();
-        $qualif = $this->get_qualifications();
-
-        foreach($comp as $key => $value){
-            
-            $c->add_competence($value);    
-
-        } 
-
-        foreach($qualif as $key => $value){
+        $data = Consultant::register($this->nom, $this->prenom, $id_pole);
         
-            $c->add_qualification($value);
+        if(isset($data) {
+            $c = new Consultant($data['id']); 
+            if(isset($c){
+                $comp = $this->get_competences();
+                $qualif = $this->get_qualifications();
+                foreach($comp as $key => $value){
 
+                    $c->add_competence($value);    
+                    
+                } 
+
+                foreach($qualif as $key => $value){
+
+                    $c->add_qualification($value);
+
+                }
+                
+                $pdo = Database::connect();
+
+                $statement = $pdo->prepare("DELETE FROM * WHERE id_candidat = :idcandidat");
+                $statement->execute(array("idcandidat"=> $this->id));
+
+                $pdo = null;
+
+                return $data["url"];
+    
+            }else{
+                exit();
+            }
+        } else {
+            exit();
         }
 
-    echo "win";
 
-//        delete();
+        //        delete();
+        
+        //return $data['url'];
+
     }
 
     public function add_interview($infos) {
@@ -323,5 +333,41 @@ class Candidat {
         return $statement->fetchAll(PDO::FETCH_ASSOC);
 
     }
+    
+    
+    static public function register($nom, $prenom) {
+
+        $login = substr($prenom, 0, 1) . $nom;
+
+        $cpt = 0;
+        while (!Security::login_validity($login)) {
+            $cpt++;
+            $login = substr($prenom, 0, 1) . $nom . $cpt;
+        }
+
+        $token = hash("sha256", $login . bin2hex(random_bytes(50)) . $pole);
+
+        $pdo = Database::connect();
+        
+        $statement = $pdo->prepare("INSERT INTO candidats (nom, prenom, login, token) VALUES (:nom, :prenom, :login, :token)");
+        $statement->execute(array(
+            ':nom' => $nom,
+            ':prenom' => $prenom,
+            ':login' => $login,
+            ':token' => $token
+        ));
+
+        $id = $pdo->lastInsertID();
+
+        $pdo = null;
+
+        $url = "http://" . $_SERVER["HTTP_HOST"] . "/register/?token=" . $token;
+
+        return array(
+            "url" => $url,
+            "id" => $id);
+
+    }
+
 
 }

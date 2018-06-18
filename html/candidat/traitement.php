@@ -22,7 +22,9 @@ if ($_GET["action"] == "timeline") {
  
 }elseif ($_GET["action"] == "transfer") {
 
-    $candidat->transfer();    
+    
+
+    $candidat->transfer(3);    
 
 
 }
