@@ -49,7 +49,7 @@
             ?>;
             --auto-color: <?php
                 if ($pole == 0) echo "white";
-                else echo "inerit"
+                else echo "inerit";
             ?>;
         }
     </style>

@@ -31,6 +31,13 @@ error_reporting(E_ALL);
     <link rel="stylesheet" href="/cdn/main.css">
     <link rel="stylesheet" href="/candidat/main.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --main-color: #06436f;
+            --main-color-light: #06436f88;
+            --auto-color: white;
+        }
+    </style>
     <script src="/cdn/Chart.bundle.min.js"></script>
     <script src="/cdn/Ajax.js"></script>
     <script src="/cdn/url_get.js"></script>
@@ -45,16 +52,21 @@ error_reporting(E_ALL);
     
     <nav>
         <div id="image-profile">
-            <img src="/images/unknown.png" alt="profile image">
+            <img src="/images/profil/unknown.png" alt="profile image">
         </div>
         <div class="hr"></div>
+        <div class="profile-info left">Prénom :</div>
         <div class="profile-info" data-info="prenom"><?php echo $candidat->get_prenom(); ?></div>
+        <div class="profile-info left">Nom :</div>
         <div class="profile-info" data-info="nom"><?php echo $candidat->get_nom(); ?></div>
-        <div class="profile-info" data-info="email"><?php echo $candidat->get_email(); ?></div></div>
-        <div class="profile-info" data-info="telephone"><?php echo $candidat->get_telephone(); ?></div></div>
-        <div class="profile-info" data-info="linkedin"><?php echo $candidat->get_linkedin(); ?></div></div>
-        
-        <a class="bottom btn h-56 modif-profile bold" href='/candidat/modifier?id=<?php echo $id; ?>'>Modifier mon profil</a>
+        <div class="profile-info left">Email :</div>
+        <a href="mailto:<?php echo $candidat->get_email(); ?>" class="profile-info underline" data-info="email"><?php echo $candidat->get_email(); ?></a>
+        <div class="profile-info left">Téléphone :</div>
+        <div class="profile-info" data-info="telephone"><?php echo $candidat->get_telephone(); ?></div>
+        <div class="profile-info left">LinkedIn :</div>
+        <a href="<?php echo $candidat->get_linkedin(); ?>" class="profile-info underline" data-info="linkedin"><?php echo $candidat->get_linkedin(); ?></a>
+
+        <a class="bottom btn h-56 modif-profile bold" href='/candidat/modifier?id=<?php echo $id; ?>'>Modifier le profil</a>
 
     </nav>
 
