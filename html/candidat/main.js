@@ -2,7 +2,7 @@ class Candidat {
 
     static delFile(div) {
 
-        Ajax.get("/consultant/traitement.php?id=" + url_get.$_GET().id + "&action=gettoken", function(e) {
+        Ajax.get("/candidat/traitement.php?id=" + url_get.$_GET().id + "&action=gettoken", function(e) {
 
             console.log(e);
             var token = JSON.parse(e).token;

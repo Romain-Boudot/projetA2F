@@ -1,52 +1,60 @@
 class Transfer {
 
-    constructor() {
-        this.pole = "";
-        this.poleName = "";
-        this.divIndus = document.getElementById("Indus")
-        this.divSI = document.getElementById("SI")
-        this.divDatabase = document.getElementById("Database")
+    static Indus() {
+        document.getElementById("TransferBtn").dataset.pole = 1
+        document.getElementById("TransferBtn").dataset.poleName = "Indus"
+        document.getElementById("Indus").classList.add("active")
+        document.getElementById("SI").classList.remove("active")
+        document.getElementById("Database").classList.remove("active")
     }
 
-    Indus() {
-        this.pole = 1
-        this.poleName = "Indus"
-        this.divIndus.style.classList.add("active")
-        this.divSI.style.classList.remove("active")
-        this.divDatabase.style.classList.remove("active")
+    static SI() {
+        document.getElementById("TransferBtn").dataset.pole = 2
+        document.getElementById("TransferBtn").dataset.poleName = "SI"
+        document.getElementById("Indus").classList.remove("active")
+        document.getElementById("SI").classList.add("active")
+        document.getElementById("Database").classList.remove("active")
     }
 
-    SI() {
-        this.pole = 2
-        this.poleName = "SI"
-        this.divIndus.style.classList.remove("active")
-        this.divSI.style.classList.add("active")
-        this.divDatabase.style.classList.remove("active")
+    static Database() {
+        document.getElementById("TransferBtn").dataset.pole = 3
+        document.getElementById("TransferBtn").dataset.poleName = "Database"
+        document.getElementById("Indus").classList.remove("active")
+        document.getElementById("SI").classList.remove("active")
+        document.getElementById("Database").classList.add("active")
     }
 
-    Database() {
-        this.pole = 3
-        this.poleName = "Database"
-        this.divIndus.style.classList.remove("active")
-        this.divSI.style.classList.remove("active")
-        this.divDatabase.style.classList.add("active")
-    }
+    static send(btn) {
 
-    send() {
+        if (btn.dataset.pole == "" || btn.dataset.poleName == "") return;
 
-        if (this.pole == "" || this.poleName == "") return;
+        Ajax.get("/candidat/traitement.php?id=" + url_get.$_GET().id + "&action=gettoken", function(e) {
 
-        Alert.popup({
-            title: "Transfer",
-            text: "Etes-vous sûr(e) de vouloir transferer ce candidat vers le pôle " + this.poleName + " ? Cette action est irreversible.",
-            showCancelButton: true,
-            confirmText: "Oui",
-            confirmColor: "#40aa40",
-            confirm : function () {
-                Ajax.post("/candidat/traitement.php?id=<?php echo $_GET['id']; ?>&action=transfer", "token=<?php echo Security::gen_token(5100) ?>&pole=" + this.pole, function(e) {
-                    location.href = "/consultant/?id=" + JSON.parse(e).infos.id;
-                });
-            }
+            var token = JSON.parse(e).token;
+
+            Alert.popup({
+                title: "Transfert",
+                text: "Etes-vous sûr(e) de vouloir transférer ce candidat vers le pôle " + btn.dataset.poleName + " ? Cette action est irreversible.",
+                showCancelButton: true,
+                confirmText: "Oui",
+                confirmColor: "#40aa40",
+                confirm : function () {
+                    Ajax.post("/candidat/traitement.php?id=" + url_get.$_GET().id + "&action=transfer", "token=" + token + "&pole=" + btn.dataset.pole, function(e) {
+                        Alert.popup({
+                            title: "Erreur",
+                            text: JSON.parse(e).message,
+                            showCancelButton: false,
+                            confirmColor: "#fff",
+                            confirmText: "Retour",
+                            confirm: function() {
+                                Alert.close()
+                            }
+                        })
+                        location.href = "/consultant/?id=" + JSON.parse(e).infos.id;
+                    });
+                }
+            })
+            
         })
 
     }

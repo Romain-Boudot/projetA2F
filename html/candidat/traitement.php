@@ -7,11 +7,11 @@ include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Security.php";
  
 session_start(); 
  
-Security::check_login(array(0, 1, 2)); 
+Security::check_login(array(0, 1, 2));
  
 if (!isset($_GET["id"]) || !isset($_GET["action"])) exit();
 
-$candidat = new Candidat($_GET["id"]); 
+$candidat = new Candidat($_GET["id"]);
 
 if ($_GET["action"] == "timeline") { 
  
@@ -34,7 +34,7 @@ if ($_GET["action"] == "timeline") {
         exit();
     }
 
-    if (!Security::check_token($_POST['token'], 5100)) {
+    if (!Security::check_token($_POST['token'], 5000)) {
         echo '{"code": -2, "message": "Wrong token"}';
         exit();
     }
