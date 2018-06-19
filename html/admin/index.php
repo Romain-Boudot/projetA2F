@@ -11,7 +11,9 @@ include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Security.php";
 
 session_start();
 
-Security::check_login(array(1,2));
+Security::check_login(array(1, 2));
+
+$token = Security::gen_token('4');
 
 ?>
 
@@ -24,6 +26,7 @@ Security::check_login(array(1,2));
     <link rel="stylesheet" href="/cdn/main.css">
     <link rel="stylesheet" href="/admin/main.css">
     <script src="/cdn/Ajax.js"></script>
+    <script src="/cdn/Alert.js"></script>
     <script src="/cdn/Post.js"></script>
     <script src="/cdn/Admin.js"></script>
     <script src="/cdn/Dropdown.js"></script>
@@ -44,6 +47,9 @@ Security::check_login(array(1,2));
     <div class="mainWrapper">
 
         <div  onclick="location.href='/'" class="close">Retour</div>
+
+
+<!-- COMPÉTENCE -->
 
         <div class="popup" id="Comp"><div class="nav">Compétences</div>
             <div class="relative-wrapper-container">
@@ -121,12 +127,14 @@ Security::check_login(array(1,2));
             </div>
         </div>
 
+
+<!-- RH -->
+
         <div class="popup" id="rh"><div class="nav">Ressources humaines</div>
             <div class="relative-wrapper-container">
                 <?php
 
                     $rh = RH::get_array();
-                    ?><pre> <?php var_dump($rh);?></pre><?php 
                     foreach ($rh as $name => $value) {
                         
                         ?><div><?php  echo $value['nom']; ?> - 
@@ -137,9 +145,10 @@ Security::check_login(array(1,2));
 
                 <!-- <div class="popup" id="rh"><div class="nav">Responsable</div> -->
                     
-                    <form action="/admin/index.php/" method="post">
-                    
-                        <input type="hidden" name="" value="info">
+                    <form action="/admin/traitement.php/" method="post">
+                        
+                        <input type="hidden" name="token" value="<?php echo $token; ?>" >
+                        <input type="hidden" name='action' value='add_rh'>
 
                         <input type="text" name="nom" placeholder="Nom" required>
                         <input type="text" name="prenom" placeholder="Prenom" required>
@@ -151,6 +160,9 @@ Security::check_login(array(1,2));
                 <!-- </div> -->
             </div>
         </div>
+
+
+<!-- BM -->
 
         <div class="popup" id="bm"><div class="nav">Business manager</div>
             <div class="relative-wrapper-container">
@@ -163,7 +175,8 @@ Security::check_login(array(1,2));
                     ?><div><?php  echo $value['nom']; ?> - 
                     <?php echo $value['prenom']; 
                     
-                    echo "<form action='/admin/index.php/' method='post'>
+                    echo "<form action='/admin/traitement.php/' method='post'>
+                    <input type='hidden' name='token' value=" . $token ." >
                     <input type='hidden' name='action' value='delete_bm'>
                     <input type='hidden' name='id_bm' value='" .$value['id_bm'] . "'>
                     
@@ -176,9 +189,9 @@ Security::check_login(array(1,2));
 
                 <!-- <div class="popup" id="rh"><div class="nav">Responsable</div> -->
     
-                    <form action="/admin/index.php/" method="post">
+                <form action="/admin/traitement.php/" method="post">
                     
-                        <input type="hidden" name="action" value="add_rh">
+                        <input type="hidden" name="action" value="add_bm">
 
                         <input type="text" name="nom" placeholder="Nom" required>
                         <input type="text" name="prenom" placeholder="Prenom" required>
@@ -191,6 +204,9 @@ Security::check_login(array(1,2));
             </div>
         </div>
 
+
+<!-- CONSULTANT -->
+
         <div class="popup" id="cons"><div class="nav">Consultants</div>
             <div class="relative-wrapper-container">
             <?php
@@ -200,19 +216,33 @@ Security::check_login(array(1,2));
                 foreach ($cons as $nsame => $value) {
                     
                     ?><div><?php  echo $value['nom']; ?> - 
-                    <?php echo $value['prenom']; ?></div>
+                    <?php echo $value['prenom']; ?>
+                    - Pole <?php echo $value['nom_pole']; ?></div>
                 <?php 
                 }
                 ?>
                 
                 <!-- <div class="popup" id="rh"><div class="nav">Responsable</div> -->
     
-                    <form action="/admin/index.php/" method="post">
+                <form action="/admin/traitement.php/" method="post">
                         
-                        <input type="hidden" name="action" value="info">
+                        <input type="hidden" name="action" value="add_consultant">
+                        <input type="hidden" name="token" value="<?php echo $token; ?>" >
 
                         <input type="text" name="nom" placeholder="Nom" required>
                         <input type="text" name="prenom" placeholder="Prenom" required>
+                        <select name="pole" required><option selected disabled>Pole</option><?php
+
+                        $p = array(
+                            "1" => "SI",
+                            "2" => "Indus",
+                            "3" => "Database"
+                        );
+                        for($i=1; $i <= 3; $i++){
+                            ?>
+                            <option value=" <?php echo $i; ?>"><?php echo $p[$i]; ?> </option><?php
+                        }
+                        ?>
 
                         <input type="submit" value="Envoyer">
 
@@ -221,6 +251,9 @@ Security::check_login(array(1,2));
                 <!-- </div> -->
             </div>
         </div>
+
+
+<!-- CANDIDAT -->
 
         <div class="popup" id="candidats"><div class="nav">Candidats</div>
              <div class="relative-wrapper-container">
@@ -237,12 +270,14 @@ Security::check_login(array(1,2));
                 ?> 
                 <!-- <div class="popup" id="rh"><div class="nav">Responsable</div> -->
     
-                    <form action="/admin/index.php/" method="post">
+                <form action="/admin/traitement.php/" method="post">
                             
-                        <input type="hidden" name="" value="info">
+                        <input type="hidden" name="" value="add_candidat">
+                        <input type="hidden" name="token" value="<?php echo $token; ?>" >
 
                         <input type="text" name="nom" placeholder="Nom" required>
                         <input type="text" name="prenom" placeholder="Prenom" required>
+
 
                         <input type="submit" value="Envoyer">
 
@@ -251,6 +286,10 @@ Security::check_login(array(1,2));
                 <!-- </div> -->
             </div>
         </div>
+
+
+<!-- CLIENT -->
+
         <div class="popup" id="client"><div class="nav">Clients</div>
              <div class="relative-wrapper-container">
              <?php
@@ -265,9 +304,10 @@ Security::check_login(array(1,2));
                 ?>
                 <!-- <div class="popup" id="rh"><div class="nav">Responsable</div> -->
     
-                    <form action="/admin/index.php/" method="post">
+                <form action="/admin/traitement.php/" method="post">
                         
-                        <input type="hidden" name="" value="info">
+                        <input type="hidden" name="" value="add_client">
+                        <input type="hidden" name="token" value="<?php echo $token; ?>" >
 
                         <input type="text" name="nom" placeholder="Nom" required>
                         <input type="text" name="prenom" placeholder="Prenom" required>
@@ -280,6 +320,21 @@ Security::check_login(array(1,2));
             </div>
         </div>
     </div> 
+    <?php var_dump($_POST['url']); ?>
+<?php if(isset($_POST['url'])){ ?>
+    <script>    
+
+    Alert.popup({
+        title: "Compte créé",
+        text: "Création du mot de passe : \n <?php echo $_POST['url']; ?>",
+        confirmColor: "#bbbbbb",
+        confirmText: "Retour",
+        confirm: function() {
+            Alert.close();
+        }
+    })
+    </script> <?php
+} ?>
 
     <script>
         Popup.open('Comp');

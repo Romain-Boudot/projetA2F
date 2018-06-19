@@ -62,6 +62,7 @@ class Alert {
         content.innerText = obj.text;
         //content.style.textAlign = "center";
         content.style.marginBottom = "20px";
+        content.style.wordWrap = "break-word";
         block.appendChild(content);
 
         confirm.style.marginBottom = "20px";

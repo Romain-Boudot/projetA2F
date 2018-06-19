@@ -351,7 +351,7 @@ Class Consultant {
 
         $pdo = Database::connect();
 
-        $statement = $pdo->prepare("SELECT * from consultants ORDER BY nom");
+        $statement = $pdo->prepare("SELECT * from consultants c join poles p on c.pole=p.id_pole ORDER BY nom");
         $statement->execute();
         $array = $statement->fetchAll(PDO::FETCH_ASSOC);
 
