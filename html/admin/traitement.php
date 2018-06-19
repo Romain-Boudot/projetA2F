@@ -107,9 +107,16 @@ if ($_POST['action'] == "delete") {
 
 } elseif ($_POST['action'] == "add_consultant") {
 
-    Consultant::register($_POST['nom'], $_POST['prenom'], $_POST['pole']);
-    
-    //header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/index.php');
+    $data = Consultant::register($_POST['nom'], $_POST['prenom'], $_POST['pole']);
+    ?>
+    <form name='add_cons' action='/admin/index.php' method='POST'>  
+        <input type='hidden' name='url' value=" <?php echo $data['url']; ?> " >
+    </form>
+    <script>
+        document.add_cons.submit();
+    </script>
+    <?php
+   // header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/index.php');
     //exit();
 
 } elseif ($_POST['action'] == "delete_candidat") {

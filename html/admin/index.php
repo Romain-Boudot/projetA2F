@@ -28,6 +28,7 @@ if ($_SESSION['user']['type'] == 0 && 0) {
     <link rel="stylesheet" href="/cdn/main.css">
     <link rel="stylesheet" href="/admin/main.css">
     <script src="/cdn/Ajax.js"></script>
+    <script src="/cdn/Alert.js"></script>
     <script src="/cdn/Post.js"></script>
     <script src="/cdn/Admin.js"></script>
     <script src="/cdn/Dropdown.js"></script>
@@ -48,6 +49,9 @@ if ($_SESSION['user']['type'] == 0 && 0) {
     <div class="mainWrapper">
 
         <div  onclick="location.href='/'" class="close">Retour</div>
+
+
+<!-- COMPÉTENCE -->
 
         <div class="popup" id="Comp"><div class="nav">Compétences</div>
             <div class="relative-wrapper-container">
@@ -125,12 +129,14 @@ if ($_SESSION['user']['type'] == 0 && 0) {
             </div>
         </div>
 
+
+<!-- RH -->
+
         <div class="popup" id="rh"><div class="nav">Ressources humaines</div>
             <div class="relative-wrapper-container">
                 <?php
 
                     $rh = RH::get_array();
-                    ?><pre> <?php var_dump($rh);?></pre><?php 
                     foreach ($rh as $name => $value) {
                         
                         ?><div><?php  echo $value['nom']; ?> - 
@@ -156,6 +162,9 @@ if ($_SESSION['user']['type'] == 0 && 0) {
                 <!-- </div> -->
             </div>
         </div>
+
+
+<!-- BM -->
 
         <div class="popup" id="bm"><div class="nav">Business manager</div>
             <div class="relative-wrapper-container">
@@ -197,6 +206,9 @@ if ($_SESSION['user']['type'] == 0 && 0) {
             </div>
         </div>
 
+
+<!-- CONSULTANT -->
+
         <div class="popup" id="cons"><div class="nav">Consultants</div>
             <div class="relative-wrapper-container">
             <?php
@@ -206,8 +218,8 @@ if ($_SESSION['user']['type'] == 0 && 0) {
                 foreach ($cons as $nsame => $value) {
                     
                     ?><div><?php  echo $value['nom']; ?> - 
-                    <?php echo $value['prenom']; ?> - Pole 
-                    <?php echo $value['nom_pole']; ?></div>
+                    <?php echo $value['prenom']; ?>
+                    - Pole <?php echo $value['nom_pole']; ?></div>
                 <?php 
                 }
                 ?>
@@ -242,6 +254,9 @@ if ($_SESSION['user']['type'] == 0 && 0) {
             </div>
         </div>
 
+
+<!-- CANDIDAT -->
+
         <div class="popup" id="candidats"><div class="nav">Candidats</div>
              <div class="relative-wrapper-container">
              <?php
@@ -273,6 +288,10 @@ if ($_SESSION['user']['type'] == 0 && 0) {
                 <!-- </div> -->
             </div>
         </div>
+
+
+<!-- CLIENT -->
+
         <div class="popup" id="client"><div class="nav">Clients</div>
              <div class="relative-wrapper-container">
              <?php
@@ -303,6 +322,21 @@ if ($_SESSION['user']['type'] == 0 && 0) {
             </div>
         </div>
     </div> 
+    <?php var_dump($_POST['url']); ?>
+<?php if(isset($_POST['url'])){ ?>
+    <script>    
+
+    Alert.popup({
+        title: "Compte créé",
+        text: "Création du mot de passe : \n <?php echo $_POST['url']; ?>",
+        confirmColor: "#bbbbbb",
+        confirmText: "Retour",
+        confirm: function() {
+            Alert.close();
+        }
+    })
+    </script> <?php
+} ?>
 
     <script>
         Popup.open('Comp');
