@@ -96,11 +96,10 @@ class Alert {
 
     }
 
-    static load_page(url) {
-
-
+    static load_page(url, callback = null) {
 
         Ajax.get(url, function(e) {
+
             var back = document.createElement("div");
             var block = document.createElement("div");
 
@@ -109,9 +108,9 @@ class Alert {
             block.style.position = "absolute";
             block.style.top = "10%";
             block.style.borderRadius = "10px";
-            block.style.width = "500px";
-            block.style.left = "calc(50% - " + (parseInt(block.style.width.slice(0, -2)) / 2) + "px)";
-
+            block.style.width = "80vw";
+            block.style.left = "10vw";
+            
             back.style.backgroundColor = "rgba(0, 0, 0, .3)";
             back.style.fontFamily = "Roboto, sans-serif";
             back.style.position = "fixed";
@@ -123,6 +122,8 @@ class Alert {
             back.appendChild(block);
 
             Alert.open(back);
+
+            if (callback != null) callback();
 
         })
 
