@@ -43,7 +43,7 @@ session_start();
         -ms-filter: grayscale(0);
         box-shadow: 0px 0px 10px -1px rgba(0, 0, 0, .8);
     }
-    .btnTransfer {
+    .btnTransfert {
         display: inline-block;
         padding: 10px 15px;
         border: 2px solid rgba(0, 0, 0, .1);
@@ -52,7 +52,7 @@ session_start();
         cursor: pointer;
         margin-right: 20px;
     }
-    .btnTransfer:hover {
+    .btnTransfert:hover {
         background-color: var(--main-color);
         color: var(--auto-color);
     }
@@ -63,22 +63,22 @@ session_start();
         <h3>Choix du pôle</h3>    
     </div>
 
-    <div onclick="transfer.Indus()" class="imgPole" id="Indus">
+    <div onclick="Transfer.Indus()" class="imgPole" id="Indus">
         <img src="/images/schema-industrie-15.svg" alt="logo a2f industrie" height="100" width="100">
     </div>
 
-    <div onclick="transfer.SI()" class="imgPole" id="SI">
+    <div onclick="Transfer.SI()" class="imgPole" id="SI">
         <img src="/images/visuel-si.svg" alt="logo a2f SI" height="100" width="100">
     </div>
 
-    <div onclick="transfer.Database()" class="imgPole" id="Database">
+    <div onclick="Transfer.Database()" class="imgPole" id="Database">
         <img src="/images/schema-database-17.svg" alt="logo a2f database" height="100" width="100">
     </div>
 
     <br>
 
-    <div onclick="Alert.close()" class="btnTransfer">Annuler</div>
+    <div onclick="Alert.close()" class="btnTransfert">Annuler</div>
 
-    <div onclick="transfer.send()" class="btnTransfer">Transférer</div>
+    <div id="TransferBtn" onclick="Transfer.send(this)" class="btnTransfert">Transférer</div>
 
 </div>

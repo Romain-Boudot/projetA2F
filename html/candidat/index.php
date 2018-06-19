@@ -81,7 +81,7 @@ error_reporting(E_ALL);
 
         </form>
 
-        <div class="btn h-56 modif-profile bold" onclick="Alert.load_page('/candidat/test.php?id=<?php echo $_GET['id']; ?>', function() {var transfer = new Transfer;})">Transfer</div>
+        <div class="btn h-56 modif-profile bold" onclick="Alert.load_page('/candidat/test.php?id=<?php echo $_GET['id']; ?>')">Transfer</div>
 
         <a class="bottom btn h-56 modif-profile bold" href='/candidat/modifier?id=<?php echo $id; ?>'>Modifier mon profil</a>
 

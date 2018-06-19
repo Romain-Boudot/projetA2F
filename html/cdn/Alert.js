@@ -136,9 +136,8 @@ class Alert {
         opened.style.opacity = "0";
         setTimeout(() => {
             opened.remove();
+            if (elem != null) Alert.open(elem);
         }, 500);
-
-        if (elem != null) Alert.open(elem);
 
     }
 
