@@ -96,7 +96,7 @@ class Candidat {
 
                 $pdo = null;
 
-                return $data["url"];
+                return $data;
     
             }else{
                 exit();
