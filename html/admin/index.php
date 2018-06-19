@@ -11,12 +11,10 @@ include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Security.php";
 
 session_start();
 
+Security::check_login(array(1, 2));
+
 $token = Security::gen_token('4');
 
-if ($_SESSION['user']['type'] == 0 && 0) {
-    echo "vous n'avez pas accès à la page d'administration en tant que consultant";
-        exit();
-    }
 ?>
 
 <!DOCTYPE html>

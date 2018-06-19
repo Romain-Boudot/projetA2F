@@ -4,8 +4,11 @@ include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Database.php";
 include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Competence.php";
 include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Search.php";
 include_once $_SERVER["DOCUMENT_ROOT"] . "/../includes/splitstr.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Security.php";
 
 session_start();
+
+Security::check_login(array(1,2));
 
 $search = new Search();
 $id_processing = $_GET["id"];

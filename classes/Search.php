@@ -95,7 +95,7 @@ Class Search {
         if(isset($array['candidats'])){
             if($array['candidats'] == false){
 
-                $statement = "SELECT c.* from consultants c ";
+                $statement = "SELECT c.*, (SELECT nom_serveur FROM fichiers_consultants fc WHERE type = 'img' AND fc.id_consultant = c.id_consultant) from consultants c ";
 
                 if(isset($array['disponibilites'])){
                     if(sizeof($array['disponibilites']['id_disponibilite']) > 0){ 
@@ -375,9 +375,11 @@ Class Search {
 
                     $statement .= " ( ";
 
-                    foreach ($array['etape'] as $key => $value) {
+                    foreach ($array['etape'] as $key => $value){
 
-                        if ($key > 0) $statement .= " OR ";
+                        if ($key > 0){
+                            $statement .= " OR ";
+                        }
 
                         $statement .= " c.etape = :bp" . $bindparamcpt ." ";
 

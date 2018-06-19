@@ -1,17 +1,13 @@
 <?php
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-
     include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Database.php";
     include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Competence.php";
     include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/RH.php";    
     include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Candidat.php";
-
+    include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Security.php";
     session_start();
 
+    Security::check_login(array(1,2));
 
     if(isset($_GET['id'])){
 
