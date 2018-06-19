@@ -36,7 +36,7 @@ Security::check_login(array(0, 1, 2));
     <link rel="stylesheet" href="/recherche/main.css">
     <script src="/cdn/Popup.js"></script>
     <script src="/cdn/Dropdown.js"></script>
-    <script src="/cdn/Search.js"></script>
+    <script src="/recherche/Search.js"></script>
     <title>A2F Advisor</title>
 </head>
 
@@ -72,6 +72,23 @@ Security::check_login(array(0, 1, 2));
                 
 
         </div>
+
+        <?php
+
+            if ($_SESSION['user']['type'] >= 1) {
+
+        ?>
+
+        <div class="btnSlideContainer">
+            <div onclick="s.show_consultant()">Consultants</div><div onclick="s.show_candidat()">Candidats</div>
+            <div></div>
+        </div>
+
+        <?php
+
+            }
+
+        ?>
 
         <div class="search">
     
@@ -194,10 +211,14 @@ Security::check_login(array(0, 1, 2));
             ?>
 
             <div class="sugest">
-                <label class="labelComp">Compétence(s)</label>
-                <label class="labelClient consultantOnly">Client(s)</label>
-                <div class="sugestedComp borderRight"></div>
-                <div class="sugestedClient consultantOnly"></div>
+                <div>
+                    <label class="labelComp">Compétence(s)</label>
+                    <label class="labelClient consultantOnly">Client(s)</label>
+                </div>
+                <div>
+                    <div class="sugestedComp"></div>
+                    <div class="sugestedClient borderLeft consultantOnly"></div>
+                </div>
             </div>
 
         </div>

@@ -438,7 +438,7 @@ select:focus {
     width: 90%;
     margin: 20px 5%;
     display: none;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 100%;
 }
 
 .sugest .sugestedItem {
@@ -461,6 +461,8 @@ select:focus {
 
 .sugest>* {
     margin: 10px 10px;
+    display: grid;
+    grid-template-columns: 50% 50%;
 }
 
 .labelComp {
@@ -525,4 +527,36 @@ select:focus {
 .btn:not(a):not(.close):hover {
     background-color: var(--main-color);
     color: var(--auto-color);
+}
+
+.btnSlideContainer {
+    display: inline-block;
+    position: absolute;
+    top: 60px;
+    left: calc(50% - 100px);
+    width: 200px;
+    padding: 5px;
+    border: 2px solid var(--main-color);
+    border-radius: 100px;
+    color: rgb(161, 161, 161);
+}
+
+.btnSlideContainer>div{
+    position: relative;
+    display: inline-block;
+    width: calc(50% - 1.75px);
+    text-align: center;
+    z-index: 15;
+    cursor: pointer;
+}
+
+.btnSlideContainer>div:nth-child(3) {
+    position: absolute;
+    height: calc(100% - 6px);
+    background-color: var(--main-color);
+    top: 0;
+    border-radius: 100px;
+    margin: 3px;
+    z-index: 10;
+    transition: .2s left ease, .2s right ease;
 }
