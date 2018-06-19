@@ -77,7 +77,7 @@ class Candidat {
             if(isset($c)) {
                 $c->set_email($this->get_email());
                 $c->set_telephone($this->get_telephone());
-                $c->set_linkedin($this->get_linkedin));
+                $c->set_linkedin($this->get_linkedin());
                 $c->send_modif();
                  
                 $comp = $this->get_competences();
