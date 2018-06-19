@@ -49,6 +49,7 @@ error_reporting(E_ALL);
     <script src="/cdn/Chart.js"></script>
     <script src="/cdn/Dropdown.js"></script>
     <script src="/candidat/main.js"></script>
+    <script src="/candidat/transfer.js"></script>
     <title>A2F Advisor</title>
 </head>
 <body>
@@ -71,14 +72,16 @@ error_reporting(E_ALL);
         <div class="profile-info left">LinkedIn :</div>
         <a href="<?php echo $candidat->get_linkedin(); ?>" class="profile-info underline" data-info="linkedin"><?php echo $candidat->get_linkedin(); ?></a>
 
-        <form action="/candidat/traitement.php" method="get">
+        <form action="/candidat/traitement.php" method="get" class="hidden">
 
-                <input type="hidden" name="action" value="transfer"> 
+            <input type="hidden" name="action" value="transfer"> 
             <input type="hidden" name="id" value=" <?php echo $id; ?> ">
 
             <input type="submit" value="Envoyer">
 
         </form>
+
+        <div class="btn h-56 modif-profile bold" onclick="Alert.load_page('/candidat/test.php?id=<?php echo $_GET['id']; ?>', function() {var transfer = new Transfer;})">Transfer</div>
 
         <a class="bottom btn h-56 modif-profile bold" href='/candidat/modifier?id=<?php echo $id; ?>'>Modifier mon profil</a>
 

@@ -32,14 +32,14 @@
 .nom,
 .prenom,
 .email,
-.telephone,
-.pole {
+.telephone {
     width: calc(65% - 4px);
     text-align: center;
     float: right;
     padding: 2px 2px;
-    word-wrap: break-word;
+    /*word-wrap: break-word;*/
     overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .filter {

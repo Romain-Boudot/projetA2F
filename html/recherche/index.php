@@ -36,7 +36,7 @@ Security::check_login(array(0, 1, 2));
     <link rel="stylesheet" href="/recherche/main.css">
     <script src="/cdn/Popup.js"></script>
     <script src="/cdn/Dropdown.js"></script>
-    <script src="/cdn/Search.js"></script>
+    <script src="/recherche/Search.js"></script>
     <title>A2F Advisor</title>
 </head>
 
@@ -73,11 +73,28 @@ Security::check_login(array(0, 1, 2));
 
         </div>
 
+        <?php
+
+            if ($_SESSION['user']['type'] >= 1) {
+
+        ?>
+
+        <div class="btnSlideContainer">
+            <div onclick="s.show_consultant()">Consultants</div><div onclick="s.show_candidat()">Candidats</div>
+            <div></div>
+        </div>
+
+        <?php
+
+            }
+
+        ?>
+
         <div class="search">
     
             <div class="filterGrid">
 
-                <div class="filterGridLeft borderRight">
+                <div class="filterGridLeft borderRight consultantOnly">
 
                     Pôles :
                     <br>
@@ -99,7 +116,7 @@ Security::check_login(array(0, 1, 2));
 
                 </div>
 
-                <div class="filterGridRight">
+                <div class="filterGridRight consultantOnly">
                     Disponibilités :
                     <label for="dispMtn" class="disp">
                         <input type="checkbox" name="dispMtn" id="dispMtn">
@@ -122,11 +139,44 @@ Security::check_login(array(0, 1, 2));
                         <div class="checkbox">✔</div>
                         Dans 3 mois et plus
                     </label>
+
+                    <label for="test">
+                        <input type="checkbox" name="test" id="test">
+                        <div class="test">test</div>
+                    </label>
+
+                </div>
+
+                <div class="filterGridLarge candidatOnly">
+
+                    Avancements :
+                    <label for="av1" class="disp">
+                        <input type="checkbox" name="av2" id="av1">
+                        <div class="checkbox">✔</div>
+                        1er appel
+                    </label>
+                    <label for="av2" class="disp">
+                        <input type="checkbox" name="av2" id="av2">
+                        <div class="checkbox">✔</div>
+                        1ere entretien
+                    </label>
+                    <br>
+                    <label for="av3" class="disp">
+                        <input type="checkbox" name="av3" id="av3">
+                        <div class="checkbox">✔</div>
+                        2eme entretien
+                    </label>
+                    <label for="av4" class="disp">
+                        <input type="checkbox" name="av4" id="av4">
+                        <div class="checkbox">✔</div>
+                        3eme entretien
+                    </label>
+
                 </div>
 
                 <div class="filterGridLarge borderTop">
 
-                    <div class="btn fakeComp" onclick="Popup.open('popupClient', s)">Selection des clients</div>
+                    <div class="btn fakeComp consultantOnly" onclick="Popup.open('popupClient', s)">Selection des clients</div>
                     <div class="btn fakeComp ml" onclick="Popup.open('popupComp', s)">Selection des competences</div>
 
                 </div>
@@ -161,10 +211,14 @@ Security::check_login(array(0, 1, 2));
             ?>
 
             <div class="sugest">
-                <label class="labelComp">Compétence(s)</label>
-                <label class="labelClient">Client(s)</label>
-                <div class="sugestedComp borderRight"></div>
-                <div class="sugestedClient"></div>
+                <div>
+                    <label class="labelComp">Compétence(s)</label>
+                    <label class="labelClient consultantOnly">Client(s)</label>
+                </div>
+                <div>
+                    <div class="sugestedComp"></div>
+                    <div class="sugestedClient borderLeft consultantOnly"></div>
+                </div>
             </div>
 
         </div>

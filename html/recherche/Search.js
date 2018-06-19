@@ -49,6 +49,15 @@ class S {
 
         });
 
+        this.btnSlide = {
+            slider : document.querySelector(".btnSlideContainer>div:nth-child(3)"),
+            consultant : document.querySelector(".btnSlideContainer>div:nth-child(1)"),
+            candidat : document.querySelector(".btnSlideContainer>div:nth-child(2)"),
+            container :  document.querySelector(".btnSlideContainer"),
+            status : false
+        }
+
+
     }
 
     onPopupOpen() {
@@ -279,6 +288,56 @@ class S {
             this.sugest.client[e.dataset.name] = e.dataset.id;
 
         });
+        
+        this.show_consultant();
+
+    }
+
+    show_consultant() {
+
+        if (this.btnSlide.slider != null) {
+            this.btnSlide.slider.style.left = "0";
+            this.btnSlide.consultant.style.color = "rgba(0, 0, 0, .8)";
+            this.btnSlide.candidat.style.color = "rgb(161, 161, 161)";
+            this.btnSlide.container.style.borderColor = "var(--main-color)";
+            this.btnSlide.slider.style.backgroundColor = "var(--main-color)";
+            this.btnSlide.status = false;
+        }
+
+        document.querySelectorAll(".consultantOnly").forEach(e => {
+
+            e.style.display = "inline-block";
+
+        });
+
+        document.querySelectorAll(".candidatOnly").forEach(e => {
+
+            e.style.display = "none";
+
+        })
+
+    }
+
+    show_candidat() {
+
+        this.btnSlide.slider.style.left = "calc(50% - 4px)";
+        this.btnSlide.consultant.style.color = "rgb(161, 161, 161)";
+        this.btnSlide.candidat.style.color = "rgb(255, 255, 255)";
+        this.btnSlide.container.style.borderColor = "var(--color-df)";
+        this.btnSlide.slider.style.backgroundColor = "var(--color-df)";
+        this.btnSlide.status = true;
+
+        document.querySelectorAll(".consultantOnly").forEach(e => {
+
+            e.style.display = "none";
+
+        });
+
+        document.querySelectorAll(".candidatOnly").forEach(e => {
+
+            e.style.display = "inline-block";
+
+        })
 
     }
 
@@ -287,6 +346,8 @@ class S {
         s.keyup({keyCode: 13});
 
         this.arr = {
+            "candidats": this.btnSlide.status,
+            "etape": [],
             "competences":{
                 "id_competence":[],
                 "niveau":[]
@@ -314,6 +375,11 @@ class S {
         var disp2M = document.getElementById('disp2M');
         var disp3M = document.getElementById('disp3M');
 
+        var av1 = document.getElementById('av1');
+        var av2 = document.getElementById('av2');
+        var av3 = document.getElementById('av3');
+        var av4 = document.getElementById('av4');
+
         if (archive != null && archive.checked ) {
             this.arr.archive = 1;
         } else {
@@ -339,6 +405,18 @@ class S {
         }
         if (disp3M.checked) {
             this.arr.disponibilites.id_disponibilite.push(4);
+        }
+        if (av1.checked) {
+            this.arr.etape.push(1);
+        }
+        if (av2.checked) {
+            this.arr.etape.push(2);
+        }
+        if (av3.checked) {
+            this.arr.etape.push(3);
+        }
+        if (av4.checked) {
+            this.arr.etape.push(4);
         }
 
         document.querySelectorAll("[data-type='competence']").forEach(e => {

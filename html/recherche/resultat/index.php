@@ -189,12 +189,15 @@
     
         <?php
 
+            $candidat = json_decode($_GET["filter"], true)["candidats"];
+            if ($candidat) $col = "candidat"; else $col = "consultant";
+
             foreach ($result as $key => $value) {
 
         ?>
-        <div onclick="location.href='http://<?php echo $_SERVER['HTTP_HOST'] . '/consultant/?id=' . $value['id_consultant']; ?>'" class="profile pole<?php echo $value['pole']; ?>">
+        <div onclick="location.href='http://<?php echo $_SERVER['HTTP_HOST'] . '/' . $col . '/?id=' . $value['id_' . $col]; ?>'" class="profile pole<?php echo $value['pole']; ?>">
 
-            <img src="/images/unknown.png" alt="profile photo">
+            <img src="/images/profil/unknown.png" alt="profile photo">
 
             <div class="nom"><?php echo $value["nom"]; ?></div>
             <div class="prenom"><?php echo $value["prenom"]; ?></div>

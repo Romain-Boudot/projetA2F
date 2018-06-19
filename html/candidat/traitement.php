@@ -7,10 +7,12 @@ include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Security.php";
  
 session_start(); 
  
-//Security::check_login(array(0, 1, 2)); 
+Security::check_login(array(0, 1, 2)); 
  
-//if (!isset($_GET["id"]) || !isset($_GET["action"])) exit(); 
+if (!isset($_GET["id"]) || !isset($_GET["action"])) exit();
+
 $candidat = new Candidat($_GET["id"]); 
+
 if ($_GET["action"] == "timeline") { 
  
     if (!isset($_GET["lvl"])) exit(); 
@@ -22,7 +24,28 @@ if ($_GET["action"] == "timeline") {
  
 } elseif ($_GET["action"] == "transfer") {
 
-    $candidat->transfer(/*pole*/);
+    if (!isset($_POST["token"])) {
+        echo '{"code": -2, "message": "Missing token"}';
+        exit();
+    }
+
+    if (!isset($_POST['pole'])) {
+        echo '{"code": -2, "message": "Missing pole"}';
+        exit();
+    }
+
+    if (!Security::check_token($_POST['token'], 5100)) {
+        echo '{"code": -2, "message": "Wrong token"}';
+        exit();
+    }
+
+    $returned = $candidat->transfer($_POST['pole']);
+
+    echo '{"code": 1, "message": "Transfer Réussi", "infos": {
+        "url": "' . $returned["url"] . '",
+        "id": "' . $returned["id"] . '"
+    }}';
+
 
 } elseif ($_GET["action"] == "img") {
 

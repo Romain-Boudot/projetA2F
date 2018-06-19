@@ -477,3 +477,7 @@ nav {
     display: inline-block;
     line-height: 20px;
 }
+
+.btn {
+    cursor: pointer;
+}
