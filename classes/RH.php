@@ -50,4 +50,15 @@ class RH {
 
     }
 
+    static public function delete($id) {
+        $pdo = Database::connect();
+ 
+        $statement = $pdo->prepare("DELETE FROM RH WHERE id_rh = :id");
+        $statement->execute(array(
+            ':id' => $id
+        ));
+ 
+        $pdo = null;
+    } 
+
 }
