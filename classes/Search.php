@@ -95,7 +95,7 @@ Class Search {
         if(isset($array['candidats'])){
             if($array['candidats'] == false){
 
-                $statement = "SELECT c.*, (SELECT nom_serveur FROM fichiers_consultants fc WHERE type = 'img' AND fc.id_consultant = c.id_consultant) from consultants c ";
+                $statement = "SELECT c.*, COALESCE((SELECT nom_serveur FROM fichiers_consultants fc WHERE type = 'img' AND fc.id_consultant = c.id_consultant), 'unknown.png') AS image from consultants c ";
 
                 if(isset($array['disponibilites'])){
                     if(sizeof($array['disponibilites']['id_disponibilite']) > 0){ 
@@ -251,6 +251,25 @@ Class Search {
                             $bindparamcpt ++ ;
                         }
                     }
+                }
+
+
+                if(isset($array["archive"])){
+                    
+                    if ($where == 0) {
+                        $statement .= " WHERE ";
+                        $where = 1;
+                    } else{
+                        $statement .= " AND ";
+                        $where = 1;
+                    }
+    
+                    $statement .= " ( ";
+                    $statement .= " c.archive = :bp" . $bindparamcpt . " ";
+                    $statement .= " ) ";
+
+                    $bindparam[":bp" . $bindparamcpt] = $array["archive"];
+                    $bindparamcpt++;
                 }
 
 

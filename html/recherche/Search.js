@@ -297,7 +297,7 @@ class S {
 
         if (this.btnSlide.slider != null) {
             this.btnSlide.slider.style.left = "0";
-            this.btnSlide.consultant.style.color = "rgba(0, 0, 0, .8)";
+            this.btnSlide.consultant.style.color = "var(--auto-color)";
             this.btnSlide.candidat.style.color = "rgb(161, 161, 161)";
             this.btnSlide.container.style.borderColor = "var(--main-color)";
             this.btnSlide.slider.style.backgroundColor = "var(--main-color)";
