@@ -59,7 +59,6 @@ if ($_SESSION['user']['type'] == 0 && 0) {
                 <?php
 
                     $cpt = 0;
-                    
                     function tab($tab, $cpt) {
 
                         ?>
@@ -69,31 +68,32 @@ if ($_SESSION['user']['type'] == 0 && 0) {
                         <?php
 
                         $cpt += 1;
-                        
                         foreach ($tab as $name => $value) {
-                            
                             if ($value["enfant"] != null) {
                                 
                                 ?>
                                 
                                 <div id="ddt<?php echo $cpt; ?>" class="dropdownTrigger"><?php echo $name; ?>
 
-                                <div onclick="Admin.addDaughter(<?php echo $value["id_competence"]; ?>, <?php echo $cpt; ?>)" 
-                                    data-name="<?php echo $name; ?>" 
-                                    data-id="<?php echo $value["id_competence"]; ?>" 
-                                    class="competence borderComp">Ajouter une compétence fille
-                                </div>
+                                    <div onclick="Admin.addDaughter(<?php echo $value["id_competence"]; ?>, <?php echo $cpt; ?>)" 
+                                        data-name="<?php echo $name; ?>" 
+                                        data-id="<?php echo $value["id_competence"]; ?>" 
+                                        class="competence borderComp">
+                                        Ajouter une compétence fille
+                                    </div>
+        
+                                    <div onclick="Post.send('admin/traitement.php', { 'id' : '<?php echo $value["id_competence"]; ?>' , 'action' : 'delete'})" 
+                                        data-name="<?php echo $name; ?>"
+                                        data-id="<?php echo $value["id_competence"]; ?>" 
+                                        class="competence borderComp">
+                                        Supprimer
+                                    </div>
 
-                                <div onclick="Post.send('admin/traitement.php', { 'id' : '<?php echo $value["id_competence"]; ?>' , 'action' : 'delete'})" 
-                                    data-name="<?php echo $name; ?>"
-                                    data-id="<?php echo $value["id_competence"]; ?>" 
-                                    class="competence borderComp">Supprimer</div>
                                 </div>
                                 
                                 <?php
 
                                 $returned = tab($value["enfant"], $cpt);
-
                                 $cpt = $returned["cpt"];
 
                             } else {
@@ -101,7 +101,12 @@ if ($_SESSION['user']['type'] == 0 && 0) {
                                 ?>
                                 
                                 <div class="competence"><?php echo $name; ?>
-                                <div onclick="Post.send('/admin/traitement.php', { 'id' : '<?php echo $value["id_competence"]; ?>' , 'action' : 'delete'})" data-name="<?php echo $name; ?>" data-id="<?php echo $value["id_competence"]; ?>" class="competence borderComp">Supprimer</div>
+                                    <div onclick="Post.send('/admin/traitement.php', { 'id' : '<?php echo $value["id_competence"]; ?>' , 'action' : 'delete'})" 
+                                        data-name="<?php echo $name; ?>" 
+                                        data-id="<?php echo $value["id_competence"]; ?>" 
+                                        class="competence borderComp">
+                                        Supprimer
+                                    </div>
                                 </div>
                                 
                                 <?php
@@ -134,7 +139,8 @@ if ($_SESSION['user']['type'] == 0 && 0) {
                                 <div onclick="Admin.addDaughter(<?php echo $value["id_competence"]; ?>, <?php echo $cpt; ?>)" 
                                     data-name="<?php echo $name; ?>" 
                                     data-id="<?php echo $value["id_competence"]; ?>" 
-                                    class="competence borderComp">Ajouter une compétence fille
+                                    class="competence borderComp">
+                                    Ajouter une compétence fille
                                 </div>
                             </div>
                             
@@ -164,40 +170,42 @@ if ($_SESSION['user']['type'] == 0 && 0) {
             <div class="relative-wrapper-container">
                 <?php
 
-                    $rh = RH::get_array();
+                $rh = RH::get_array();
 
-                    foreach ($rh as $name => $value) {
-                        
-                        ?>
-                        
-                        <div><?php  echo $value['nom']; ?> - 
-                            <?php echo $value['prenom']; ?>
-                            
-                            <form action='/admin/traitement.php/' method='post'>
-                                <input type='hidden' name='token' value=" <?php echo $token; ?> " >
-                                <input type='hidden' name='action' value='delete_rh'>
-                                <input type='hidden' name='id_rh' value='<?php echo $value['id_rh']; ?>  '>
-                                <input type='submit' value='Supprimer'>
-                            </form>
-                            
-                        </div>
-                    
-                    <?php 
-                    
-                    }
+                foreach ($rh as $name => $value) {
                     
                     ?>
+                    
+                    <div><?php  echo $value['nom']; ?> - 
+                        <?php echo $value['prenom']; ?>
+                        
+                        <form action='/admin/traitement.php/' method='post'>
 
-                <!-- <div class="popup" id="rh"><div class="nav">Responsable</div> -->
+                            <input type='hidden' name='token' value=" <?php echo $token; ?> " >
+                            <input type='hidden' name='action' value='delete_rh'>
+                            <input type='hidden' name='id_rh' value='<?php echo $value['id_rh']; ?>  '>
+                            <input type='submit' value='Supprimer'>
+
+                        </form>
+                        
+                    </div>
                 
-                    <form action="/admin/traitement.php/" method="post">
-                        <input type="hidden" name="token" value="<?php echo $token; ?>" >
-                        <input type="hidden" name='action' value='add_rh'>
-                        <input type="text" name="nom" placeholder="Nom" required>
-                        <input type="text" name="prenom" placeholder="Prenom" required>
-                        <input type="submit" value="Envoyer">
-                    </form>
-                <!-- </div> -->
+                <?php 
+                
+                }
+                
+                ?>
+
+                <form action="/admin/traitement.php/" method="post">
+
+                    <input type="hidden" name="token" value="<?php echo $token; ?>" >
+                    <input type="hidden" name='action' value='add_rh'>
+                    <input type="text" name="nom" placeholder="Nom" required>
+                    <input type="text" name="prenom" placeholder="Prenom" required>
+                 
+                    <input type="submit" value="Envoyer">
+
+                </form>
             </div>
         </div>
 
@@ -219,10 +227,12 @@ if ($_SESSION['user']['type'] == 0 && 0) {
                         <?php echo $value['prenom']; ?>
                     
                         <form action='/admin/traitement.php/' method='post'>
+
                             <input type='hidden' name='token' value=" <?php echo $token; ?> " >
                             <input type='hidden' name='action' value='delete_bm'>
                             <input type='hidden' name='id_bm' value='<?php echo $value['id_bm']; ?>  '>
                             <input type='submit' value='Supprimer'>
+
                         </form>
 
                     </div>
@@ -233,16 +243,16 @@ if ($_SESSION['user']['type'] == 0 && 0) {
 
                 ?>
 
-                <!-- <div class="popup" id="rh"><div class="nav">Responsable</div> -->
-    
                 <form action="/admin/traitement.php/" method="post">
+
                     <input type="hidden" name="token" value="<?php echo $token; ?>" >   
                     <input type="hidden" name="action" value="add_bm">
                     <input type="text" name="nom" placeholder="Nom" required>
                     <input type="text" name="prenom" placeholder="Prenom" required>
+                  
                     <input type="submit" value="Envoyer">
+
                 </form>
-                <!-- </div> -->
             </div>
         </div>
 
@@ -258,47 +268,50 @@ if ($_SESSION['user']['type'] == 0 && 0) {
 
                 foreach ($cons as $nsame => $value) {
                     
-                    ?><div><?php  echo $value['nom']; ?> - 
-                    <?php echo $value['prenom']; ?>
-                    - Pole <?php echo $value['nom_pole']; 
-                    echo "<form action='/admin/traitement.php/' method='post'>
-                    <input type='hidden' name='token' value=" . $token ." >
-                    <input type='hidden' name='action' value='delete_consultant'>
-                    <input type='hidden' name='id_consultant' value='" .$value['id_consultant'] . "'>
+                    ?>
                     
-                    <input type='submit' value='Supprimer'";?>
-            </div>
-            <?php 
+                    <div><?php  echo $value['nom']; ?> - 
+                        <?php echo $value['prenom']; ?>
+                    
+                        <form action='/admin/traitement.php/' method='post'>
+
+                            <input type='hidden' name='token' value=" <?php echo $token; ?> " >
+                            <input type='hidden' name='action' value='delete_consultant'>
+                            <input type='hidden' name='id_consultant' value='<?php echo $value['id_consultant']; ?>  '>
+                            <input type='submit' value='Supprimer'>
+
+                        </form>
+
+                    </div>
+
+                <?php 
+
             }
+            
             ?>
                 
-                <!-- <div class="popup" id="rh"><div class="nav">Responsable</div> -->
-    
                 <form action="/admin/traitement.php/" method="post">
                         
-                        <input type="hidden" name="action" value="add_consultant">
-                        <input type="hidden" name="token" value="<?php echo $token; ?>" >
+                    <input type="hidden" name="token" value="<?php echo $token; ?>" >
+                    <input type="hidden" name="action" value="add_consultant">
+                    <input type="text" name="nom" placeholder="Nom" required>
+                    <input type="text" name="prenom" placeholder="Prenom" required>
+                    <select name="pole" required><option selected disabled>Pole</option><?php
 
-                        <input type="text" name="nom" placeholder="Nom" required>
-                        <input type="text" name="prenom" placeholder="Prenom" required>
-                        <select name="pole" required><option selected disabled>Pole</option><?php
-
-                        $p = array(
-                            "1" => "SI",
-                            "2" => "Indus",
-                            "3" => "Database"
-                        );
-                        for($i=1; $i <= 3; $i++){
-                            ?>
-                            <option value=" <?php echo $i; ?>"><?php echo $p[$i]; ?> </option><?php
-                        }
+                    $p = array(
+                        "1" => "SI",
+                        "2" => "Indus",
+                        "3" => "Database"
+                    );
+                    for($i=1; $i <= 3; $i++){
                         ?>
+                        <option value=" <?php echo $i; ?>"><?php echo $p[$i]; ?> </option><?php
+                    }
+                    ?>
 
-                        <input type="submit" value="Envoyer">
+                    <input type="submit" value="Envoyer">
 
-                    </form>
-        
-                <!-- </div> -->
+                </form>
             </div>
         </div>
 
@@ -314,27 +327,38 @@ if ($_SESSION['user']['type'] == 0 && 0) {
 
                 foreach ($cand as $nsame => $value) {
                     
-                    ?><div><?php  echo $value['nom']; ?> - 
-                    <?php echo $value['prenom']; ?></div>
-                <?php 
+                    ?>
+                    
+                    <div><?php  echo $value['nom']; ?> - 
+                        <?php echo $value['prenom']; ?>
+                        
+                        <form action='/admin/traitement.php/' method='post'>
+
+                            <input type='hidden' name='token' value=" <?php echo $token; ?> " >
+                            <input type='hidden' name='action' value='delete_candidat'>
+                            <input type='hidden' name='id_candidat' value='<?php echo $value['id_candidat']; ?>  '>
+                            <input type='submit' value='Supprimer'>
+
+                        </form>
+                        
+                    </div>
+
+                    <?php 
+
                 }
+                
                 ?> 
-                <!-- <div class="popup" id="rh"><div class="nav">Responsable</div> -->
-    
+
                 <form action="/admin/traitement.php/" method="post">
                             
-                        <input type="hidden" name="" value="add_candidat">
-                        <input type="hidden" name="token" value="<?php echo $token; ?>" >
+                    <input type="hidden" name="token" value="<?php echo $token; ?>" >
+                    <input type="hidden" name="action" value="add_candidat">
+                    <input type="text" name="nom" placeholder="Nom" required>
+                    <input type="text" name="prenom" placeholder="Prenom" required>
 
-                        <input type="text" name="nom" placeholder="Nom" required>
-                        <input type="text" name="prenom" placeholder="Prenom" required>
+                    <input type="submit" value="Envoyer">
 
-
-                        <input type="submit" value="Envoyer">
-
-                    </form>
-            
-                <!-- </div> -->
+                </form>
             </div>
         </div>
 
@@ -350,29 +374,37 @@ if ($_SESSION['user']['type'] == 0 && 0) {
 
                 foreach ($client as $nsame => $value) {
                     
-                    ?><div><?php  echo $value['entreprise'];?></div>
-                <?php 
+                    ?>
+                    
+                    <div><?php  echo $value['entreprise'];?></div>
+                    
+                    <form action='/admin/traitement.php/' method='post'>
+
+                        <input type='hidden' name='token' value=" <?php echo $token; ?> " >
+                        <input type='hidden' name='action' value='delete_client'>
+                        <input type='hidden' name='id_client' value='<?php echo $value['id_client']; ?>  '>
+                        <input type='submit' value='Supprimer'>
+
+                    </form>
+
+                    <?php 
+
                 }
+
                 ?>
-                <!-- <div class="popup" id="rh"><div class="nav">Responsable</div> -->
     
                 <form action="/admin/traitement.php/" method="post">
                         
-                        <input type="hidden" name="" value="add_client">
-                        <input type="hidden" name="token" value="<?php echo $token; ?>" >
+                    <input type="hidden" name="token" value="<?php echo $token; ?>" >
+                    <input type="hidden" name="action" value="add_client">
+                    <input type="text" name="entreprise" placeholder="Nom de l'entreprise" required>
 
-                        <input type="text" name="nom" placeholder="Nom" required>
-                        <input type="text" name="prenom" placeholder="Prenom" required>
+                    <input type="submit" value="Envoyer">
 
-                        <input type="submit" value="Envoyer">
-
-                       </form>
-    
-                <!-- </div> -->
+                </form>
             </div>
         </div>
     </div> 
-    <?php var_dump($_POST['url']); ?>
 <?php if(isset($_POST['url'])){ ?>
     <script>    
 

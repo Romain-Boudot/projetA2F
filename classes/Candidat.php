@@ -39,8 +39,8 @@ class Candidat {
 
         $add_candidate = $pdo->prepare("INSERT INTO candidats (nom, prenom) VALUES (:nom, :prenom)");
         $add_candidate->execute(array(':nom' => $infos['nom'], ':prenom' => $infos['prenom']));	
-
-        $pdo =  null;
+        echo "lol";
+       $pdo =  null;
     }
 
     public function delete(){

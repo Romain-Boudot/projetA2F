@@ -23,4 +23,15 @@ class Client {
 
     }
 
+    static public function delete($id) {
+        $pdo = Database::connect();
+ 
+        $statement = $pdo->prepare("DELETE FROM clients WHERE id_client = :id");
+        $statement->execute(array(
+            ':id' => $id
+        ));
+ 
+        $pdo = null;
+    } 
+
 }
