@@ -533,7 +533,7 @@ select:focus {
 .btnSlideContainer {
     display: inline-block;
     position: absolute;
-    top: 60px;
+    top: 14px;
     left: calc(50% - 100px);
     width: 200px;
     padding: 5px;

@@ -11,7 +11,7 @@
 - [x] Onglet Aide qui force le scrolling sur la page (c'est moche et c'est nul)
 ## BM/RH :
 ###  Recherche : 
-- [ ] Bouton consultants/candidats overlap le wrapper de la recherche
-- [ ] "Recherche : " les deux points descendent en bas et c'est moche
+- [x] Bouton consultants/candidats overlap le wrapper de la recherche
+- [x] "Recherche : " les deux points descendent en bas et c'est moche
 ## Statistiques : 
 - [ ] Basses résolutions : toutes les colonnes ne s'affichent pas sur les graphiques
