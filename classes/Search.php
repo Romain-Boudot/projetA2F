@@ -421,7 +421,6 @@ Class Search {
         $query->execute($bindparam);
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         
-        var_dump($statement);
         return $result;        
 
     } 
