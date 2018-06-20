@@ -80,10 +80,10 @@
 }
 
 .searchBar::before {
-    content: "Recherche : ";
+    content: "Recherche :";
     position: absolute;
-    right: calc(100% + 20px);
-    width: 90px;
+    right: calc(100% + 10px);
+    width: 100px;
     height: 44px;
     line-height: 44px;
 }
