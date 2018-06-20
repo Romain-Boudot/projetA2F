@@ -197,7 +197,7 @@
         ?>
         <div onclick="location.href='http://<?php echo $_SERVER['HTTP_HOST'] . '/' . $col . '/?id=' . $value['id_' . $col]; ?>'" class="profile pole<?php echo $value['pole']; ?>">
 
-            <img src="/images/profil/unknown.png" alt="profile photo">
+        <img src="/images/profil/<?php echo $value['image']; ?>" alt="profile photo">
 
             <div class="nom"><?php echo $value["nom"]; ?></div>
             <div class="prenom"><?php echo $value["prenom"]; ?></div>

@@ -46,7 +46,7 @@ class Candidat {
     public function delete(){
         $pdo = Database::connect(); 
 
-        $delete_candidate = $pdo->prepare("DELETE FROM candidats WHERE id_candidat = :id");
+        $delete_candidate = $pdo->prepare("DELETE FROM * WHERE id_candidat = :id");
         $delete_candidate->bindParam('id', $this->id);
         $delete_candidate->execute();
 
@@ -75,6 +75,11 @@ class Candidat {
         if(isset($data)) {
             $c = new Consultant($data['id']); 
             if(isset($c)) {
+                $c->set_email($this->get_email());
+                $c->set_telephone($this->get_telephone());
+                $c->set_linkedin($this->get_linkedin());
+                $c->send_modif();
+                 
                 $comp = $this->get_competences();
                 $qualif = $this->get_qualifications();
                 foreach($comp as $key => $value){
@@ -89,13 +94,8 @@ class Candidat {
 
                 }
                 
-                $pdo = Database::connect();
-
-                $statement = $pdo->prepare("DELETE FROM * WHERE id_candidat = :idcandidat");
-                $statement->execute(array("idcandidat"=> $this->id));
-
-                $pdo = null;
-
+                $this->delete();
+    
                 return $data;
     
             }else{
@@ -106,9 +106,7 @@ class Candidat {
         }
 
 
-        //        delete();
         
-        //return $data['url'];
 
     }
 

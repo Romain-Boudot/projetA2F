@@ -29,7 +29,6 @@ class Transfer {
         if (btn.dataset.pole == "" || btn.dataset.poleName == "") return;
 
         Ajax.get("/candidat/traitement.php?id=" + url_get.$_GET().id + "&action=gettoken", function(e) {
-
             var token = JSON.parse(e).token;
 
             Alert.popup({
