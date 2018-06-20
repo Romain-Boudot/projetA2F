@@ -1,30 +1,17 @@
-# projetA2F
-Projet de stage A2f
-
-
-•
-|-html
-| |-profil
-| |
-
-
-
- - graph avec filtre
- - barre de recherche avec fitre (huge)
- - time line (popup sur des pts avec event)
- - 
-
-
- - RH : R(all)  W(*comp) create user yes
- - BM : R(all)  W(entr)  create user yes
- - co : R(comp) W(comp)  create user no
-
-
-
-infos :
- - competence
- - salaires (augmentation)
- - clients
- - mobilité
- - disponibilter
- - 
+ERREURS VISUELLES : 
+ Consultant : 
+  Profil :
+   - [ ] Nom/Prénom/Email dépassent du cadre gauche du profil consultant
+   - [ ] Linkedin overlap le boutton "Modifier le profil"
+   - [ ]  Pas de limites sur les graphiques (vite illisible)
+   - [ ] Pas d'overflow sur les onglets des profils (texte innacessible au delà de quelques dizaines de chars)
+  Recherche : 
+   - [ ] Notice : undefined statement in Search.php visible au chargement
+   - [ ] "Recherche : " les deux points descendent en bas et c'est moche
+   - [ ] Onglet Aide qui force le scrolling sur la page (c'est moche et c'est nul)
+ BM/RH :
+  Recherche : 
+   - [ ] Bouton consultants/candidats overlap le wrapper de la recherche
+   - [ ] "Recherche : " les deux points descendent en bas et c'est moche
+  Statistiques : 
+   - [ ] Basses résolutions : toutes les colonnes ne s'affichent pas sur les graphiques
