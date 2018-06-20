@@ -4,7 +4,7 @@
 - [x] Nom/Prénom/Email dépassent du cadre gauche du profil consultant
 - [x] Linkedin overlap le boutton "Modifier le profil"
 - [ ] Pas de limites sur les graphiques (vite illisible)
-- [ ] Pas d'overflow sur les onglets des profils (texte innacessible au delà de quelques dizaines de chars)
+- [x] Pas d'overflow sur les onglets des profils (texte innacessible au delà de quelques dizaines de chars)
 ### Recherche : 
 - [ ] Notice : undefined statement in Search.php visible au chargement
 - [ ] "Recherche : " les deux points descendent en bas et c'est moche
