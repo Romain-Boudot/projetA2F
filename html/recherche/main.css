@@ -73,6 +73,7 @@
     text-align: left;
     cursor: text;
     border: 1px solid rgba(0, 0, 0, .5);
+    margin-bottom: 10px;
 }
 
 .searchBar select {
@@ -436,7 +437,7 @@ select:focus {
 
 .sugest {
     width: 90%;
-    margin: 20px 5%;
+    margin: 10px 5%;
     display: none;
     grid-template-columns: 100%;
 }
