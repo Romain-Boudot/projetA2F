@@ -275,7 +275,9 @@
                         )
                     );
 
-                    foreach ($graph as $values) {
+                    foreach ($graph as $key => $values) {
+ 
+                        if ($graphG[$values['id_graphique']]['length'] >= 8) continue;
 
                         if ($values["niveau"] == null) $values["niveau"] = 0;
 

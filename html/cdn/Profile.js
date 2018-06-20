@@ -2,6 +2,9 @@ class Arr {
 
     static arr() {
         return {
+            lenght : function() {
+                var cpt = 0; for (var a in this.values) { cpt++; } return cpt;
+            },
             includes : function(id) {
                 for (var a in this.values) {if (a == id) return true;} return false;
             },
@@ -140,6 +143,7 @@ class Graph {
     }
 
     addG1(id, niveau, name) {
+        if (this.g1.lenght() >= 8) return;
         if (this.g1.push(id, niveau)) {
             document.querySelector('.graph1').innerHTML += '<div class="graphComp" data-id="' + id + '" data-lvl="' + niveau + '">' + name +
             "<div onclick='g.delG1(" + id + ")' class='del'>&times;</div></div>";
@@ -151,6 +155,7 @@ class Graph {
         }
     }
     addG2(id, niveau, name) {
+        if (this.g2.lenght() >= 8) return;
         if (this.g2.push(id, niveau)) {
             document.querySelector('.graph2').innerHTML += '<div class="graphComp" data-id="' + id + '" data-lvl="' + niveau + '">' + name +
             "<div onclick='g.delG2(" + id + ")' class='del'>&times;</div></div>";
@@ -162,6 +167,7 @@ class Graph {
         }
     }
     addG3(id, niveau, name) {
+        if (this.g3.lenght() >= 8) return;
         if (this.g3.push(id, niveau)) {
             document.querySelector('.graph3').innerHTML += '<div class="graphComp" data-id="' + id + '" data-lvl="' + niveau + '">' + name +
             "<div onclick='g.delG3(" + id + ")' class='del'>&times;</div></div>";
