@@ -6,7 +6,7 @@
 - [x] Pas de limites sur les graphiques (vite illisible)
 - [x] Pas d'overflow sur les onglets des profils (texte innacessible au delà de quelques dizaines de chars)
 ### Recherche : 
-- [ ] Notice : undefined statement in Search.php visible au chargement
+- [x] Notice : undefined statement in Search.php visible au chargement
 - [ ] "Recherche : " les deux points descendent en bas et c'est moche
 - [ ] Onglet Aide qui force le scrolling sur la page (c'est moche et c'est nul)
 ## BM/RH :
