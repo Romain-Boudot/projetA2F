@@ -69,45 +69,47 @@
     <?php include $_SERVER["DOCUMENT_ROOT"] . "/../includes/header.php" ?>
     
     <nav>
-        <div id="image-profile">
-            <img class="photoUploadHover" src="/images/profil/<?php
+        <div class="infos-wrapper">
+
+            <div id="image-profile">
+                <img class="photoUploadHover" src="/images/profil/<?php
                 $files = $consultant->get_files("img");
                 if (isset($files[0])) {
                     echo $files[0]["nom_serveur"];
                 } else {
                     echo "unknown.png";
                 }
-            ?>" alt="profile image">
-            <?php if ($id == $_SESSION['user']['id']) {?>
-            <form id="photoForm" class="photoUpload" action="/consultant/traitement.php" method="post">
-                <input id="uploadPhoto" class="hidden" type="file" name="file">
-                <label for="uploadPhoto"><i class="material-icons plus">add</i></label>
-            </form>
-            <?php } ?>
-        </div>
-        <div class="profile-info bold" style="text-transform: uppercase;">pôle <?php echo $consultant->get_nom_pole(); ?></div>
-        <div class="hr"></div>
-        <div class="profile-info left">Prénom :</div>
-        <div class="profile-info" data-info="prenom"><?php echo $consultant->get_prenom(); ?></div>
-        <div class="profile-info left">Nom :</div>
-        <div class="profile-info" data-info="nom"><?php echo $consultant->get_nom(); ?></div>
-        <div class="profile-info left">Email :</div>
-        <a href="mailto:<?php echo $consultant->get_email(); ?>" class="profile-info underline" data-info="email"><?php echo $consultant->get_email(); ?></a>
-        <div class="profile-info left">Téléphone :</div>
-        <div class="profile-info" data-info="telephone"><?php echo $consultant->get_telephone(); ?></div>
-        <div class="profile-info left">LinkedIn :</div>
-        <a href="<?php echo $consultant->get_linkedin(); ?>" class="profile-info underline" data-info="linkedin"><?php echo $consultant->get_linkedin(); ?></a>
-        
-        <?php if ($_SESSION['user']['type'] >= 1 || $_SESSION['user']['login'] == $consultant->get_login()) {?>
+                ?>" alt="profile image">
+                <?php if ($id == $_SESSION['user']['id']) {?>
+                <form id="photoForm" class="photoUpload" action="/consultant/traitement.php" method="post">
+                    <input id="uploadPhoto" class="hidden" type="file" name="file">
+                    <label for="uploadPhoto"><i class="material-icons plus">add</i></label>
+                </form>
+                <?php } ?>
+            </div>
+            <div class="profile-info bold" style="text-transform: uppercase;">pôle <?php echo $consultant->get_nom_pole(); ?></div>
             <div class="hr"></div>
-            <div class="profile-info salaire">salaire : <?php echo $consultant->get_salaire(); ?>€</div>
-        <?php
+            <div class="profile-info left">Prénom :</div>
+            <div class="profile-info" data-info="prenom"><?php echo $consultant->get_prenom(); ?></div>
+            <div class="profile-info left">Nom :</div>
+            <div class="profile-info" data-info="nom"><?php echo $consultant->get_nom(); ?></div>
+            <div class="profile-info left">Email :</div>
+            <a href="mailto:<?php echo $consultant->get_email(); ?>" class="profile-info underline" data-info="email"><?php echo $consultant->get_email(); ?></a>
+            <div class="profile-info left">Téléphone :</div>
+            <div class="profile-info" data-info="telephone"><?php echo $consultant->get_telephone(); ?></div>
+            <div class="profile-info left">LinkedIn :</div>
+            <a href="<?php echo $consultant->get_linkedin(); ?>" class="profile-info underline" data-info="linkedin"><?php echo $consultant->get_linkedin(); ?></a>
+            
+            <?php if ($_SESSION['user']['type'] >= 1 || $_SESSION['user']['login'] == $consultant->get_login()) {?>
+                <div class="hr"></div>
+                <div class="profile-info salaire">salaire : <?php echo $consultant->get_salaire(); ?>€</div>
+            <?php
         
-        }
+        } ?>
+        </div>
+        <?php if ($_SESSION['user']['login'] == $consultant->get_login()) {?>
 
-        if ($_SESSION['user']['login'] == $consultant->get_login()) {?>
-
-        <a class="bottom btn h-56 modif-profile bold" href="/consultant/modifier">Modifier mon profil</a>
+            <a class="bottom btn h-56 modif-profile bold" href="/consultant/modifier">Modifier mon profil</a>
 
         <?php } ?>
     </nav>

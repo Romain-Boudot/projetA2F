@@ -93,11 +93,6 @@ ul>li {
     font-weight: 500;
 }
 
-.bottom {
-    position: absolute;
-    bottom: 0;
-}
-
 .noMI {
     margin: 0 !important;
 }

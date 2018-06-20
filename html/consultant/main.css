@@ -23,9 +23,9 @@ nav {
     text-decoration: underline;
 }
 
-.bottom {
-    position: absolute;
-    bottom: 0;
+.infos-wrapper {
+    height: calc(100% - 60px);
+    overflow: auto;
 }
 
 .modif-profile {
@@ -34,10 +34,11 @@ nav {
     text-align: center;
     width: calc(100% - 24px);
     padding: 5px 0;
-    margin: 10px 10px 30px 10px;
+    margin: 5px 10px;
     border: 2px solid rgba(0, 0, 0, .1);
     transition: .2s background-color ease, .2s color ease;
     border-radius: 3px;
+    display: block;
 }
 
 .modif-profile:hover {
