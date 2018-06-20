@@ -34,7 +34,6 @@ if ($_SESSION['user']['type'] == 0 && 0) {
     <script src="/cdn/Dropdown.js"></script>
     <script src="/cdn/Popup.js"></script>
     <script src="/cdn/Profile.js"></script>
-    <script src="/cdn/Post.js"></script>
     <title>A2F advisor</title>
 </head>
 <body>
@@ -168,44 +167,45 @@ if ($_SESSION['user']['type'] == 0 && 0) {
 
         <div class="popup" id="rh"><div class="nav">Ressources humaines</div>
             <div class="relative-wrapper-container">
-                <?php
-
-                $rh = RH::get_array();
-
-                foreach ($rh as $name => $value) {
-                    
-                    ?>
-                    
-                    <div><?php  echo $value['nom']; ?> - 
-                        <?php echo $value['prenom']; ?>
-                        
-                        <form action='/admin/traitement.php/' method='post'>
-
-                            <input type='hidden' name='token' value=" <?php echo $token; ?> " >
-                            <input type='hidden' name='action' value='delete_rh'>
-                            <input type='hidden' name='id_rh' value='<?php echo $value['id_rh']; ?>  '>
-                            <input type='submit' value='Supprimer'>
-
-                        </form>
-                        
-                    </div>
-                
-                <?php 
-                
-                }
-                
-                ?>
-
-                <form action="/admin/traitement.php/" method="post">
-
+                                
+                <form class="addForm" action="/admin/traitement.php/" method="post">
+                    <span class="bold p20">Ajouter un RH</span>
                     <input type="hidden" name="token" value="<?php echo $token; ?>" >
                     <input type="hidden" name='action' value='add_rh'>
                     <input type="text" name="nom" placeholder="Nom" required>
                     <input type="text" name="prenom" placeholder="Prenom" required>
-                 
-                    <input type="submit" value="Envoyer">
-
+                    <input type="submit" value="Ajouter">
                 </form>
+
+                <div class="Grid3Col">
+
+                    <div class="Col1 bold">Nom</div>
+                    <div class="Col2 bold">Prenom</div>
+                    <div class="Col3 bold">Supprimer</div>
+                    <div class="Grid3ColHr"></div>
+                    
+                    <?php
+
+                    $rh = RH::get_array();
+
+                    foreach ($rh as $name => $value) {
+                    
+                    ?>
+                        
+                    <div class="Col1"><?php  echo $value['nom']; ?></div>
+                    <div class="Col2"><?php echo $value['prenom']; ?></div>
+                    <form class="Col3" action='/admin/traitement.php/' method='post'>
+                        <input type='hidden' name='token' value=" <?php echo $token; ?> " >
+                        <input type='hidden' name='action' value='delete_rh'>
+                        <input type='hidden' name='id_rh' value='<?php echo $value['id_rh']; ?>  '>
+                        <input type='submit' value='Supprimer'>
+                    </form>
+                    <div class="Grid3ColHr"></div>
+
+                    <?php } ?>
+                        
+                </div>
+
             </div>
         </div>
 
@@ -214,46 +214,49 @@ if ($_SESSION['user']['type'] == 0 && 0) {
 <!-- BM -->
 
         <div class="popup" id="bm"><div class="nav">Business manager</div>
+
             <div class="relative-wrapper-container">
-            <?php
 
-                $bm = BM::get_array();
-
-                foreach ($bm as $name => $value) {
-                    
-                    ?>
-                    
-                    <div><?php  echo $value['nom']; ?> - 
-                        <?php echo $value['prenom']; ?>
-                    
-                        <form action='/admin/traitement.php/' method='post'>
-
-                            <input type='hidden' name='token' value=" <?php echo $token; ?> " >
-                            <input type='hidden' name='action' value='delete_bm'>
-                            <input type='hidden' name='id_bm' value='<?php echo $value['id_bm']; ?>  '>
-                            <input type='submit' value='Supprimer'>
-
-                        </form>
-
-                    </div>
-
-                <?php 
-                   
-                }
-
-                ?>
-
-                <form action="/admin/traitement.php/" method="post">
-
+                <form class="addForm" action="/admin/traitement.php/" method="post">
+                    <span class="bold p20">Ajouter un Business manager</span>
                     <input type="hidden" name="token" value="<?php echo $token; ?>" >   
                     <input type="hidden" name="action" value="add_bm">
                     <input type="text" name="nom" placeholder="Nom" required>
                     <input type="text" name="prenom" placeholder="Prenom" required>
-                  
-                    <input type="submit" value="Envoyer">
-
+                    <input type="submit" value="Ajouter">
                 </form>
+                
+                <div class="Grid3Col">
+
+                    <div class="Col1 bold">Nom</div>
+                    <div class="Col2 bold">Prenom</div>
+                    <div class="Col3 bold">Supprimer</div>
+                    <div class="Grid3ColHr"></div>
+
+                    <?php
+
+                    $bm = BM::get_array();
+
+                    foreach ($bm as $name => $value) {
+                        
+                    ?>
+                    
+                    <div class="Col1"><?php  echo $value['nom']; ?></div>
+                    <div class="Col2"><?php echo $value['prenom']; ?></div>
+                    <form class="Col3" action='/admin/traitement.php/' method='post'>
+                        <input type='hidden' name='token' value=" <?php echo $token; ?> " >
+                        <input type='hidden' name='action' value='delete_bm'>
+                        <input type='hidden' name='id_bm' value='<?php echo $value['id_bm']; ?>  '>
+                        <input type='submit' value='Supprimer'>
+                    </form>
+                    <div class="Grid3ColHr"></div>
+
+                <?php } ?>
+
+                </div>
+
             </div>
+
         </div>
 
 
@@ -262,36 +265,10 @@ if ($_SESSION['user']['type'] == 0 && 0) {
 
         <div class="popup" id="cons"><div class="nav">Consultants</div>
             <div class="relative-wrapper-container">
-            <?php
 
-                $cons = Consultant::get_array();
+                <form class="addForm" action="/admin/traitement.php/" method="post">
 
-                foreach ($cons as $nsame => $value) {
-                    
-                    ?>
-                    
-                    <div><?php  echo $value['nom']; ?> - 
-                        <?php echo $value['prenom']; ?>
-                    
-                        <form action='/admin/traitement.php/' method='post'>
-
-                            <input type='hidden' name='token' value=" <?php echo $token; ?> " >
-                            <input type='hidden' name='action' value='delete_consultant'>
-                            <input type='hidden' name='id_consultant' value='<?php echo $value['id_consultant']; ?>  '>
-                            <input type='submit' value='Supprimer'>
-
-                        </form>
-
-                    </div>
-
-                <?php 
-
-            }
-            
-            ?>
-                
-                <form action="/admin/traitement.php/" method="post">
-                        
+                    <span class="bold p20">Ajouter un consultant</span>
                     <input type="hidden" name="token" value="<?php echo $token; ?>" >
                     <input type="hidden" name="action" value="add_consultant">
                     <input type="text" name="nom" placeholder="Nom" required>
@@ -309,57 +286,108 @@ if ($_SESSION['user']['type'] == 0 && 0) {
                     }
                     ?>
 
-                    <input type="submit" value="Envoyer">
+                    <input type="submit" value="Ajouter">
 
                 </form>
+
+                <div class="Grid4Col">
+
+                    <div class="Col1 bold">Nom</div>
+                    <div class="Col2 bold">Prenom</div>
+                    <div class="Col3 bold">Reset mot de passe</div>
+                    <div class="Col4 bold">Supprimer</div>
+                    <div class="Grid4ColHr"></div>
+
+                    <?php
+
+                        $cons = Consultant::get_array();
+
+                        foreach ($cons as $nsame => $value) {
+                            
+                            ?>
+                            
+                            <div class="Col1"><?php  echo $value['nom']; ?></div>
+                            <div class="Col2"><?php echo $value['prenom']; ?></div>
+                            <div class="Col3">RESET</div>
+                            <form class="Col4" action='/admin/traitement.php/' method='post'>
+                                <input type='hidden' name='token' value=" <?php echo $token; ?> " >
+                                <input type='hidden' name='action' value='delete_consultant'>
+                                <input type='hidden' name='id_consultant' value='<?php echo $value['id_consultant']; ?>  '>
+                                <div class="inputSubmit supprimer">Supprimer</div>
+                            </form>
+                            <div class="Grid4ColHr"></div>
+
+                        <?php 
+
+                    }
+                    
+                    ?>
+                    <script>
+                        document.querySelectorAll("form .inputSubmit.supprimer").forEach(e => {
+                            e.onclick = function() {
+                                Alert.popup({
+                                    title: 'Attention !',
+                                    text: 'Etes-vous sûr(e) de vouloir supprimer ce consultant ?',
+                                    showCancelButton: true,
+                                    confirmColor: '#409940',
+                                    confirmText: 'Supprimer',
+                                    confirm: function() {
+                                        e.parentElement.submit();
+                                    }
+                                })
+                            }
+                        })
+                    </script>
+                </div>
+
             </div>
+
         </div>
 
 
 
 <!-- CANDIDAT -->
 
-        <div class="popup" id="candidats"><div class="nav">Candidats</div>
-             <div class="relative-wrapper-container">
-             <?php
-
-                $cand = Candidat::get_array();
-
-                foreach ($cand as $nsame => $value) {
-                    
-                    ?>
-                    
-                    <div><?php  echo $value['nom']; ?> - 
-                        <?php echo $value['prenom']; ?>
-                        
-                        <form action='/admin/traitement.php/' method='post'>
-
-                            <input type='hidden' name='token' value=" <?php echo $token; ?> " >
-                            <input type='hidden' name='action' value='delete_candidat'>
-                            <input type='hidden' name='id_candidat' value='<?php echo $value['id_candidat']; ?>  '>
-                            <input type='submit' value='Supprimer'>
-
-                        </form>
-                        
-                    </div>
-
-                    <?php 
-
-                }
-                
-                ?> 
-
-                <form action="/admin/traitement.php/" method="post">
-                            
+        <div class="popup" id="candidats">
+            
+            <div class="nav">Candidats</div>
+            
+            <div class="relative-wrapper-container">
+            
+                <form class="addForm" action="/admin/traitement.php/" method="post">
+                    <span class="bold p20">Ajouter un candidat</span>
                     <input type="hidden" name="token" value="<?php echo $token; ?>" >
                     <input type="hidden" name="action" value="add_candidat">
                     <input type="text" name="nom" placeholder="Nom" required>
                     <input type="text" name="prenom" placeholder="Prenom" required>
-
-                    <input type="submit" value="Envoyer">
-
+                    <input type="submit" value="Ajouter">
                 </form>
+
+                <div class="Grid3Col">
+
+                    <div class="Col1 bold">Nom</div>
+                    <div class="Col2 bold">Prenom</div>
+                    <div class="Col3 bold">Supprimer</div>
+                    <div class="Grid3ColHr"></div>
+
+                    <?php $cand = Candidat::get_array();
+                    foreach ($cand as $nsame => $value) { ?>
+                    <div class="Col1"><?php  echo $value['nom']; ?></div>
+                    <div class="Col2"><?php echo $value['prenom']; ?></div>
+                    <form class="Col3" action='/admin/traitement.php/' method='post'>
+                        <input type='hidden' name='token' value=" <?php echo $token; ?> " >
+                        <input type='hidden' name='action' value='delete_candidat'>
+                        <input type='hidden' name='id_candidat' value='<?php echo $value['id_candidat']; ?>  '>
+                        <input type='submit' value='Supprimer'>
+                    </form>
+                    <div class="Grid3ColHr"></div>
+                    
+                    <?php } ?> 
+                    
+                </div>
+
             </div>
+            
         </div>
 
 
@@ -367,44 +395,48 @@ if ($_SESSION['user']['type'] == 0 && 0) {
 <!-- CLIENT -->
 
         <div class="popup" id="client"><div class="nav">Clients</div>
-             <div class="relative-wrapper-container">
-             <?php
 
-                $client = Client::get_array();
+            <div class="relative-wrapper-container">
 
-                foreach ($client as $nsame => $value) {
-                    
+                <form class="addForm" action="/admin/traitement.php/" method="post">
+                    <span class="bold p20">Ajouter un client</span>                        
+                    <input type="hidden" name="token" value="<?php echo $token; ?>" >
+                    <input type="hidden" name="action" value="add_client">
+                    <input type="text" name="entreprise" placeholder="Nom de l'entreprise" required>
+                    <input type="submit" value="Ajouter">
+                </form>
+
+                <div class="Grid2Col">
+
+                    <div class="Col1 bold">Entreprise</div>
+                    <div class="Col2 bold">Supprimer</div>
+                    <div class="Grid2ColHr"></div>
+
+                    <?php
+
+                    $client = Client::get_array();
+
+                    foreach ($client as $nsame => $value) {
+                        
                     ?>
                     
-                    <div><?php  echo $value['entreprise'];?></div>
+                    <div class="Col1"><?php  echo $value['entreprise'];?></div>
                     
-                    <form action='/admin/traitement.php/' method='post'>
-
+                    <form class="Col2" action='/admin/traitement.php/' method='post'>
                         <input type='hidden' name='token' value=" <?php echo $token; ?> " >
                         <input type='hidden' name='action' value='delete_client'>
                         <input type='hidden' name='id_client' value='<?php echo $value['id_client']; ?>  '>
                         <input type='submit' value='Supprimer'>
-
                     </form>
+                    <div class="Grid2ColHr"></div>
 
-                    <?php 
+                    <?php } ?>
 
-                }
-
-                ?>
-    
-                <form action="/admin/traitement.php/" method="post">
-                        
-                    <input type="hidden" name="token" value="<?php echo $token; ?>" >
-                    <input type="hidden" name="action" value="add_client">
-                    <input type="text" name="entreprise" placeholder="Nom de l'entreprise" required>
-
-                    <input type="submit" value="Envoyer">
-
-                </form>
+                </div>
+                
             </div>
-        </div>
-    </div> 
+
+        </div> 
 <?php if(isset($_POST['url'])){ ?>
     <script>    
 

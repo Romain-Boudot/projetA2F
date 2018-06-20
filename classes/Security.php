@@ -91,7 +91,7 @@ class Security {
 
                     $cpt1 = $cpt;
 
-                    while($_SESSION['user']['token'][$cpt1 + 1]) {
+                    while(isset($_SESSION['user']['token'][$cpt1 + 1])) {
 
                         $_SESSION['user']['token'][$cpt1 + 1] = $_SESSION['user']['token'][$cpt1];
                         $cpt1++;
