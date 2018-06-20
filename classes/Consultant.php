@@ -427,4 +427,19 @@ Class Consultant {
 
     }
 
+    static public function reset_password($id_consultant){
+        $pdo = Database::connect();
+
+        $token = bin2hex(random_bytes(32));
+
+        $statmenet = $pdo->prepare("UPDATE consultants SET mot_de_passe = NULL, token = :token WHERE id_consultant = :id");
+        $statement->execute(array(
+            ":id" => $id_consultant,
+            ":token" => $token
+        ));
+
+        //code here//
+        return $token;
+    }
+
 }
