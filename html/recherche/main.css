@@ -64,9 +64,18 @@
     margin-left: 30px !important;
 }
 
+.searchBarContainer {
+    width: 90%;
+}
+
+.searchBarContainer>*:first-child,
+.searchBarContainer>*:last-child {
+    width: 100px;
+}
+
 .searchBar {
     position: relative;
-    width: 70%;
+    width: calc(100% - 200px);
     min-height: 33px;
     /* border: 1px solid rgba(0, 0, 0, 0.144); */
     background-color: rgba(255, 255, 255, 0.473);
@@ -78,15 +87,6 @@
 
 .searchBar select {
     width: 110px;
-}
-
-.searchBar::before {
-    content: "Recherche :";
-    position: absolute;
-    right: calc(100% + 10px);
-    width: 100px;
-    height: 44px;
-    line-height: 44px;
 }
 
 [contenteditable]:focus {
@@ -417,7 +417,6 @@ select:focus {
 
 .searchBtn {
     position: relative;
-    height: 50px;
     line-height: 50px;
     display: inline-block;
     width: 300px;
@@ -428,6 +427,12 @@ select:focus {
     border-radius: 3px;
     cursor: pointer;
     transition: .2s background-color ease, .2s color ease;
+    margin: 30px 0;
+}
+
+.searchBtn {
+    content: "test";
+    position: relative;
 }
 
 .searchBtn:hover {
