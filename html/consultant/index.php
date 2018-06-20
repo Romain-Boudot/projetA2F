@@ -102,7 +102,6 @@
             
             <?php if ($_SESSION['user']['type'] >= 1 || $_SESSION['user']['login'] == $consultant->get_login()) {?>
                 <div class="hr"></div>
-                <div class="profile-info salaire">salaire : <?php echo $consultant->get_salaire(); ?>€</div>
             <?php
         
         } ?>

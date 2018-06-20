@@ -15,3 +15,20 @@
 - [x] "Recherche : " les deux points descendent en bas et c'est moche
 ## Statistiques : 
 - [ ] Basses résolutions : toutes les colonnes ne s'affichent pas sur les graphiques
+## Candidats : 
+### Modifier :
+- [ ] Entretiens + Qualifications : Overflow de la page sur les détails
+- [ ] Qualifications : Overlap du titre des qualifications sur la date d'obtention
+### Profil : 
+- [ ] Trop d'infos trop longues = bouton modifier inaccessible
+### Recherche : 
+- [x] Photos de profil invisbles, "profile picture" bug
+
+
+# ERREURS SYSTEME
+## Consultant
+### Profil : 
+- [x] Modifier : Téléphone non modifiable
+- [x] Salaire inutile/deprecated = à virer
+## Candidat : 
+- [x] Modifier : Téléphone non modifiable

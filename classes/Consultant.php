@@ -5,7 +5,6 @@ Class Consultant {
     private $nom;
     private $prenom;
     private $date_de_recrutement;
-    private $salaire;
     private $login;
     private $mot_de_passe;
     private $email;
@@ -35,7 +34,6 @@ Class Consultant {
             $this->pole = $infos['pole'];
             $this->honoraires = $infos['honoraires'];
             $this->login = $infos['login'];
-            $this->salaire = $infos['salaire'];
         } elseif(!$statement){
     
             //            header('location: ../search/');
@@ -337,10 +335,6 @@ Class Consultant {
 
     public function get_login() {
         return $this->login;
-    }
-
-    public function get_salaire() {
-        return $this->salaire;
     }
 
     public function get_id() {

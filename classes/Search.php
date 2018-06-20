@@ -304,7 +304,7 @@ Class Search {
 
             }elseif($array['candidats'] == true){
 
-                $statement = "SELECT c.* from candidats c ";
+                $statement = "SELECT c.*, COALESCE((SELECT nom_serveur FROM fichiers_candidats fc WHERE type = 'img' AND fc.id_candidat = c.id_candidat), 'unknown.png') AS image from candidats c ";
 
 
 
