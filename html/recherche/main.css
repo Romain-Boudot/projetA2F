@@ -493,15 +493,15 @@ select:focus {
     top: 10px;
     left: 10px;
     padding: 10px 10px;
-    z-index: 650;
+    z-index: 1500;
     border: 1px solid rgba(0, 0, 0, .08);
     cursor: pointer;
     background-color: rgb(221, 221, 221);
-}
-
-.help {
     visibility: hidden;
+    min-width: 200px;
     max-width: calc(15% - 40px);
+    max-height: 70vh;
+    overflow: auto;
 }
 
 .help div {

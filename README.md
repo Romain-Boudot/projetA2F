@@ -8,7 +8,7 @@
 ### Recherche : 
 - [x] Notice : undefined statement in Search.php visible au chargement
 - [x] "Recherche : " les deux points descendent en bas et c'est moche
-- [ ] Onglet Aide qui force le scrolling sur la page (c'est moche et c'est nul)
+- [x] Onglet Aide qui force le scrolling sur la page (c'est moche et c'est nul)
 ## BM/RH :
 ###  Recherche : 
 - [ ] Bouton consultants/candidats overlap le wrapper de la recherche
