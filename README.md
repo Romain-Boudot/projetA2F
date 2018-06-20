@@ -1,7 +1,7 @@
 # ERREURS VISUELLES
 ## Consultant
 ### Profil :
-- [ ] Nom/Prénom/Email dépassent du cadre gauche du profil consultant
+- [x] Nom/Prénom/Email dépassent du cadre gauche du profil consultant
 - [ ] Linkedin overlap le boutton "Modifier le profil"
 - [ ] Pas de limites sur les graphiques (vite illisible)
 - [ ] Pas d'overflow sur les onglets des profils (texte innacessible au delà de quelques dizaines de chars)
