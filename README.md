@@ -20,7 +20,7 @@
 - [ ] Entretiens + Qualifications : Overflow de la page sur les détails
 - [ ] Qualifications : Overlap du titre des qualifications sur la date d'obtention
 ### Profil : 
-- [ ] Trop d'infos trop longues = bouton modifier inaccessible
+- [ ] Trop d'infos trop longues = bouton modifier inaccessible (same as consultants)
 ### Recherche : 
 - [x] Photos de profil invisbles, "profile picture" bug
 
