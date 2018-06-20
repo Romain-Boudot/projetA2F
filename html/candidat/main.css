@@ -117,6 +117,7 @@ nav {
     grid-row: 1 / 2;
     padding: 10px;
     text-align: center;
+    word-wrap: break-word;
 }
 
 #oc1 .intervention .infos:nth-child(2) {
@@ -124,12 +125,14 @@ nav {
     grid-row: 1 / 2;
     padding: 10px;
     text-align: center;
+    word-wrap: break-word;
 }
 
 #oc1 .intervention .details {
     grid-column: 3 / 4;
     grid-row: 1 / 2;
     padding: 10px;
+    word-wrap: break-word;
 }
 
 .clickable {
@@ -148,6 +151,7 @@ nav {
     grid-row: 1 / 2;
     padding: 10px;
     text-align: center;
+    word-wrap: break-word;
 }
 
 #oc2 .qualification .infos:nth-child(2) {
@@ -155,12 +159,14 @@ nav {
     grid-row: 1 / 2;
     padding: 10px;
     text-align: center;
+    word-wrap: break-word;
 }
 
 #oc2 .qualification .details {
     grid-column: 3 / 4;
     grid-row: 1 / 2;
     padding: 10px;
+    word-wrap: break-word;
 }
 
 .dropdownTrigger,
