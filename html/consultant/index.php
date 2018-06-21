@@ -70,7 +70,6 @@
     
     <nav>
         <div class="infos-wrapper">
-
             <div id="image-profile">
                 <img class="photoUploadHover" src="/images/profil/<?php
                 $files = $consultant->get_files("img");

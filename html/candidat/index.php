@@ -57,34 +57,33 @@ error_reporting(E_ALL);
     <?php include $_SERVER["DOCUMENT_ROOT"] . "/../includes/header.php" ?>
     
     <nav>
-        <div id="image-profile">
-            <img src="/images/profil/unknown.png" alt="profile image">
+        <div class="infos-wrapper">
+            <div id="image-profile">
+                <img src="/images/profil/unknown.png" alt="profile image">
+            </div>
+            <div class="hr"></div>
+            <div class="profile-info left">Prénom :</div>
+            <div class="profile-info" data-info="prenom"><?php echo $candidat->get_prenom(); ?></div>
+            <div class="profile-info left">Nom :</div>
+            <div class="profile-info" data-info="nom"><?php echo $candidat->get_nom(); ?></div>
+            <div class="profile-info left">Email :</div>
+            <a href="mailto:<?php echo $candidat->get_email(); ?>" class="profile-info underline" data-info="email"><?php echo $candidat->get_email(); ?></a>
+            <div class="profile-info left">Téléphone :</div>
+            <div class="profile-info" data-info="telephone"><?php echo $candidat->get_telephone(); ?></div>
+            <div class="profile-info left">LinkedIn :</div>
+            <a href="<?php echo $candidat->get_linkedin(); ?>" class="profile-info underline" data-info="linkedin"><?php echo $candidat->get_linkedin(); ?></a>
+
+            <form action="/candidat/traitement.php" method="get" class="hidden">
+
+                <input type="hidden" name="action" value="transfer"> 
+                <input type="hidden" name="id" value=" <?php echo $id; ?> ">
+
+                <input type="submit" value="Envoyer">
+
+            </form>
         </div>
-        <div class="hr"></div>
-        <div class="profile-info left">Prénom :</div>
-        <div class="profile-info" data-info="prenom"><?php echo $candidat->get_prenom(); ?></div>
-        <div class="profile-info left">Nom :</div>
-        <div class="profile-info" data-info="nom"><?php echo $candidat->get_nom(); ?></div>
-        <div class="profile-info left">Email :</div>
-        <a href="mailto:<?php echo $candidat->get_email(); ?>" class="profile-info underline" data-info="email"><?php echo $candidat->get_email(); ?></a>
-        <div class="profile-info left">Téléphone :</div>
-        <div class="profile-info" data-info="telephone"><?php echo $candidat->get_telephone(); ?></div>
-        <div class="profile-info left">LinkedIn :</div>
-        <a href="<?php echo $candidat->get_linkedin(); ?>" class="profile-info underline" data-info="linkedin"><?php echo $candidat->get_linkedin(); ?></a>
-
-        <form action="/candidat/traitement.php" method="get" class="hidden">
-
-            <input type="hidden" name="action" value="transfer"> 
-            <input type="hidden" name="id" value=" <?php echo $id; ?> ">
-
-            <input type="submit" value="Envoyer">
-
-        </form>
-
         <div class="btn h-56 modif-profile bold" onclick="Alert.load_page('/candidat/test.php?id=<?php echo $_GET['id']; ?>')">Transfer</div>
-
         <a class="bottom btn h-56 modif-profile bold" href='/candidat/modifier?id=<?php echo $id; ?>'>Modifier mon profil</a>
-
     </nav>
 
     <div class="main-wrapper">
