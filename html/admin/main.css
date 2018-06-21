@@ -4,11 +4,15 @@ nav {
     position: fixed;
     top: 0;
     left: 0;
-    background-color: rgba(0, 0, 0, 0.144);
+    z-index: 2000;
+    background-color: rgba(0, 0, 0, .1);
+    -webkit-box-shadow: 4px 2px 15px 5px rgba(0,0,0,0.3);
+    -moz-box-shadow: 4px 2px 15px 5px rgba(0,0,0,0.3);
+    box-shadow: 4px 2px 15px 5px rgba(0,0,0,0.3);
 }
 
 nav .onglet {
-    width: 100%;
+    width: calc(100% - 20px);
     padding: 5px 10px;
     cursor: pointer;
 }
@@ -35,7 +39,8 @@ nav .onglet {
 
 .nav {
     height: 56px;
-    background-color: rgba(0, 0, 0, .08);
+    background-color: var(--color-df);
+    color: white;
     line-height: 56px;
     text-align: center;
 }
@@ -181,14 +186,28 @@ input[type=number] {
     text-align: center;
 }
 
-form input[type=submit] {
-    background-color: rgba(0, 0, 0, 0.244);
+form input[type=submit],
+.inputSubmit {
     padding: 10px 15px;
     margin: 10px auto;
-    border: none;
+    border: 2px solid rgba(0, 0, 0, .1);
     border-radius: 5px;
     cursor: pointer;
     font-size: 15px;
+    background-color: rgba(0, 0, 0, 0);
+    transition: .2s background-color ease, .2s color ease;
+}
+
+.inputSubmit {
+    display: block;
+    margin: 3px;
+    padding: 5px 10px;
+}
+
+form input[type=submit]:hover,
+.inputSubmit:hover {
+    background-color: var(--color-df);
+    color: white;
 }
 
 .QualSubmit>*,
@@ -323,18 +342,22 @@ input[type=text]:focus {
     position: absolute;
     display: inline-block;
     z-index: 1000;
-    height: 26px;
-    line-height: 26px;
+    height: 22px;
+    line-height: 22px;
     top: 5px;
     right: 5px;
     padding: 10px 15px;
     cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.144);
+    background-color: rgba(0, 0, 0, 0);
+    border: 2px solid white;
+    color: white;
     border-radius: 5px;
+    transition: .2s background-color ease, .2s color ease;
 }
 
 .close:hover {
-    background-color: rgba(0, 0, 0, 0.244);
+    color: inherit;
+    background-color: rgba(255, 255, 255, 1);
 }
 
 .w-50 {
@@ -404,4 +427,81 @@ input[type=text]:focus {
     transition: 0.2s opacity ease;
     opacity: 1;
     visibility: visible;
+}
+
+.Grid4Col {
+    margin: 20px;
+    width: calc(100% - 70px);
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    align-items: center;
+    justify-items: center;
+    gap: 2px 10px;
+}
+
+.Grid4Col>*,
+.Grid3Col>* {
+    word-wrap: break-word;
+    max-width: 100%;
+}
+
+.Grid4ColHr {
+    grid-column: 1 / 5;
+    width: 100%;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+
+.Grid3ColHr {
+    grid-column: 1 / 4;
+    width: 100%;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+
+.Grid3Col {
+    margin: 20px;
+    width: calc(100% - 60px);
+    display: grid;
+    grid-template-columns: calc(100% / 3) calc(100% / 3) calc(100% / 3);
+    align-items: center;
+    justify-items: center;
+    gap: 2px 10px;
+}
+
+.Grid2ColHr {
+    grid-column: 1 / 3;
+    width: 100%;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+
+.Grid2Col {
+    margin: 20px;
+    width: calc(100% - 60px);
+    display: grid;
+    grid-template-columns: 50% 50%;
+    align-items: center;
+    justify-items: center;
+    gap: 2px 10px;
+}
+
+.Col1 {
+    grid-column: 1 / 2;
+}
+.Col2 {
+    grid-column: 2 / 3;
+}
+.Col3 {
+    grid-column: 3 / 4;
+}
+.Col4 {
+    grid-column: 4 / 5;
+}
+
+.Large4Col {
+    grid-column: 1 / 5;
+}
+
+.addForm {
+    width: 40%;
+    margin: 30px 30% 100px 30%;
+    text-align: center;
 }

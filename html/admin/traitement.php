@@ -24,6 +24,9 @@ if (!isset($_POST['action']) ){
 }
 
 
+
+// PARTIE COMPETENCE
+
 if ($_POST['action'] == "delete") {
     if(isset($_POST["id"])){
         $id_comp = $_POST["id"];
@@ -58,6 +61,10 @@ if ($_POST['action'] == "delete") {
     header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/index.php');
     exit();
 
+
+
+// PARTIE BM
+
 } elseif ($_POST['action'] == "delete_bm") {
 
     BM::delete($_POST['id_bm']);
@@ -70,9 +77,13 @@ if ($_POST['action'] == "delete") {
     header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/index.php');
     exit();
 
+
+
+// PARTIE RH
+
 } elseif ($_POST['action'] == "delete_rh") {
 
-    BM::delete($_POST['id_rh']);
+    RH::delete($_POST['id_rh']);
     header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/index.php');
     exit();
 
@@ -83,9 +94,13 @@ if ($_POST['action'] == "delete") {
     header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/index.php');
     exit();
 
+
+
+// PARTIE CLIENT
+
 } elseif ($_POST['action'] == "delete_client") {
 
-    BM::delete($_POST['id_client']);
+    Client::delete($_POST['id_client']);
     header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/index.php');
     exit();
 
@@ -99,9 +114,14 @@ if ($_POST['action'] == "delete") {
     header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/index.php');
     exit();
 
-} elseif ($_POST['action'] == "delete_consultant") {
 
-    BM::delete($_POST['id_consultant']);
+
+// PARTIE CONSULTANT
+
+} elseif ($_POST['action'] == "delete_consultant") {
+    $c = new Consultant($_POST['id_consultant']);
+
+   $c->delete();
     header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/index.php');
     exit();
 
@@ -116,12 +136,18 @@ if ($_POST['action'] == "delete") {
         document.add_cons.submit();
     </script>
     <?php
-   // header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/index.php');
-    //exit();
+
+//    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/index.php');
+//    exit();
+
+
+
+// PARTIE CANDIDAT
 
 } elseif ($_POST['action'] == "delete_candidat") {
+    $cand = new Candidat($_POST['id_candidat']);
 
-    BM::delete($_POST['id_candidat']);
+   $cand->delete();
     header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/index.php');
     exit();
     
@@ -149,7 +175,7 @@ if ($_POST['action'] == "delete") {
         "nom" => $_POST['nom'],
         "prenom" => $_POST['prenom']
     );
-
+    var_dump($infos);
     Candidat::add($infos);
 
     header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/index.php');

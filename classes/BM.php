@@ -49,6 +49,17 @@ class BM {
 
     }
 
+   static public function delete($id) {
+       $pdo = Database::connect();
+
+       $statement = $pdo->prepare("DELETE FROM BM WHERE id_bm = :id");
+       $statement->execute(array(
+           ':id' => $id
+       ));
+
+       $pdo = null;
+   } 
+
     static public function reset_password($id_bm){
         $pdo = Database::connect();
 
