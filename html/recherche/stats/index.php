@@ -7,7 +7,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . "/../classes/Client.php";
 
 session_start();
 
-Security::check_login(array(0, 1, 2));
+Security::check_login(array(1, 2));
 
 ?>
 <!DOCTYPE html>

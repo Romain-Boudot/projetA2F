@@ -14,15 +14,17 @@
     </div>
     <?php } ?>
 
+    <?php if ($_SESSION['user']["type"] >= 1) {?>
     <div class="header-right mr-1">
         <a class="btn btn-header bold noMI autoColor" href="/recherche/stats">Statistiques</a>
     </div>
+    <?php } ?>
 
     <div class="header-right mr-1">
         <a class="btn btn-header bold noMI autoColor" href="/recherche">Recherche</a>
     </div>
 
-    <?php if ($_SESSION['user']["type"] >= 1 || 1) {?>
+    <?php if ($_SESSION['user']["type"] >= 1) {?>
     <div class="header-right mr-1">
         <a class="btn btn-header bold noMI autoColor" href="/admin">Page Admin</a>
     </div>
