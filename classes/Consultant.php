@@ -438,7 +438,6 @@ Class Consultant {
             ":token" => $token
         ));
 
-        //code here//
         return $token;
     }
 

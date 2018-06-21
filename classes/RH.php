@@ -50,4 +50,18 @@ class RH {
 
     }
 
+    static public function reset_password($id_rh){
+        $pdo = Database::connect();
+
+        $token = bin2hex(random_bytes(32));
+
+        $statmenet = $pdo->prepare("UPDATE RH SET mot_de_passe = NULL, token = :token WHERE id_rh = :id");
+        $statement->execute(array(
+            ":id" => $id_rh,
+            ":token" => $token
+        ));
+
+        return $token;
+    }
+
 }

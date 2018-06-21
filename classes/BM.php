@@ -49,4 +49,18 @@ class BM {
 
     }
 
+    static public function reset_password($id_bm){
+        $pdo = Database::connect();
+
+        $token = bin2hex(random_bytes(32));
+
+        $statmenet = $pdo->prepare("UPDATE BM SET mot_de_passe = NULL, token = :token WHERE id_bm = :id");
+        $statement->execute(array(
+            ":id" => $id_bm,
+            ":token" => $token
+        ));
+
+        return $token;
+    }
+
 }
