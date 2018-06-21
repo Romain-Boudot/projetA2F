@@ -126,7 +126,7 @@
                 <input type="text" name="nom" placeholder="Nom" value="<?php echo $c->get_nom(); ?>" required>
                 <input type="text" name="prenom" placeholder="Prenom" value="<?php echo $c->get_prenom(); ?>" required>
                 <input type="text" name="email" placeholder="Email" value="<?php echo $c->get_email(); ?>" required>
-                <input type="text" name="tel" placeholder="Téléphone" value="<?php echo $c->get_telephone(); ?>" required>
+                <input type="text" name="telephone" placeholder="Téléphone" value="<?php echo $c->get_telephone(); ?>" required>
                 <input type="text" name="linkedin" placeholder="Linkedin (http://...)" value="<?php echo $c->get_linkedin(); ?>">
 
                 <input type="submit" value="Envoyer">

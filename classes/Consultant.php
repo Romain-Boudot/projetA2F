@@ -5,7 +5,6 @@ Class Consultant {
     private $nom;
     private $prenom;
     private $date_de_recrutement;
-    private $salaire;
     private $login;
     private $mot_de_passe;
     private $email;
@@ -35,7 +34,6 @@ Class Consultant {
             $this->pole = $infos['pole'];
             $this->honoraires = $infos['honoraires'];
             $this->login = $infos['login'];
-            $this->salaire = $infos['salaire'];
         } elseif(!$statement){
     
             //            header('location: ../search/');
@@ -339,10 +337,6 @@ Class Consultant {
         return $this->login;
     }
 
-    public function get_salaire() {
-        return $this->salaire;
-    }
-
     public function get_id() {
         return $this->id;
     }
@@ -431,6 +425,21 @@ Class Consultant {
 
         return new Consultant($answer[0]["id_consultant"]);
 
+    }
+
+    static public function reset_password($id_consultant){
+        $pdo = Database::connect();
+
+        $token = bin2hex(random_bytes(32));
+
+        $statmenet = $pdo->prepare("UPDATE consultants SET mot_de_passe = NULL, token = :token WHERE id_consultant = :id");
+        $statement->execute(array(
+            ":id" => $id_consultant,
+            ":token" => $token
+        ));
+
+        //code here//
+        return $token;
     }
 
 }

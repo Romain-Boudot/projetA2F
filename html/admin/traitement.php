@@ -125,7 +125,25 @@ if ($_POST['action'] == "delete") {
     header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/index.php');
     exit();
     
-} elseif ($_POST['action'] == "add_candidat") {
+}elseif ($_POST['action'] == "reset_password"){
+
+    if(!isset($_POST['id'])){
+        exit();
+    }
+    $token = "http://" . $_SERVER["HTTP_HOST"] . "/identification/?token=" . Consultant::reset_password($_POST['id']);
+    
+?>     
+    <form name='reset_password' action='/admin/index.php' method='POST'>  
+        <input type='hidden' name='url' value=" <?php echo $token; ?> " >
+    </form>
+    <script>
+        document.reset_password.submit();
+    </script>
+<?php
+
+    exit();
+
+}elseif ($_POST['action'] == "add_candidat") {
 
     $infos = array(
         "nom" => $_POST['nom'],
