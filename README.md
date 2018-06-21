@@ -16,7 +16,7 @@
 - [x] "Recherche : " les deux points descendent en bas et c'est moche
 - [x] Bouton "test" a remove
 ## Statistiques : 
-- [ ] Basses résolutions : toutes les colonnes ne s'affichent pas sur les graphiques
+- [x] Basses résolutions : toutes les colonnes ne s'affichent pas sur les graphiques
 ## Candidats : 
 ### Modifier :
 - [x] Entretiens + Qualifications : Overflow de la page sur les détails

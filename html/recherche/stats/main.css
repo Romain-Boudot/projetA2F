@@ -98,6 +98,22 @@ canvas {
     grid-column: 2 / 3;
 }
 
+@media screen and (max-width: 1550px) {
+
+    .graph {
+        grid-template-columns: auto 70% auto;
+    }
+
+}
+
+@media screen and (max-width: 1200px) {
+
+    .graph {
+        grid-template-columns: auto 90% auto;
+    }
+
+}
+
 .graph>div>div {
     width: 100%;
     text-align: center;   
