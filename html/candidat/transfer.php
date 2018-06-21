@@ -4,6 +4,13 @@ include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Security.php";
 
 session_start();
 
+Security::check_login(array(1, 2));
+
+if (!isset($_GET["ajaxtrue"])) {
+    include_once $_SERVER["HTTP_HOST"] . "/erreurs/403.php";
+    exit();
+}
+
 ?>
 
 <style>
