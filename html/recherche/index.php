@@ -184,32 +184,29 @@ Security::check_login(array(0, 1, 2));
             </div>
 
             <div class="searchBarContainer">
-                <div>Recherche :</div>
-                <div id="input" class="searchBar">
+                <div>Recherche :</div><div id="input" class="searchBar">
                     <div id="inputFilter">
                         <div id="textInput">
                             <input type="text">
                         </div>
                     </div>
-                </div>
-                <?php
+                </div><?php
 
                 if ($_SESSION['user']['type'] == 2) {
 
-                ?>
-
-                <label for="archive">
+                ?><label for="archive">
                     <input type="checkbox" name="archive" id="archive">
                     <div for="archive" class="checkbox">✔</div>
                     archive
-                </label>
+                </label><?php
 
-                <?php
+                } else {
+
+                    ?><div></div><?php
 
                 }
 
-                ?>
-            </div>
+            ?></div>
 
             <div class="sugest">
                 <div>
