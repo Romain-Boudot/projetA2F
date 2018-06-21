@@ -19,8 +19,8 @@
 - [ ] Basses résolutions : toutes les colonnes ne s'affichent pas sur les graphiques
 ## Candidats : 
 ### Modifier :
-- [ ] Entretiens + Qualifications : Overflow de la page sur les détails
-- [ ] Qualifications : Overlap du titre des qualifications sur la date d'obtention
+- [x] Entretiens + Qualifications : Overflow de la page sur les détails
+- [x] Qualifications : Overlap du titre des qualifications sur la date d'obtention
 ### Profil : 
 - [x] Trop d'infos trop longues = bouton modifier inaccessible (same as consultants)
 ### Recherche : 
