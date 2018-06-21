@@ -151,23 +151,8 @@ script {
     color: rgba(0, 0, 0, 0);
 }
 
-.test {
-    height: 12px;
-    margin: 2px;
-    padding: 5px 10px;
-    font-size: 12px;
-    line-height: 12px;
-    border: 1px solid rgba(0, 0, 0, .1);
-    border-radius: 3px;
-    transition: 0.2s color ease;
-}
-
 input[type=checkbox]:checked~.checkbox {
     color: inherit;
-}
-
-input[type=checkbox]:checked~.test {
-    background-color: var(--main-color);
 }
 
 

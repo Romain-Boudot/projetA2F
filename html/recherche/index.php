@@ -140,11 +140,6 @@ Security::check_login(array(0, 1, 2));
                         Dans 3 mois et plus
                     </label>
 
-                    <label for="test">
-                        <input type="checkbox" name="test" id="test">
-                        <div class="test">test</div>
-                    </label>
-
                 </div>
 
                 <div class="filterGridLarge candidatOnly">
