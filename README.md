@@ -29,8 +29,8 @@
 
 # ERREURS SYSTEME
 ## Consultant
-### Profil : 
-- [x] Modifier : Téléphone non modifiable
+### Profil :
+- [x] Modifier : Téléphone non modifiable
 - [x] Salaire inutile/deprecated = à virer
 ## Candidat : 
 - [x] Modifier : Téléphone non modifiable
