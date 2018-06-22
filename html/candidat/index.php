@@ -244,12 +244,6 @@ error_reporting(E_ALL);
                 </div>
             </div>
 
-            <?php
-
-            if ($id == $_SESSION["user"]["id"]) {
-
-            ?>
-
             <div class="fileUpload">
             
                 <?php
@@ -287,12 +281,6 @@ error_reporting(E_ALL);
                 </script>
         
             </div>
-
-            <?php 
-
-                }
-            
-            ?>
 
         </div>
     </div>

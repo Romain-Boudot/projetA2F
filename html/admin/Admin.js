@@ -29,6 +29,9 @@ class Admin {
             }
         }
         parent.appendChild(input);
+
+        input.focus();
+
     }
 
 }

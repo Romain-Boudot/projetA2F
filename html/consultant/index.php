@@ -37,18 +37,18 @@
         :root {
             --main-color: <?php
                 if ($pole == 0) echo "#06436f";
-                if ($pole == 1) echo "#f7931e";
+                if ($pole == 1) echo "#06436f";
                 if ($pole == 2) echo "#259225";
                 if ($pole == 3) echo "#f05944";
             ?>;
             --main-color-light: <?php
                 if ($pole == 0) echo "#06436f88";
-                if ($pole == 1) echo "#f7931e88";
+                if ($pole == 1) echo "#06436f88";
                 if ($pole == 2) echo "#25922588";
                 if ($pole == 3) echo "#f0594488";
             ?>;
             --auto-color: <?php
-                if ($pole == 0) echo "white";
+                if ($pole <= 1) echo "white";
                 else echo "inerit";
             ?>;
         }
@@ -330,6 +330,8 @@
             </div>   
         </div>
 
+        <?php if ($id == $_SESSION['user']['id'] || $_SESSION['user']['type'] >= 1) { ?>
+
         <div class="fileUpload">
         
             <?php
@@ -343,20 +345,26 @@
                             <img src="/images/pdf.svg" alt="svg pdf" height="20">
                             <?php echo $value["vrai_nom"]; ?>
                         </a>
-                        <i onclick="Consultant.delFile(this)" data-servername="<?php echo $value["nom_serveur"]; ?>" class="material-icons floatRight clickable">delete</i>
+                        <?php if ($_SESSION['user']['type'] == 0) { ?><i onclick="Consultant.delFile(this)" data-servername="<?php echo $value["nom_serveur"]; ?>" class="material-icons floatRight clickable">delete</i><?php } ?>
                         <a class="floatRight clickable" href="/?file=<?php echo $value["nom_serveur"]; ?>" target="_blank"><img src="/images/download.svg" alt="svg pdf" height="20"></a>
                     </div><?php
 
                 }
 
-                if (sizeof($files) != 5) {
+                if ($_SESSION['user']['type'] == 0) {
 
-                    ?><div class="addFile">
+                    ?><div class="addFile" <?php if (sizeof($files) >= 5) echo 'style="display: none;"' ?>>
                         <label for="fileInput">
                             <i class="material-icons">add</i>
                         </label>
                         <div class="label">Ajout d'un fichier<br>(1Mo max.)</div>
                     </div><?php
+
+                } else {
+
+                    if (sizeof($files) == 0) {
+                        echo "Ce consultant n'as aucun fichier pdf.";
+                    }
 
                 }
 
@@ -371,6 +379,8 @@
             </script>
         
         </div>
+
+        <?php } ?>
 
     </div>
     <?php

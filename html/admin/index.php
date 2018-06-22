@@ -28,10 +28,10 @@ $token = Security::gen_token('4');
     <script src="/cdn/Ajax.js"></script>
     <script src="/cdn/Alert.js"></script>
     <script src="/cdn/Post.js"></script>
-    <script src="/cdn/Admin.js"></script>
     <script src="/cdn/Dropdown.js"></script>
     <script src="/cdn/Popup.js"></script>
     <script src="/cdn/Profile.js"></script>
+    <script src="/admin/Admin.js"></script>
     <title>A2F advisor</title>
 </head>
 <body>
