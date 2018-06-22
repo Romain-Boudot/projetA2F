@@ -44,9 +44,10 @@ class Candidat {
     }
 
     public function delete(){
+
         $pdo = Database::connect(); 
 
-        $delete_candidate = $pdo->prepare("DELETE FROM * WHERE id_candidat = :id");
+        $delete_candidate = $pdo->prepare("DELETE FROM candidats WHERE id_candidat = :id");
         $delete_candidate->bindParam('id', $this->id);
         $delete_candidate->execute();
 

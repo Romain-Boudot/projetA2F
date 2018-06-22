@@ -277,7 +277,7 @@ form input[type=submit]:hover,
 }
 
 .relative-wrapper-container>.dropdownTrigger,
-.relative-wrapper-container>.comp {
+.relative-wrapper-container>.competence {
     width: calc(100% - 20px);
     padding: 5px 0 5px 20px;
 }
@@ -289,7 +289,7 @@ form input[type=submit]:hover,
 }
 
 .relative-wrapper-container>.dropdownContainer>.dropdownTrigger,
-.relative-wrapper-container>.dropdownContainer>.comp {
+.relative-wrapper-container>.dropdownContainer>.competence {
     width: calc(100% - 50px);
     padding: 3px 0 3px 50px;
 }
@@ -300,12 +300,12 @@ form input[type=submit]:hover,
     padding: 3px 0;
 }
 .relative-wrapper-container>.dropdownContainer>.dropdownContainer>.dropdownTrigger,
-.relative-wrapper-container>.dropdownContainer>.dropdownContainer>.comp {
+.relative-wrapper-container>.dropdownContainer>.dropdownContainer>.competence {
     width: calc(100% - 80px);
     padding: 3px 0 3px 80px;
 }
 
-.relative-wrapper-container>.dropdownContainer>.dropdownContainer>.dropdownContainer>.comp {
+.relative-wrapper-container>.dropdownContainer>.dropdownContainer>.dropdownContainer>.competence {
     width: calc(100% - 110px);
     padding: 3px 0 3px 110px;
 }
@@ -409,9 +409,8 @@ input[type=text]:focus {
     margin-left: 5px;
 }
 
-.competence {
-    width: calc(100% - 120px);
-    padding: 3px 0 3px 120px;
+.competenceBtn {
+    margin-left: 10px;
 }
 
 .competence>div {
@@ -440,9 +439,13 @@ input[type=text]:focus {
 }
 
 .Grid4Col>*,
-.Grid3Col>* {
+.Grid3Col>*,
+.Grid2Col>*,
+.Grid5Col>* {
     word-wrap: break-word;
-    max-width: 100%;
+    max-width: calc(100% - 20px);
+    margin: 10px;
+    text-align: center;
 }
 
 .Grid4ColHr {
@@ -475,12 +478,28 @@ input[type=text]:focus {
 
 .Grid2Col {
     margin: 20px;
-    width: calc(100% - 60px);
+    width: calc(100% - 50px);
     display: grid;
     grid-template-columns: 50% 50%;
     align-items: center;
     justify-items: center;
     gap: 2px 10px;
+}
+
+.Grid5Col {
+    margin: 20px;
+    width: calc(100% - 80px);
+    display: grid;
+    grid-template-columns: calc(100% / 5) calc(100% / 5) calc(100% / 5) calc(100% / 5) calc(100% / 5);
+    align-items: center;
+    justify-items: center;
+    gap: 2px 10px;
+}
+
+.Grid5ColHr {
+    grid-column: 1 / 6;
+    width: 100%;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
 }
 
 .Col1 {
@@ -495,6 +514,9 @@ input[type=text]:focus {
 .Col4 {
     grid-column: 4 / 5;
 }
+.Col5 {
+    grid-column: 5 / 6;
+}
 
 .Large4Col {
     grid-column: 1 / 5;
@@ -504,4 +526,8 @@ input[type=text]:focus {
     width: 40%;
     margin: 30px 30% 100px 30%;
     text-align: center;
+}
+
+.borderComp {
+    cursor: pointer;
 }

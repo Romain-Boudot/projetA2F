@@ -2,6 +2,31 @@
 
 class BM {
 
+    private $login;
+
+    public function __construct($id){
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("SELECT * FROM BM c WHERE c.id_bm = :id");
+        $statement->bindParam('id', $id);
+        $statement->execute();
+
+        $infos = $statement->fetch();
+
+        if($statement) {
+
+            $this->login = $infos['login'];
+        
+        } elseif (!$statement) {
+    
+            //            header('location: ../search/');
+            //HEADER A CHANGER
+        }
+
+        $pdo = null;
+
+    }
+
     static public function get_array() {
     
         $pdo = Database::connect();
@@ -11,7 +36,6 @@ class BM {
         $array = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         return $array;
-
 
     }
     
@@ -65,13 +89,56 @@ class BM {
 
         $token = bin2hex(random_bytes(32));
 
-        $statmenet = $pdo->prepare("UPDATE BM SET mot_de_passe = NULL, token = :token WHERE id_bm = :id");
+        $statement = $pdo->prepare("UPDATE BM SET mot_de_passe = NULL, token = :token WHERE id_bm = :id");
         $statement->execute(array(
             ":id" => $id_bm,
             ":token" => $token
         ));
 
         return $token;
+    }
+
+    static public function get_bm_via_token($token){
+
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("SELECT * FROM BM WHERE token = :token");
+        $statement->execute(array(
+            ":token" => $token
+        ));
+
+        $answer = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($answer == false || sizeof($answer) > 1) return false;
+
+        $pdo = null;
+
+        return new BM($answer[0]["id_bm"]);
+
+    }
+
+    public function set_password($pwd, $pwd_verif) {
+
+        if ($pwd != $pwd_verif) return false;
+
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("UPDATE BM SET mot_de_passe = :pwd, token = null WHERE login = :login");
+        $statement->execute(array(
+            ":pwd" => $pwd,
+            ":login" => $this->login,
+        ));
+
+        //hash("sha256", $pwd)
+
+        $pdo = null;
+
+        return true;
+            
+    }
+
+    public function get_login() {
+        return $this->login;
     }
 
 }

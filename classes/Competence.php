@@ -1,6 +1,6 @@
 <?php
 
-function tab_search($id, $tab) {
+function tab_search($id, $tab, $depth) {
 
     $comp = null;
 
@@ -9,10 +9,11 @@ function tab_search($id, $tab) {
         if ($c["id_competence_mere"] == $id) {            
 
             $comp[$c["nom"]] = array(
+                "depth" => $depth,
                 "id_competence" => $c["id_competence"],
                 "id_competence_mere" => $c["id_competence_mere"],
                 "niveau" => (isset($c["niveau"]) ? $c["niveau"] : null),
-                "enfant" => tab_search($c["id_competence"], $tab)
+                "enfant" => tab_search($c["id_competence"], $tab, $depth + 1)
             );
  
         }
@@ -72,8 +73,9 @@ class Competence {
                 if ($c["id_competence_mere"] == null) {
  
                     $comp[$c["nom"]] = array(
+                        "depth" => 0,
                         "id_competence" => $c["id_competence"],
-                        "enfant" => tab_search($c["id_competence"], $answer)
+                        "enfant" => tab_search($c["id_competence"], $answer, 1)
                     );
  
                 }
@@ -99,8 +101,9 @@ class Competence {
                 if ($c["id_competence_mere"] == null) {
 
                     $comp[$c["nom"]] = array(
+                        "depth" => 0,
                         "id_competence" => $c["id_competence"],
-                        "enfant" => tab_search($c["id_competence"], $answer),
+                        "enfant" => tab_search($c["id_competence"], $answer, 1),
                     );
 
                 }

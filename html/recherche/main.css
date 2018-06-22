@@ -8,12 +8,12 @@
     -webkit-box-shadow: -3px 2px 0px 0px rgba(0, 0, 0, 0.2);
     -moz-box-shadow: -3px 2px 0px 0px rgba(0, 0, 0, 0.2);
     box-shadow: -3px 2px 0px 0px rgba(0, 0, 0, 0.2);
-    text-align: center;
 }
 
 .main-wrapper {
     left: 0;
     width: 100vw;
+    text-align: center;
 }
 
 .popup {
@@ -465,7 +465,7 @@ select:focus {
 .helpTrigger {
     position: absolute;
     top: 10px;
-    left: 10px;
+    right: 10px;
 }
 
 .helpTrigger>i {
@@ -479,7 +479,7 @@ select:focus {
 .help {
     position: absolute;
     top: 10px;
-    left: 10px;
+    right: 10px;
     padding: 10px 10px;
     z-index: 1500;
     border: 1px solid rgba(0, 0, 0, .08);

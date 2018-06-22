@@ -70,21 +70,11 @@ $token = Security::gen_token('4');
                                 
                                 ?>
                                 
-                                <div id="ddt<?php echo $cpt; ?>" class="dropdownTrigger"><?php echo $name; ?>
-
-                                    <div onclick="Admin.addDaughter(<?php echo $value["id_competence"]; ?>, <?php echo $cpt; ?>)" 
+                                <div id="ddt<?php echo $cpt; ?>" class="dropdownTrigger"><?php echo $name; 
+                                ?><div onclick="Admin.addDaughter(<?php echo $value["id_competence"]; ?>, <?php echo $cpt; ?>)" 
                                         data-name="<?php echo $name; ?>" 
                                         data-id="<?php echo $value["id_competence"]; ?>" 
-                                        class="competence borderComp">
-                                        Ajouter une compétence fille
-                                    </div>
-        
-                                    <div onclick="Post.send('admin/traitement.php', { 'id' : '<?php echo $value["id_competence"]; ?>' , 'action' : 'delete'})" 
-                                        data-name="<?php echo $name; ?>"
-                                        data-id="<?php echo $value["id_competence"]; ?>" 
-                                        class="competence borderComp">
-                                        Supprimer
-                                    </div>
+                                        class="competenceBtn borderComp">Ajouter une compétence fille</div>
 
                                 </div>
                                 
@@ -93,17 +83,33 @@ $token = Security::gen_token('4');
                                 $returned = tab($value["enfant"], $cpt);
                                 $cpt = $returned["cpt"];
 
+                            } elseif ($value["depth"] < 3) {
+
+                                ?><div id="ddt<?php echo $cpt; ?>" class="dropdownTrigger"><?php echo $name; 
+                                ?><div onclick="Admin.addDaughter(<?php echo $value["id_competence"]; ?>, <?php echo $cpt; ?>)" 
+                                        data-name="<?php echo $name; ?>" 
+                                        data-id="<?php echo $value["id_competence"]; ?>" 
+                                        class="competenceBtn borderComp">Ajouter une compétence fille</div>
+
+                                    <div onclick="Post.send('/admin/traitement.php', { 'id' : '<?php echo $value["id_competence"]; ?>' , 'action' : 'delete'})" 
+                                        data-name="<?php echo $name; ?>" 
+                                        data-id="<?php echo $value["id_competence"]; ?>" 
+                                        class="competenceBtn borderComp">Supprimer</div>
+                                </div>
+                                <div id="ddc<?php echo $cpt; ?>" class="dropdownContainer"></div>
+                                <?php
+
+                                $cpt++;
+
                             } else {
 
                                 ?>
                                 
-                                <div class="competence"><?php echo $name; ?>
-                                    <div onclick="Post.send('/admin/traitement.php', { 'id' : '<?php echo $value["id_competence"]; ?>' , 'action' : 'delete'})" 
+                                <div class="competence"><?php echo $name;
+                                ?><div onclick="Post.send('/admin/traitement.php', { 'id' : '<?php echo $value["id_competence"]; ?>' , 'action' : 'delete'})" 
                                         data-name="<?php echo $name; ?>" 
                                         data-id="<?php echo $value["id_competence"]; ?>" 
-                                        class="competence borderComp">
-                                        Supprimer
-                                    </div>
+                                        class="competenceBtn borderComp">Supprimer</div>
                                 </div>
                                 
                                 <?php
@@ -175,12 +181,13 @@ $token = Security::gen_token('4');
                     <input type="submit" value="Ajouter">
                 </form>
 
-                <div class="Grid3Col">
+                <div class="Grid4Col">
 
                     <div class="Col1 bold">Nom</div>
                     <div class="Col2 bold">Prenom</div>
-                    <div class="Col3 bold">Supprimer</div>
-                    <div class="Grid3ColHr"></div>
+                    <div class="Col3 bold">Changer le mot de passe</div>
+                    <div class="Col4 bold">Supprimer</div>
+                    <div class="Grid4ColHr"></div>
                     
                     <?php
 
@@ -188,17 +195,37 @@ $token = Security::gen_token('4');
 
                     foreach ($rh as $name => $value) {
                     
+                    if ($_SESSION['user']['type'] == 2 && $_SESSION['user']['id'] == $value['id_rh']) continue;
+
                     ?>
                         
                     <div class="Col1"><?php  echo $value['nom']; ?></div>
                     <div class="Col2"><?php echo $value['prenom']; ?></div>
-                    <form class="Col3" action='/admin/traitement.php/' method='post'>
+                    <?php
+                            
+                        if ($value["token"] != NULL) {
+                            ?><div class="Col3"><?php echo "http://" . $_SERVER["HTTP_HOST"] . "/identification/?token=" . $value["token"]; ?></div><?php
+                        } else {
+                            ?>
+
+                            <div class="Col3 inputSubmit" onclick="Post.send('/admin/traitement.php', {
+                                'action': 'reset_password',
+                                'id': <?php echo $value["id_rh"]; ?>,
+                                'who': 'RH',
+                                'token': '<?php echo $token; ?>'
+                            })">Changer</div>
+
+                            <?php
+                        }
+                        
+                    ?>
+                    <form class="Col4" action='/admin/traitement.php/' method='post'>
                         <input type='hidden' name='token' value=" <?php echo $token; ?> " >
                         <input type='hidden' name='action' value='delete_rh'>
                         <input type='hidden' name='id_rh' value='<?php echo $value['id_rh']; ?>  '>
-                        <input type='submit' value='Supprimer'>
+                        <div class="inputSubmit supprimer">Supprimer</div>
                     </form>
-                    <div class="Grid3ColHr"></div>
+                    <div class="Grid4ColHr"></div>
 
                     <?php } ?>
                         
@@ -224,12 +251,13 @@ $token = Security::gen_token('4');
                     <input type="submit" value="Ajouter">
                 </form>
                 
-                <div class="Grid3Col">
+                <div class="Grid4Col">
 
                     <div class="Col1 bold">Nom</div>
                     <div class="Col2 bold">Prenom</div>
-                    <div class="Col3 bold">Supprimer</div>
-                    <div class="Grid3ColHr"></div>
+                    <div class="Col3 bold">Changer le mot de passe</div>
+                    <div class="Col4 bold">Supprimer</div>
+                    <div class="Grid4ColHr"></div>
 
                     <?php
 
@@ -241,13 +269,31 @@ $token = Security::gen_token('4');
                     
                     <div class="Col1"><?php  echo $value['nom']; ?></div>
                     <div class="Col2"><?php echo $value['prenom']; ?></div>
-                    <form class="Col3" action='/admin/traitement.php/' method='post'>
+                    <?php
+                            
+                        if ($value["token"] != NULL) {
+                            ?><div class="Col3"><?php echo "http://" . $_SERVER["HTTP_HOST"] . "/identification/?token=" . $value["token"]; ?></div><?php
+                        } else {
+                            ?>
+
+                            <div class="Col3 inputSubmit" onclick="Post.send('/admin/traitement.php', {
+                                'action': 'reset_password',
+                                'id': <?php echo $value["id_bm"]; ?>,
+                                'who': 'BM',
+                                'token': '<?php echo $token; ?>'
+                            })">Changer</div>
+
+                            <?php
+                        }
+                        
+                    ?>
+                    <form class="Col4" action='/admin/traitement.php/' method='post'>
                         <input type='hidden' name='token' value=" <?php echo $token; ?> " >
                         <input type='hidden' name='action' value='delete_bm'>
                         <input type='hidden' name='id_bm' value='<?php echo $value['id_bm']; ?>  '>
-                        <input type='submit' value='Supprimer'>
+                        <div class="inputSubmit supprimer">Supprimer</div>
                     </form>
-                    <div class="Grid3ColHr"></div>
+                    <div class="Grid4ColHr"></div>
 
                 <?php } ?>
 
@@ -288,13 +334,14 @@ $token = Security::gen_token('4');
 
                 </form>
 
-                <div class="Grid4Col">
+                <div class="Grid5Col">
 
                     <div class="Col1 bold">Nom</div>
                     <div class="Col2 bold">Prenom</div>
-                    <div class="Col3 bold">Reset mot de passe</div>
-                    <div class="Col4 bold">Supprimer</div>
-                    <div class="Grid4ColHr"></div>
+                    <div class="Col3 bold">Pôle</div>
+                    <div class="Col4 bold">Changer le mot de passe</div>
+                    <div class="Col5 bold">Supprimer</div>
+                    <div class="Grid5ColHr"></div>
 
                     <?php
 
@@ -306,36 +353,39 @@ $token = Security::gen_token('4');
                             
                             <div class="Col1"><?php  echo $value['nom']; ?></div>
                             <div class="Col2"><?php echo $value['prenom']; ?></div>
-                            <div class="Col3">RESET</div>
-                            <form class="Col4" action='/admin/traitement.php/' method='post'>
+                            <div class="Cole3"><?php echo $value['nom_pole']; ?></div>
+                            <?php
+                            
+                            if ($value["token"] != NULL) {
+                                ?><div class="Col4"><?php echo "http://" . $_SERVER["HTTP_HOST"] . "/identification/?token=" . $value["token"]; ?></div><?php
+                            } else {
+                                ?>
+
+                                <div class="Col4 inputSubmit" onclick="Post.send('/admin/traitement.php', {
+                                    'action': 'reset_password',
+                                    'id': <?php echo $value["id_consultant"]; ?>,
+                                    'who': 'consultant',
+                                    'token': '<?php echo $token; ?>'
+                                })">Changer</div>
+
+                                <?php
+                            }
+                            
+                            ?>
+                            <form class="Col5" action='/admin/traitement.php/' method='post'>
                                 <input type='hidden' name='token' value=" <?php echo $token; ?> " >
                                 <input type='hidden' name='action' value='delete_consultant'>
                                 <input type='hidden' name='id_consultant' value='<?php echo $value['id_consultant']; ?>  '>
                                 <div class="inputSubmit supprimer">Supprimer</div>
                             </form>
-                            <div class="Grid4ColHr"></div>
+                            <div class="Grid5ColHr"></div>
 
                         <?php 
 
                     }
                     
                     ?>
-                    <script>
-                        document.querySelectorAll("form .inputSubmit.supprimer").forEach(e => {
-                            e.onclick = function() {
-                                Alert.popup({
-                                    title: 'Attention !',
-                                    text: 'Etes-vous sûr(e) de vouloir supprimer ce consultant ?',
-                                    showCancelButton: true,
-                                    confirmColor: '#409940',
-                                    confirmText: 'Supprimer',
-                                    confirm: function() {
-                                        e.parentElement.submit();
-                                    }
-                                })
-                            }
-                        })
-                    </script>
+                    
                 </div>
 
             </div>
@@ -375,8 +425,8 @@ $token = Security::gen_token('4');
                     <form class="Col3" action='/admin/traitement.php/' method='post'>
                         <input type='hidden' name='token' value=" <?php echo $token; ?> " >
                         <input type='hidden' name='action' value='delete_candidat'>
-                        <input type='hidden' name='id_candidat' value='<?php echo $value['id_candidat']; ?>  '>
-                        <input type='submit' value='Supprimer'>
+                        <input type='hidden' name='id_candidat' value='<?php echo $value['id_candidat']; ?>'>
+                        <div class="inputSubmit supprimer">Supprimer</div>
                     </form>
                     <div class="Grid3ColHr"></div>
                     
@@ -424,7 +474,7 @@ $token = Security::gen_token('4');
                         <input type='hidden' name='token' value=" <?php echo $token; ?> " >
                         <input type='hidden' name='action' value='delete_client'>
                         <input type='hidden' name='id_client' value='<?php echo $value['id_client']; ?>  '>
-                        <input type='submit' value='Supprimer'>
+                        <div class="inputSubmit supprimer">Supprimer</div>
                     </form>
                     <div class="Grid2ColHr"></div>
 
@@ -439,8 +489,8 @@ $token = Security::gen_token('4');
     <script>    
 
     Alert.popup({
-        title: "Compte créé",
-        text: "Création du mot de passe : \n <?php echo $_POST['url']; ?>",
+        title: "Création du mot de passe",
+        text: "<?php echo $_POST['url']; ?>",
         confirmColor: "#bbbbbb",
         confirmText: "Retour",
         confirm: function() {
@@ -454,6 +504,23 @@ $token = Security::gen_token('4');
         Popup.open('Comp');
         Dropdown.load();
     </script>   
+
+    <script>
+        document.querySelectorAll("form .inputSubmit.supprimer").forEach(e => {
+            e.onclick = function() {
+                Alert.popup({
+                    title: 'Attention !',
+                    text: 'Etes-vous sûr(e) de vouloir supprimer cette entrée ?',
+                    showCancelButton: true,
+                    confirmColor: '#409940',
+                    confirmText: 'Supprimer',
+                    confirm: function() {
+                        e.parentElement.submit();
+                    }
+                })
+            }
+        })
+    </script>
 
 </body>
 </html>

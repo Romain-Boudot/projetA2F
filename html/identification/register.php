@@ -1,31 +1,70 @@
 <?php
 
 include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Consultant.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/RH.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/BM.php";
 
 if (isset($pass)) {
     if (!$pass) {
+        echo '1';
         include_once $_SERVER["DOCUMENT_ROOT"] . "/erreurs/403.php";
         exit();
     }
 } else {
-    include_once $_SERVER["DOCUMENT_ROOT"] . "/erreurs/403.php";
+        echo '2';
+        include_once $_SERVER["DOCUMENT_ROOT"] . "/erreurs/403.php";
     exit();
 }
 
 $consultant = Consultant::get_consultant_via_token($_GET["token"]);
+$bm = BM::get_bm_via_token($_GET["token"]);
+$rh = RH::get_rh_via_token($_GET["token"]);
 
-if (!$consultant) {
-    include_once $_SERVER["DOCUMENT_ROOT"] . "/erreurs/403.php";
+if (!$consultant && !$bm && !$rh) {
+        echo '3';
+        include_once $_SERVER["DOCUMENT_ROOT"] . "/erreurs/403.php";
     exit();
+}
+
+if (!(!$consultant)) {
+
+    $login = $consultant->get_login();
+
+} elseif (!(!$bm)) {
+
+    $login = $bm->get_login();
+
+} elseif (!(!$rh)) {
+
+    $login = $rh->get_login();
+
 }
 
 if (isset($_POST["action"])) {
 
     if ($_POST["action"] == "setpassword" && (isset($_POST["pwd"]) || isset($_POST["pwd_verif"]))) {
     
-        if ($consultant->set_password($_POST["pwd"], $_POST["pwd_verif"])) {
-            header("location: http://" . $_SERVER["HTTP_HOST"]);
-            exit();
+        if (!(!$consultant)) {
+
+            if ($consultant->set_password($_POST["pwd"], $_POST["pwd_verif"])) {
+                header("location: http://" . $_SERVER["HTTP_HOST"]);
+                exit();
+            }
+
+        } elseif (!(!$bm)) {
+
+            if ($bm->set_password($_POST["pwd"], $_POST["pwd_verif"])) {
+                header("location: http://" . $_SERVER["HTTP_HOST"]);
+                exit();
+            }
+
+        } elseif (!(!$rh)) {
+
+            if ($rh->set_password($_POST["pwd"], $_POST["pwd_verif"])) {
+                header("location: http://" . $_SERVER["HTTP_HOST"]);
+                exit();
+            }
+
         }
     
     }
@@ -70,7 +109,7 @@ if (isset($_POST["action"])) {
             <input type="hidden" name="action" value="setpassword">
 
             <i class="material-icons">account_box</i>
-            <input type="text" name="login" value="<?php echo $consultant->get_login(); ?>" disabled autocomplete="off"> <br>
+            <input type="text" name="login" value="<?php echo $login; ?>" disabled autocomplete="off"> <br>
 
             <i class="material-icons">done</i>
             <input class="pwd" name="pwd" type="password" placeholder="Nouveau mot de passe" autocomplete="off" required><br>

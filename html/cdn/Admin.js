@@ -4,6 +4,13 @@ class Admin {
 
         var parent = document.querySelector("#ddc" + parentid)
 
+        var trigger = document.querySelector("#ddt" + parentid)
+        
+        trigger.nextElementSibling.style.height = trigger.nextElementSibling.scrollHeight + "px";
+        setTimeout(() => {
+            trigger.nextElementSibling.style.height = "auto";
+        }, 300);
+
         var input = document.createElement("input");
 
         if (document.getElementById("addDaughter") != null) {
