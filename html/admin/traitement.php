@@ -77,10 +77,20 @@ elseif ($_POST['action'] == "delete_bm") {
 
 } elseif ($_POST['action'] == "add_bm") {
     
-    BM::register($_POST['nom'], $_POST['prenom']);
-    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/index.php');
-    exit();
+    $data = BM::register($_POST['nom'], $_POST['prenom']);
     
+?>     
+    <form name='reset_password' action='/admin/index.php' method='POST'>  
+        <input type='hidden' name='url' value=" <?php echo $data["url"]; ?> " >
+    </form>
+    <script>
+        document.reset_password.submit();
+    </script>
+
+<?php
+
+exit();
+
 }
 
 // ====================== PARTIE RH ========================
@@ -93,13 +103,21 @@ elseif ($_POST['action'] == "delete_rh") {
 
 } elseif ($_POST['action'] == "add_rh") {
     
-    RH::register($_POST['nom'], $_POST['prenom']);
+    $data = RH::register($_POST['nom'], $_POST['prenom']);
 
-    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/index.php');
-    exit();
+?>     
+    <form name='reset_password' action='/admin/index.php' method='POST'>  
+        <input type='hidden' name='url' value=" <?php echo $data["url"]; ?> " >
+    </form>
+    <script>
+        document.reset_password.submit();
+    </script>
 
-    
-} 
+<?php
+
+exit();
+
+}
 
 // =================== PARTIE CLIENT =========================
 
@@ -140,12 +158,12 @@ elseif ($_POST['action'] == "delete_consultant") {
 
     $data = Consultant::register($_POST['nom'], $_POST['prenom'], $_POST['pole']);
     ?>
-    <form name='add_cons' action='/admin/index.php' method='POST'>  
-        <input type='hidden' name='url' value=" <?php echo $data['url']; ?> " >
-    </form>
-    <script>
-        document.add_cons.submit();
-    </script>
+        <form name='add_cons' action='/admin/index.php' method='POST'>  
+            <input type='hidden' name='url' value=" <?php echo $data['url']; ?> " >
+        </form>
+        <script>
+            document.add_cons.submit();
+        </script>
     <?php
 
     exit();
