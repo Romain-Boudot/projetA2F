@@ -48,7 +48,7 @@
         
             <!-- // Comp section // -->
         
-            <div onclick="Competence.send()" class="submit">Envoyer</div>
+            <div onclick="Competence.send()" class="submit">Enregistrer</div>
 
             <div class="compListWrapper">
 
@@ -129,7 +129,7 @@
                 <input type="text" name="telephone" placeholder="Téléphone" value="<?php echo $c->get_telephone(); ?>" required>
                 <input type="text" name="linkedin" placeholder="Linkedin (http://...)" value="<?php echo $c->get_linkedin(); ?>">
 
-                <input type="submit" value="Envoyer">
+                <input type="submit" value="Enregistrer">
 
             </form>
         
@@ -168,7 +168,7 @@
                     <div class="details textCenter">
                         <textarea placeholder="Détails de l'intervention" name="details" maxlength="500" rows="10" required></textarea>
                     </div>
-                    <div class="InterSubmit"><input type="submit" value="Envoyer"></div>
+                    <div class="InterSubmit"><input type="submit" value="Enregistrer"></div>
                 </div>
 
                 <?php
@@ -219,7 +219,7 @@
                     <div class="details textCenter">
                         <textarea placeholder="Détails de l'intervention" name="details" maxlength="500" rows="10" required></textarea>
                     </div>
-                    <div class="QualSubmit"><input type="submit" value="Envoyer"></div>
+                    <div class="QualSubmit"><input type="submit" value="Enregistrer"></div>
                 </div>
 
                 <?php
@@ -250,7 +250,7 @@
         
             <!-- // Graph section // -->
 
-            <div onclick="g.send()" class="submit">Envoyer</div>
+            <div onclick="g.send()" class="submit">Enregistrer</div>
 
             <div class="compListWrapper w-50">
 

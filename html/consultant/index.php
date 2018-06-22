@@ -37,18 +37,18 @@
         :root {
             --main-color: <?php
                 if ($pole == 0) echo "#06436f";
+                if ($pole == 2) echo "#f7931e";
                 if ($pole == 1) echo "#06436f";
-                if ($pole == 2) echo "#259225";
                 if ($pole == 3) echo "#f05944";
             ?>;
             --main-color-light: <?php
                 if ($pole == 0) echo "#06436f88";
+                if ($pole == 2) echo "#f7931e88";
                 if ($pole == 1) echo "#06436f88";
-                if ($pole == 2) echo "#25922588";
                 if ($pole == 3) echo "#f0594488";
             ?>;
             --auto-color: <?php
-                if ($pole <= 1) echo "white";
+                if ($pole == 0 || $pole == 1) echo "white";
                 else echo "inerit";
             ?>;
         }
@@ -363,7 +363,7 @@
                 } else {
 
                     if (sizeof($files) == 0) {
-                        echo "Ce consultant n'as aucun fichier pdf.";
+                        echo "Ce consultant n'a aucun fichier pdf.";
                     }
 
                 }
@@ -384,9 +384,9 @@
 
     </div>
     <?php
-    if ($pole == 1) {
+    if ($pole == 2) {
         ?><img class="logo" src="/images/schema-industrie-15.svg" alt="logo Indus" width="300"><?php
-    } elseif ($pole == 2) {
+    } elseif ($pole == 1) {
         ?><img class="logo" src="/images/visuel-si.svg" alt="logo Si" width="300"><?php
     } elseif ($pole == 3) {
         ?><img class="logo" src="/images/schema-database-17.svg" alt="logo database" width="300"><?php
