@@ -22,10 +22,18 @@ class Security {
 
         $statement = $pdo->prepare("SELECT * FROM consultants WHERE login = :login");
         $statement->execute(array(":login" => $login));
-        if ($statement->fetch() != false) {
-            return false;
-        } else {
+        $cons = $statement->fetch();
+        $statement = $pdo->prepare("SELECT * FROM BM WHERE login = :login");
+        $statement->execute(array(":login" => $login));
+        $bm = $statement->fetch();
+        $statement = $pdo->prepare("SELECT * FROM RH WHERE login = :login");
+        $statement->execute(array(":login" => $login));
+        $rh = $statement->fetch();
+
+        if (!$bm && !$rh && !$cons) {
             return true;
+        } else {
+            return false;
         }
 
     }
