@@ -82,10 +82,11 @@ Class Consultant {
     public function send_modif(){
 
         $db = Database::connect();
-        $statement = $db->prepare("UPDATE consultants SET nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, linkedin = :linkedin WHERE id_consultant = :id");
+        $statement = $db->prepare("UPDATE consultants SET login = :login, nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, linkedin = :linkedin WHERE id_consultant = :id");
         $statement->execute(array(
             ":nom" => $this->nom,
             ":prenom" => $this->prenom,
+            ":login" => $this->login,
             ":email" => $this->email,
             ":telephone" => $this->telephone,
             ":linkedin" => $this->linkedin,
@@ -296,8 +297,7 @@ Class Consultant {
         $pdo = Database::connect(); 
 
         $statement = $pdo->prepare("SELECT i.id_intervention, i.date, i.details, c.entreprise FROM interventions i JOIN clients c ON c.id_client = i.id_client WHERE id_consultant = :id"); 
-        $statement->execute(array(":id" => $this->id)); 
-
+        $statement->execute(array(":id" => $this->id));
 
         $pdo = null; 
 
@@ -309,7 +309,7 @@ Class Consultant {
 
         $pdo = Database::connect(); 
 
-        $statement = $pdo->prepare("SELECT * FROM qualifications WHERE id_consultant = :id"); 
+        $statement = $pdo->prepare("SELECT * FROM qualifications WHERE id_consultant = :id ORDER BY date_obtention"); 
         $statement->execute(array(":id" => $this->id)); 
 
         $pdo = null; 
@@ -335,6 +335,13 @@ Class Consultant {
 
     public function get_login() {
         return $this->login;
+    }
+
+    public function set_login($login) {
+        if (Security::login_validity($login)) {
+            $this->login = $login;
+            $_SESSION['user']['login'] = $login;
+        }
     }
 
     public function get_id() {

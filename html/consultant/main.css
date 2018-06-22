@@ -267,8 +267,17 @@ nav {
     position: relative;
 }
 
+.comp::before {
+    content: " ";
+    width: 20px;
+    margin-right: 10px;
+    font-weight: bold;
+    right: calc(-100% - 10px);
+}
+
 .dropdownTrigger::before {
     content: "+";
+    width: 20px;
     margin-right: 10px;
     font-weight: bold;
     right: calc(-100% - 10px);

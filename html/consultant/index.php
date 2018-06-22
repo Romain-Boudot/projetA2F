@@ -97,7 +97,7 @@
             <div class="profile-info left">Téléphone :</div>
             <div class="profile-info" data-info="telephone"><?php echo $consultant->get_telephone(); ?></div>
             <div class="profile-info left">LinkedIn :</div>
-            <a href="<?php echo $consultant->get_linkedin(); ?>" class="profile-info underline" data-info="linkedin"><?php echo $consultant->get_linkedin(); ?></a>
+            <a href="<?php echo $consultant->get_linkedin(); ?>" target="_blank" class="profile-info underline" data-info="linkedin"><?php echo $consultant->get_linkedin(); ?></a>
             
             <?php if ($_SESSION['user']['type'] >= 1 || $_SESSION['user']['login'] == $consultant->get_login()) {?>
                 <div class="hr"></div>
@@ -250,6 +250,8 @@
             
             </div>
 
+            <div style="text-align: center;">Compétences de <?php echo $consultant->get_nom() . " " . $consultant->get_prenom(); ?></div>
+
             <div id="chart-wrapper">
 
                 <?php
@@ -355,7 +357,7 @@
 
                     ?><div class="addFile" <?php if (sizeof($files) >= 5) echo 'style="display: none;"' ?>>
                         <label for="fileInput">
-                            <i class="material-icons">add</i>
+                            <i class="material-icons">attach_file</i>
                         </label>
                         <div class="label">Ajout d'un fichier<br>(1Mo max.)</div>
                     </div><?php

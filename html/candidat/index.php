@@ -267,7 +267,7 @@ error_reporting(E_ALL);
 
                 <div class="addFile" <?php if (sizeof($files) == 5) echo 'style="display: none;"'; ?>>
                     <label for="fileInput">
-                        <i class="material-icons">add</i>
+                        <i class="material-icons">attach_file</i>
                     </label>
                     <div class="label">Ajout d'un fichier<br>(1Mo max.)</div>
                 </div>

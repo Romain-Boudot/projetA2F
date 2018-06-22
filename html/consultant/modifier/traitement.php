@@ -8,6 +8,12 @@
             }
         }
 
+        if (isset($_POST['login'])) {
+            if ($c->get_login() != $_POST["login"]) {
+                $c->set_login($_POST['login']);
+            }
+        }
+
         if (isset($_POST['prenom'])) {
             if ($c->get_prenom() != $_POST["prenom"]) {
                 $c->set_prenom($_POST['prenom']);

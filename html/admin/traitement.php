@@ -1,8 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 
 include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Security.php";
 include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Database.php";
@@ -195,7 +191,7 @@ elseif ($_POST['action'] == "delete_candidat") {
 
 }
 
-// reset passwords
+// =============== reset passwords =======================
 
 elseif ($_POST['action'] == "reset_password") {
 

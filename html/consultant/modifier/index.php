@@ -26,6 +26,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/consultant/modifier/main.css">
     <link rel="stylesheet" href="/cdn/main.css">
+    <script src="/cdn/Ajax.js"></script>
+    <script src="/cdn/Alert.js"></script>
     <script src="/cdn/Dropdown.js"></script>
     <script src="/cdn/Popup.js"></script>
     <script src="/cdn/Profile.js"></script>
@@ -125,8 +127,30 @@
 
                 <input type="text" name="nom" placeholder="Nom" value="<?php echo $c->get_nom(); ?>" required>
                 <input type="text" name="prenom" placeholder="Prenom" value="<?php echo $c->get_prenom(); ?>" required>
-                <input type="text" name="email" placeholder="Email" value="<?php echo $c->get_email(); ?>" required>
-                <input type="text" name="telephone" placeholder="Téléphone" value="<?php echo $c->get_telephone(); ?>" required>
+                <input id="login" type="text" name="login" placeholder="Login" value="<?php echo $c->get_login(); ?>" required>
+                <script>
+                    document.getElementById("login").onblur = function() {
+                        Ajax.post("/traitement.php", "action=login_validity&login=" + this.value, function (e) {
+                            console.log(e);
+                            data = JSON.parse(e);
+                            if (data.code == -1) {
+                                Alert.popup({
+                                    title: "Login Incorrect !",
+                                    text: "Le login choisi est déjà utilisé",
+                                    showCancelButton: false,
+                                    cancelText: "Cancel",
+                                    confirmColor: "#bbbbbb",
+                                    confirmText: "Retour",
+                                    confirm: function() {
+                                        Alert.close();
+                                    }
+                                })
+                            }
+                        })
+                    }
+                </script>
+                <input type="text" name="email" placeholder="Email" value="<?php echo $c->get_email(); ?>">
+                <input type="text" name="telephone" placeholder="Téléphone" value="<?php echo $c->get_telephone(); ?>">
                 <input type="text" name="linkedin" placeholder="Linkedin (http://...)" value="<?php echo $c->get_linkedin(); ?>">
 
                 <input type="submit" value="Enregistrer">
@@ -217,7 +241,7 @@
                     <div class="infos"><input type="text" name="nom" placeholder="Nom de Qualification" required></div>
                     <div class="infos"><input type="date" name="date" required></div>
                     <div class="details textCenter">
-                        <textarea placeholder="Détails de l'intervention" name="details" maxlength="500" rows="10" required></textarea>
+                        <textarea placeholder="Détails de la qualification" name="details" maxlength="500" rows="10"></textarea>
                     </div>
                     <div class="QualSubmit"><input type="submit" value="Enregistrer"></div>
                 </div>
@@ -278,9 +302,9 @@
 
                                 ?><div class="comp">
                                     <?php echo $name; ?> - <span><?php echo $value["niveau"]; ?></span>
-                                    <span onclick="g.addG3(<?php echo $value["id_competence"]; ?>, <?php echo $value["niveau"]; ?>, '<?php echo $name; ?>')" class="floatRight">Graph 3</span>
-                                    <span onclick="g.addG2(<?php echo $value["id_competence"]; ?>, <?php echo $value["niveau"]; ?>, '<?php echo $name; ?>')" class="floatRight">Graph 2</span>
-                                    <span onclick="g.addG1(<?php echo $value["id_competence"]; ?>, <?php echo $value["niveau"]; ?>, '<?php echo $name; ?>')" class="floatRight">Graph 1</span>
+                                    <span onclick="g.addG3(<?php echo $value["id_competence"]; ?>, <?php echo $value["niveau"]; ?>, '<?php echo str_replace("'", "\'", $name); ?>')" class="floatRight">Graph 3</span>
+                                    <span onclick="g.addG2(<?php echo $value["id_competence"]; ?>, <?php echo $value["niveau"]; ?>, '<?php echo str_replace("'", "\'", $name); ?>')" class="floatRight">Graph 2</span>
+                                    <span onclick="g.addG1(<?php echo $value["id_competence"]; ?>, <?php echo $value["niveau"]; ?>, '<?php echo str_replace("'", "\'", $name); ?>')" class="floatRight">Graph 1</span>
                                 </div><?php
 
                             }
