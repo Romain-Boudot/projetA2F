@@ -6,9 +6,9 @@ nav {
     left: 0;
     z-index: 2000;
     background-color: rgba(0, 0, 0, .1);
-    -webkit-box-shadow: 4px 2px 15px 5px rgba(0,0,0,0.3);
-    -moz-box-shadow: 4px 2px 15px 5px rgba(0,0,0,0.3);
-    box-shadow: 4px 2px 15px 5px rgba(0,0,0,0.3);
+    -webkit-box-shadow: 4px 2px 15px 5px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 4px 2px 15px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 4px 2px 15px 5px rgba(0, 0, 0, 0.3);
 }
 
 nav .onglet {
@@ -45,7 +45,7 @@ nav .onglet {
     text-align: center;
 }
 
-#InfoP form{
+#InfoP form {
     margin: 50px 0 0 150px;
     padding: 0;
     width: 30%;
@@ -53,7 +53,7 @@ nav .onglet {
 }
 
 #Inter form,
-#Qual form  {
+#Qual form {
     position: relative;
     width: 80%;
     left: 10%;
@@ -61,14 +61,66 @@ nav .onglet {
     margin: 10px 0;
 }
 
-#Inter form .intervention,
+#Inter form .intervention {
+    display: grid;
+    grid-template-areas: "dateD dateF entreprise client" "enregistrer details details details";
+}
+
+#Inter form input,
+#Inter form select {
+    width: calc(100% - 20px);
+}
+
+#Inter form select {
+    height: 40px;
+}
+
+#Inter form .infos,
+#Inter form .submit {
+    text-align: center;
+}
+
+#Inter form *:not(.hr) {
+    padding: 10px;
+    word-wrap: break-word;
+}
+
+#Inter form .infos:nth-child(1) {
+    grid-area: dateD;
+}
+
+#Inter form .infos:nth-child(2) {
+    grid-area: dateF;
+}
+
+#Inter form .infos:nth-child(3) {
+    grid-area: entreprise;
+}
+
+#Inter form .infos:nth-child(4) {
+    grid-area: client;
+}
+
+#Inter form .details {
+    grid-area: details;
+}
+
+#Inter form .submit {
+    grid-area: enregistrer;
+}
+
+
+/* #Inter form .intervention, */
+
 #Qual form .qualification {
     display: grid;
     grid-template-columns: 20% 20% 20% 20% 20%;
     grid-template-rows: 50% 50%;
 }
 
-#Inter form .infos:nth-child(1),
+
+/* #Inter form .infos:nth-child(1), */
+
 #Qual form .infos:nth-child(1) {
     grid-column: 1 / 2;
     grid-row: 1 / 2;
@@ -77,7 +129,9 @@ nav .onglet {
     word-wrap: break-word;
 }
 
-#Inter form .infos:nth-child(2),
+
+/* #Inter form .infos:nth-child(2), */
+
 #Qual form .infos:nth-child(2) {
     grid-column: 2 / 3;
     grid-row: 1 / 2;
@@ -86,7 +140,9 @@ nav .onglet {
     word-wrap: break-word;
 }
 
-#Inter form .details,
+
+/* #Inter form .details, */
+
 #Qual form .details {
     grid-column: 3 / 6;
     grid-row: 1 / 3;
@@ -94,37 +150,36 @@ nav .onglet {
     word-wrap: break-word;
 }
 
-#Inter form .InterSubmit,
+
+/* #Inter form .InterSubmit, */
+
 #Qual form .QualSubmit {
     grid-column: 1 / 3;
     text-align: center;
 }
 
 @media screen and (max-width: 1350px) {
-    #Inter form .infos:nth-child(1),
+    /* #Inter form .infos:nth-child(1), */
     #Qual form .infos:nth-child(1) {
         grid-column: 1 / 3;
         grid-row: 1 / 2;
         padding: 10px;
         text-align: center;
     }
-    
-    #Inter form .infos:nth-child(2),
+    /* #Inter form .infos:nth-child(2), */
     #Qual form .infos:nth-child(2) {
         grid-column: 4 / 6;
         grid-row: 1 / 2;
         padding: 10px;
         text-align: center;
     }
-    
-    #Inter form .details,
+    /* #Inter form .details, */
     #Qual form .details {
         grid-column: 2 / 6;
         grid-row: 2 / 3;
         padding: 10px;
     }
-
-    #Inter form .InterSubmit,
+    /* #Inter form .InterSubmit, */
     #Qual form .QualSubmit {
         grid-column: 1 / 2;
     }
@@ -276,7 +331,7 @@ form input[type=submit]:hover {
     cursor: pointer;
     border-radius: 5px;
     border: 2px solid rgba(0, 0, 0, .1);
-    transition: .2s background-color ease, .2s color ease;    
+    transition: .2s background-color ease, .2s color ease;
 }
 
 .submit:hover {
@@ -342,7 +397,7 @@ form input[type=submit]:hover {
 
 .delInt {
     border: 2px solid rgba(0, 0, 0, .1);
-    transition: .2s background-color ease, .2s color ease;    
+    transition: .2s background-color ease, .2s color ease;
 }
 
 .delInt:hover {

@@ -170,6 +170,7 @@
                 <div class="intervention">
                     <div class="infos">Date</div>
                     <div class="infos">Date de fin</div>
+                    <div class="infos">Entreprise</div>
                     <div class="infos">Client</div>
                     <div class="details textCenter">
                         Détails
@@ -180,6 +181,7 @@
                 <div class="intervention">
                     <div class="infos"><input type="date" name="date" required></div>
                     <div class="infos"><input type="date" name="date_fin"></div>
+                    <div class="infos"><input type="text" placeholder="entreprise"></div>
                     <div class="infos"><select name="client" required><option selected disabled>Client</option><?php
                     
                         $cl = Client::get_array();
