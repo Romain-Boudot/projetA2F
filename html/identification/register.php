@@ -43,7 +43,12 @@ if (!(!$consultant)) {
 if (isset($_POST["action"])) {
 
     if ($_POST["action"] == "setpassword" && (isset($_POST["pwd"]) || isset($_POST["pwd_verif"]))) {
-    
+        $_POST['pwd'] = hash('sha256', $_POST['pwd']);
+        $_POST['pwd_verif'] = hash('sha256', $_POST['pwd_verif']);    
+
+        var_dump($_POST['pwd'];
+        var_dump($_POST['pwd_verif'];
+        exit();
         if (!(!$consultant)) {
 
             if ($consultant->set_password($_POST["pwd"], $_POST["pwd_verif"])) {

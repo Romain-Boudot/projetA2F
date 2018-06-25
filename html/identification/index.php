@@ -14,7 +14,7 @@
 
     if (isset($_POST["login"]) && isset($_POST["password"])) {
 
-        if (Database::login($_POST["login"], $_POST["password"])) {
+        if (Database::login($_POST["login"], hash('sha256', $_POST["password"]))) {
 
             header('location: http://' . $_SERVER['HTTP_HOST']);
 
