@@ -386,13 +386,13 @@ class S {
             this.arr.archive = 0;
         }
         if (poleIndus.checked) {
-            this.arr.poles.id_pole.push(1);
+            this.arr.poles.id_pole.push(2);
         }
         if (poleDatabase.checked) {
             this.arr.poles.id_pole.push(3);
         }
         if (poleSi.checked) {
-            this.arr.poles.id_pole.push(2);
+            this.arr.poles.id_pole.push(1);
         }
         if (dispMtn.checked) {
             this.arr.disponibilites.id_disponibilite.push(1);
