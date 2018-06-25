@@ -455,3 +455,31 @@ nav {
     display: inline-block;
     line-height: 20px;
 }
+
+body {
+    display: grid;
+    width: calc(100vw - 100px);
+    grid-template-columns: auto auto auto auto;
+    grid-template-areas: "niv1 niv2 niv3 niv";
+    padding: 50px;
+    grid-gap: 20px;
+    justify-items: center;
+    align-items: center;
+}
+
+.niv1 {
+    grid-area: "niv1"
+}
+.niv2 {
+    grid-area: "niv2"
+}
+.niv3 {
+    grid-area: "niv3"
+}
+.niv {
+    grid-area: "niv"
+}
+
+.hr {
+    grid-column: 1 / 5
+}
