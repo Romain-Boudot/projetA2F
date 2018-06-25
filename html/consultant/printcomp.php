@@ -41,7 +41,7 @@ function arr_explorer($arr) {
             $rt = arr_explorer($value["enfant"]);
 
             // $html .= '<div class="hr m' . $value["depth"] . '"></div>';
-            $html .= '<div class="m' . $value["depth"] . '">' . $name . '<div class="niv">Moyenne : ' . $rt["niveau"] . '</div></div>';
+            $html .= '<div class="m' . $value["depth"] . '">' . $name . '<div class="' . (intval($value["depth"]) > 1 ? "niv" : "moy") . '">Moyenne : ' . $rt["niveau"] . '</div></div>';
             $html .= $rt["html"];
 
         }
@@ -67,25 +67,38 @@ function arr_explorer($arr) {
     <style>
         body {
             display: grid;
+            margin: 0 10vw;
             width: calc(80vw - 100px);
-            grid-template-columns: repeat(10, calc(100% / 10));
+            grid-template-columns: repeat(5, calc(100% / 5));
             padding: 50px;
             grid-gap: 5px 0;
             justify-items: center;
             align-items: center;
         }
+        @media screen {
+            body {
+                max-width: 700px;
+            }
+        }
+        @media print {
+            body {
+                width: calc(100vw - 100px);
+            }
+        }
         body>* {
             width: 100%;
         }
         .m1 {
-            grid-column: 1 / 4;
+            grid-column: 1 / 6;
             margin: 5px 0;
             font-weight: bold;
+            border-bottom: 3px solid rgba(0, 0, 0, .5);
         }
         .m2 {
-            grid-column: 2 / 5;
+            grid-column: 2 / 6;
             margin: 5px 0;
             font-weight: bold;
+            border-bottom: 1.5px solid rgba(0, 0, 0, .5);
         }
         .m3 {
             grid-column: 3 / 6;
@@ -95,8 +108,11 @@ function arr_explorer($arr) {
             border-bottom: 1px solid rgba(0, 0, 0, .5);
             text-align: center;
         }
-        .niv {
+        .niv, .moy {
             float: right;
+        }
+        .niv {
+            font-weight: normal;
         }
         .hr {
             margin: 0;
