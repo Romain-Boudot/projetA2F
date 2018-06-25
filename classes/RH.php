@@ -139,4 +139,8 @@ class RH {
 
     }
 
+    public function get_login() {
+        return $this->login;
+    }
+
 }
