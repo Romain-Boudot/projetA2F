@@ -169,6 +169,7 @@
 
                 <div class="intervention">
                     <div class="infos">Date</div>
+                    <div class="infos">Date de fin</div>
                     <div class="infos">Client</div>
                     <div class="details textCenter">
                         Détails
@@ -178,6 +179,7 @@
                 <div class="hr"></div>
                 <div class="intervention">
                     <div class="infos"><input type="date" name="date" required></div>
+                    <div class="infos"><input type="date" name="date_fin"></div>
                     <div class="infos"><select name="client" required><option selected disabled>Client</option><?php
                     
                         $cl = Client::get_array();
@@ -205,6 +207,8 @@
                     <div class="hr"></div>
                     <div class="intervention">
                         <div class="infos"><?php echo $int['date']; ?></div>
+                        <div class="infos"><?php if(is_null($int['date_fin'])){echo "Non définie";
+                                                  } else{ echo $int['date_fin'];} ?></div>
                         <div class="infos"><?php echo $int['entreprise']; ?></div>
                         <div class="details"><?php echo $int['details']; ?></div>
                         <div class="InterSubmit"><div onclick="Intervention.del(<?php echo $int['id_intervention']; ?>)" class="delInt">Supprimer</div></div>

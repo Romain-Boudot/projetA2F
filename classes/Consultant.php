@@ -98,8 +98,8 @@ Class Consultant {
     public function add_intervention($infos){
         $pdo = Database::connect();
 
-        $statement = $pdo->prepare("INSERT INTO interventions (id_consultant, id_client, date, details) VALUES (:id_consultant, :id_client, :date, :details)");
-        $statement->execute(array(':id_consultant' => $this->id, ':id_client' => $infos['id_client'], ':date' => $infos['date'], ':details' => $infos['details']));
+        $statement = $pdo->prepare("INSERT INTO interventions (id_consultant, id_client, date, date_fin, details) VALUES (:id_consultant, :id_client, :date, :date_fin, :details)");
+        $statement->execute(array(':id_consultant' => $this->id, ':id_client' => $infos['id_client'], ':date' => $infos['date'], ':date_fin' => $infos['date_fin'], ':details' => $infos['details']));
 
         $pdo =null;
     }
@@ -296,7 +296,7 @@ Class Consultant {
     public function get_interventions(){ 
         $pdo = Database::connect(); 
 
-        $statement = $pdo->prepare("SELECT i.id_intervention, i.date, i.details, c.entreprise FROM interventions i JOIN clients c ON c.id_client = i.id_client WHERE id_consultant = :id"); 
+        $statement = $pdo->prepare("SELECT i.id_intervention, i.date, i.date_fin, i.details, c.entreprise FROM interventions i JOIN clients c ON c.id_client = i.id_client WHERE id_consultant = :id"); 
         $statement->execute(array(":id" => $this->id));
 
         $pdo = null; 
