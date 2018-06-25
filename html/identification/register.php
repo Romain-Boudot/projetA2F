@@ -6,13 +6,11 @@ include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/BM.php";
 
 if (isset($pass)) {
     if (!$pass) {
-        echo '1';
         include_once $_SERVER["DOCUMENT_ROOT"] . "/erreurs/403.php";
         exit();
     }
 } else {
-        echo '2';
-        include_once $_SERVER["DOCUMENT_ROOT"] . "/erreurs/403.php";
+    include_once $_SERVER["DOCUMENT_ROOT"] . "/erreurs/403.php";
     exit();
 }
 
@@ -21,8 +19,7 @@ $bm = BM::get_bm_via_token($_GET["token"]);
 $rh = RH::get_rh_via_token($_GET["token"]);
 
 if (!$consultant && !$bm && !$rh) {
-        echo '3';
-        include_once $_SERVER["DOCUMENT_ROOT"] . "/erreurs/403.php";
+    include_once $_SERVER["DOCUMENT_ROOT"] . "/erreurs/403.php";
     exit();
 }
 
@@ -42,30 +39,28 @@ if (!(!$consultant)) {
 
 if (isset($_POST["action"])) {
 
-    if ($_POST["action"] == "setpassword" && (isset($_POST["pwd"]) || isset($_POST["pwd_verif"]))) {
-        $_POST['pwd'] = hash('sha256', $_POST['pwd']);
-        $_POST['pwd_verif'] = hash('sha256', $_POST['pwd_verif']);    
+    if ($_POST["action"] == "setpassword" && isset($_POST["pwd"]) && isset($_POST["pwd_verif"])) {
 
-        var_dump($_POST['pwd'];
-        var_dump($_POST['pwd_verif'];
-        exit();
+        $pwd = hash("sha256", $_POST["pwd"]);
+        $pwd_verif = hash("sha256", $_POST["pwd_verif"]);    
+
         if (!(!$consultant)) {
 
-            if ($consultant->set_password($_POST["pwd"], $_POST["pwd_verif"])) {
+            if ($consultant->set_password($pwd, $pwd_verif)) {
                 header("location: http://" . $_SERVER["HTTP_HOST"]);
                 exit();
             }
 
         } elseif (!(!$bm)) {
 
-            if ($bm->set_password($_POST["pwd"], $_POST["pwd_verif"])) {
+            if ($bm->set_password($pwd, $pwd_verif)) {
                 header("location: http://" . $_SERVER["HTTP_HOST"]);
                 exit();
             }
 
         } elseif (!(!$rh)) {
 
-            if ($rh->set_password($_POST["pwd"], $_POST["pwd_verif"])) {
+            if ($rh->set_password($pwd, $pwd_verif)) {
                 header("location: http://" . $_SERVER["HTTP_HOST"]);
                 exit();
             }
