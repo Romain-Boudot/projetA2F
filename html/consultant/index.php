@@ -109,6 +109,10 @@
 
             <a class="bottom btn h-56 modif-profile bold" href="/consultant/modifier">Modifier mon profil</a>
 
+        <?php } elseif ($_SESSION['user']['type'] >= 1) { ?>
+
+            <a href="/consultant/printcomp.php?id=<?php echo $id; ?>" class="bottom btn h-56 modif-profile bold">Voir toutes les compétences</a>
+
         <?php } ?>
     </nav>
 
