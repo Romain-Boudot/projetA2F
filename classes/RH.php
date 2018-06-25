@@ -67,7 +67,7 @@ class RH {
 
         $pdo = null;
 
-        $url = "http://" . $_SERVER["HTTP_HOST"] . "/register/?token=" . $token;
+        $url = "http://" . $_SERVER["HTTP_HOST"] . "/identification/?token=" . $token;
 
         return array(
             "url" => $url,

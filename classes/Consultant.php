@@ -95,11 +95,39 @@ Class Consultant {
 
     }
 
+    public function add_client($nom){
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("INSERT INTO clients (entreprise) VALUES (:nom_client)");
+        $statement->execute(array(':nom_client' => $nom));
+
+        $id = $pdo->lastInsertId();
+
+        $pdo = null;
+
+        return $id;
+    }    
+
+    public function add_entreprise($nom){
+
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("INSERT INTO entreprises (nom) VALUES (:nom_entreprise)");
+        $statement->execute(array(':nom_entreprise' => $nom));
+
+        $id = $pdo->lastInsertId();
+
+        $pdo = null;
+
+        return $id;
+
+    }
+
     public function add_intervention($infos){
         $pdo = Database::connect();
 
-        $statement = $pdo->prepare("INSERT INTO interventions (id_consultant, id_client, date, date_fin, details) VALUES (:id_consultant, :id_client, :date, :date_fin, :details)");
-        $statement->execute(array(':id_consultant' => $this->id, ':id_client' => $infos['id_client'], ':date' => $infos['date'], ':date_fin' => $infos['date_fin'], ':details' => $infos['details']));
+        $statement = $pdo->prepare("INSERT INTO interventions (id_consultant, id_entreprise, id_client, date, date_fin, details) VALUES (:id_consultant, :id_entreprise, :id_client, :date, :date_fin, :details)");
+        $statement->execute(array(':id_consultant' => $this->id, ':id_entreprise'=> $infos['id_entreprise'], ':id_client' => $infos['id_client'], ':date' => $infos['date'], ':date_fin' => $infos['date_fin'], ':details' => $infos['details']));
 
         $pdo =null;
     }
@@ -296,7 +324,7 @@ Class Consultant {
     public function get_interventions(){ 
         $pdo = Database::connect(); 
 
-        $statement = $pdo->prepare("SELECT i.id_intervention, i.date, i.date_fin, i.details, c.entreprise FROM interventions i JOIN clients c ON c.id_client = i.id_client WHERE id_consultant = :id"); 
+        $statement = $pdo->prepare("SELECT i.id_intervention, i.date, i.date_fin, i.details, c.entreprise FROM interventions i JOIN clients c ON c.id_client = i.id_client WHERE id_consultant = :id ORDER BY i.date"); 
         $statement->execute(array(":id" => $this->id));
 
         $pdo = null; 

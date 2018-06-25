@@ -58,6 +58,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="/cdn/Chart.bundle.min.js"></script>
     <script src="/cdn/Ajax.js"></script>
+    <script src="/cdn/Popup.js"></script>
     <script src="/cdn/Alert.js"></script>
     <script src="/cdn/Chart.js"></script>
     <script src="/cdn/Dropdown.js"></script>
@@ -113,6 +114,7 @@
     </nav>
 
     <div class="main-wrapper">
+
         <div class="relative-wrapper-container">
             <div style="width: 100%; margin-bottom: 20px; position: relative; height: 0px;overflow: hidden;">fixing div</div>
             <div id="onglets-wrapper">
