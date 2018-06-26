@@ -77,11 +77,11 @@
 }
 
 .pole1 {
-    border: 2px solid var(--color-in-light);
+    border: 2px solid var(--color-si-light);
 }
 
 .pole2 {
-    border: 2px solid var(--color-si-light);
+    border: 2px solid var(--color-in-light);
 }
 
 .pole3 {

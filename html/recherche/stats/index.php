@@ -21,8 +21,8 @@ Security::check_login(array(1, 2));
         :root {
             --main-color: <?php
                 if ($_SESSION['user']['pole'] == 0) echo "#06436f";
-                if ($_SESSION['user']['pole'] == 1) echo "#f7931e";
-                if ($_SESSION['user']['pole'] == 2) echo "#06436f";
+                if ($_SESSION['user']['pole'] == 2) echo "#f7931e";
+                if ($_SESSION['user']['pole'] == 1) echo "#06436f";
                 if ($_SESSION['user']['pole'] == 3) echo "#f05944";
             ?>;
             --auto-color: <?php

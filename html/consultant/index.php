@@ -36,10 +36,10 @@
     <style>
         :root {
             --main-color: <?php
-                if ($pole == 0) echo "#06436f";
-                if ($pole == 2) echo "#f7931e";
-                if ($pole == 1) echo "#06436f";
-                if ($pole == 3) echo "#f05944";
+                if ($_SESSION['user']['pole'] == 0) echo "#06436f";
+                if ($_SESSION['user']['pole'] == 2) echo "#f7931e";
+                if ($_SESSION['user']['pole'] == 1) echo "#06436f";
+                if ($_SESSION['user']['pole'] == 3) echo "#f05944";
             ?>;
             --main-color-light: <?php
                 if ($pole == 0) echo "#06436f88";
@@ -48,8 +48,8 @@
                 if ($pole == 3) echo "#f0594488";
             ?>;
             --auto-color: <?php
-                if ($pole == 0 || $pole == 1) echo "white";
-                else echo "inerit";
+                if ($_SESSION['user']['pole'] == 0) echo "white";
+                else echo "inerit"
             ?>;
         }
     </style>
