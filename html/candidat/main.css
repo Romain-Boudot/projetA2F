@@ -135,6 +135,21 @@ nav {
     word-wrap: break-word;
 }
 
+.zoom {
+    position: absolute;
+    font-size: 30px !important;
+    color: rgb(158, 158, 158);
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+}
+
+.details {
+    position: relative;
+    max-height: 100px;
+    overflow: hidden;
+}
+
 .clickable {
     cursor: pointer;
 }

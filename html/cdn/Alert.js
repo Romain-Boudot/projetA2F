@@ -55,14 +55,16 @@ class Alert {
         title.innerText = obj.title;
         title.style.fontSize = "27px";
         title.style.fontWeight = "600";
-        //title.style.textAlign = "center";
         title.style.margin = "20px 0";
         block.appendChild(title);
 
         content.innerText = obj.text;
-        //content.style.textAlign = "center";
+        obj.textAlign ? content.style.textAlign = obj.textAlign : null;
         content.style.marginBottom = "20px";
+        content.style.padding = "0 20px"
         content.style.wordWrap = "break-word";
+        content.style.maxHeight = "60vw";
+        content.style.overflow = "auto";
         block.appendChild(content);
 
         confirm.style.marginBottom = "20px";
@@ -87,11 +89,13 @@ class Alert {
 
         block.style.backgroundColor = "white";
         block.style.position = "absolute";
-        block.style.top = "10%";
+        block.style.top = "70px";
         block.style.borderRadius = "10px";
-        block.style.width = "500px";
+        block.style.maxHeight = "calc(100vh - 100px)";
+        block.style.overflow = "auto";
+        obj.width ? block.style.width = obj.width : block.style.width = "500px";
         block.style.textAlign = "center";
-        block.style.left = "calc(50% - " + (parseInt(block.style.width.slice(0, -2)) / 2) + "px)";
+        obj.left ? block.style.left = obj.left : block.style.left = "calc(50% - " + (parseInt(block.style.width.slice(0, -2)) / 2) + "px)";
 
         Alert.open(back);
 
@@ -139,6 +143,23 @@ class Alert {
             if (elem != null) Alert.open(elem);
         }, 500);
 
+    }
+
+    static zoom(target, title) {
+        Alert.popup({
+            title: title,
+            text: target.previousElementSibling.innerText,
+            showCancelButton: false,
+            cancelText: "Cancel",
+            confirmColor: "#bbbbbb",
+            confirmText: "Retour",
+            width: "60vw",
+            left: "20vw",
+            textAlign: "left",
+            confirm: function() {
+                Alert.close();
+            }
+        })
     }
 
 }

@@ -145,7 +145,7 @@ nav .onglet {
 }
 
 .details {
-    max-height: 700px;
+    max-height: 300px !important;
     overflow: auto;
 }
 

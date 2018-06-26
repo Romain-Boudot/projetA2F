@@ -110,7 +110,7 @@ error_reporting(E_ALL);
                     <div class="intervention">
                         <div class="infos"><?php echo $int['date_entretien']; ?></div>
                         <div class="infos"><?php echo $int['nom']; echo " "; echo $int['prenom']; ?></div>
-                        <div class="details"><?php echo str_replace("\n","<br>",$int['details']); ?></div>
+                        <div class="details"><div><?php echo str_replace("\n","<br>",$int['details']); ?></div><i onclick="Alert.zoom(this, 'Entretien du <?php echo $int['date_entretien']; ?>')" class="zoom material-icons">zoom_in</i></div>
                     </div>
 
                             <?php
@@ -138,7 +138,7 @@ error_reporting(E_ALL);
                     <div class="qualification">
                         <div class="infos"><?php echo $qual['nom_qualification']; ?></div>
                         <div class="infos"><?php echo $qual['date_obtention']; ?></div>
-                        <div class="details"><?php echo str_replace("\n","<br>",$qual['details']); ?></div>
+                        <div class="details"><div><?php echo str_replace("\n","<br>",$qual['details']); ?></div><i onclick="Alert.zoom(this, 'Entretien')" class="zoom material-icons">zoom_in</i></div>
                     </div>   
 
                     <?php
