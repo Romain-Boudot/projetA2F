@@ -40,6 +40,8 @@ function arr_explorer($arr) {
 
             $rt = arr_explorer($value["enfant"]);
 
+            $parentAverage += $rt['niveau'];
+
             // $html .= '<div class="hr m' . $value["depth"] . '"></div>';
             $html .= '<div class="m' . $value["depth"] . '">' . $name . '<div class="' . (intval($value["depth"]) > 1 ? "niv" : "moy") . '">Moyenne : ' . $rt["niveau"] . '</div></div>';
             $html .= $rt["html"];

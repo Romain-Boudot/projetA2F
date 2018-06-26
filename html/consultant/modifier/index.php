@@ -13,9 +13,9 @@
     $c = new Consultant($_SESSION['user']['id']);
     
     if (isset($_POST['modif'])) {
+        $pass = true;
         include_once "traitement.php";
     }
-
 
 ?>
 <!DOCTYPE html>
@@ -32,6 +32,7 @@
     <script src="/cdn/Popup.js"></script>
     <script src="/cdn/Profile.js"></script>
     <script src="/cdn/Post.js"></script>
+    <script src="/consultant/modifier/main.js"></script>
     <title>A2F Advisor</title>
 </head>
 <body>
@@ -151,7 +152,7 @@
                 </script>
                 <input type="text" name="email" placeholder="Email" value="<?php echo $c->get_email(); ?>">
                 <input type="text" name="telephone" placeholder="Téléphone" value="<?php echo $c->get_telephone(); ?>">
-                <input type="text" name="linkedin" placeholder="Linkedin (http://...)" value="<?php echo $c->get_linkedin(); ?>">
+                <input type="text" name="linkedin" placeholder="Linkedin (https://...)" value="<?php echo $c->get_linkedin(); ?>">
 
                 <input type="submit" value="Enregistrer">
 
@@ -178,20 +179,10 @@
                 <div class="intervention">
                     <div class="infos"><input type="date" name="date" required></div>
                     <div class="infos"><input type="date" name="date_fin"></div>
-                    <div class="infos"><input type="text" placeholder="entreprise"></div>
-                    <div class="infos"><select name="client" required><option selected disabled>Client</option><?php
-                    
-                        $cl = Client::get_array();
-
-                        foreach ($cl as $key => $value) {
-                            
-                            ?><option value="<?php echo $value['id_client']; ?>"><?php echo $value['entreprise']; ?></option><?php
-
-                        }
-
-                    ?></select></div>
+                    <div class="infos"><input type="text" name="entreprise" placeholder="entreprise"></div>
+                    <div class="infos"><input type="text" name="client" placeholder="client"></div>
                     <div class="details textCenter">
-                        <textarea placeholder="Détails de l'intervention" name="details" maxlength="500" rows="10" required></textarea>
+                        <textarea placeholder="Détails de l'intervention" name="details" maxlength="1000" rows="10"></textarea>
                     </div>
                     <div class="InterSubmit"><input type="submit" value="Enregistrer"></div>
                 </div>
@@ -206,8 +197,13 @@
                     <div class="hr"></div>
                     <div class="intervention">
                         <div class="infos"><?php echo $int['date']; ?></div>
-                        <div class="infos"><?php if(is_null($int['date_fin'])){echo "Non définie";
-                                                  } else{ echo $int['date_fin'];} ?></div>
+                        <div class="infos"><?php 
+                            if (is_null($int['date_fin'])) {
+                                echo "Non définie";
+                            } else { 
+                                echo $int['date_fin'];
+                            }
+                        ?></div>
                         <div class="infos"><?php echo $int['entreprise']; ?></div>
                         <div class="details"><?php echo $int['details']; ?></div>
                         <div class="InterSubmit"><div onclick="Intervention.del(<?php echo $int['id_intervention']; ?>)" class="delInt">Supprimer</div></div>
@@ -242,9 +238,9 @@
                 <div class="hr"></div>
                 <div class="qualification">
                     <div class="infos"><input type="text" name="nom" placeholder="Nom de Qualification" required></div>
-                    <div class="infos"><input type="date" name="date" required></div>
+                    <div class="infos"><input type="date" name="date"></div>
                     <div class="details textCenter">
-                        <textarea placeholder="Détails de la qualification" name="details" maxlength="500" rows="10"></textarea>
+                        <textarea placeholder="Détails de la qualification" name="details" maxlength="1000" rows="10"></textarea>
                     </div>
                     <div class="QualSubmit"><input type="submit" value="Enregistrer"></div>
                 </div>

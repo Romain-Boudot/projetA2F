@@ -365,7 +365,7 @@
                         <label for="fileInput">
                             <i class="material-icons">attach_file</i>
                         </label>
-                        <div class="label">Ajout d'un fichier<br>(1Mo max.)</div>
+                        <div class="label">Ajout d'un fichier<br>(1Mo max. pdf)</div>
                     </div><?php
 
                 } else {

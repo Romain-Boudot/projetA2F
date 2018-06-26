@@ -1,5 +1,7 @@
 <?php
 
+    if (!$pass) exit();
+
     if ($_POST['modif'] == "info") {
 
         if (isset($_POST['nom'])) {
