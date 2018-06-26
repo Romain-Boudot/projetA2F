@@ -20,7 +20,7 @@ class Database {
     
     }
 
-    public function login($login, $password) {
+    static public function login($login, $password) {
 
         sleep(1);
 
