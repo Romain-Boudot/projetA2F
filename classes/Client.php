@@ -11,12 +11,12 @@ class Client {
         } else return false;
     }
 
-    static public function get_array() {
+    static public function get_array($like = "") {
 
         $db = Database::connect();
 
-        $statement = $db->prepare("SELECT * FROM clients ORDER BY entreprise");
-        $statement->execute();
+        $statement = $db->prepare("SELECT * FROM clients WHERE entreprise LIKE :like ORDER BY entreprise");
+        $statement->execute(array(":like" => "%" . $like . "%"));
         $answer = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         return $answer;
@@ -33,5 +33,22 @@ class Client {
  
         $pdo = null;
     } 
+
+}
+
+class Entreprise {
+
+    static public function get_array($like = "") {
+
+        $db = Database::connect();
+
+        $statement = $db->prepare("SELECT * FROM entreprises WHERE nom LIKE :like ORDER BY nom");
+        // * = id_entreprise, nom
+        $statement->execute(array(":like" => "%" . $like . "%"));
+        $answer = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return $answer;
+
+    }
 
 }
