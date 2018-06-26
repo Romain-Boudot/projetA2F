@@ -201,11 +201,6 @@ form input[type=submit] {
     border-radius: 5px;
     cursor: pointer;
     font-size: 15px;
-    background-color: rgba(0, 0, 0, 0);
-    transition: .2s background-color ease, .2s color ease;
-}
-
-form input[type=submit]:hover {
     background-color: var(--color-df);
     color: white;
 }
@@ -281,10 +276,6 @@ form input[type=submit]:hover {
     cursor: pointer;
     border-radius: 5px;
     border: 2px solid rgba(0, 0, 0, .1);
-    transition: .2s background-color ease, .2s color ease; 
-}
-
-.submit:hover {
     background-color: var(--color-df);
     color: white;
 }
@@ -316,13 +307,9 @@ form input[type=submit]:hover {
     margin: 50px 75px 50px 150px !important;
 }
 .delInt {
-    border: 2px solid rgba(0, 0, 0, .1);
-    transition: .2s background-color ease, .2s color ease;    
-}
-
-.delInt:hover {
     background-color: var(--color-df);
     color: white;
+    border: 2px solid rgba(0, 0, 0, .1);
 }
 
 .del {
