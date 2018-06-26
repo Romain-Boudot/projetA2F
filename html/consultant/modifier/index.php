@@ -182,7 +182,7 @@
                     <div class="infos"><input type="text" name="entreprise" placeholder="entreprise"></div>
                     <div class="infos"><input type="text" name="client" placeholder="client"></div>
                     <div class="details textCenter">
-                        <textarea placeholder="Détails de l'intervention" name="details" maxlength="1000" rows="10"></textarea>
+                        <textarea placeholder="Détails de l'intervention" name="details" maxlength="1500" rows="10"></textarea>
                     </div>
                     <div class="InterSubmit"><input type="submit" value="Enregistrer"></div>
                 </div>
@@ -205,7 +205,7 @@
                             }
                         ?></div>
                         <div class="infos"><?php echo $int['entreprise']; ?></div>
-                        <div class="details"><?php echo $int['details']; ?></div>
+                        <div class="details"><?php echo str_replace("\n","<br>",$int['details']); ?></div>
                         <div class="InterSubmit"><div onclick="Intervention.del(<?php echo $int['id_intervention']; ?>)" class="delInt">Supprimer</div></div>
                     </div>
 
@@ -240,7 +240,7 @@
                     <div class="infos"><input type="text" name="nom" placeholder="Nom de Qualification" required></div>
                     <div class="infos"><input type="date" name="date"></div>
                     <div class="details textCenter">
-                        <textarea placeholder="Détails de la qualification" name="details" maxlength="1000" rows="10"></textarea>
+                        <textarea placeholder="Détails de la qualification" name="details" maxlength="1500" rows="10"></textarea>
                     </div>
                     <div class="QualSubmit"><input type="submit" value="Enregistrer"></div>
                 </div>
@@ -256,7 +256,7 @@
                     <div class="qualification">
                         <div class="infos"><?php echo $qual['nom_qualification']; ?></div>
                         <div class="infos"><?php echo $qual['date_obtention']; ?></div>
-                        <div class="details"><?php echo $qual['details']; ?></div>
+                        <div class="details"><?php echo str_replace("\n","<br>",$qual['details']); ?></div>
                         <div class="QualSubmit"><div onclick="Qualification.del(<?php echo $qual['id_qualification']; ?>)" class="delInt">Supprimer</div></div>
                     </div>
 

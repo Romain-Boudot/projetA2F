@@ -142,7 +142,7 @@
                     <div class="intervention">
                         <div class="infos"><?php echo $int['date']; ?></div>
                         <div class="infos"><?php echo $int['entreprise']; ?></div>
-                        <div class="details"><?php echo $int['details']; ?></div>
+                        <div class="details"><?php echo str_replace("\n","<br>",$int['details']); ?></div>
                     </div>
 
                             <?php
@@ -178,7 +178,7 @@
                     <div class="qualification">
                         <div class="infos"><?php echo $int['nom_qualification']; ?></div>
                         <div class="infos"><?php echo $int['date_obtention']; ?></div>
-                        <div class="details"><?php echo $int['details']; ?></div>
+                        <div class="details"><?php echo str_replace("\n","<br>",$int['details']) ?></div>
                     </div>   
 
                     <?php

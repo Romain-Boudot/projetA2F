@@ -110,7 +110,7 @@ error_reporting(E_ALL);
                     <div class="intervention">
                         <div class="infos"><?php echo $int['date_entretien']; ?></div>
                         <div class="infos"><?php echo $int['nom']; echo " "; echo $int['prenom']; ?></div>
-                        <div class="details"><?php echo $int['details']; ?></div>
+                        <div class="details"><?php echo str_replace("\n","<br>",$int['details']); ?></div>
                     </div>
 
                             <?php
@@ -130,15 +130,15 @@ error_reporting(E_ALL);
                     <?php           
                     
                     $tab = $candidat->get_qualifications();
-                    foreach ($tab as $int) {
+                    foreach ($tab as $qual) {
                     
                     ?>
 
                     <div class="hr"></div>
                     <div class="qualification">
-                        <div class="infos"><?php echo $int['nom_qualification']; ?></div>
-                        <div class="infos"><?php echo $int['date_obtention']; ?></div>
-                        <div class="details"><?php echo $int['details']; ?></div>
+                        <div class="infos"><?php echo $qual['nom_qualification']; ?></div>
+                        <div class="infos"><?php echo $qual['date_obtention']; ?></div>
+                        <div class="details"><?php echo str_replace("\n","<br>",$qual['details']); ?></div>
                     </div>   
 
                     <?php

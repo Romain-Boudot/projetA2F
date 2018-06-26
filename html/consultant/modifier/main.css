@@ -144,6 +144,11 @@ nav .onglet {
     text-align: center;
 }
 
+.details {
+    max-height: 700px;
+    overflow: auto;
+}
+
 @media screen and (max-width: 1350px) {
     #Inter form .infos:nth-child(1),
     #Qual form .infos:nth-child(1) {
