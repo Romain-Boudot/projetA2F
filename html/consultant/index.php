@@ -125,11 +125,10 @@
                 <div id="ot1" class="onglet-label ongletTrigger">Interventions</div><div id="ot2" class="onglet-label ongletTrigger">Qualifications</div><div id="ot3" class="onglet-label ongletTrigger">Compétences</div>
                 <div id="oc1" class="onglet ongletContainer">
                     <div class="intervention">
-                        <div class="infos">Date</div>
+                        <div class="infos">Date de début</div>
+                        <div class="infos">Date de fin</div>
+                        <div class="infos">Entreprise</div>    
                         <div class="infos">Client</div>
-                        <div class="details textCenter">
-                            Détails
-                        </div>
                     </div>
 
                     <?php

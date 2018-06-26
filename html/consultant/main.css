@@ -196,32 +196,52 @@ nav {
 
 #oc1 .intervention {
     display: grid;
-    grid-template-columns: 15% 15% 70%;
-    grid-template-rows: auto;
+    grid-template-areas: "dateD dateF entreprise client" "details details details .";
     margin: 10px 0;
 }
 
 #oc1 .intervention .infos:nth-child(1) {
-    grid-column: 1 / 2;
-    grid-row: 1 / 2;
+    grid-area: dateD;
     padding: 10px;
     text-align: center;
     word-wrap: break-word;
 }
 
 #oc1 .intervention .infos:nth-child(2) {
-    grid-column: 2 / 3;
-    grid-row: 1 / 2;
+    grid-area: dateF;
+    padding: 10px;
+    text-align: center;
+    word-wrap: break-word;
+}
+
+#oc1 .intervention .infos:nth-child(3) {
+    grid-area: entreprise;
+    padding: 10px;
+    text-align: center;
+    word-wrap: break-word;
+}
+
+#oc1 .intervention .infos:nth-child(4) {
+    grid-area: client;
     padding: 10px;
     text-align: center;
     word-wrap: break-word;
 }
 
 #oc1 .intervention .details {
-    grid-column: 3 / 4;
-    grid-row: 1 / 2;
+    grid-area: details;
     padding: 10px;
     word-wrap: break-word;
+}
+
+.zoom {
+    float: right;
+    font-size: 50px;
+}
+
+.details {
+    max-height: 100px;
+    overflow: hidden;
 }
 
 .clickable {
