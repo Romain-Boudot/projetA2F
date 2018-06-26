@@ -3,6 +3,8 @@
 
     Security::check_login(array(0, 1, 2));
 
+    if (!isset($pass)) exit();
+
     if ($_POST['modif'] == "info") {
 
         if (isset($_POST['nom'])) {
@@ -54,6 +56,8 @@
             ));
 
         }
+
+        exit();
 
     } elseif ($_POST['modif'] == "int") {
 

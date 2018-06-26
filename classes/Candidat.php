@@ -220,16 +220,15 @@ class Candidat {
             ":id_candidat" => $this->id,
             ":id_competence" => $infos['id_competence']
         ));
-//        if ($infos["niveau"] == 0) return;
-        $statement = $pdo->prepare("INSERT INTO competences_candidats (niveau, id_candidat, id_competence) VALUES (:niv, :idca, :idco)");
+        if ($infos["niveau"] == 0) return;
+        $statement = $pdo->prepare("INSERT INTO competences_candidats (niveau, id_candidat, id_competence) VALUES (?, ?, ?)");
         $statement->execute(array(
-           ':niv' => $infos['niveau'],
-           ':idca' => $this->id,
-           ':idco' => $infos['id_competence']
+           $infos['niveau'],
+           $this->id,
+           $infos['id_competence']
         ));
         
-        var_dump($statement);
-            $pdo = null; 
+        $pdo = null; 
     
     }
 

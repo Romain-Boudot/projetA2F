@@ -7,28 +7,28 @@
     include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Security.php";
     session_start();
 
-    Security::check_login(array(1,2));
+    Security::check_login(array(1, 2));
 
-    if(isset($_GET['id'])){
+    if (isset($_GET['id'])){
 
         $id = $_GET['id'];
     
-    }
-    elseif(isset($_POST['id_cons'])){
+    } elseif (isset($_POST['id_cand'])) {
         
-        $id = $_POST['id_cons'];
+        $id = $_POST['id_cand'];
 
-    }
-
-    else{
-        echo "Candidat introuvable";
+    } else {
+        
+        include_once $_SERVER["DOCUMENT_ROOT"] . "/erreurs/404.php";
         exit();
+
     }
  
 
     $c = new Candidat($id);
 
     if (isset($_POST['modif'])) {
+        $pass = true;
         include_once "traitement.php";
     }
 
@@ -105,7 +105,7 @@
 
                 };
 
-                $comp = Competence::get_array($_SESSION['user']['id']);
+                $comp = Competence::get_array($id, true);
 
                 foreach ($comp as $name => $value) {
 
@@ -137,7 +137,7 @@
             <form action="/candidat/modifier/" method="post">
             
                 <input type="hidden" name="modif" value="info">
-                <input type="hidden" name="id_cons" value="<?php echo $id; ?>">   
+                <input type="hidden" name="id_cand" value="<?php echo $id; ?>">   
 
                 <input type="text" name="nom" placeholder="Nom" value="<?php echo $c->get_nom(); ?>" required>
                 <input type="text" name="prenom" placeholder="Prenom" value="<?php echo $c->get_prenom(); ?>" required>
@@ -159,7 +159,7 @@
 
                 <input type="hidden" name="modif" value="int">
                 <input type="hidden" name="action" value="add">                
-                <input type="hidden" name="id_cons" value="<?php echo $id ?>">                
+                <input type="hidden" name="id_cand" value="<?php echo $id ?>">                
                
                      <div class="intervention">
                     <div class="infos">Date</div>
@@ -223,7 +223,7 @@
                 <input type="hidden" name="modif" value="qual">
                 <input type="hidden" name="action" value="add">
                 
-                <input type="hidden" name="id_cons" value="<?php echo $id; ?>">                
+                <input type="hidden" name="id_cand" value="<?php echo $id; ?>">                
 
                 <div class="qualification">
                     <div class="infos">Qualification</div>

@@ -78,7 +78,7 @@ class Competence {
         Post.send("/candidat/modifier/", {
             "comp" : encodeURI(JSON.stringify(arr)),
             "modif" : "comp",
-            "id_cons" : id_ca
+            "id_cand" : id_ca
         });
 
     }
