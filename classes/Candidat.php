@@ -45,7 +45,13 @@ class Candidat {
 
     public function delete(){
 
-        $pdo = Database::connect(); 
+        $pdo = Database::connect();
+
+        $files = $this->get_files();
+
+        foreach ($files as $key => $value) {
+            unlink($_SERVER["DOCUMENT_ROOT"] . "/../files/" . $value["nom_serveur"]);
+        }
 
         $delete_candidate = $pdo->prepare("DELETE FROM candidats WHERE id_candidat = :id");
         $delete_candidate->bindParam('id', $this->id);
