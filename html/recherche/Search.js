@@ -358,9 +358,6 @@ class S {
             "clients":{
                 "id_client":[]
             },
-            "disponibilites":{
-                "id_disponibilite":[]
-            },
             "consultant":[],
             "archive": null
         }
@@ -369,11 +366,6 @@ class S {
         var poleIndus = document.getElementById('poleIndus');
         var poleDatabase = document.getElementById('poleDatabase');
         var poleSi = document.getElementById('poleSi');
-
-        var dispMtn = document.getElementById('dispMtn');
-        var disp1M = document.getElementById('disp1M');
-        var disp2M = document.getElementById('disp2M');
-        var disp3M = document.getElementById('disp3M');
 
         var av1 = document.getElementById('av1');
         var av2 = document.getElementById('av2');
@@ -393,18 +385,6 @@ class S {
         }
         if (poleSi.checked) {
             this.arr.poles.id_pole.push(1);
-        }
-        if (dispMtn.checked) {
-            this.arr.disponibilites.id_disponibilite.push(1);
-        }
-        if (disp1M.checked) {
-            this.arr.disponibilites.id_disponibilite.push(2)
-        }
-        if (disp2M.checked) {
-            this.arr.disponibilites.id_disponibilite.push(3);
-        }
-        if (disp3M.checked) {
-            this.arr.disponibilites.id_disponibilite.push(4);
         }
         if (av1.checked) {
             this.arr.etape.push(1);

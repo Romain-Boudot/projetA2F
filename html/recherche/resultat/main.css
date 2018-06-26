@@ -21,7 +21,8 @@
 }
 
 .profile img {
-    width: 35%;
+    width: 100px;
+    height: 100px;
     overflow: hidden;
     border-radius: 600px;
     float: left;
