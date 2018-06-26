@@ -172,9 +172,6 @@
                     <div class="infos">Date de fin</div>
                     <div class="infos">Entreprise</div>
                     <div class="infos">Client</div>
-                    <div class="details textCenter">
-                        Détails
-                    </div>
                 </div>
                 
                 <div class="hr"></div>
