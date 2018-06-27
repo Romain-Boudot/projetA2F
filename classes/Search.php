@@ -14,7 +14,7 @@ function average_skill($bind, $id, $lvl = null) {
 
     $is_last = Competence::is_last($id); // si la competence a des enfant (bool)
 
-    if ($is_last == null) $is_last = false;
+    if ($is_last == null) $is_last = false; // dans le doute
 
     if ($is_last) {
 
@@ -75,6 +75,69 @@ function average_skill($bind, $id, $lvl = null) {
 
 Class Search {
 
+    static private function average_skill_v2($bind, $id, $lvl) {
+
+        if (Competence::is_last($id)) {
+
+            $str = 
+                "CAST(
+                    (SELECT
+                        AVG(
+                            CAST(
+                                COALESCE(
+                                    (
+                                    SELECT
+                                        AVG(avs1.niveau)
+                                    FROM
+                                        competences_consultants avs1
+                                    WHERE
+                                        avs1.id_competence = :bp" . $bind["bindparamcpt"] . "
+                                    AND
+                                        avs1.id_consultant = avs2.id_consultant
+                                ),
+                                0
+                                ) AS DECIMAL(6, 3)
+                            )
+                        ) AS average
+                    FROM
+                        consultants avs2
+                    WHERE avs2.id_consultant = c.id_consultant
+                    ) as DECIMAL(6, 3)
+                )" . $bind["lvl"][$lvl];
+
+            $bind["bindparam"][":bp" . $bind["bindparamcpt"]] = $id;
+            $bind["bindparamcpt"] += 1;
+
+        } else {
+
+            $str = 
+                "CAST(
+                    (SELECT AVG((
+                SELECT AVG(COALESCE((SELECT avs1.niveau FROM competences_consultants avs1 WHERE avs1.id_competence = c1.id_competence AND avs1.id_consultant = co.id_consultant ), 0))
+                FROM competences c1 WHERE NOT EXISTS (SELECT * FROM competences c2 WHERE c2.id_competence_mere = c1.id_competence) AND
+                (
+                    c1.id_competence_mere = :bp" . $bind["bindparamcpt"] . "
+                    OR
+                    EXISTS (SELECT * FROM competences tmp1 WHERE c1.id_competence_mere = tmp1.id_competence AND tmp1.id_competence_mere = :bp" . $bind["bindparamcpt"] . " )
+                )
+            )) as average
+            FROM consultants co
+            WHERE co.id_consultant = c.id_consultant
+            ) as DECIMAL(6, 3))" . $bind["lvl"][$lvl];
+        
+            $bind["bindparam"][":bp" . $bind["bindparamcpt"]] = $id;
+            $bind["bindparamcpt"] += 1;
+
+        }
+    
+        return array(
+            "statement" => $str,
+            "bindparam" => $bind["bindparam"],
+            "bindparamcpt" => $bind["bindparamcpt"]
+        );
+    
+    }
+
     static public function lookup(){
 
         $array = json_decode($_GET["filter"], true);
@@ -130,7 +193,7 @@ Class Search {
                                 }
                             }
 
-                            $returned = average_skill(
+                            $returned = Search::average_skill_v2(
                                 array(
                                     "bindparamcpt" => $bindparamcpt,
                                     "bindparam" => $bindparam,
@@ -143,12 +206,6 @@ Class Search {
                             $statement .= $returned["statement"];
                             $bindparam = $returned["bindparam"];
                             $bindparamcpt = $returned["bindparamcpt"];
-
-                            // $statement .= " EXISTS (SELECT * FROM competences_consultants ccc WHERE ccc.id_consultant = c.id_consultant AND ccc.id_competence = :bp" . $bindparamcpt . " AND ccc.niveau = :bp" . ($bindparamcpt + 1) . " ) ";
-
-                            // $bindparam[":bp" . $bindparamcpt] = $value;
-                            // $bindparam[":bp" . ($bindparamcpt + 1)] = $array["competences"]["niveau"][$key];
-                            // $bindparamcpt += 2;
 
                         }
 
