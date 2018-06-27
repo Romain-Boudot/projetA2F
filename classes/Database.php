@@ -28,7 +28,7 @@ class Database {
 
         if ($db == false) return false;
 
-        $statement = $db->prepare("SELECT * FROM consultants where login = :login AND mot_de_passe = :password");
+        $statement = $db->prepare("SELECT * FROM consultants where login = :login AND mot_de_passe = :password AND archive = 0");
         $statement->execute(array(
             ":login" => $login,
             ":password" => $password

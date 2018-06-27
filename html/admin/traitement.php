@@ -164,6 +164,14 @@ elseif ($_POST['action'] == "delete_consultant") {
 
     exit();
     
+} elseif ($_POST['action'] == "archive") {
+
+    $c = new Consultant($_POST['id_consultant']);
+
+    $c->archive();
+    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/index.php');
+    exit();
+
 }
 
 // ========================= PARTIE CANDIDAT =================== 

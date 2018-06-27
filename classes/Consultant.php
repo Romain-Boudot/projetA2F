@@ -13,6 +13,7 @@ Class Consultant {
     private $nom_pole;
     private $pole;
     private $honoraires;
+    private $archive;
 
     public function __construct($id){
         $pdo = Database::connect();
@@ -23,7 +24,7 @@ Class Consultant {
 
         $infos = $statement->fetch();
 
-        if($statement){
+        if ($statement) {
             $this->id = $infos['id_consultant'];
             $this->nom = $infos['nom'];
             $this->prenom = $infos['prenom'];
@@ -34,11 +35,13 @@ Class Consultant {
             $this->pole = $infos['pole'];
             $this->honoraires = $infos['honoraires'];
             $this->login = $infos['login'];
-        } elseif(!$statement){
+            $this->archive = $infos['archive'];
+        } elseif (!$statement) {
     
-            //            header('location: ../search/');
-            //HEADER A CHANGER
+            // nop
+            
         }
+
         $pdo = null;
 
 
@@ -46,24 +49,31 @@ Class Consultant {
 
     public static function add($infos) { // deprecated
 
-    $pdo = Database::connect();
+        $pdo = Database::connect();
 
         $statement = $pdo->prepare("INSERT INTO `consultants` (`nom`, `prenom`, `login`, `mot_de_passe`, `email`, `telephone`, `linkedin`, `pole`) VALUES (:nom, :prenom, :login, :mdp, :email, :telephone, :linkedin, :pole)");
         $statement->execute(array(':nom' => $infos['nom'], ':prenom' => $infos['prenom'], ':email' => $infos['email'], ':linkedin' => $infos['linkedin'], ':pole' => $infos['pole'], ':telephone' => $infos['telephone'], ':login' => $infos['login'], ':mdp' => $infos['mot_de_passe']));
-     //   $last = $pdo->lastInsertId(); 
+        //   $last = $pdo->lastInsertId(); 
 
         $pdo = null;
 
     }
 
 
-    public function archive(){
+    public function archive($status = null) {
+
+        $status == null ? $status = !$this->get_archive() : null;
+
         $pdo = Database::connect();
 
-        $statement = $pdo->prepare("UPDATE consultants SET archive = TRUE");
-        $statement->execute();
+        $statement = $pdo->prepare("UPDATE consultants SET archive = :archive WHERE id_consultant = :id");
+        $statement->execute(array(
+            ":archive" => $status,
+            ":id" => $this->id
+        ));
 
         $pdo = null;
+
     }
 
     public function delete() {
@@ -83,7 +93,7 @@ Class Consultant {
         $pdo = null;
     }
 
-    public function send_modif(){
+    public function send_modif() {
 
         $db = Database::connect();
         $statement = $db->prepare("UPDATE consultants SET login = :login, nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, linkedin = :linkedin WHERE id_consultant = :id");
@@ -99,7 +109,7 @@ Class Consultant {
 
     }
 
-    public function add_client($nom){
+    public function add_client($nom) {
         $pdo = Database::connect();
 
         $statement = $pdo->prepare("INSERT INTO clients (entreprise) VALUES (:nom_client)");
@@ -237,7 +247,7 @@ Class Consultant {
 
     }
 
-    public function get_nom(){
+    public function get_nom() {
         return $this->nom;
     }
 
@@ -245,48 +255,52 @@ Class Consultant {
         $this->nom = $nom;
     }
 
-    public function get_prenom(){
+    public function get_prenom() {
         return $this->prenom;
     }
 
-    public function set_prenom($prenom){
+    public function set_prenom($prenom) {
         $this->prenom = $prenom;
     }
 
-    public function get_email(){
+    public function get_email() {
         return $this->email;
     }
 
-    public function set_email($email){
+    public function set_email($email) {
         $this->email = $email;
     }
 
-    public function get_telephone(){
+    public function get_telephone() {
         return $this->telephone;
     }
 
-    public function set_telephone($tel){
+    public function set_telephone($tel) {
         $this->telephone = $tel;
     }
 
-    public function get_linkedin(){
+    public function get_linkedin() {
         return $this->linkedin;
     }
 
-    public function set_linkedin($linkedin){
+    public function set_linkedin($linkedin) {
         $this->linkedin = $linkedin;
     }
 
-    public function get_pole(){
+    public function get_pole() {
         return $this->pole;
     }
 
-    public function get_nom_pole(){
+    public function get_nom_pole() {
         return $this->nom_pole;
     }
 
-    public function get_honoraires(){
+    public function get_honoraires() {
         return $this->honoraires;
+    }
+
+    public function get_archive() {
+        return ($this->archive == "1" ? true : false);
     }
 
     public function get_files($type = "") {

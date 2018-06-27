@@ -334,14 +334,15 @@ $token = Security::gen_token('4');
 
                 </form>
 
-                <div class="Grid5Col">
+                <div class="Grid6Col">
 
                     <div class="Col1 bold">Nom</div>
                     <div class="Col2 bold">Prenom</div>
                     <div class="Col3 bold">Pôle</div>
                     <div class="Col4 bold">Changer le mot de passe</div>
                     <div class="Col5 bold">Supprimer</div>
-                    <div class="Grid5ColHr"></div>
+                    <div class="Col6 bold">Archiver</div>
+                    <div class="Grid6ColHr"></div>
 
                     <?php
 
@@ -353,7 +354,7 @@ $token = Security::gen_token('4');
                             
                             <div class="Col1"><?php  echo $value['nom']; ?></div>
                             <div class="Col2"><?php echo $value['prenom']; ?></div>
-                            <div class="Cole3"><?php echo $value['nom_pole']; ?></div>
+                            <div class="Col3"><?php echo $value['nom_pole']; ?></div>
                             <?php
                             
                             if ($value["token"] != NULL) {
@@ -372,13 +373,19 @@ $token = Security::gen_token('4');
                             }
                             
                             ?>
-                            <form class="Col5" action='/admin/traitement.php/' method='post'>
+                            <form class="Col5" action='/admin/traitement.php' method='post'>
                                 <input type='hidden' name='token' value=" <?php echo $token; ?> " >
                                 <input type='hidden' name='action' value='delete_consultant'>
-                                <input type='hidden' name='id_consultant' value='<?php echo $value['id_consultant']; ?>  '>
+                                <input type='hidden' name='id_consultant' value='<?php echo $value['id_consultant']; ?>'>
                                 <div class="inputSubmit supprimer">Supprimer</div>
                             </form>
-                            <div class="Grid5ColHr"></div>
+                            <form class="Col6" action='/admin/traitement.php' method='post'>
+                                <input type='hidden' name='token' value=" <?php echo $token; ?> " >
+                                <input type='hidden' name='action' value='archive'>
+                                <input type='hidden' name='id_consultant' value='<?php echo $value['id_consultant']; ?>'>
+                                <input type="submit" value="<?php echo ($value["archive"] == "1" ? "Désarchiver" : "Archiver"); ?>">
+                            </form>
+                            <div class="Grid6ColHr"></div>
 
                         <?php 
 
