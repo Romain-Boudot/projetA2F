@@ -194,20 +194,14 @@ form input[type=submit],
     border-radius: 5px;
     cursor: pointer;
     font-size: 15px;
-    background-color: rgba(0, 0, 0, 0);
-    transition: .2s background-color ease, .2s color ease;
+    background-color: var(--color-df);
+    color: white;
 }
 
 .inputSubmit {
     display: block;
     margin: 3px;
     padding: 5px 10px;
-}
-
-form input[type=submit]:hover,
-.inputSubmit:hover {
-    background-color: var(--color-df);
-    color: white;
 }
 
 .QualSubmit>*,

@@ -26,7 +26,7 @@ Security::check_login(array(0, 1, 2));
                 if ($_SESSION['user']['pole'] == 3) echo "#f05944";
             ?>;
             --auto-color: <?php
-                if ($_SESSION['user']['pole'] == 0) echo "white";
+                if ($_SESSION['user']['pole'] <= 1) echo "white";
                 else echo "inerit"
             ?>;
         }
