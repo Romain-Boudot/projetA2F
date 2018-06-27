@@ -476,19 +476,27 @@ Class Search {
 
     }
 
-    static public function graph_query_v2($id) {
+    static public function graph_query_v2($id, $id_consultant = NULL) {
 
         $pdo = Database::connect();
         $returned = array();
 
+        $id_consultant == NULL ? $statementPart = " 1 " : $statementPart = " id_consultant = :id_cons";
+
         if (Competence::is_last($id)) {
                         
-            $statement = $pdo->prepare("SELECT c.nom, (SELECT COUNT(*) FROM competences_consultants cc WHERE cc.niveau >= 2 AND cc.id_competence = c.id_competence) as count FROM competences c WHERE c.id_competence = :id_comp");
-            $statement->execute(array(":id_comp" => $id));
+            $statement = $pdo->prepare("SELECT c.nom, (SELECT COUNT(*) FROM competences_consultants cc WHERE cc.niveau >= 2 AND cc.id_competence = c.id_competence) as count FROM competences c WHERE c.id_competence = :id_comp AND " . $statementPart);
+            $statement->execute($id_consultant == NULL ?
+                array(":id_comp" => $id) :
+                array(":id_comp" => $id, ":id_cons" => $id_consultant)
+            );
             $returned["count"] = $statement->fetch();
 
-            $statement = $pdo->prepare("SELECT AVG(CAST(COALESCE((SELECT AVG(cc.niveau) FROM competences_consultants cc WHERE cc.id_competence = :id_comp AND cc.id_consultant = c.id_consultant), 0) as DECIMAL(6, 3))) as average FROM consultants c");
-            $statement->execute(array("id_comp" => $id));
+            $statement = $pdo->prepare("SELECT AVG(CAST(COALESCE((SELECT AVG(cc.niveau) FROM competences_consultants cc WHERE cc.id_competence = :id_comp AND cc.id_consultant = c.id_consultant), 0) as DECIMAL(6, 3))) as average FROM consultants c WHERE " . $statementPart);
+            $statement->execute($id_consultant == NULL ?
+                array("id_comp" => $id) :
+                array("id_comp" => $id, ":id_cons" => $id_consultant)
+            );
             $returned["average"] = $statement->fetch();
 
             return $returned;
@@ -505,8 +513,11 @@ Class Search {
                     OR
                     EXISTS (SELECT * FROM competences tmp1 WHERE c1.id_competence_mere = tmp1.id_competence AND tmp1.id_competence_mere = :id_comp )
                 )
-            )) >= 2");
-            $statement->execute(array(":id_comp" => $id));
+            )) >= 2 AND " . $statementPart);
+            $statement->execute($id_consultant == NULL ?
+                array(":id_comp" => $id) :
+                array(":id_comp" => $id, ":id_cons" => $id_consultant)
+            );
             $returned["count"] = $statement->fetch();
 
             $statement = $pdo->prepare("SELECT AVG((
@@ -518,8 +529,11 @@ Class Search {
                     EXISTS (SELECT * FROM competences tmp1 WHERE c1.id_competence_mere = tmp1.id_competence AND tmp1.id_competence_mere = :id_comp )
                 )
             )) as average
-            FROM consultants co");
-            $statement->execute(array("id_comp" => $id));
+            FROM consultants co WHERE " . $statementPart);
+            $statement->execute($id_consultant == NULL ?
+                array(":id_comp" => $id) :
+                array(":id_comp" => $id, ":id_cons" => $id_consultant)
+            );
             $returned["average"] = $statement->fetch();
 
             return $returned;

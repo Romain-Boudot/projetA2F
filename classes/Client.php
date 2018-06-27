@@ -34,6 +34,32 @@ class Client {
         $pdo = null;
     } 
 
+    static public function check_exist($nom){
+
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("SELECT id_client FROM clients WHERE entreprise LIKE :nom");
+        $statement->execute(array(':nom' => "%" . $nom . "%"));
+        $id = $statement->fetch();
+
+        return $id;
+
+    }
+
+    static public function add_client($nom){
+
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("INSERT INTO clients (entreprise) VALUES (:nom_client)");
+        $statement->execute(array(':nom_client' => $nom));
+
+        $id = $pdo->lastInsertId();
+
+        $pdo = null;
+
+        return $id;
+
+    }
 }
 
 class Entreprise {
@@ -50,5 +76,31 @@ class Entreprise {
         return $answer;
 
     }
+
+    static public function check_exist($nom){
+
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("SELECT id_entreprise FROM entreprises WHERE nom LIKE :nom");
+        $statement->execute(array(':nom' => "%" . $nom . "%"));
+        $id = $statement->fetch();
+
+        return $id;
+
+    }
+
+    static public function add_entreprise($nom){
+        
+        $pdo = Database::connect();
+
+        $statement = $pdo->prepare("INSERT INTO entreprises (nom) VALUES (:nom_entreprise)");
+        $statement->execute(array(':nom_entreprise' => $nom));
+
+        $id = $pdo->lastInsertId();
+
+        $pdo = null;
+
+        return $id;
+     }
 
 }
