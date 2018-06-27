@@ -144,6 +144,9 @@
                 <input type="text" name="email" placeholder="Email" value="<?php echo $c->get_email(); ?>" >
                 <input type="text" name="telephone" placeholder="Téléphone" value="<?php echo $c->get_telephone(); ?>" >
                 <input type="text" name="linkedin" placeholder="Linkedin" value="<?php echo $c->get_linkedin(); ?>">
+                <input type="text" name="disponibilites" placeholder="Disponibilités" value="<?php echo $c->get_disponibilites(); ?>">
+                <input type="text" name="remuneration" placeholder="Rémunération" value="<?php echo $c->get_remuneration(); ?>">
+                <input type="text" name="mobilite" placeholder="Mobilité" value="<?php echo $c->get_mobilite(); ?>">
 
                 <input type="submit" value="Enregistrer">
 

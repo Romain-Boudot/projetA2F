@@ -72,6 +72,12 @@ error_reporting(E_ALL);
             <div class="profile-info" data-info="telephone"><?php echo $candidat->get_telephone(); ?></div>
             <div class="profile-info left">LinkedIn :</div>
             <a href="<?php echo $candidat->get_linkedin(); ?>" class="profile-info underline" data-info="linkedin"><?php echo $candidat->get_linkedin(); ?></a>
+            <div class="profile-info left">Disponibilités :</div>
+            <div class="profile-info" data-info="disponibilites"><?php echo $candidat->get_disponibilites(); ?></div>
+            <div class="profile-info left">Rémunération :</div>
+            <div class="profile-info" data-info="remuneration"><?php echo $candidat->get_remuneration(); ?></div>
+            <div class="profile-info left">Mobilité :</div>
+            <div class="profile-info" data-info="mobilite"><?php echo $candidat->get_mobilite(); ?></div>
 
             <form action="/candidat/traitement.php" method="get" class="hidden">
 

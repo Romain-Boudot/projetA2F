@@ -8,6 +8,9 @@ class Candidat {
     private $email;
     private $linkedin;
     private $etape;
+    private $disponibilites;
+    private $mobilite;
+    private $remuneration;
     
     public function __construct($id){
         $pdo = Database::connect();
@@ -26,6 +29,9 @@ class Candidat {
             $this->email = $infos['email'];
             $this->linkedin = $infos['linkedin'];
             $this->etape = $infos['etape'];
+            $this->mobilite = $infos['mobilite'];
+            $this->remuneration = $infos['remuneration'];
+            $this->disponibilites = $infos['disponibilites'];
         } elseif(!$statement){
             
         }
@@ -63,14 +69,17 @@ class Candidat {
     public function send_modif(){
         
         $db = Database::connect();
-        $statement = $db->prepare("UPDATE candidats SET nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, linkedin = :linkedin WHERE id_candidat = :id");
+        $statement = $db->prepare("UPDATE candidats SET disponibilites = :disponibilites, remuneration = :remuneration, mobilite = :mobilite, nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, linkedin = :linkedin WHERE id_candidat = :id");
         $statement->execute(array(
             ":nom" => $this->nom,
             ":prenom" => $this->prenom,
             ":email" => $this->email,
             ":telephone" => $this->telephone,
             ":linkedin" => $this->linkedin,
-            ":id" => $this->id
+            ":id" => $this->id,
+            ":disponibilites" => $this->disponibilites,
+            ":remuneration" => $this->remuneration,
+            ":mobilite" => $this->mobilite
         ));
 
     }
@@ -285,6 +294,30 @@ class Candidat {
 
     public function get_etape(){
         return $this->etape;
+    }
+
+    public function get_remuneration() {
+        return $this->remuneration;
+    }
+
+    public function get_disponibilites() {
+        return $this->disponibilites;
+    }
+
+    public function get_mobilite() {
+        return $this->mobilite;
+    }
+
+    public function set_remuneration($rem) {
+        $this->remuneration = $rem;
+    }
+
+    public function set_disponibilites($dispo) {
+        $this->disponibilites = $dispo;
+    }
+
+    public function set_mobilite($mobi) {
+        $this->mobilite = $mobi;
     }
 
     public function get_files($type = "") {

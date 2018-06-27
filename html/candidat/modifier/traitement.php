@@ -37,6 +37,24 @@
             }
         }
 
+        if (isset($_POST['disponibilites'])) {
+            if ($c->get_disponibilites() != $_POST["disponibilites"]) {
+                $c->set_disponibilites($_POST['disponibilites']);
+            }
+        }
+
+        if (isset($_POST['mobilite'])) {
+            if ($c->get_mobilite() != $_POST["mobilite"]) {
+                $c->set_mobilite($_POST['mobilite']);
+            }
+        }
+
+        if (isset($_POST['remuneration'])) {
+            if ($c->get_remuneration() != $_POST["remuneration"]) {
+                $c->set_remuneration($_POST['remuneration']);
+            }
+        }
+
         $c->send_modif();
 
 
