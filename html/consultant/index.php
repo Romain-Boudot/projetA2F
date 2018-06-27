@@ -140,20 +140,28 @@
                     <div class="hr"></div>
                     <div class="intervention">
                         <div class="infos"><?php echo $int['date']; ?></div>
-                        <div class="infos"><?php echo $int['entreprise']; ?></div>
+                        <div class="infos"><?php 
+                            if (is_null($int['date_fin'])) {
+                                echo "Non définie";
+                            } else { 
+                                echo $int['date_fin'];
+                            }
+                        ?></div>
+                        <div class="infos"><?php echo $int["nom"]; ?></div>
+                        <div class="infos"><?php 
+                            if (is_null($int['entreprise'])) {
+                                echo "Non définie";
+                            } else { 
+                                echo $int['entreprise'];
+                            }
+                        ?></div>
+                        <?php if (strlen($int['details']) > 0) { ?>
                         <div class="details"><div><?php echo str_replace("\n","<br>",$int['details']); ?></div><i onclick="Alert.zoom(this, 'Intervention')" class="zoom material-icons">zoom_in</i></div>
+                        <?php } ?>
                     </div>
 
                             <?php
                         }
-                    ?>
-                
-                    <?php
-
-                        //$tab = $consultant->get_qualifications();
-
-                        //foreach ($tab as $int) {
-                            
                     ?>
 
                 </div>
@@ -176,9 +184,17 @@
                     <div class="hr"></div>
                     <div class="qualification">
                         <div class="infos"><?php echo $int['nom_qualification']; ?></div>
-                        <div class="infos"><?php echo $int['date_obtention']; ?></div>
+                        <div class="infos"><?php 
+                            if (is_null($int['date_obtention'])) {
+                                echo "Non définie";
+                            } else { 
+                                echo $int['date_obtention'];
+                            }
+                        ?></div>
+                        <?php if (strlen($int['details']) > 0) { ?>
                         <div class="details"><div><?php echo str_replace("\n","<br>",$int['details']) ?></div><i onclick="Alert.zoom(this, '<?php echo $int['nom_qualification'] ?>')" class="zoom material-icons">zoom_in</i></div>
-                    </div>   
+                        <?php } ?>
+                    </div>
 
                     <?php
                         }

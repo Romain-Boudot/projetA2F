@@ -132,7 +132,6 @@ Class Consultant {
             $pdo = Database::connect();
 
             $statement = $pdo->prepare("INSERT INTO interventions (id_consultant, id_entreprise, id_client, date, date_fin, details) VALUES (:id_consultant, :id_entreprise, :id_client, :date, :date_fin, :details)");
-            var_dump($statement);
             
             $statement->execute(array(
                 ':id_consultant' => $this->id,
@@ -140,9 +139,8 @@ Class Consultant {
                 ':id_client' => $infos['id_client'],
                 ':date' => $infos['date'],
                 ':date_fin' => $infos['date_fin'],
-                ':details' => $infos['details']));
-
-            var_dump($infos);            
+                ':details' => $infos['details']
+            ));      
 
             $pdo =null;
 
@@ -340,7 +338,7 @@ Class Consultant {
     public function get_interventions(){ 
         $pdo = Database::connect(); 
 
-        $statement = $pdo->prepare("SELECT i.id_intervention, i.date, i.date_fin, i.details, c.entreprise, e.nom FROM interventions i JOIN clients c ON c.id_client = i.id_client JOIN entreprises e ON e.id_entreprise = i.id_entreprise WHERE id_consultant = :id ORDER BY i.date"); 
+        $statement = $pdo->prepare("SELECT i.id_intervention, i.date, i.date_fin, i.details, c.entreprise, e.nom FROM interventions i LEFT JOIN clients c ON c.id_client = i.id_client JOIN entreprises e ON e.id_entreprise = i.id_entreprise WHERE id_consultant = :id ORDER BY i.date"); 
         $statement->execute(array(":id" => $this->id));
 
         $pdo = null; 
