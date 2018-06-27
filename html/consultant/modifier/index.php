@@ -179,7 +179,7 @@
                 <div class="intervention">
                     <div class="infos"><input type="date" name="date" required></div>
                     <div class="infos"><input type="date" name="date_fin"></div>
-                    <div class="infos"><input type="text" name="entreprise" placeholder="entreprise"></div>
+                    <div class="infos"><input type="text" name="entreprise" placeholder="entreprise" required></div>
                     <div class="infos"><input type="text" name="client" placeholder="client"></div>
                     <div class="details textCenter">
                         <textarea placeholder="Détails de l'intervention" name="details" maxlength="1000" rows="10"></textarea>
@@ -190,7 +190,10 @@
                 <?php
 
                     $arr = $c->get_interventions();
-                    foreach ($arr as $int) {
+
+
+                    var_dump($arr);
+                foreach ($arr as $int) {
 
                 ?>
 
@@ -205,6 +208,7 @@
                             }
                         ?></div>
                         <div class="infos"><?php echo $int['entreprise']; ?></div>
+                        <div class="infos"><?php echo $int['client']; ?> </div>
                         <div class="details"><?php echo $int['details']; ?></div>
                         <div class="InterSubmit"><div onclick="Intervention.del(<?php echo $int['id_intervention']; ?>)" class="delInt">Supprimer</div></div>
                     </div>

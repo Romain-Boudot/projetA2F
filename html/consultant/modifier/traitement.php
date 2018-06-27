@@ -63,15 +63,42 @@
 
         if (isset($_POST['action'])) if ($_POST['action'] == "add") {
 
-            
-            if (isset($_POST['client']) && isset($_POST['date']) && isset($_POST['details'])) {
-                
+            if (isset($_POST['date']) && isset($_POST['details']) && isset($_POST['entreprise'])) {
+
+                if ((strlen($_POST['client'])) > 0) {
+        
+                    $client = Client::check_exist($_POST['client']);
+
+                    var_dump($client);
+
+                    $id_client = $client['id_client'];
+
+
+
+                    if ($client == false){
+
+                        Client::add_client($_POST['client']);
+
+                    }     
+
+                } else { 
+                    $id_client = NULL;
+                }
+
+                $entreprise = Entreprise::check_exist($_POST['entreprise']);
+    
+                if ($entreprise == false) {
+
+                    Entreprise::add_entreprise($_POST['entreprise']);
+                    
+                }
                 $c->add_intervention(array(
-                    "id_client" => $_POST["client"],
+                    "id_client" => $id_client,
                     "date" => $_POST["date"],
+                    "date_fin" => $_POST["date_fin"],
+                    "id_entreprise" => $entreprise['id_entreprise'],
                     "details" => $_POST["details"]
                 ));
-                
             }
         
         } elseif ($_POST['action'] == "delete") {
@@ -154,4 +181,4 @@
 
     }
 
-    header("location: http://" . $_SERVER['HTTP_HOST'] . "/consultant/modifier/");
+//    header("location: http://" . $_SERVER['HTTP_HOST'] . "/consultant/modifier/");
