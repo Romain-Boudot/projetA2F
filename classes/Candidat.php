@@ -43,7 +43,7 @@ class Candidat {
        $pdo =  null;
     }
 
-    public function delete(){
+    public function delete() {
 
         $pdo = Database::connect();
 
@@ -294,7 +294,7 @@ class Candidat {
         $statement = $pdo->prepare("SELECT * FROM fichiers_candidats WHERE id_candidat = :id AND type LIKE :type");
         $statement->execute(array(
             ":id" => $this->id,
-            ":type" => $type
+            ":type" => "%" . $type . "%"
         ));
 
         $pdo = null;

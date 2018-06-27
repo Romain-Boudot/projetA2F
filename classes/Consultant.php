@@ -69,8 +69,15 @@ Class Consultant {
         $pdo = null;
     }
 
-    public function delete(){
+    public function delete() {
+
         $pdo = Database::connect();
+
+        $files = $this->get_files();
+
+        foreach ($files as $key => $value) {
+            unlink($_SERVER["DOCUMENT_ROOT"] . "/../files/" . $value["nom_serveur"]);
+        }
 
         $statement = $pdo->prepare("DELETE FROM consultants WHERE id_consultant = :id");
         $statement->bindParam('id', $this->id);
@@ -282,7 +289,7 @@ Class Consultant {
         $statement = $pdo->prepare("SELECT * FROM fichiers_consultants WHERE id_consultant = :id AND type LIKE :type");
         $statement->execute(array(
             ":id" => $this->id,
-            ":type" => $type
+            ":type" => "%" . $type . "%"
         ));
 
         $pdo = null;
