@@ -21,13 +21,13 @@ Security::check_login(array(0, 1, 2));
         :root {
             --main-color: <?php
                 if ($_SESSION['user']['pole'] == 0) echo "#06436f";
-                if ($_SESSION['user']['pole'] == 1) echo "#f7931e";
-                if ($_SESSION['user']['pole'] == 2) echo "#259225";
+                if ($_SESSION['user']['pole'] == 2) echo "#f7931e";
+                if ($_SESSION['user']['pole'] == 1) echo "#06436f";
                 if ($_SESSION['user']['pole'] == 3) echo "#f05944";
             ?>;
             --auto-color: <?php
-                if ($_SESSION['user']['pole'] == 0) echo "white";
-                else echo "inerit"
+                echo "white";
+                //else echo "inerit"
             ?>;
         }
     </style>
@@ -94,7 +94,7 @@ Security::check_login(array(0, 1, 2));
     
             <div class="filterGrid">
 
-                <div class="filterGridLeft borderRight consultantOnly">
+                <div class="filterGridLarge consultantOnly">
 
                     Pôles :
                     <br>
@@ -112,37 +112,6 @@ Security::check_login(array(0, 1, 2));
                         <input type="checkbox" name="poleSi" id="poleSi">
                         <div class="checkbox">✔</div>
                         Si
-                    </label>
-
-                </div>
-
-                <div class="filterGridRight consultantOnly">
-                    Disponibilités :
-                    <label for="dispMtn" class="disp">
-                        <input type="checkbox" name="dispMtn" id="dispMtn">
-                        <div class="checkbox">✔</div>
-                        Maintenant
-                    </label>
-                    <label for="disp1M" class="disp">
-                        <input type="checkbox" name="disp1M" id="disp1M">
-                        <div class="checkbox">✔</div>
-                        Dans 1 mois
-                    </label>
-                    <br>
-                    <label for="disp2M" class="disp">
-                        <input type="checkbox" name="disp2M" id="disp2M">
-                        <div class="checkbox">✔</div>
-                        Dans 2 mois
-                    </label>
-                    <label for="disp3M" class="disp">
-                        <input type="checkbox" name="disp3M" id="disp3M">
-                        <div class="checkbox">✔</div>
-                        Dans 3 mois et plus
-                    </label>
-
-                    <label for="test">
-                        <input type="checkbox" name="test" id="test">
-                        <div class="test">test</div>
                     </label>
 
                 </div>
@@ -183,32 +152,30 @@ Security::check_login(array(0, 1, 2));
 
             </div>
 
-            <div id="input" class="searchBar">
-                <div id="inputFilter">
-                    <div id="textInput">
-                        <input type="text">
+            <div class="searchBarContainer">
+                <div>Recherche :</div><div id="input" class="searchBar">
+                    <div id="inputFilter">
+                        <div id="textInput">
+                            <input type="text">
+                        </div>
                     </div>
-                </div>
-            </div>
-
-
-            <?php
+                </div><?php
 
                 if ($_SESSION['user']['type'] == 2) {
 
-            ?>
+                ?><label for="archive">
+                    <input type="checkbox" name="archive" id="archive">
+                    <div for="archive" class="checkbox">✔</div>
+                    archive
+                </label><?php
 
-            <label for="archive">
-                <input type="checkbox" name="archive" id="archive">
-                <div for="archive" class="checkbox">✔</div>
-                archive
-            </label>
+                } else {
 
-            <?php
+                    ?><div></div><?php
 
                 }
 
-            ?>
+            ?></div>
 
             <div class="sugest">
                 <div>

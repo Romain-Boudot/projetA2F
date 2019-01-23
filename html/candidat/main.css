@@ -13,6 +13,7 @@ nav {
 
 .profile-info {
     width: calc(100% - 20px);
+    word-wrap: break-word;
     padding: 1px 10px;
     text-align: center;
     display: block;
@@ -22,9 +23,9 @@ nav {
     text-decoration: underline;
 }
 
-.bottom {
-    position: absolute;
-    bottom: 0;
+.infos-wrapper {
+    height: calc(100% - 120px);
+    overflow: auto;
 }
 
 .modif-profile {
@@ -33,10 +34,11 @@ nav {
     text-align: center;
     width: calc(100% - 24px);
     padding: 5px 0;
-    margin: 10px 10px 30px 10px;
+    margin: 5px 10px;
     border: 2px solid rgba(0, 0, 0, .1);
     transition: .2s background-color ease, .2s color ease;
     border-radius: 3px;
+    display: block;
 }
 
 .modif-profile:hover {
@@ -115,6 +117,7 @@ nav {
     grid-row: 1 / 2;
     padding: 10px;
     text-align: center;
+    word-wrap: break-word;
 }
 
 #oc1 .intervention .infos:nth-child(2) {
@@ -122,12 +125,29 @@ nav {
     grid-row: 1 / 2;
     padding: 10px;
     text-align: center;
+    word-wrap: break-word;
 }
 
 #oc1 .intervention .details {
     grid-column: 3 / 4;
     grid-row: 1 / 2;
     padding: 10px;
+    word-wrap: break-word;
+}
+
+.zoom {
+    position: absolute;
+    font-size: 30px !important;
+    color: rgb(158, 158, 158);
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+}
+
+.details {
+    position: relative;
+    max-height: 100px;
+    overflow: hidden;
 }
 
 .clickable {
@@ -146,6 +166,7 @@ nav {
     grid-row: 1 / 2;
     padding: 10px;
     text-align: center;
+    word-wrap: break-word;
 }
 
 #oc2 .qualification .infos:nth-child(2) {
@@ -153,12 +174,14 @@ nav {
     grid-row: 1 / 2;
     padding: 10px;
     text-align: center;
+    word-wrap: break-word;
 }
 
 #oc2 .qualification .details {
     grid-column: 3 / 4;
     grid-row: 1 / 2;
     padding: 10px;
+    word-wrap: break-word;
 }
 
 .dropdownTrigger,

@@ -1,10 +1,18 @@
 <?php
 
+    if (!$pass) exit();
+
     if ($_POST['modif'] == "info") {
 
         if (isset($_POST['nom'])) {
             if ($c->get_nom() != $_POST["nom"]) {
                 $c->set_nom($_POST['nom']);
+            }
+        }
+
+        if (isset($_POST['login'])) {
+            if ($c->get_login() != $_POST["login"]) {
+                $c->set_login($_POST['login']);
             }
         }
 
@@ -55,15 +63,40 @@
 
         if (isset($_POST['action'])) if ($_POST['action'] == "add") {
 
-            
-            if (isset($_POST['client']) && isset($_POST['date']) && isset($_POST['details'])) {
+            if (
+                isset($_POST["date"]) &&
+                isset($_POST["date_fin"]) &&
+                isset($_POST["entreprise"]) &&
+                isset($_POST["client"]) &&
+                isset($_POST["details"])
+            ) {
+
+                if ((strlen($_POST['client'])) > 0) {
+        
+                    $client = Client::check_exist($_POST['client']);
+
+                    !$client ? $id_client = Client::add_client($_POST['client']) : $id_client = $client['id_client'];
+
+                } else {
+
+                    $id_client = NULL;
                 
+                }
+
+                $entreprise = Entreprise::check_exist($_POST['entreprise']);
+
+                !$entreprise ? $id_entreprise = Entreprise::add_entreprise($_POST['entreprise']) : $id_entreprise = $entreprise['id_entreprise'];
+                    
+                strlen($_POST["date_fin"]) > 0 ? $date_fin = $_POST["date_fin"] : $date_fin = NULL;
+
                 $c->add_intervention(array(
-                    "id_client" => $_POST["client"],
+                    "id_client" => $id_client,
                     "date" => $_POST["date"],
+                    "date_fin" => $date_fin,
+                    "id_entreprise" => $id_entreprise,
                     "details" => $_POST["details"]
                 ));
-                
+
             }
         
         } elseif ($_POST['action'] == "delete") {
@@ -82,9 +115,11 @@
 
             if (isset($_POST['nom']) && isset($_POST['date']) && isset($_POST['details'])) {
                 
+                strlen($_POST["date"]) > 0 ? $date = $_POST["date"] : $date = NULL;
+
                 $c->add_qualification(array(
                     "nom_qualification" => $_POST["nom"],
-                    "date_obtention" => $_POST["date"],
+                    "date_obtention" => $date,
                     "details" => $_POST["details"]
                 ));
                 
@@ -146,4 +181,4 @@
 
     }
 
-    header("location: http://" . $_SERVER['HTTP_HOST'] . "/consultant/modifier/");
+//    header("location: http://" . $_SERVER['HTTP_HOST'] . "/consultant/modifier/");

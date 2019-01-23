@@ -7,7 +7,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . "/../classes/Client.php";
 
 session_start();
 
-Security::check_login(array(0, 1, 2));
+Security::check_login(array(1, 2));
 
 ?>
 <!DOCTYPE html>
@@ -21,13 +21,13 @@ Security::check_login(array(0, 1, 2));
         :root {
             --main-color: <?php
                 if ($_SESSION['user']['pole'] == 0) echo "#06436f";
-                if ($_SESSION['user']['pole'] == 1) echo "#f7931e";
-                if ($_SESSION['user']['pole'] == 2) echo "#259225";
+                if ($_SESSION['user']['pole'] == 2) echo "#f7931e";
+                if ($_SESSION['user']['pole'] == 1) echo "#06436f";
                 if ($_SESSION['user']['pole'] == 3) echo "#f05944";
             ?>;
             --auto-color: <?php
-                if ($_SESSION['user']['pole'] == 0) echo "white";
-                else echo "inerit"
+                echo "white";
+                //else echo "inerit"
             ?>;
         }
     </style>

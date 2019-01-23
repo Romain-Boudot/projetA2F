@@ -14,7 +14,7 @@ function average_skill($bind, $id, $lvl = null) {
 
     $is_last = Competence::is_last($id); // si la competence a des enfant (bool)
 
-    if ($is_last == null) $is_last = false;
+    if ($is_last == null) $is_last = false; // dans le doute
 
     if ($is_last) {
 
@@ -75,6 +75,69 @@ function average_skill($bind, $id, $lvl = null) {
 
 Class Search {
 
+    static private function average_skill_v2($bind, $id, $lvl) {
+
+        if (Competence::is_last($id)) {
+
+            $str = 
+                "CAST(
+                    (SELECT
+                        AVG(
+                            CAST(
+                                COALESCE(
+                                    (
+                                    SELECT
+                                        AVG(avs1.niveau)
+                                    FROM
+                                        competences_consultants avs1
+                                    WHERE
+                                        avs1.id_competence = :bp" . $bind["bindparamcpt"] . "
+                                    AND
+                                        avs1.id_consultant = avs2.id_consultant
+                                ),
+                                0
+                                ) AS DECIMAL(6, 3)
+                            )
+                        ) AS average
+                    FROM
+                        consultants avs2
+                    WHERE avs2.id_consultant = c.id_consultant
+                    ) as DECIMAL(6, 3)
+                )" . $bind["lvl"][$lvl];
+
+            $bind["bindparam"][":bp" . $bind["bindparamcpt"]] = $id;
+            $bind["bindparamcpt"] += 1;
+
+        } else {
+
+            $str = 
+                "CAST(
+                    (SELECT AVG((
+                SELECT AVG(COALESCE((SELECT avs1.niveau FROM competences_consultants avs1 WHERE avs1.id_competence = c1.id_competence AND avs1.id_consultant = co.id_consultant ), 0))
+                FROM competences c1 WHERE NOT EXISTS (SELECT * FROM competences c2 WHERE c2.id_competence_mere = c1.id_competence) AND
+                (
+                    c1.id_competence_mere = :bp" . $bind["bindparamcpt"] . "
+                    OR
+                    EXISTS (SELECT * FROM competences tmp1 WHERE c1.id_competence_mere = tmp1.id_competence AND tmp1.id_competence_mere = :bp" . $bind["bindparamcpt"] . " )
+                )
+            )) as average
+            FROM consultants co
+            WHERE co.id_consultant = c.id_consultant
+            ) as DECIMAL(6, 3))" . $bind["lvl"][$lvl];
+        
+            $bind["bindparam"][":bp" . $bind["bindparamcpt"]] = $id;
+            $bind["bindparamcpt"] += 1;
+
+        }
+    
+        return array(
+            "statement" => $str,
+            "bindparam" => $bind["bindparam"],
+            "bindparamcpt" => $bind["bindparamcpt"]
+        );
+    
+    }
+
     static public function lookup(){
 
         $array = json_decode($_GET["filter"], true);
@@ -95,7 +158,7 @@ Class Search {
         if(isset($array['candidats'])){
             if($array['candidats'] == false){
 
-                $statement = "SELECT c.*, (SELECT nom_serveur FROM fichiers_consultants fc WHERE type = 'img' AND fc.id_consultant = c.id_consultant) from consultants c ";
+                $statement = "SELECT c.*, COALESCE((SELECT nom_serveur FROM fichiers_consultants fc WHERE type = 'img' AND fc.id_consultant = c.id_consultant), 'unknown.png') AS image from consultants c ";
 
                 if(isset($array['disponibilites'])){
                     if(sizeof($array['disponibilites']['id_disponibilite']) > 0){ 
@@ -130,7 +193,7 @@ Class Search {
                                 }
                             }
 
-                            $returned = average_skill(
+                            $returned = Search::average_skill_v2(
                                 array(
                                     "bindparamcpt" => $bindparamcpt,
                                     "bindparam" => $bindparam,
@@ -143,12 +206,6 @@ Class Search {
                             $statement .= $returned["statement"];
                             $bindparam = $returned["bindparam"];
                             $bindparamcpt = $returned["bindparamcpt"];
-
-                            // $statement .= " EXISTS (SELECT * FROM competences_consultants ccc WHERE ccc.id_consultant = c.id_consultant AND ccc.id_competence = :bp" . $bindparamcpt . " AND ccc.niveau = :bp" . ($bindparamcpt + 1) . " ) ";
-
-                            // $bindparam[":bp" . $bindparamcpt] = $value;
-                            // $bindparam[":bp" . ($bindparamcpt + 1)] = $array["competences"]["niveau"][$key];
-                            // $bindparamcpt += 2;
 
                         }
 
@@ -254,6 +311,25 @@ Class Search {
                 }
 
 
+                if(isset($array["archive"])){
+                    
+                    if ($where == 0) {
+                        $statement .= " WHERE ";
+                        $where = 1;
+                    } else{
+                        $statement .= " AND ";
+                        $where = 1;
+                    }
+    
+                    $statement .= " ( ";
+                    $statement .= " c.archive = :bp" . $bindparamcpt . " ";
+                    $statement .= " ) ";
+
+                    $bindparam[":bp" . $bindparamcpt] = $array["archive"];
+                    $bindparamcpt++;
+                }
+
+
                 if(isset($array["consultant"])) if (sizeof($array["consultant"])) {
 
                     if ($where == 0) {
@@ -285,7 +361,7 @@ Class Search {
 
             }elseif($array['candidats'] == true){
 
-                $statement = "SELECT c.* from candidats c ";
+                $statement = "SELECT c.*, COALESCE((SELECT nom_serveur FROM fichiers_candidats fc WHERE type = 'img' AND fc.id_candidat = c.id_candidat), 'unknown.png') AS image from candidats c ";
 
 
 
@@ -402,7 +478,6 @@ Class Search {
         $query->execute($bindparam);
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         
-        var_dump($statement);
         return $result;        
 
     } 
@@ -458,19 +533,27 @@ Class Search {
 
     }
 
-    static public function graph_query_v2($id) {
+    static public function graph_query_v2($id, $id_consultant = NULL) {
 
         $pdo = Database::connect();
         $returned = array();
 
+        $id_consultant == NULL ? $statementPart = " 1 " : $statementPart = " id_consultant = :id_cons";
+
         if (Competence::is_last($id)) {
                         
-            $statement = $pdo->prepare("SELECT c.nom, (SELECT COUNT(*) FROM competences_consultants cc WHERE cc.niveau >= 2 AND cc.id_competence = c.id_competence) as count FROM competences c WHERE c.id_competence = :id_comp");
-            $statement->execute(array(":id_comp" => $id));
+            $statement = $pdo->prepare("SELECT c.nom, (SELECT COUNT(*) FROM competences_consultants cc WHERE cc.niveau >= 2 AND cc.id_competence = c.id_competence) as count FROM competences c WHERE c.id_competence = :id_comp AND " . $statementPart);
+            $statement->execute($id_consultant == NULL ?
+                array(":id_comp" => $id) :
+                array(":id_comp" => $id, ":id_cons" => $id_consultant)
+            );
             $returned["count"] = $statement->fetch();
 
-            $statement = $pdo->prepare("SELECT AVG(CAST(COALESCE((SELECT AVG(cc.niveau) FROM competences_consultants cc WHERE cc.id_competence = :id_comp AND cc.id_consultant = c.id_consultant), 0) as DECIMAL(6, 3))) as average FROM consultants c");
-            $statement->execute(array("id_comp" => $id));
+            $statement = $pdo->prepare("SELECT AVG(CAST(COALESCE((SELECT AVG(cc.niveau) FROM competences_consultants cc WHERE cc.id_competence = :id_comp AND cc.id_consultant = c.id_consultant), 0) as DECIMAL(6, 3))) as average FROM consultants c WHERE " . $statementPart);
+            $statement->execute($id_consultant == NULL ?
+                array("id_comp" => $id) :
+                array("id_comp" => $id, ":id_cons" => $id_consultant)
+            );
             $returned["average"] = $statement->fetch();
 
             return $returned;
@@ -487,8 +570,11 @@ Class Search {
                     OR
                     EXISTS (SELECT * FROM competences tmp1 WHERE c1.id_competence_mere = tmp1.id_competence AND tmp1.id_competence_mere = :id_comp )
                 )
-            )) >= 2");
-            $statement->execute(array(":id_comp" => $id));
+            )) >= 2 AND " . $statementPart);
+            $statement->execute($id_consultant == NULL ?
+                array(":id_comp" => $id) :
+                array(":id_comp" => $id, ":id_cons" => $id_consultant)
+            );
             $returned["count"] = $statement->fetch();
 
             $statement = $pdo->prepare("SELECT AVG((
@@ -500,8 +586,11 @@ Class Search {
                     EXISTS (SELECT * FROM competences tmp1 WHERE c1.id_competence_mere = tmp1.id_competence AND tmp1.id_competence_mere = :id_comp )
                 )
             )) as average
-            FROM consultants co");
-            $statement->execute(array("id_comp" => $id));
+            FROM consultants co WHERE " . $statementPart);
+            $statement->execute($id_consultant == NULL ?
+                array(":id_comp" => $id) :
+                array(":id_comp" => $id, ":id_cons" => $id_consultant)
+            );
             $returned["average"] = $statement->fetch();
 
             return $returned;

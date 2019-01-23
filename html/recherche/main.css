@@ -13,6 +13,7 @@
 .main-wrapper {
     left: 0;
     width: 100vw;
+    text-align: center;
 }
 
 .popup {
@@ -22,10 +23,8 @@
     width: 30%;
 }
 
-.search,
-.clientSelect {
+.search {
     position: relative;
-    top: 15%;
     left: 15%;
     max-width: calc(70% - 80px);
     max-height: calc(70% - 80px);
@@ -35,6 +34,7 @@
     -moz-box-shadow: 0px 23px 58px -19px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 23px 58px -19px rgba(0, 0, 0, 0.75);
     border-radius: 5px;
+    margin-top: 75px;
 }
 
 .search {
@@ -64,28 +64,29 @@
     margin-left: 30px !important;
 }
 
+.searchBarContainer {
+    width: 90%;
+}
+
+.searchBarContainer>*:first-child,
+.searchBarContainer>*:last-child {
+    width: 100px;
+}
+
 .searchBar {
     position: relative;
-    width: 70%;
+    width: calc(100% - 205px);
     min-height: 33px;
     /* border: 1px solid rgba(0, 0, 0, 0.144); */
     background-color: rgba(255, 255, 255, 0.473);
     text-align: left;
     cursor: text;
     border: 1px solid rgba(0, 0, 0, .5);
+    margin-bottom: 10px;
 }
 
 .searchBar select {
     width: 110px;
-}
-
-.searchBar::before {
-    content: "Recherche : ";
-    position: absolute;
-    right: calc(100% + 20px);
-    width: 90px;
-    height: 44px;
-    line-height: 44px;
 }
 
 [contenteditable]:focus {
@@ -113,7 +114,6 @@
 }
 
 #inputFilter>div {
-    height: 26px;
     line-height: 23px;
     padding: 3px 6px;
     margin: 4px 0 4px 6px;
@@ -150,23 +150,8 @@ script {
     color: rgba(0, 0, 0, 0);
 }
 
-.test {
-    height: 12px;
-    margin: 2px;
-    padding: 5px 10px;
-    font-size: 12px;
-    line-height: 12px;
-    border: 1px solid rgba(0, 0, 0, .1);
-    border-radius: 3px;
-    transition: 0.2s color ease;
-}
-
 input[type=checkbox]:checked~.checkbox {
     color: inherit;
-}
-
-input[type=checkbox]:checked~.test {
-    background-color: var(--main-color);
 }
 
 
@@ -416,17 +401,20 @@ select:focus {
 
 .searchBtn {
     position: relative;
-    height: 50px;
     line-height: 50px;
     display: inline-block;
     width: 300px;
-    top: calc(15% + 50px);
-    left: calc(50% - 150px);
     text-align: center;
     border: 2px solid rgba(0, 0, 0, .1);
     border-radius: 3px;
     cursor: pointer;
     transition: .2s background-color ease, .2s color ease;
+    margin: 50px 0;
+}
+
+.searchBtn {
+    content: "test";
+    position: relative;
 }
 
 .searchBtn:hover {
@@ -436,7 +424,7 @@ select:focus {
 
 .sugest {
     width: 90%;
-    margin: 20px 5%;
+    margin: 10px 5%;
     display: none;
     grid-template-columns: 100%;
 }
@@ -476,7 +464,7 @@ select:focus {
 .helpTrigger {
     position: absolute;
     top: 10px;
-    left: 10px;
+    right: 10px;
 }
 
 .helpTrigger>i {
@@ -490,17 +478,17 @@ select:focus {
 .help {
     position: absolute;
     top: 10px;
-    left: 10px;
+    right: 10px;
     padding: 10px 10px;
-    z-index: 650;
+    z-index: 1500;
     border: 1px solid rgba(0, 0, 0, .08);
     cursor: pointer;
     background-color: rgb(221, 221, 221);
-}
-
-.help {
     visibility: hidden;
+    min-width: 200px;
     max-width: calc(15% - 40px);
+    max-height: 70vh;
+    overflow: auto;
 }
 
 .help div {
@@ -532,7 +520,7 @@ select:focus {
 .btnSlideContainer {
     display: inline-block;
     position: absolute;
-    top: 60px;
+    top: 14px;
     left: calc(50% - 100px);
     width: 200px;
     padding: 5px;

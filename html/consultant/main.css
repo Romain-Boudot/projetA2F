@@ -13,6 +13,7 @@ nav {
 
 .profile-info {
     width: calc(100% - 20px);
+    word-wrap: break-word;
     padding: 1px 10px;
     text-align: center;
     display: block;
@@ -22,9 +23,9 @@ nav {
     text-decoration: underline;
 }
 
-.bottom {
-    position: absolute;
-    bottom: 0;
+.infos-wrapper {
+    height: calc(100% - 60px);
+    overflow: auto;
 }
 
 .modif-profile {
@@ -33,10 +34,11 @@ nav {
     text-align: center;
     width: calc(100% - 24px);
     padding: 5px 0;
-    margin: 10px 10px 30px 10px;
+    margin: 5px 10px;
     border: 2px solid rgba(0, 0, 0, .1);
     transition: .2s background-color ease, .2s color ease;
     border-radius: 3px;
+    display: block;
 }
 
 .modif-profile:hover {
@@ -194,29 +196,57 @@ nav {
 
 #oc1 .intervention {
     display: grid;
-    grid-template-columns: 15% 15% 70%;
-    grid-template-rows: auto;
+    grid-template-areas: "dateD dateF entreprise client" ". details details .";
     margin: 10px 0;
 }
 
 #oc1 .intervention .infos:nth-child(1) {
-    grid-column: 1 / 2;
-    grid-row: 1 / 2;
+    grid-area: dateD;
     padding: 10px;
     text-align: center;
+    word-wrap: break-word;
 }
 
 #oc1 .intervention .infos:nth-child(2) {
-    grid-column: 2 / 3;
-    grid-row: 1 / 2;
+    grid-area: dateF;
     padding: 10px;
     text-align: center;
+    word-wrap: break-word;
+}
+
+#oc1 .intervention .infos:nth-child(3) {
+    grid-area: entreprise;
+    padding: 10px;
+    text-align: center;
+    word-wrap: break-word;
+}
+
+#oc1 .intervention .infos:nth-child(4) {
+    grid-area: client;
+    padding: 10px;
+    text-align: center;
+    word-wrap: break-word;
 }
 
 #oc1 .intervention .details {
-    grid-column: 3 / 4;
-    grid-row: 1 / 2;
+    grid-area: details;
     padding: 10px;
+    word-wrap: break-word;
+}
+
+.zoom {
+    position: absolute;
+    font-size: 30px !important;
+    color: rgb(158, 158, 158);
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+}
+
+.details {
+    position: relative;
+    max-height: 100px;
+    overflow: hidden;
 }
 
 .clickable {
@@ -235,6 +265,7 @@ nav {
     grid-row: 1 / 2;
     padding: 10px;
     text-align: center;
+    word-wrap: break-word;
 }
 
 #oc2 .qualification .infos:nth-child(2) {
@@ -242,12 +273,14 @@ nav {
     grid-row: 1 / 2;
     padding: 10px;
     text-align: center;
+    word-wrap: break-word;
 }
 
 #oc2 .qualification .details {
     grid-column: 3 / 4;
     grid-row: 1 / 2;
     padding: 10px;
+    word-wrap: break-word;
 }
 
 .dropdownTrigger,
@@ -259,8 +292,17 @@ nav {
     position: relative;
 }
 
+.comp::before {
+    content: " ";
+    width: 20px;
+    margin-right: 10px;
+    font-weight: bold;
+    right: calc(-100% - 10px);
+}
+
 .dropdownTrigger::before {
     content: "+";
+    width: 20px;
     margin-right: 10px;
     font-weight: bold;
     right: calc(-100% - 10px);

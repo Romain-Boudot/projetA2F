@@ -1,6 +1,6 @@
 <?php
 
-function tab_search($id, $tab) {
+function tab_search($id, $tab, $depth) {
 
     $comp = null;
 
@@ -9,10 +9,11 @@ function tab_search($id, $tab) {
         if ($c["id_competence_mere"] == $id) {            
 
             $comp[$c["nom"]] = array(
+                "depth" => $depth,
                 "id_competence" => $c["id_competence"],
                 "id_competence_mere" => $c["id_competence_mere"],
                 "niveau" => (isset($c["niveau"]) ? $c["niveau"] : null),
-                "enfant" => tab_search($c["id_competence"], $tab)
+                "enfant" => tab_search($c["id_competence"], $tab, $depth + 1)
             );
  
         }
@@ -55,7 +56,7 @@ class Competence {
 
     }
  
-    static public function get_array($id = null) {
+    static public function get_array($id = null, $candidat = false) {
  
         $db = Database::connect();
 
@@ -72,8 +73,9 @@ class Competence {
                 if ($c["id_competence_mere"] == null) {
  
                     $comp[$c["nom"]] = array(
+                        "depth" => 0,
                         "id_competence" => $c["id_competence"],
-                        "enfant" => tab_search($c["id_competence"], $answer)
+                        "enfant" => tab_search($c["id_competence"], $answer, 1)
                     );
  
                 }
@@ -82,7 +84,7 @@ class Competence {
  
             return $comp;
         
-        } else {
+        } elseif (!$candidat) {
 
             $comp = array();
 
@@ -99,8 +101,37 @@ class Competence {
                 if ($c["id_competence_mere"] == null) {
 
                     $comp[$c["nom"]] = array(
+                        "depth" => 0,
                         "id_competence" => $c["id_competence"],
-                        "enfant" => tab_search($c["id_competence"], $answer),
+                        "enfant" => tab_search($c["id_competence"], $answer, 1),
+                    );
+
+                }
+
+            }
+
+            return $comp;
+
+        } else {
+
+            $comp = array();
+
+            $statement = $db->prepare("SELECT c.*,(
+                SELECT niveau FROM competences_candidats cc WHERE c.id_competence = cc.id_competence AND cc.id_candidat = :id
+            ) as niveau FROM competences c");
+            $statement->execute(array(
+                ":id" => $id
+            ));
+            $answer = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+            foreach($answer as $c) {
+
+                if ($c["id_competence_mere"] == null) {
+
+                    $comp[$c["nom"]] = array(
+                        "depth" => 0,
+                        "id_competence" => $c["id_competence"],
+                        "enfant" => tab_search($c["id_competence"], $answer, 1),
                     );
 
                 }

@@ -74,6 +74,7 @@ nav .onglet {
     grid-row: 1 / 2;
     padding: 10px;
     text-align: center;
+    word-wrap: break-word;
 }
 
 #Inter form .infos:nth-child(2),
@@ -82,6 +83,7 @@ nav .onglet {
     grid-row: 1 / 2;
     padding: 10px;
     text-align: center;
+    word-wrap: break-word;
 }
 
 #Inter form .details,
@@ -89,12 +91,18 @@ nav .onglet {
     grid-column: 3 / 6;
     grid-row: 1 / 3;
     padding: 10px;
+    word-wrap: break-word;
 }
 
 #Inter form .InterSubmit,
 #Qual form .QualSubmit {
     grid-column: 1 / 3;
     text-align: center;
+}
+
+.details {
+    max-height: 300px !important;
+    overflow: auto;
 }
 
 @media screen and (max-width: 1350px) {
@@ -193,11 +201,6 @@ form input[type=submit] {
     border-radius: 5px;
     cursor: pointer;
     font-size: 15px;
-    background-color: rgba(0, 0, 0, 0);
-    transition: .2s background-color ease, .2s color ease;
-}
-
-form input[type=submit]:hover {
     background-color: var(--color-df);
     color: white;
 }
@@ -273,10 +276,6 @@ form input[type=submit]:hover {
     cursor: pointer;
     border-radius: 5px;
     border: 2px solid rgba(0, 0, 0, .1);
-    transition: .2s background-color ease, .2s color ease; 
-}
-
-.submit:hover {
     background-color: var(--color-df);
     color: white;
 }
@@ -308,13 +307,9 @@ form input[type=submit]:hover {
     margin: 50px 75px 50px 150px !important;
 }
 .delInt {
-    border: 2px solid rgba(0, 0, 0, .1);
-    transition: .2s background-color ease, .2s color ease;    
-}
-
-.delInt:hover {
     background-color: var(--color-df);
     color: white;
+    border: 2px solid rgba(0, 0, 0, .1);
 }
 
 .del {

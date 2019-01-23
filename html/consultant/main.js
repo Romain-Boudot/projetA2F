@@ -44,7 +44,7 @@ class Consultant {
         var inputimg = document.getElementById("uploadPhoto");
         var fileInput = document.getElementById("fileInput");
 
-        inputimg.onchange = function() {   
+        if (inputimg) inputimg.onchange = function() {   
             var img = new FormData();
             img.append('file', inputimg.files[0]);
             Ajax.file("/consultant/traitement.php?action=img", img, function(data) {
@@ -67,7 +67,7 @@ class Consultant {
             });
         }
 
-        fileInput.onchange = function() {   
+        if (fileInput) fileInput.onchange = function() {   
             var pdf = new FormData();
             pdf.append('file', fileInput.files[0]);
             Ajax.file("/consultant/traitement.php?action=pdfadd", pdf, function(data) {

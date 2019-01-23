@@ -26,13 +26,13 @@
         :root {
             --main-color: <?php
                 if ($_SESSION['user']['pole'] == 0) echo "#06436f";
-                if ($_SESSION['user']['pole'] == 1) echo "#f7931e";
-                if ($_SESSION['user']['pole'] == 2) echo "#259225";
+                if ($_SESSION['user']['pole'] == 2) echo "#f7931e";
+                if ($_SESSION['user']['pole'] == 1) echo "#06436f";
                 if ($_SESSION['user']['pole'] == 3) echo "#f05944";
             ?>;
             --auto-color: <?php
-                if ($_SESSION['user']['pole'] == 0) echo "white";
-                else echo "inerit"
+                echo "white";
+                //else echo "inerit"
             ?>;
         }
     </style>
@@ -197,7 +197,7 @@
         ?>
         <div onclick="location.href='http://<?php echo $_SERVER['HTTP_HOST'] . '/' . $col . '/?id=' . $value['id_' . $col]; ?>'" class="profile pole<?php echo $value['pole']; ?>">
 
-            <img src="/images/profil/unknown.png" alt="profile photo">
+        <img src="/images/profil/<?php echo $value['image']; ?>" alt="profile photo">
 
             <div class="nom"><?php echo $value["nom"]; ?></div>
             <div class="prenom"><?php echo $value["prenom"]; ?></div>

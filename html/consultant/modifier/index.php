@@ -13,9 +13,9 @@
     $c = new Consultant($_SESSION['user']['id']);
     
     if (isset($_POST['modif'])) {
+        $pass = true;
         include_once "traitement.php";
     }
-
 
 ?>
 <!DOCTYPE html>
@@ -26,10 +26,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/consultant/modifier/main.css">
     <link rel="stylesheet" href="/cdn/main.css">
+    <script src="/cdn/Ajax.js"></script>
+    <script src="/cdn/Alert.js"></script>
     <script src="/cdn/Dropdown.js"></script>
     <script src="/cdn/Popup.js"></script>
     <script src="/cdn/Profile.js"></script>
     <script src="/cdn/Post.js"></script>
+    <script src="/consultant/modifier/main.js"></script>
     <title>A2F Advisor</title>
 </head>
 <body>
@@ -48,7 +51,7 @@
         
             <!-- // Comp section // -->
         
-            <div onclick="Competence.send()" class="submit">Envoyer</div>
+            <div onclick="Competence.send()" class="submit">Enregistrer</div>
 
             <div class="compListWrapper">
 
@@ -125,11 +128,33 @@
 
                 <input type="text" name="nom" placeholder="Nom" value="<?php echo $c->get_nom(); ?>" required>
                 <input type="text" name="prenom" placeholder="Prenom" value="<?php echo $c->get_prenom(); ?>" required>
-                <input type="text" name="email" placeholder="Email" value="<?php echo $c->get_email(); ?>" required>
-                <input type="text" name="tel" placeholder="Téléphone" value="<?php echo $c->get_telephone(); ?>" required>
-                <input type="text" name="linkedin" placeholder="Linkedin (http://...)" value="<?php echo $c->get_linkedin(); ?>">
+                <input id="login" type="text" name="login" placeholder="Login" value="<?php echo $c->get_login(); ?>" required>
+                <script>
+                    document.getElementById("login").onblur = function() {
+                        Ajax.post("/traitement.php", "action=login_validity&login=" + this.value, function (e) {
+                            console.log(e);
+                            data = JSON.parse(e);
+                            if (data.code == -1) {
+                                Alert.popup({
+                                    title: "Login Incorrect !",
+                                    text: "Le login choisi est déjà utilisé",
+                                    showCancelButton: false,
+                                    cancelText: "Cancel",
+                                    confirmColor: "#bbbbbb",
+                                    confirmText: "Retour",
+                                    confirm: function() {
+                                        Alert.close();
+                                    }
+                                })
+                            }
+                        })
+                    }
+                </script>
+                <input type="text" name="email" placeholder="Email" value="<?php echo $c->get_email(); ?>">
+                <input type="text" name="telephone" placeholder="Téléphone" value="<?php echo $c->get_telephone(); ?>">
+                <input type="text" name="linkedin" placeholder="Linkedin (https://...)" value="<?php echo $c->get_linkedin(); ?>">
 
-                <input type="submit" value="Envoyer">
+                <input type="submit" value="Enregistrer">
 
             </form>
         
@@ -145,44 +170,49 @@
 
                 <div class="intervention">
                     <div class="infos">Date</div>
+                    <div class="infos">Date de fin</div>
+                    <div class="infos">Entreprise</div>
                     <div class="infos">Client</div>
-                    <div class="details textCenter">
-                        Détails
-                    </div>
                 </div>
                 
                 <div class="hr"></div>
                 <div class="intervention">
                     <div class="infos"><input type="date" name="date" required></div>
-                    <div class="infos"><select name="client" required><option selected disabled>Client</option><?php
-                    
-                        $cl = Client::get_array();
-
-                        foreach ($cl as $key => $value) {
-                            
-                            ?><option value="<?php echo $value['id_client']; ?>"><?php echo $value['entreprise']; ?></option><?php
-
-                        }
-
-                    ?></select></div>
+                    <div class="infos"><input type="date" name="date_fin"></div>
+                    <div class="infos"><input type="text" name="entreprise" placeholder="entreprise" required></div>
+                    <div class="infos"><input type="text" name="client" placeholder="client"></div>
                     <div class="details textCenter">
-                        <textarea placeholder="Détails de l'intervention" name="details" maxlength="500" rows="10" required></textarea>
+                        <textarea placeholder="Détails de l'intervention" name="details" maxlength="1500" rows="10"></textarea>
                     </div>
-                    <div class="InterSubmit"><input type="submit" value="Envoyer"></div>
+                    <div class="InterSubmit"><input type="submit" value="Enregistrer"></div>
                 </div>
 
                 <?php
 
-                    $arr = $c->get_interventions();
-                    foreach ($arr as $int) {
+                $arr = $c->get_interventions();
+
+                foreach ($arr as $int) {
 
                 ?>
-
                     <div class="hr"></div>
                     <div class="intervention">
                         <div class="infos"><?php echo $int['date']; ?></div>
-                        <div class="infos"><?php echo $int['entreprise']; ?></div>
-                        <div class="details"><?php echo $int['details']; ?></div>
+                        <div class="infos"><?php 
+                            if (is_null($int['date_fin'])) {
+                                echo "Non définie";
+                            } else { 
+                                echo $int['date_fin'];
+                            }
+                        ?></div>
+                        <div class="infos"><?php echo $int['nom']; ?></div>
+                        <div class="infos"><?php 
+                            if (is_null($int['entreprise'])) {
+                                echo "Non définie";
+                            } else { 
+                                echo $int['entreprise'];
+                            }
+                        ?></div>
+                        <div class="details"><?php echo str_replace("\n","<br>",$int['details']); ?></div>
                         <div class="InterSubmit"><div onclick="Intervention.del(<?php echo $int['id_intervention']; ?>)" class="delInt">Supprimer</div></div>
                     </div>
 
@@ -215,11 +245,11 @@
                 <div class="hr"></div>
                 <div class="qualification">
                     <div class="infos"><input type="text" name="nom" placeholder="Nom de Qualification" required></div>
-                    <div class="infos"><input type="date" name="date" required></div>
+                    <div class="infos"><input type="date" name="date"></div>
                     <div class="details textCenter">
-                        <textarea placeholder="Détails de l'intervention" name="details" maxlength="500" rows="10" required></textarea>
+                        <textarea placeholder="Détails de la qualification" name="details" maxlength="1500" rows="10"></textarea>
                     </div>
-                    <div class="QualSubmit"><input type="submit" value="Envoyer"></div>
+                    <div class="QualSubmit"><input type="submit" value="Enregistrer"></div>
                 </div>
 
                 <?php
@@ -232,8 +262,14 @@
                     <div class="hr"></div>
                     <div class="qualification">
                         <div class="infos"><?php echo $qual['nom_qualification']; ?></div>
-                        <div class="infos"><?php echo $qual['date_obtention']; ?></div>
-                        <div class="details"><?php echo $qual['details']; ?></div>
+                        <div class="infos"><?php 
+                            if (is_null($qual['date_obtention'])) {
+                                echo "Non définie";
+                            } else { 
+                                echo $qual['date_obtention'];
+                            }
+                        ?></div>
+                        <div class="details"><?php echo str_replace("\n","<br>",$qual['details']); ?></div>
                         <div class="QualSubmit"><div onclick="Qualification.del(<?php echo $qual['id_qualification']; ?>)" class="delInt">Supprimer</div></div>
                     </div>
 
@@ -250,7 +286,7 @@
         
             <!-- // Graph section // -->
 
-            <div onclick="g.send()" class="submit">Envoyer</div>
+            <div onclick="g.send()" class="submit">Enregistrer</div>
 
             <div class="compListWrapper w-50">
 
@@ -278,9 +314,9 @@
 
                                 ?><div class="comp">
                                     <?php echo $name; ?> - <span><?php echo $value["niveau"]; ?></span>
-                                    <span onclick="g.addG3(<?php echo $value["id_competence"]; ?>, <?php echo $value["niveau"]; ?>, '<?php echo $name; ?>')" class="floatRight">Graph 3</span>
-                                    <span onclick="g.addG2(<?php echo $value["id_competence"]; ?>, <?php echo $value["niveau"]; ?>, '<?php echo $name; ?>')" class="floatRight">Graph 2</span>
-                                    <span onclick="g.addG1(<?php echo $value["id_competence"]; ?>, <?php echo $value["niveau"]; ?>, '<?php echo $name; ?>')" class="floatRight">Graph 1</span>
+                                    <span onclick="g.addG3(<?php echo $value["id_competence"]; ?>, <?php echo $value["niveau"]; ?>, '<?php echo str_replace("'", "\'", $name); ?>')" class="floatRight">Graph 3</span>
+                                    <span onclick="g.addG2(<?php echo $value["id_competence"]; ?>, <?php echo $value["niveau"]; ?>, '<?php echo str_replace("'", "\'", $name); ?>')" class="floatRight">Graph 2</span>
+                                    <span onclick="g.addG1(<?php echo $value["id_competence"]; ?>, <?php echo $value["niveau"]; ?>, '<?php echo str_replace("'", "\'", $name); ?>')" class="floatRight">Graph 1</span>
                                 </div><?php
 
                             }

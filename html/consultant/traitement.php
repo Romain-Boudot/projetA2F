@@ -38,7 +38,7 @@
 
         $extension_upload = strtolower(substr(strrchr($_FILES['file']['name'], '.'), 1));
         if (!in_array($extension_upload, $extensions_valides)) {
-            echo '{"code": -3, "message": "Extension incorrecte (jpg, jpeg, png)"]';
+            echo '{"code": -3, "message": "Extension incorrecte (.jpg, .jpeg, .png)"}';
             exit();
         }
 
@@ -87,7 +87,7 @@
         $extension_upload = strtolower(substr(strrchr($_FILES['file']['name'], '.'), 1));
 
         if (!in_array($extension_upload, $extensions_valides)) {
-            echo '{"code": -3, "message": "Extension incorrecte (pdf)"}';
+            echo '{"code": -3, "message": "Extension incorrecte (.pdf)"}';
             exit();
         }
 

@@ -8,6 +8,9 @@ class Candidat {
     private $email;
     private $linkedin;
     private $etape;
+    private $disponibilites;
+    private $mobilite;
+    private $remuneration;
     
     public function __construct($id){
         $pdo = Database::connect();
@@ -26,6 +29,9 @@ class Candidat {
             $this->email = $infos['email'];
             $this->linkedin = $infos['linkedin'];
             $this->etape = $infos['etape'];
+            $this->mobilite = $infos['mobilite'];
+            $this->remuneration = $infos['remuneration'];
+            $this->disponibilites = $infos['disponibilites'];
         } elseif(!$statement){
             
         }
@@ -39,12 +45,19 @@ class Candidat {
 
         $add_candidate = $pdo->prepare("INSERT INTO candidats (nom, prenom) VALUES (:nom, :prenom)");
         $add_candidate->execute(array(':nom' => $infos['nom'], ':prenom' => $infos['prenom']));	
-
-        $pdo =  null;
+        echo "lol";
+       $pdo =  null;
     }
 
-    public function delete(){
-        $pdo = Database::connect(); 
+    public function delete() {
+
+        $pdo = Database::connect();
+
+        $files = $this->get_files();
+
+        foreach ($files as $key => $value) {
+            unlink($_SERVER["DOCUMENT_ROOT"] . "/../files/" . $value["nom_serveur"]);
+        }
 
         $delete_candidate = $pdo->prepare("DELETE FROM candidats WHERE id_candidat = :id");
         $delete_candidate->bindParam('id', $this->id);
@@ -56,14 +69,17 @@ class Candidat {
     public function send_modif(){
         
         $db = Database::connect();
-        $statement = $db->prepare("UPDATE candidats SET nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, linkedin = :linkedin WHERE id_candidat = :id");
+        $statement = $db->prepare("UPDATE candidats SET disponibilites = :disponibilites, remuneration = :remuneration, mobilite = :mobilite, nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, linkedin = :linkedin WHERE id_candidat = :id");
         $statement->execute(array(
             ":nom" => $this->nom,
             ":prenom" => $this->prenom,
             ":email" => $this->email,
             ":telephone" => $this->telephone,
             ":linkedin" => $this->linkedin,
-            ":id" => $this->id
+            ":id" => $this->id,
+            ":disponibilites" => $this->disponibilites,
+            ":remuneration" => $this->remuneration,
+            ":mobilite" => $this->mobilite
         ));
 
     }
@@ -75,6 +91,11 @@ class Candidat {
         if(isset($data)) {
             $c = new Consultant($data['id']); 
             if(isset($c)) {
+                $c->set_email($this->get_email());
+                $c->set_telephone($this->get_telephone());
+                $c->set_linkedin($this->get_linkedin());
+                $c->send_modif();
+                 
                 $comp = $this->get_competences();
                 $qualif = $this->get_qualifications();
                 foreach($comp as $key => $value){
@@ -89,13 +110,8 @@ class Candidat {
 
                 }
                 
-                $pdo = Database::connect();
-
-                $statement = $pdo->prepare("DELETE FROM * WHERE id_candidat = :idcandidat");
-                $statement->execute(array("idcandidat"=> $this->id));
-
-                $pdo = null;
-
+                $this->delete();
+    
                 return $data;
     
             }else{
@@ -106,9 +122,7 @@ class Candidat {
         }
 
 
-        //        delete();
         
-        //return $data['url'];
 
     }
 
@@ -221,16 +235,15 @@ class Candidat {
             ":id_candidat" => $this->id,
             ":id_competence" => $infos['id_competence']
         ));
-//        if ($infos["niveau"] == 0) return;
-        $statement = $pdo->prepare("INSERT INTO competences_candidats (niveau, id_candidat, id_competence) VALUES (:niv, :idca, :idco)");
+        if ($infos["niveau"] == 0) return;
+        $statement = $pdo->prepare("INSERT INTO competences_candidats (niveau, id_candidat, id_competence) VALUES (?, ?, ?)");
         $statement->execute(array(
-           ':niv' => $infos['niveau'],
-           ':idca' => $this->id,
-           ':idco' => $infos['id_competence']
+           $infos['niveau'],
+           $this->id,
+           $infos['id_competence']
         ));
         
-        var_dump($statement);
-            $pdo = null; 
+        $pdo = null; 
     
     }
 
@@ -283,6 +296,30 @@ class Candidat {
         return $this->etape;
     }
 
+    public function get_remuneration() {
+        return $this->remuneration;
+    }
+
+    public function get_disponibilites() {
+        return $this->disponibilites;
+    }
+
+    public function get_mobilite() {
+        return $this->mobilite;
+    }
+
+    public function set_remuneration($rem) {
+        $this->remuneration = $rem;
+    }
+
+    public function set_disponibilites($dispo) {
+        $this->disponibilites = $dispo;
+    }
+
+    public function set_mobilite($mobi) {
+        $this->mobilite = $mobi;
+    }
+
     public function get_files($type = "") {
 
         $pdo = Database::connect();
@@ -290,7 +327,7 @@ class Candidat {
         $statement = $pdo->prepare("SELECT * FROM fichiers_candidats WHERE id_candidat = :id AND type LIKE :type");
         $statement->execute(array(
             ":id" => $this->id,
-            ":type" => $type
+            ":type" => "%" . $type . "%"
         ));
 
         $pdo = null;

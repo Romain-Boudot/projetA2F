@@ -93,11 +93,6 @@ ul>li {
     font-weight: 500;
 }
 
-.bottom {
-    position: absolute;
-    bottom: 0;
-}
-
 .noMI {
     margin: 0 !important;
 }
@@ -120,11 +115,11 @@ a {
 }
 
 :root {
-    --color-si: #259225;
+    --color-si: #06436f;
     --color-db: #f05944;
     --color-in: #f7931e;
     --color-df: #06436f;
-    --color-si-light: #259225aa;
+    --color-si-light: #06436faa;
     --color-db-light: #f05944aa;
     --color-in-light: #f7931eaa;
     --color-df-light: #06436faa;
@@ -136,4 +131,12 @@ a {
 
 .autoColor {
     color: var(--auto-color);
+}
+
+.p20 {
+    font-size: 20px;
+}
+
+.bold {
+    font-weight: bold;
 }

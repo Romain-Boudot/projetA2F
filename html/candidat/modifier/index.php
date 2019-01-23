@@ -7,28 +7,28 @@
     include_once $_SERVER["DOCUMENT_ROOT"] . "/../classes/Security.php";
     session_start();
 
-    Security::check_login(array(1,2));
+    Security::check_login(array(1, 2));
 
-    if(isset($_GET['id'])){
+    if (isset($_GET['id'])){
 
         $id = $_GET['id'];
     
-    }
-    elseif(isset($_POST['id_cons'])){
+    } elseif (isset($_POST['id_cand'])) {
         
-        $id = $_POST['id_cons'];
+        $id = $_POST['id_cand'];
 
-    }
-
-    else{
-        echo "Candidat introuvable";
+    } else {
+        
+        include_once $_SERVER["DOCUMENT_ROOT"] . "/erreurs/404.php";
         exit();
+
     }
  
 
     $c = new Candidat($id);
 
     if (isset($_POST['modif'])) {
+        $pass = true;
         include_once "traitement.php";
     }
 
@@ -63,7 +63,7 @@
         
             <!-- // Comp section // -->
         
-            <div onclick="Competence.send_candidat(<?php echo $id; ?>)" class="submit">Envoyer</div>
+            <div onclick="Competence.send_candidat(<?php echo $id; ?>)" class="submit">Enregistrer</div>
 
             <div class="compListWrapper">
 
@@ -105,7 +105,7 @@
 
                 };
 
-                $comp = Competence::get_array($_SESSION['user']['id']);
+                $comp = Competence::get_array($id, true);
 
                 foreach ($comp as $name => $value) {
 
@@ -137,15 +137,18 @@
             <form action="/candidat/modifier/" method="post">
             
                 <input type="hidden" name="modif" value="info">
-                <input type="hidden" name="id_cons" value="<?php echo $id; ?>">   
+                <input type="hidden" name="id_cand" value="<?php echo $id; ?>">   
 
                 <input type="text" name="nom" placeholder="Nom" value="<?php echo $c->get_nom(); ?>" required>
                 <input type="text" name="prenom" placeholder="Prenom" value="<?php echo $c->get_prenom(); ?>" required>
-                <input type="text" name="email" placeholder="Email" value="<?php echo $c->get_email(); ?>" required>
-                <input type="text" name="tel" placeholder="Téléphone" value="<?php echo $c->get_telephone(); ?>" required>
+                <input type="text" name="email" placeholder="Email" value="<?php echo $c->get_email(); ?>" >
+                <input type="text" name="telephone" placeholder="Téléphone" value="<?php echo $c->get_telephone(); ?>" >
                 <input type="text" name="linkedin" placeholder="Linkedin" value="<?php echo $c->get_linkedin(); ?>">
+                <input type="text" name="disponibilites" placeholder="Disponibilités" value="<?php echo $c->get_disponibilites(); ?>">
+                <input type="text" name="remuneration" placeholder="Rémunération" value="<?php echo $c->get_remuneration(); ?>">
+                <input type="text" name="mobilite" placeholder="Mobilité" value="<?php echo $c->get_mobilite(); ?>">
 
-                <input type="submit" value="Envoyer">
+                <input type="submit" value="Enregistrer">
 
             </form>
 
@@ -159,7 +162,7 @@
 
                 <input type="hidden" name="modif" value="int">
                 <input type="hidden" name="action" value="add">                
-                <input type="hidden" name="id_cons" value="<?php echo $id ?>">                
+                <input type="hidden" name="id_cand" value="<?php echo $id ?>">                
                
                      <div class="intervention">
                     <div class="infos">Date</div>
@@ -185,9 +188,9 @@
 
                     ?></select></div>
                     <div class="details textCenter">
-                        <textarea placeholder="Détails de l'intervention" name="details" maxlength="500" rows="10" required></textarea>
+                        <textarea placeholder="Détails de l'intervention" name="details" maxlength="1500" rows="10" required></textarea>
                     </div>
-                    <div class="InterSubmit"><input type="submit" value="Envoyer"></div>
+                    <div class="InterSubmit"><input type="submit" value="Enregistrer"></div>
                 </div>
 
                 <?php
@@ -201,7 +204,7 @@
                     <div class="intervention">
                         <div class="infos"><?php echo $int['date_entretien']; ?></div>
                         <div class="infos"><?php echo $int['nom']; echo " "; echo $int['prenom']; ?></div>
-                        <div class="details"><?php echo $int['details']; ?></div>
+                        <div class="details"><?php echo str_replace("\n","<br>",$int['details']); ?></div>
                         <div class="InterSubmit"><div onclick="Intervention.del_candidat(<?php echo $int['id_entretien']; ?>, <?php echo $id; ?>)" class="delInt">Supprimer</div></div>
                     </div>
 
@@ -223,7 +226,7 @@
                 <input type="hidden" name="modif" value="qual">
                 <input type="hidden" name="action" value="add">
                 
-                <input type="hidden" name="id_cons" value="<?php echo $id; ?>">                
+                <input type="hidden" name="id_cand" value="<?php echo $id; ?>">                
 
                 <div class="qualification">
                     <div class="infos">Qualification</div>
@@ -238,9 +241,9 @@
                     <div class="infos"><input type="text" name="nom" placeholder="Nom de la qualification" required></div>
                     <div class="infos"><input type="date" name="date" required></div>
                     <div class="details textCenter">
-                        <textarea placeholder="Détails de l'intervention" name="details" maxlength="500" rows="10" required></textarea>
+                        <textarea placeholder="Détails de l'intervention" name="details" maxlength="1500" rows="10" required></textarea>
                     </div>
-                    <div class="QualSubmit"><input type="submit" value="Envoyer"></div>
+                    <div class="QualSubmit"><input type="submit" value="Enregistrer"></div>
                 </div>
 
                 <?php
@@ -254,7 +257,7 @@
                     <div class="qualification">
                         <div class="infos"><?php echo $qual['nom_qualification']; ?></div>
                         <div class="infos"><?php echo $qual['date_obtention']; ?></div>
-                        <div class="details"><?php echo $qual['details']; ?></div>
+                        <div class="details"><?php echo str_replace("\n","<br>",$qual['details']); ?></div>
                         <div class="QualSubmit"><div onclick="Qualification.del_candidat(<?php echo $qual['id_qualification']; ?>, <?php echo $id; ?>)" class="delInt">Supprimer</div></div>
                     </div>
 

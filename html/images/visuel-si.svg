@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 19.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 404.9 284.8" style="enable-background:new 0 0 404.9 284.8;" xml:space="preserve">
+<svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 404.9 284.8" style="enable-background:new 0 0 404.9 284.8;" xml:space="preserve">
 <style type="text/css">
 	.st0{fill:#F0FAFF;}
 	.st1{fill:#F05944;}
@@ -10,7 +11,7 @@
 	.st4{fill:none;}
 	.st5{clip-path:url(#SVGID_6_);}
 	.st6{clip-path:url(#SVGID_8_);}
-	.st7{fill:#259225;}
+	.st7{fill:#06436F;}
 	.st8{opacity:0.4;}
 	.st9{opacity:0.53;clip-path:url(#SVGID_10_);fill:#28282E;}
 	.st10{fill:#44B2E6;}
@@ -247,7 +248,7 @@
 	.st241{fill:url(#SVGID_250_);}
 	.st242{fill:#FF5C23;stroke:#FFFFFF;stroke-miterlimit:10;}
 	.st243{fill:#FF5C23;}
-	.st244{fill:none;stroke:#259225;stroke-miterlimit:10;}
+	.st244{fill:none;stroke:#06436F;stroke-miterlimit:10;}
 	.st245{fill:#EE7838;}
 	.st246{fill:#EFEFEF;}
 	.st247{fill:url(#SVGID_251_);}
@@ -283,7 +284,8 @@
 	<g>
 		<circle class="st7" cx="146.5" cy="270.7" r="8.7"/>
 	</g>
-	<path class="st244" d="M16.3,97.8L75,68.4l185-54.3l129.7,69.1L263.1,199.9L158,122L48.9,235.8l98,35.8l116.2-71.6l-3.2-185.9   L158,122L75,68.4l-26,167.3C48.9,235.8,16.8,97.4,16.3,97.8z"/>
-	<polyline class="st244" points="48.9,235.8 263.1,199.9 158,122 146.9,271.5  "/>
+	<path class="st244" d="M16.3,97.8L75,68.4l185-54.3l129.7,69.1L263.1,199.9L158,122L48.9,235.8l98,35.8l116.2-71.6l-3.2-185.9
+		L158,122L75,68.4l-26,167.3C48.9,235.8,16.8,97.4,16.3,97.8z"/>
+	<polyline class="st244" points="48.9,235.8 263.1,199.9 158,122 146.9,271.5 	"/>
 </g>
 </svg>

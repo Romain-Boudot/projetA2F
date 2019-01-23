@@ -57,34 +57,39 @@ error_reporting(E_ALL);
     <?php include $_SERVER["DOCUMENT_ROOT"] . "/../includes/header.php" ?>
     
     <nav>
-        <div id="image-profile">
-            <img src="/images/profil/unknown.png" alt="profile image">
+        <div class="infos-wrapper">
+            <div id="image-profile">
+                <img src="/images/profil/unknown.png" alt="profile image">
+            </div>
+            <div class="hr"></div>
+            <div class="profile-info left">Prénom :</div>
+            <div class="profile-info" data-info="prenom"><?php echo $candidat->get_prenom(); ?></div>
+            <div class="profile-info left">Nom :</div>
+            <div class="profile-info" data-info="nom"><?php echo $candidat->get_nom(); ?></div>
+            <div class="profile-info left">Email :</div>
+            <a href="mailto:<?php echo $candidat->get_email(); ?>" class="profile-info underline" data-info="email"><?php echo $candidat->get_email(); ?></a>
+            <div class="profile-info left">Téléphone :</div>
+            <div class="profile-info" data-info="telephone"><?php echo $candidat->get_telephone(); ?></div>
+            <div class="profile-info left">LinkedIn :</div>
+            <a href="<?php echo $candidat->get_linkedin(); ?>" class="profile-info underline" data-info="linkedin"><?php echo $candidat->get_linkedin(); ?></a>
+            <div class="profile-info left">Disponibilités :</div>
+            <div class="profile-info" data-info="disponibilites"><?php echo $candidat->get_disponibilites(); ?></div>
+            <div class="profile-info left">Rémunération :</div>
+            <div class="profile-info" data-info="remuneration"><?php echo $candidat->get_remuneration(); ?></div>
+            <div class="profile-info left">Mobilité :</div>
+            <div class="profile-info" data-info="mobilite"><?php echo $candidat->get_mobilite(); ?></div>
+
+            <form action="/candidat/traitement.php" method="get" class="hidden">
+
+                <input type="hidden" name="action" value="transfer"> 
+                <input type="hidden" name="id" value=" <?php echo $id; ?> ">
+
+                <input type="submit" value="Envoyer">
+
+            </form>
         </div>
-        <div class="hr"></div>
-        <div class="profile-info left">Prénom :</div>
-        <div class="profile-info" data-info="prenom"><?php echo $candidat->get_prenom(); ?></div>
-        <div class="profile-info left">Nom :</div>
-        <div class="profile-info" data-info="nom"><?php echo $candidat->get_nom(); ?></div>
-        <div class="profile-info left">Email :</div>
-        <a href="mailto:<?php echo $candidat->get_email(); ?>" class="profile-info underline" data-info="email"><?php echo $candidat->get_email(); ?></a>
-        <div class="profile-info left">Téléphone :</div>
-        <div class="profile-info" data-info="telephone"><?php echo $candidat->get_telephone(); ?></div>
-        <div class="profile-info left">LinkedIn :</div>
-        <a href="<?php echo $candidat->get_linkedin(); ?>" class="profile-info underline" data-info="linkedin"><?php echo $candidat->get_linkedin(); ?></a>
-
-        <form action="/candidat/traitement.php" method="get" class="hidden">
-
-            <input type="hidden" name="action" value="transfer"> 
-            <input type="hidden" name="id" value=" <?php echo $id; ?> ">
-
-            <input type="submit" value="Envoyer">
-
-        </form>
-
-        <div class="btn h-56 modif-profile bold" onclick="Alert.load_page('/candidat/test.php?id=<?php echo $_GET['id']; ?>')">Transfer</div>
-
-        <a class="bottom btn h-56 modif-profile bold" href='/candidat/modifier?id=<?php echo $id; ?>'>Modifier mon profil</a>
-
+        <div class="btn h-56 modif-profile bold" onclick="Alert.load_page('/candidat/transfer.php?ajaxtrue&id=<?php echo $_GET['id']; ?>')">Transfert</div>
+        <a class="bottom btn h-56 modif-profile bold" href='/candidat/modifier?id=<?php echo $id; ?>'>Modifier le profil</a>
     </nav>
 
     <div class="main-wrapper">
@@ -111,7 +116,7 @@ error_reporting(E_ALL);
                     <div class="intervention">
                         <div class="infos"><?php echo $int['date_entretien']; ?></div>
                         <div class="infos"><?php echo $int['nom']; echo " "; echo $int['prenom']; ?></div>
-                        <div class="details"><?php echo $int['details']; ?></div>
+                        <div class="details"><div><?php echo str_replace("\n","<br>",$int['details']); ?></div><i onclick="Alert.zoom(this, 'Entretien du <?php echo $int['date_entretien']; ?>')" class="zoom material-icons">zoom_in</i></div>
                     </div>
 
                             <?php
@@ -131,15 +136,15 @@ error_reporting(E_ALL);
                     <?php           
                     
                     $tab = $candidat->get_qualifications();
-                    foreach ($tab as $int) {
+                    foreach ($tab as $qual) {
                     
                     ?>
 
                     <div class="hr"></div>
                     <div class="qualification">
-                        <div class="infos"><?php echo $int['nom_qualification']; ?></div>
-                        <div class="infos"><?php echo $int['date_obtention']; ?></div>
-                        <div class="details"><?php echo $int['details']; ?></div>
+                        <div class="infos"><?php echo $qual['nom_qualification']; ?></div>
+                        <div class="infos"><?php echo $qual['date_obtention']; ?></div>
+                        <div class="details"><div><?php echo str_replace("\n","<br>",$qual['details']); ?></div><i onclick="Alert.zoom(this, 'Entretien')" class="zoom material-icons">zoom_in</i></div>
                     </div>   
 
                     <?php
@@ -245,12 +250,6 @@ error_reporting(E_ALL);
                 </div>
             </div>
 
-            <?php
-
-            if ($id == $_SESSION["user"]["id"]) {
-
-            ?>
-
             <div class="fileUpload">
             
                 <?php
@@ -274,9 +273,9 @@ error_reporting(E_ALL);
 
                 <div class="addFile" <?php if (sizeof($files) == 5) echo 'style="display: none;"'; ?>>
                     <label for="fileInput">
-                        <i class="material-icons">add</i>
+                        <i class="material-icons">attach_file</i>
                     </label>
-                    <div class="label">Ajout d'un fichier<br>(1Mo max.)</div>
+                    <div class="label">Ajout d'un fichier<br>(1Mo max. pdf)</div>
                 </div>
 
                 <div class="hidden">
@@ -288,12 +287,6 @@ error_reporting(E_ALL);
                 </script>
         
             </div>
-
-            <?php 
-
-                }
-            
-            ?>
 
         </div>
     </div>

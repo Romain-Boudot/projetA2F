@@ -27,7 +27,12 @@
     
     }
 
-    header("location: http://" . $_SERVER['HTTP_HOST'] . "/recherche/");
-    exit();
+    if ($_SESSION['user']['type'] == 0) {
+        header("location: http://" . $_SERVER['HTTP_HOST'] . "/consultant/");
+        exit();
+    } else {
+        header("location: http://" . $_SERVER['HTTP_HOST'] . "/recherche/");
+        exit();
+    }
 
 ?>
